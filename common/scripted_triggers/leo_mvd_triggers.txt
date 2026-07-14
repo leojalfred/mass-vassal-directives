@@ -1,0 +1,137 @@
+﻿# Leo VI's Mass Vassal Directives - scripted triggers
+#
+# Eligibility must match vanilla exactly. Wherever possible we call the vanilla
+# scripted triggers directly (00_vassal_stance_triggers.txt). The remaining
+# conditions are verbatim mirrors of give_vassal_directive_interaction
+# (00_vassal_interactions.txt:3428-3453 and its send_option blocks) because the
+# interaction's inline is_shown/is_valid blocks cannot be invoked from script.
+# Re-diff those mirrored lines against vanilla after each game patch.
+
+# Current scope: vassal candidate. $LIEGE$ = the liege issuing directives.
+# Mirrors the interaction's is_shown + is_valid + is_valid_showing_failures_only.
+leo_mvd_base_eligible_trigger = {
+	# is_shown mirror (00_vassal_interactions.txt:3428-3444)
+	trigger_if = {
+		limit = {
+			$LIEGE$ = { government_allows = administrative }
+		}
+		is_vassal_or_below_of = $LIEGE$
+	}
+	trigger_else = {
+		is_vassal_of = $LIEGE$
+	}
+	is_landed = yes
+	NOT = { government_has_flag = government_is_herder }
+	highest_held_title_tier >= tier_county
+	is_ai = yes
+	# is_valid_showing_failures_only mirror (:3450-3453); the follows/valid
+	# sub-triggers are both included in the vanilla composite below
+	is_physically_able = yes
+	# is_valid mirror - the canonical vanilla eligibility composite
+	vassal_is_valid_and_follows_directive_trigger = { VASSAL = this LIEGE = $LIEGE$ }
+	# mod-side: skip vassals the player exempted from automation
+	NOT = { has_variable = leo_mvd_exempt }
+}
+
+# Current scope: vassal. Priority 1 - Convert Faith.
+# Vanilla gates mirror the convert_faith send_option (:3491-3508);
+# the same-faith-as-liege requirement is the mod's own targeting filter.
+leo_mvd_p1_convert_faith_trigger = {
+	save_temporary_scope_as = leo_mvd_vassal_tmp
+	NOT = { government_has_flag = government_is_nomadic }
+	faith = $LIEGE$.faith
+	any_sub_realm_county = {
+		faith != scope:leo_mvd_vassal_tmp.faith
+	}
+}
+
+# Current scope: vassal. Priority 2 - Convert (Promote) Culture.
+# Vanilla gates mirror the convert_culture send_option (:3510-3527);
+# the same-culture-as-liege requirement is the mod's own targeting filter.
+leo_mvd_p2_convert_culture_trigger = {
+	save_temporary_scope_as = leo_mvd_vassal_tmp
+	NOT = { government_has_flag = government_is_nomadic }
+	culture = $LIEGE$.culture
+	any_sub_realm_county = {
+		culture != scope:leo_mvd_vassal_tmp.culture
+	}
+}
+
+# Current scope: vassal. Requires scope:leo_mvd_liege to be set (the player).
+# Vanilla per-directive gates for the configured blanket fallback directive,
+# mirroring the corresponding send_option blocks.
+# Codes: 3 improve_development, 4 train_commanders, 5 build_maa,
+# 6 improve_cultural_acceptance, 7/8/9 building_focus_fortification/military/economy
+leo_mvd_blanket_gate_trigger = {
+	save_temporary_scope_as = leo_mvd_vassal_tmp
+	trigger_if = {
+		limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 3 } }
+		government_allows = administrative
+		highest_held_title_tier >= tier_duchy
+	}
+	trigger_else_if = {
+		limit = {
+			scope:leo_mvd_liege = {
+				OR = {
+					var:leo_mvd_blanket = 4
+					var:leo_mvd_blanket = 5
+				}
+			}
+		}
+		government_allows = administrative
+	}
+	trigger_else_if = {
+		limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 6 } }
+		NOT = { government_has_flag = government_is_nomadic }
+		highest_held_title_tier >= tier_duchy
+		any_sub_realm_county = {
+			culture != scope:leo_mvd_vassal_tmp.culture
+		}
+	}
+	trigger_else = {
+		NOT = { government_has_flag = government_is_nomadic }
+	}
+}
+
+# Current scope: vassal with leo_mvd_managed set.
+# True when the directive flag currently on the vassal is the one the mod assigned.
+leo_mvd_managed_matches_trigger = {
+	OR = {
+		AND = {
+			var:leo_mvd_managed = 1
+			has_character_flag = vassal_directive_convert_faith
+		}
+		AND = {
+			var:leo_mvd_managed = 2
+			has_character_flag = vassal_directive_convert_culture
+		}
+		AND = {
+			var:leo_mvd_managed = 3
+			has_character_flag = vassal_directive_improve_development
+		}
+		AND = {
+			var:leo_mvd_managed = 4
+			has_character_flag = vassal_directive_train_commanders
+		}
+		AND = {
+			var:leo_mvd_managed = 5
+			has_character_flag = vassal_directive_build_maa
+		}
+		AND = {
+			var:leo_mvd_managed = 6
+			has_character_flag = vassal_directive_improve_cultural_acceptance
+		}
+		AND = {
+			var:leo_mvd_managed = 7
+			has_character_flag = vassal_directive_building_focus_fortification
+		}
+		AND = {
+			var:leo_mvd_managed = 8
+			has_character_flag = vassal_directive_building_focus_military
+		}
+		AND = {
+			var:leo_mvd_managed = 9
+			has_character_flag = vassal_directive_building_focus_economy
+		}
+	}
+}

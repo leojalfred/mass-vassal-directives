@@ -1,0 +1,140 @@
+﻿# Leo VI's Mass Vassal Directives - config summary custom localization
+# type = character; bound character is the player.
+
+leo_mvd_sum_enabled = {
+	type = character
+
+	text = {
+		localization_key = leo_mvd_on
+		trigger = {
+			has_variable = leo_mvd_enabled
+		}
+	}
+	text = {
+		localization_key = leo_mvd_off
+		fallback = yes
+	}
+}
+
+leo_mvd_sum_auto = {
+	type = character
+
+	text = {
+		localization_key = leo_mvd_on
+		trigger = {
+			has_variable = leo_mvd_auto
+		}
+	}
+	text = {
+		localization_key = leo_mvd_off
+		fallback = yes
+	}
+}
+
+leo_mvd_sum_p3 = {
+	type = character
+
+	text = {
+		localization_key = leo_mvd_sum_p3_b3
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 1
+			has_variable = leo_mvd_blanket
+			var:leo_mvd_blanket = 3
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_b4
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 1
+			has_variable = leo_mvd_blanket
+			var:leo_mvd_blanket = 4
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_b5
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 1
+			has_variable = leo_mvd_blanket
+			var:leo_mvd_blanket = 5
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_b6
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 1
+			has_variable = leo_mvd_blanket
+			var:leo_mvd_blanket = 6
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_b7
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 1
+			has_variable = leo_mvd_blanket
+			var:leo_mvd_blanket = 7
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_b8
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 1
+			has_variable = leo_mvd_blanket
+			var:leo_mvd_blanket = 8
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_b9
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 1
+			has_variable = leo_mvd_blanket
+			var:leo_mvd_blanket = 9
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_br500
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 2
+			has_variable = leo_mvd_threshold
+			var:leo_mvd_threshold = 500
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_br1000
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 2
+			has_variable = leo_mvd_threshold
+			var:leo_mvd_threshold = 1000
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_br2000
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 2
+			has_variable = leo_mvd_threshold
+			var:leo_mvd_threshold = 2000
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_br5000
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 2
+			has_variable = leo_mvd_threshold
+			var:leo_mvd_threshold = 5000
+		}
+	}
+	text = {
+		localization_key = leo_mvd_sum_p3_none
+		fallback = yes
+	}
+}

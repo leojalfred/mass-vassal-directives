@@ -1,0 +1,108 @@
+﻿# Leo VI's Mass Vassal Directives - on_action extensions
+#
+# IMPORTANT: an on_action's `effect` block is single-slot (last-loaded file
+# wins), so we must never define `effect` directly on a vanilla on_action.
+# The `on_actions` list DOES merge additively across files, so we chain our
+# own child on_actions instead. Child on_actions inherit the parent's scope.
+
+# Start the monthly pulse for every player at campaign start.
+on_game_start_after_lobby = {
+	on_actions = { leo_mvd_on_game_start }
+}
+
+leo_mvd_on_game_start = {
+	effect = {
+		every_player = {
+			leo_mvd_init_defaults_effect = yes
+			# Set the heartbeat immediately so the yearly watchdog cannot
+			# start a second pulse chain before the first tick fires.
+			add_character_flag = {
+				flag = leo_mvd_pulse_alive
+				days = 45
+			}
+			trigger_event = {
+				id = leo_mvd.1
+				days = 30
+			}
+		}
+	}
+}
+
+# ROOT: the dying character. Carry the mod configuration over to the player
+# heir so settings persist for the whole playthrough, and restart the pulse.
+on_death = {
+	on_actions = { leo_mvd_on_death }
+}
+
+leo_mvd_on_death = {
+	effect = {
+		if = {
+			limit = {
+				is_ai = no
+				has_variable = leo_mvd_p3_mode
+				exists = player_heir
+			}
+			player_heir = {
+				if = {
+					limit = { root = { has_variable = leo_mvd_enabled } }
+					set_variable = leo_mvd_enabled
+				}
+				if = {
+					limit = { root = { has_variable = leo_mvd_auto } }
+					set_variable = leo_mvd_auto
+				}
+				set_variable = {
+					name = leo_mvd_p3_mode
+					value = root.var:leo_mvd_p3_mode
+				}
+				set_variable = {
+					name = leo_mvd_blanket
+					value = root.var:leo_mvd_blanket
+				}
+				set_variable = {
+					name = leo_mvd_threshold
+					value = root.var:leo_mvd_threshold
+				}
+				if = {
+					limit = {
+						NOT = { has_character_flag = leo_mvd_pulse_alive }
+					}
+					add_character_flag = {
+						flag = leo_mvd_pulse_alive
+						days = 45
+					}
+					trigger_event = {
+						id = leo_mvd.1
+						days = 30
+					}
+				}
+			}
+		}
+	}
+}
+
+# Watchdog: if the pulse chain ever lapses (loading a save from before the mod
+# was added, switching played character, etc.), restart it within a year.
+yearly_playable_pulse = {
+	on_actions = { leo_mvd_yearly_watchdog }
+}
+
+leo_mvd_yearly_watchdog = {
+	effect = {
+		if = {
+			limit = {
+				is_ai = no
+				NOT = { has_character_flag = leo_mvd_pulse_alive }
+			}
+			leo_mvd_init_defaults_effect = yes
+			add_character_flag = {
+				flag = leo_mvd_pulse_alive
+				days = 45
+			}
+			trigger_event = {
+				id = leo_mvd.1
+				days = 1
+			}
+		}
+	}
+}

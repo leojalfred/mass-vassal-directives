@@ -1,0 +1,67 @@
+﻿# Leo VI's Mass Vassal Directives - exempt toggle interactions
+# Exempted vassals are skipped by the automated directive waterfall; set their
+# directive manually via the vanilla Give Vassal Directive interaction.
+
+leo_mvd_exempt_interaction = {
+	category = interaction_category_vassal
+	icon = icon_scheme_challenge_status
+	interface_priority = 55
+	desc = leo_mvd_exempt_interaction_desc
+
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { is_ai = no }
+		scope:recipient = {
+			trigger_if = {
+				limit = {
+					scope:actor = { government_allows = administrative }
+				}
+				is_vassal_or_below_of = scope:actor
+			}
+			trigger_else = {
+				is_vassal_of = scope:actor
+			}
+			is_landed = yes
+			highest_held_title_tier >= tier_county
+			is_ai = yes
+			NOT = { has_variable = leo_mvd_exempt }
+		}
+	}
+
+	on_accept = {
+		custom_tooltip = leo_mvd_exempt_tt
+		scope:recipient = {
+			set_variable = leo_mvd_exempt
+		}
+	}
+
+	# No ai_frequency: the AI never evaluates this interaction (player-only,
+	# also gated by is_ai = no on the actor in is_shown).
+}
+
+leo_mvd_unexempt_interaction = {
+	category = interaction_category_vassal
+	icon = icon_scheme_challenge_status
+	interface_priority = 54
+	desc = leo_mvd_unexempt_interaction_desc
+
+	auto_accept = yes
+
+	is_shown = {
+		scope:actor = { is_ai = no }
+		scope:recipient = {
+			has_variable = leo_mvd_exempt
+		}
+	}
+
+	on_accept = {
+		custom_tooltip = leo_mvd_unexempt_tt
+		scope:recipient = {
+			remove_variable = leo_mvd_exempt
+		}
+	}
+
+	# No ai_frequency: the AI never evaluates this interaction (player-only,
+	# also gated by is_ai = no on the actor in is_shown).
+}

@@ -1,0 +1,175 @@
+﻿# Leo VI's Mass Vassal Directives - scripted effects
+#
+# Directive assignment matches vanilla give_vassal_directive_interaction
+# on_accept exactly: remove_vassal_directives (vanilla scripted effect,
+# 00_realm_effects.txt) followed by add_character_flag.
+#
+# Directive codes (stored in leo_mvd_managed / leo_mvd_blanket):
+# 1 convert_faith, 2 convert_culture, 3 improve_development,
+# 4 train_commanders, 5 build_maa, 6 improve_cultural_acceptance,
+# 7 building_focus_fortification, 8 building_focus_military,
+# 9 building_focus_economy
+
+# Current scope: vassal. Assign a directive and mark it as mod-managed.
+leo_mvd_assign_effect = {
+	if = {
+		limit = {
+			NOT = { has_character_flag = vassal_directive_$DIRECTIVE$ }
+		}
+		remove_vassal_directives = yes
+		add_character_flag = vassal_directive_$DIRECTIVE$
+	}
+	set_variable = {
+		name = leo_mvd_managed
+		value = $CODE$
+	}
+}
+
+# Current scope: vassal. Clear the directive only if the mod still owns it.
+# If the flag no longer matches the stored code, the player re-assigned it
+# manually via the vanilla interaction - drop ownership, keep the directive.
+leo_mvd_clear_stale_effect = {
+	if = {
+		limit = { has_variable = leo_mvd_managed }
+		if = {
+			limit = { leo_mvd_managed_matches_trigger = yes }
+			remove_vassal_directives = yes
+		}
+		remove_variable = leo_mvd_managed
+	}
+}
+
+# Current scope: vassal. Requires scope:leo_mvd_liege (the player).
+# The priority waterfall: P1 Convert Faith -> P2 Convert Culture -> P3
+# configured fallback -> otherwise clear any stale mod-assigned directive.
+leo_mvd_evaluate_vassal_effect = {
+	if = {
+		limit = {
+			leo_mvd_p1_convert_faith_trigger = { LIEGE = scope:leo_mvd_liege }
+		}
+		leo_mvd_assign_effect = { DIRECTIVE = convert_faith CODE = 1 }
+	}
+	else_if = {
+		limit = {
+			leo_mvd_p2_convert_culture_trigger = { LIEGE = scope:leo_mvd_liege }
+		}
+		leo_mvd_assign_effect = { DIRECTIVE = convert_culture CODE = 2 }
+	}
+	else_if = {
+		# P3 blanket mode
+		limit = {
+			scope:leo_mvd_liege = {
+				has_variable = leo_mvd_p3_mode
+				var:leo_mvd_p3_mode = 1
+				has_variable = leo_mvd_blanket
+			}
+			leo_mvd_blanket_gate_trigger = yes
+		}
+		if = {
+			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 3 } }
+			leo_mvd_assign_effect = { DIRECTIVE = improve_development CODE = 3 }
+		}
+		else_if = {
+			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 4 } }
+			leo_mvd_assign_effect = { DIRECTIVE = train_commanders CODE = 4 }
+		}
+		else_if = {
+			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 5 } }
+			leo_mvd_assign_effect = { DIRECTIVE = build_maa CODE = 5 }
+		}
+		else_if = {
+			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 6 } }
+			leo_mvd_assign_effect = { DIRECTIVE = improve_cultural_acceptance CODE = 6 }
+		}
+		else_if = {
+			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 7 } }
+			leo_mvd_assign_effect = { DIRECTIVE = building_focus_fortification CODE = 7 }
+		}
+		else_if = {
+			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 8 } }
+			leo_mvd_assign_effect = { DIRECTIVE = building_focus_military CODE = 8 }
+		}
+		else_if = {
+			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 9 } }
+			leo_mvd_assign_effect = { DIRECTIVE = building_focus_economy CODE = 9 }
+		}
+	}
+	else_if = {
+		# P3 military branch mode: weak vassals build military, strong build economy.
+		# building_focus_* directives only require a non-nomadic government in vanilla.
+		limit = {
+			scope:leo_mvd_liege = {
+				has_variable = leo_mvd_p3_mode
+				var:leo_mvd_p3_mode = 2
+				has_variable = leo_mvd_threshold
+			}
+			NOT = { government_has_flag = government_is_nomadic }
+		}
+		if = {
+			limit = { max_military_strength < leo_mvd_effective_threshold }
+			leo_mvd_assign_effect = { DIRECTIVE = building_focus_military CODE = 8 }
+		}
+		else = {
+			leo_mvd_assign_effect = { DIRECTIVE = building_focus_economy CODE = 9 }
+		}
+	}
+	else = {
+		# No priority applies: clear the directive only if the mod assigned it
+		leo_mvd_clear_stale_effect = yes
+	}
+}
+
+# Current scope: the player. Run the waterfall across all eligible vassals.
+leo_mvd_run_waterfall_effect = {
+	save_scope_as = leo_mvd_liege
+	if = {
+		limit = { government_allows = administrative }
+		every_vassal_or_below = {
+			limit = {
+				leo_mvd_base_eligible_trigger = { LIEGE = scope:leo_mvd_liege }
+			}
+			leo_mvd_evaluate_vassal_effect = yes
+		}
+	}
+	else = {
+		every_vassal = {
+			limit = {
+				leo_mvd_base_eligible_trigger = { LIEGE = scope:leo_mvd_liege }
+			}
+			leo_mvd_evaluate_vassal_effect = yes
+		}
+	}
+}
+
+# Current scope: the player. Escape hatch: remove every mod-assigned directive
+# and exemption, then disable the mod. Manually assigned directives are kept.
+leo_mvd_remove_all_effect = {
+	every_vassal_or_below = {
+		limit = {
+			OR = {
+				has_variable = leo_mvd_managed
+				has_variable = leo_mvd_exempt
+			}
+		}
+		leo_mvd_clear_stale_effect = yes
+		remove_variable = leo_mvd_exempt
+	}
+	remove_variable = leo_mvd_enabled
+	remove_variable = leo_mvd_auto
+}
+
+# Current scope: the player. Idempotent config defaults.
+leo_mvd_init_defaults_effect = {
+	if = {
+		limit = { NOT = { has_variable = leo_mvd_p3_mode } }
+		set_variable = { name = leo_mvd_p3_mode value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = leo_mvd_blanket } }
+		set_variable = { name = leo_mvd_blanket value = 9 }
+	}
+	if = {
+		limit = { NOT = { has_variable = leo_mvd_threshold } }
+		set_variable = { name = leo_mvd_threshold value = 1000 }
+	}
+}

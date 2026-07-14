@@ -1,0 +1,54 @@
+﻿# Leo VI's Mass Vassal Directives - decisions
+
+leo_mvd_config_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+	}
+	desc = leo_mvd_config_decision_desc
+	selection_tooltip = leo_mvd_config_decision_tooltip
+	confirm_text = leo_mvd_config_decision_confirm
+	decision_group_type = decisions
+
+	is_shown = {
+		is_ai = no
+		is_ruler = yes
+		is_landed = yes
+	}
+
+	effect = {
+		custom_tooltip = leo_mvd_config_decision_effect_tt
+		hidden_effect = {
+			trigger_event = leo_mvd.100
+		}
+	}
+
+	ai_check_interval = 0
+	ai_will_do = { base = 0 }
+}
+
+leo_mvd_apply_now_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_realm.dds"
+	}
+	desc = leo_mvd_apply_now_decision_desc
+	selection_tooltip = leo_mvd_apply_now_decision_tooltip
+	confirm_text = leo_mvd_apply_now_decision_confirm
+	decision_group_type = decisions
+
+	is_shown = {
+		is_ai = no
+		is_ruler = yes
+		is_landed = yes
+		has_variable = leo_mvd_enabled
+	}
+
+	effect = {
+		custom_tooltip = leo_mvd_apply_now_tt
+		hidden_effect = {
+			leo_mvd_run_waterfall_effect = yes
+		}
+	}
+
+	ai_check_interval = 0
+	ai_will_do = { base = 0 }
+}

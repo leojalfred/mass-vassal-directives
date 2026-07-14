@@ -1,0 +1,26 @@
+﻿# Leo VI's Mass Vassal Directives - script values
+
+# Tier multipliers for the branch-mode military threshold.
+# The configured threshold is the duchy-tier baseline.
+leo_mvd_threshold_mult_county = 0.5
+leo_mvd_threshold_mult_kingdom = 3
+leo_mvd_threshold_mult_empire = 6
+
+# Current scope: vassal. Requires scope:leo_mvd_liege (the player) to be set.
+# Effective military-strength threshold for this vassal, tier-scaled from the
+# configured duchy baseline so it stays meaningful for counts vs kings.
+leo_mvd_effective_threshold = {
+	value = scope:leo_mvd_liege.var:leo_mvd_threshold
+	if = {
+		limit = { highest_held_title_tier = tier_county }
+		multiply = leo_mvd_threshold_mult_county
+	}
+	else_if = {
+		limit = { highest_held_title_tier = tier_kingdom }
+		multiply = leo_mvd_threshold_mult_kingdom
+	}
+	else_if = {
+		limit = { highest_held_title_tier >= tier_empire }
+		multiply = leo_mvd_threshold_mult_empire
+	}
+}
