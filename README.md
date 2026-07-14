@@ -24,7 +24,7 @@ Three modes, configured in-game:
 
 - **None** — vassals not covered by priorities 1–2 get no directive.
 - **Blanket** — one directive of your choice (any of the 7 non-conversion directives) applied to all remaining vassals. Vanilla per-directive requirements still apply (e.g. Improve Development needs an administrative duchy+ vassal).
-- **Military/economy branch** — remaining vassals below a military-strength threshold are told to construct military buildings; those above it construct economic buildings. The threshold you pick is the **duchy baseline** and scales by title tier so it stays meaningful at every realm size: counts ×0.5, dukes ×1, kings ×3, emperors ×6. (Multipliers are tunable in `common/script_values/leo_mvd_values.txt`.)
+- **Military/development branch** — remaining vassals below a military-strength threshold are told to construct military buildings; those at or above it are told to Improve Development. Improve Development keeps its vanilla requirements (administrative government, duchy tier or higher), so strong vassals who don't qualify construct economic buildings instead. The threshold you pick is the **duchy baseline** and scales by title tier so it stays meaningful at every realm size: counts ×0.5, dukes ×1, kings ×3, emperors ×6. (Multipliers are tunable in `common/script_values/leo_mvd_values.txt`.)
 
 ## Using the mod
 

@@ -109,7 +109,17 @@ leo_mvd_evaluate_vassal_effect = {
 			limit = { max_military_strength < leo_mvd_effective_threshold }
 			leo_mvd_assign_effect = { DIRECTIVE = building_focus_military CODE = 8 }
 		}
+		else_if = {
+			# Strong vassals: Improve Development where vanilla allows it
+			# (admin government + duchy or higher, per the vanilla send_option)
+			limit = {
+				government_allows = administrative
+				highest_held_title_tier >= tier_duchy
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = improve_development CODE = 3 }
+		}
 		else = {
+			# Strong vassals not eligible for Improve Development
 			leo_mvd_assign_effect = { DIRECTIVE = building_focus_economy CODE = 9 }
 		}
 	}

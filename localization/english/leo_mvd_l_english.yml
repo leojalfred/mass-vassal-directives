@@ -29,7 +29,7 @@
  leo_mvd.100.auto_off: "Turn #N off#! the monthly auto-run"
  leo_mvd.100.p3_none: "Fallback: none"
  leo_mvd.100.p3_blanket: "Fallback: choose a blanket directive..."
- leo_mvd.100.p3_branch: "Fallback: military/economy branch by strength..."
+ leo_mvd.100.p3_branch: "Fallback: military/development branch by strength..."
  leo_mvd.100.apply: "Apply directives now"
  leo_mvd.100.remove_all: "Remove all automated directives and disable"
  leo_mvd.100.close: "Close"
@@ -48,7 +48,7 @@
 
  ### Threshold picker (leo_mvd.102)
  leo_mvd.102.t: "Military Strength Threshold"
- leo_mvd.102.desc: "Fallback branch: remaining eligible [vassals|E] below the threshold are directed to @directive_military! construct [military_buildings|E]; those at or above it @directive_economical! construct [economic_buildings|E].\n\nThe threshold you pick is the #V duchy#! baseline and scales by [title|E] tier so it stays meaningful at every realm size: counts x0.5, dukes x1, kings x3, emperors x6."
+ leo_mvd.102.desc: "Fallback branch: remaining eligible [vassals|E] below the threshold are directed to @directive_military! construct [military_buildings|E]; those at or above it @task_develop_county! improve [development|E].\n\n#weak Improve Development keeps its vanilla requirements (administrative government, duchy tier or higher) — strong vassals who do not qualify @directive_economical! construct [economic_buildings|E] instead.#!\n\nThe threshold you pick is the #V duchy#! baseline and scales by [title|E] tier so it stays meaningful at every realm size: counts x0.5, dukes x1, kings x3, emperors x6."
  leo_mvd.102.t500: "Baseline #V 500#! #weak (counts 250, kings 1500, emperors 3000)#!"
  leo_mvd.102.t1000: "Baseline #V 1000#! #weak (counts 500, kings 3000, emperors 6000)#!"
  leo_mvd.102.t2000: "Baseline #V 2000#! #weak (counts 1000, kings 6000, emperors 12000)#!"
@@ -65,10 +65,10 @@
  leo_mvd_sum_p3_b7: "Blanket — $building_focus_fortification$"
  leo_mvd_sum_p3_b8: "Blanket — $building_focus_military$"
  leo_mvd_sum_p3_b9: "Blanket — $building_focus_economy$"
- leo_mvd_sum_p3_br500: "Military/economy branch #weak (baseline 500)#!"
- leo_mvd_sum_p3_br1000: "Military/economy branch #weak (baseline 1000)#!"
- leo_mvd_sum_p3_br2000: "Military/economy branch #weak (baseline 2000)#!"
- leo_mvd_sum_p3_br5000: "Military/economy branch #weak (baseline 5000)#!"
+ leo_mvd_sum_p3_br500: "Military/development branch #weak (baseline 500)#!"
+ leo_mvd_sum_p3_br1000: "Military/development branch #weak (baseline 1000)#!"
+ leo_mvd_sum_p3_br2000: "Military/development branch #weak (baseline 2000)#!"
+ leo_mvd_sum_p3_br5000: "Military/development branch #weak (baseline 5000)#!"
 
  ### Exemption marker (customizable localization override keys)
  leo_mvd_exempt_suffix: "\n#weak @cross_icon! Exempt from directive automation#!"
