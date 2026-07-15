@@ -10,6 +10,11 @@
  leo_mvd_ui_apply_tt: "Run the [directive|E] priority waterfall across all eligible, non-exempt [vassals|E] right now."
  leo_mvd_ui_remove_all: "Remove All"
  leo_mvd_ui_remove_all_tt: "Remove every [directive|E] this automation assigned, clear all exemptions, and turn automation off. Directives you assigned manually are kept."
+ leo_mvd_ui_heading_fallback: "Fallback"
+ leo_mvd_ui_fallback_tt: "What to assign a vassal when neither conversion priority applies (or when conversion is not prioritized).\n\n#weak None:#! leave them without a [directive|E].\n#weak Single Directive for All:#! give every remaining vassal one [directive|E] of your choice.\n#weak By Military Strength:#! weaker vassals build [military_buildings|E], stronger ones improve [development|E] (or build [economic_buildings|E] where development does not apply)."
+ leo_mvd_ui_p3_none: "None"
+ leo_mvd_ui_p3_blanket: "Single Directive for All"
+ leo_mvd_ui_p3_branch: "By Military Strength"
 
  ### Decisions
  leo_mvd_config_decision: "Vassal Directive Automation"

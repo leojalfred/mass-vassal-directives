@@ -1,6 +1,30 @@
 ﻿# Leo VI's Mass Vassal Directives - config summary custom localization
 # type = character; bound character is the player.
 
+# Current fallback mode, shown on the panel's mode selector button.
+leo_mvd_cur_p3_mode = {
+	type = character
+
+	text = {
+		localization_key = leo_mvd_ui_p3_blanket
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 1
+		}
+	}
+	text = {
+		localization_key = leo_mvd_ui_p3_branch
+		trigger = {
+			has_variable = leo_mvd_p3_mode
+			var:leo_mvd_p3_mode = 2
+		}
+	}
+	text = {
+		localization_key = leo_mvd_ui_p3_none
+		fallback = yes
+	}
+}
+
 leo_mvd_sum_enabled = {
 	type = character
 
