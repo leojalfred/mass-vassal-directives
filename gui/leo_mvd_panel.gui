@@ -1,17 +1,15 @@
-﻿### Leo VI's Mass Vassal Directives - docked panel
+﻿### Leo VI's Mass Vassal Directives - docked configuration panel.
 ###
-### Phase 1 smoke test: minimal panel to confirm the scripted_widgets
-### auto-instantiation mechanism (gui/scripted_widgets/leo_mvd_widgets.txt)
-### works, and that it correctly shows/hides alongside the vanilla
-### Subjects-tab directives button (window_my_realm.gui line ~3460, which
-### toggles the 'mass_directives_window' GUI variable).
+### Registered as a standalone widget via gui/scripted_widgets/, so no
+### vanilla file is overridden. Shown/hidden by the vanilla Subjects-tab
+### directives button, which toggles the 'mass_directives_window' GUI
+### variable (and which the realm window clears when it closes).
 ###
-### Layout modeled on the vanilla visible side-panel window
-### window_activity_guest_list.gui: outer vbox fills the window, the
-### header_pattern sits at the top, and the body below it uses
-### layoutpolicy_vertical = expanding to consume all remaining vertical
-### space - that is what keeps the header pinned flush to the top (without
-### it, the box distributes the slack and pushes the header down).
+### Layout note: the outer vbox fills the window, the header sits at the
+### top, and the body below it uses layoutpolicy_vertical = expanding to
+### consume all remaining vertical space - that is what keeps the header
+### pinned flush to the top (without it the box distributes the slack and
+### pushes the header down).
 
 window = {
 	name = "leo_mvd_panel"
@@ -44,7 +42,7 @@ window = {
 			layoutpolicy_horizontal = expanding
 
 			blockoverride "header_text" {
-				raw_text = "MVD Panel - Phase 1 Test"
+				text = "leo_mvd_panel_title"
 			}
 
 			blockoverride "button_close" {

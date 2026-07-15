@@ -10,6 +10,9 @@ leo_mvd_exempt_interaction = {
 
 	auto_accept = yes
 
+	# Shown for exactly the vassals that vanilla's Give Vassal Directive is
+	# shown for (its is_shown block, mirrored below), and additionally only
+	# for the human actor and only when the vassal is not already exempt.
 	is_shown = {
 		scope:actor = { is_ai = no }
 		scope:recipient = {
@@ -23,10 +26,22 @@ leo_mvd_exempt_interaction = {
 				is_vassal_of = scope:actor
 			}
 			is_landed = yes
+			NOT = { government_has_flag = government_is_herder }
 			highest_held_title_tier >= tier_county
 			is_ai = yes
 			NOT = { has_variable = leo_mvd_exempt }
 		}
+	}
+
+	# Grays out under exactly the same conditions as Give Vassal Directive,
+	# so exemption is only offered where a directive could actually be given
+	# (these mirror that interaction's is_valid / is_valid_showing_failures_only).
+	is_valid = {
+		vassal_follows_directive_trigger = { VASSAL = scope:recipient LIEGE = scope:actor }
+	}
+	is_valid_showing_failures_only = {
+		vassal_follows_directive_valid_trigger = { VASSAL = scope:recipient LIEGE = scope:actor }
+		scope:recipient = { is_physically_able = yes }
 	}
 
 	on_accept = {
@@ -48,6 +63,10 @@ leo_mvd_unexempt_interaction = {
 
 	auto_accept = yes
 
+	# Deliberately ungated beyond "is currently exempt": an exemption must
+	# always be removable, even if the vassal has since become ineligible for
+	# directives (rival, at war, disloyal, etc.). Gating this like the exempt
+	# interaction would trap such vassals in a permanent exemption.
 	is_shown = {
 		scope:actor = { is_ai = no }
 		scope:recipient = {

@@ -11,9 +11,8 @@
 ### format from game/gui/preload/textformatting.gui - chosen over color_gray,
 ### which was too subtle a dim against the gold directive art.
 ###
-### Phase 2 smoke test: only the directive_none twin is defined here, to
-### confirm a mod-added texticon file registers and the grey tint renders
-### (confirmed in-game). The remaining 14 twins are added in Phase 5.
+### Directive codes and their vanilla texticons are listed alongside the
+### matching customizable-localization keys in leo_mvd_l_english.yml.
 
 texticon = {
 	icon = leo_mvd_grey_directive_none

@@ -40,23 +40,29 @@ leo_mvd_clear_stale_effect = {
 }
 
 # Current scope: vassal. Requires scope:leo_mvd_liege (the player).
-# The priority waterfall: P1 Convert Faith -> P2 Convert Culture -> P3
-# configured fallback -> otherwise clear any stale mod-assigned directive.
+# The priority waterfall: Convert Faith -> Convert Culture -> configured
+# fallback -> otherwise clear any stale mod-assigned directive.
+#
+# When the liege has set leo_mvd_skip_p12, the two conversion priorities are
+# skipped and every eligible vassal goes straight to the fallback.
 leo_mvd_evaluate_vassal_effect = {
 	if = {
 		limit = {
+			scope:leo_mvd_liege = { NOT = { has_variable = leo_mvd_skip_p12 } }
 			leo_mvd_p1_convert_faith_trigger = { LIEGE = scope:leo_mvd_liege }
 		}
 		leo_mvd_assign_effect = { DIRECTIVE = convert_faith CODE = 1 }
 	}
 	else_if = {
 		limit = {
+			scope:leo_mvd_liege = { NOT = { has_variable = leo_mvd_skip_p12 } }
 			leo_mvd_p2_convert_culture_trigger = { LIEGE = scope:leo_mvd_liege }
 		}
 		leo_mvd_assign_effect = { DIRECTIVE = convert_culture CODE = 2 }
 	}
 	else_if = {
-		# P3 blanket mode
+		# Fallback, blanket mode: assign one chosen directive to everyone
+		# who can validly receive it.
 		limit = {
 			scope:leo_mvd_liege = {
 				has_variable = leo_mvd_p3_mode
@@ -95,8 +101,10 @@ leo_mvd_evaluate_vassal_effect = {
 		}
 	}
 	else_if = {
-		# P3 military branch mode: weak vassals build military, strong build economy.
-		# building_focus_* directives only require a non-nomadic government in vanilla.
+		# Fallback, strength-branch mode: vassals below the (tier-scaled)
+		# military threshold build military, vassals at or above it improve
+		# development where vanilla allows it, otherwise build economy.
+		# building_focus_* directives only require a non-nomadic government.
 		limit = {
 			scope:leo_mvd_liege = {
 				has_variable = leo_mvd_p3_mode

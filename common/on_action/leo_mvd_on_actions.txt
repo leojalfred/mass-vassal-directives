@@ -51,6 +51,10 @@ leo_mvd_on_death = {
 					limit = { root = { has_variable = leo_mvd_auto } }
 					set_variable = leo_mvd_auto
 				}
+				if = {
+					limit = { root = { has_variable = leo_mvd_skip_p12 } }
+					set_variable = leo_mvd_skip_p12
+				}
 				set_variable = {
 					name = leo_mvd_p3_mode
 					value = root.var:leo_mvd_p3_mode
