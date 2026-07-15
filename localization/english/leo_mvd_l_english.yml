@@ -33,19 +33,6 @@
  leo_mvd_ui_threshold_2000: "2000"
  leo_mvd_ui_threshold_5000: "5000"
 
- ### Decisions
- leo_mvd_config_decision: "Vassal Directive Automation"
- leo_mvd_config_decision_desc: "Configure the automated [directive|E] waterfall for your [vassals|E]: same-[faith|E] vassals convert stray counties first, then same-[culture|E] vassals promote culture, then your configured fallback applies."
- leo_mvd_config_decision_tooltip: "Open the directive automation settings"
- leo_mvd_config_decision_confirm: "Open Settings"
- leo_mvd_config_decision_effect_tt: "Opens the directive automation settings menu"
- leo_mvd_apply_now_decision: "Apply Directive Priorities"
- leo_mvd_apply_now_decision_desc: "Run the [directive|E] priority waterfall across all eligible [vassals|E] right now."
- leo_mvd_apply_now_decision_tooltip: "Re-evaluate and assign directives for all eligible vassals"
- leo_mvd_apply_now_decision_confirm: "Apply Now"
- leo_mvd_apply_now_tt: "Runs the priority waterfall: every eligible, non-exempt [vassal|E] is assigned the highest-priority [directive|E] that applies to them #weak (Convert Faith, then Promote Culture, then your fallback)#!. Vanilla eligibility rules apply unchanged."
- leo_mvd_remove_all_tt: "Removes every [directive|E] assigned by the automation, clears all exemptions, and turns automation off. Directives you assigned manually are kept."
-
  ### Interactions
  leo_mvd_exempt_interaction: "Exempt from Directive Automation"
  leo_mvd_exempt_interaction_desc: "Exclude [recipient.GetFullName] from your automated [directive|E] assignments so you can manage [recipient.GetHerHim] manually."
@@ -54,58 +41,8 @@
  leo_mvd_unexempt_interaction_desc: "Let the automated [directive|E] waterfall manage [recipient.GetFullName] again."
  leo_mvd_unexempt_tt: "[recipient.GetFullName] will be managed by directive automation again on the next run."
 
- ### Config menu (leo_mvd.100)
- leo_mvd.100.t: "Vassal Directive Automation"
- leo_mvd.100.desc: "Automate [vassal|E] [directives|E] with a priority waterfall:\n\n#weak Priority 1:#! @task_conversion! Convert [faith|E] — same-faith vassals holding counties of another faith\n#weak Priority 2:#! @task_promote_culture! Promote [culture|E] — same-culture vassals holding counties of another culture\n#weak Priority 3:#! your configured fallback\n\nMaster switch: [ROOT.Char.Custom('leo_mvd_sum_enabled')]\nMonthly auto-run: [ROOT.Char.Custom('leo_mvd_sum_auto')]\nFallback: [ROOT.Char.Custom('leo_mvd_sum_p3')]\n\n#weak Vanilla eligibility is respected: only vassals who would accept a directive are touched. Vassals you exempt (@cross_icon!) are always skipped; manual assignments on non-exempt vassals will be overwritten by the next run.#!"
- leo_mvd.100.enable: "Enable directive automation"
- leo_mvd.100.disable: "Disable directive automation"
- leo_mvd.100.auto_on: "Turn #P on#! the monthly auto-run"
- leo_mvd.100.auto_off: "Turn #N off#! the monthly auto-run"
- leo_mvd.100.p3_none: "Fallback: none"
- leo_mvd.100.p3_blanket: "Fallback: choose a blanket directive..."
- leo_mvd.100.p3_branch: "Fallback: military/development branch by strength..."
- leo_mvd.100.apply: "Apply directives now"
- leo_mvd.100.remove_all: "Remove all automated directives and disable"
- leo_mvd.100.close: "Close"
- leo_mvd.back: "Back"
-
- ### Blanket picker (leo_mvd.101)
- leo_mvd.101.t: "Blanket Fallback Directive"
- leo_mvd.101.desc: "Choose the [directive|E] assigned to every remaining eligible [vassal|E] once the Convert [faith|E] and Promote [culture|E] priorities do not apply. Vanilla per-directive requirements still apply #weak (e.g. Improve Development needs an administrative duchy-or-higher vassal)#! — vassals that do not qualify are left without a directive."
- leo_mvd.101.b3: "$improve_development$"
- leo_mvd.101.b4: "$train_commanders$"
- leo_mvd.101.b5: "$build_maa$"
- leo_mvd.101.b6: "$improve_cultural_acceptance$"
- leo_mvd.101.b7: "$building_focus_fortification$"
- leo_mvd.101.b8: "$building_focus_military$"
- leo_mvd.101.b9: "$building_focus_economy$"
-
- ### Threshold picker (leo_mvd.102)
- leo_mvd.102.t: "Military Strength Threshold"
- leo_mvd.102.desc: "Fallback branch: remaining eligible [vassals|E] below the threshold are directed to @directive_military! construct [military_buildings|E]; those at or above it @task_develop_county! improve [development|E].\n\n#weak Improve Development keeps its vanilla requirements (administrative government, duchy tier or higher) — strong vassals who do not qualify @directive_economical! construct [economic_buildings|E] instead.#!\n\nThe threshold you pick is the #V duchy#! military strength baseline and scales by [title|E] tier so it stays meaningful at every realm size: counts x0.5, dukes x1, kings x3, emperors x6."
- leo_mvd.102.t500: "Baseline #V 500#! #weak (counts 250, kings 1500, emperors 3000)#!"
- leo_mvd.102.t1000: "Baseline #V 1000#! #weak (counts 500, kings 3000, emperors 6000)#!"
- leo_mvd.102.t2000: "Baseline #V 2000#! #weak (counts 1000, kings 6000, emperors 12000)#!"
- leo_mvd.102.t5000: "Baseline #V 5000#! #weak (counts 2500, kings 15000, emperors 30000)#!"
-
- ### Settings summary (customizable localization)
- leo_mvd_on: "#P On#!"
- leo_mvd_off: "#N Off#!"
- leo_mvd_sum_p3_none: "None"
- leo_mvd_sum_p3_b3: "Blanket — $improve_development$"
- leo_mvd_sum_p3_b4: "Blanket — $train_commanders$"
- leo_mvd_sum_p3_b5: "Blanket — $build_maa$"
- leo_mvd_sum_p3_b6: "Blanket — $improve_cultural_acceptance$"
- leo_mvd_sum_p3_b7: "Blanket — $building_focus_fortification$"
- leo_mvd_sum_p3_b8: "Blanket — $building_focus_military$"
- leo_mvd_sum_p3_b9: "Blanket — $building_focus_economy$"
- leo_mvd_sum_p3_br500: "Military/development branch #weak (baseline 500)#!"
- leo_mvd_sum_p3_br1000: "Military/development branch #weak (baseline 1000)#!"
- leo_mvd_sum_p3_br2000: "Military/development branch #weak (baseline 2000)#!"
- leo_mvd_sum_p3_br5000: "Military/development branch #weak (baseline 5000)#!"
-
  ### Exemption marker (customizable localization override keys)
- # Exempt vassals show a dark-grey (dimmed) version of their directive icon
+ # Exempt vassals show a dimmed (grey-tinted) version of their directive icon
  # instead of the normal one. The icon keys below point at the grey texticon
  # twins defined in gui/leo_mvd_texticons.gui.
  leo_mvd_exempt_suffix: "\n#weak Exempt from directive automation#!"

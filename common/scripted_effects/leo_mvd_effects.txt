@@ -172,11 +172,11 @@ leo_mvd_remove_all_effect = {
 		leo_mvd_clear_stale_effect = yes
 		remove_variable = leo_mvd_exempt
 	}
-	remove_variable = leo_mvd_enabled
 	remove_variable = leo_mvd_auto
 }
 
-# Current scope: the player. Idempotent config defaults.
+# Current scope: the player. Idempotent config defaults, plus a one-time
+# migration off the retired leo_mvd_enabled master switch.
 leo_mvd_init_defaults_effect = {
 	if = {
 		limit = { NOT = { has_variable = leo_mvd_p3_mode } }
@@ -189,5 +189,22 @@ leo_mvd_init_defaults_effect = {
 	if = {
 		limit = { NOT = { has_variable = leo_mvd_threshold } }
 		set_variable = { name = leo_mvd_threshold value = 1000 }
+	}
+	# Migration from the old two-switch model: automation was on only when
+	# both leo_mvd_enabled and leo_mvd_auto were set. If a save from that
+	# version has auto set without enabled, automation was actually off, so
+	# clear auto. Then drop the now-unused enabled flag. Guarded so it runs
+	# at most once per character.
+	if = {
+		limit = { NOT = { has_variable = leo_mvd_v2 } }
+		if = {
+			limit = {
+				has_variable = leo_mvd_auto
+				NOT = { has_variable = leo_mvd_enabled }
+			}
+			remove_variable = leo_mvd_auto
+		}
+		remove_variable = leo_mvd_enabled
+		set_variable = leo_mvd_v2
 	}
 }

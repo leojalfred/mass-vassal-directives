@@ -23,15 +23,18 @@ Eligibility is pure vanilla: the vassal must be a landed, AI-controlled ruler of
 Three modes, configured in-game:
 
 - **None** — vassals not covered by priorities 1–2 get no directive.
-- **Blanket** — one directive of your choice (any of the 7 non-conversion directives) applied to all remaining vassals. Vanilla per-directive requirements still apply (e.g. Improve Development needs an administrative duchy+ vassal).
-- **Military/development branch** — remaining vassals below a military-strength threshold are told to construct military buildings; those at or above it are told to Improve Development. Improve Development keeps its vanilla requirements (administrative government, duchy tier or higher), so strong vassals who don't qualify construct economic buildings instead. The threshold you pick is the **duchy baseline** and scales by title tier so it stays meaningful at every realm size: counts ×0.5, dukes ×1, kings ×3, emperors ×6. (Multipliers are tunable in `common/script_values/leo_mvd_values.txt`.)
+- **Single Directive for All** — one directive of your choice (any of the 7 non-conversion directives) applied to all remaining vassals. Vanilla per-directive requirements still apply (e.g. Improve Development needs an administrative duchy+ vassal).
+- **By Military Strength** — remaining vassals below a military-strength threshold are told to construct military buildings; those at or above it are told to Improve Development. Improve Development keeps its vanilla requirements (administrative government, duchy tier or higher), so strong vassals who don't qualify construct economic buildings instead. The threshold you pick is the **duchy baseline** and scales by title tier so it stays meaningful at every realm size: counts ×0.5, dukes ×1, kings ×3, emperors ×6. (Multipliers are tunable in `common/script_values/leo_mvd_values.txt`.)
 
 ## Using the mod
 
-1. **Configure**: open the decision **"Vassal Directive Automation"** (Decisions tab). The menu shows current settings and lets you enable automation, toggle the monthly auto-run, and pick the fallback mode.
-2. **Apply**: either turn on the **monthly auto-run** (the waterfall re-evaluates all vassals every 30 in-game days — vassals whose counties finish converting automatically move on to the next priority), or use **"Apply Directive Priorities"** / the menu's _Apply directives now_ whenever you like.
-3. **Exempt individuals**: right-click a vassal's portrait → Vassal section → **"Exempt from Directive Automation"**. Exempt vassals show a ❌ marker on their directive icon everywhere in the UI and are skipped by the waterfall; manage them manually with the vanilla _Give Vassal Directive_ interaction. Undo via **"Include in Directive Automation"** on the same menu.
-4. **Escape hatch**: the config menu's _Remove all automated directives and disable_ clears every directive the mod assigned, removes all exemptions, and turns automation off. Manually assigned directives are kept.
+All configuration lives in a panel docked to the **Realm → Subjects** tab.
+
+1. **Open the panel**: in the Realm window's Subjects tab, click the directives button in the header (next to _Toggle Compact List_). The panel appears alongside the window; drag it wherever you like.
+2. **Configure**: tick **Automatically Reassign Vassal Directives** to run the waterfall monthly and re-apply whenever you change a setting; tick **Prioritize Faith and Culture Conversion** to run the two conversion tiers before the fallback (untick to send everyone straight to the fallback). Pick a **Fallback** mode, then its directive or strength baseline in the section that appears.
+3. **Apply on demand**: **Apply Now** runs the waterfall immediately. (With automation on, changing any setting also re-applies right away.)
+4. **Exempt individuals**: right-click a vassal's portrait → Vassal section → **"Exempt from Directive Automation"**. Exempt vassals show their directive icon **dimmed grey** everywhere in the UI and are skipped by the waterfall; manage them manually with the vanilla _Give Vassal Directive_ interaction. Undo via **"Include in Directive Automation"** on the same menu.
+5. **Escape hatch**: **Remove All** clears every directive the mod assigned, removes all exemptions, and turns automation off. Manually assigned directives are kept.
 
 Settings are stored per playthrough and carry over to your heir on succession.
 
@@ -40,30 +43,34 @@ Settings are stored per playthrough and carry over to your heir on succession.
 ## Compatibility
 
 - **Achievements**: not affected — since CK3 1.9, mods do not disable achievements.
-- **Existing saves**: safe to add mid-run (automation bootstraps within a game-year, or immediately via the config decision) and safe to remove (mod-assigned directives are ordinary vanilla directives; leftover mod variables are inert).
-- **Multiplayer**: settings and automation are per-player.
-- **Other mods**: the only vanilla file override is `common/customizable_localization/00_vassal_custom_loc.txt` (adds the ❌ exemption marker). Any mod overriding the same file will conflict on that cosmetic feature only.
+- **Existing saves**: safe to add mid-run (automation bootstraps within a game-year, or immediately from the panel) and safe to remove (mod-assigned directives are ordinary vanilla directives; leftover mod variables are inert).
+- **Multiplayer**: settings and automation are per-player; every button routes through a synchronized scripted GUI.
+- **Other mods**: the only vanilla file override is `common/customizable_localization/00_vassal_custom_loc.txt` (adds the greyed exemption marker). Any mod overriding the same file will conflict on that cosmetic feature only. The configuration panel is added as a standalone widget and overrides no vanilla GUI file.
 - **Nomad/herder governments**: their special directives are not automated in v1; such vassals are simply left alone.
 
 ## Updating after game patches
 
-Two files mirror or copy vanilla content and should be re-diffed against the game files after each CK3 patch (both are commented with what to compare):
+A few files mirror or copy vanilla content and should be re-diffed against the game files after each CK3 patch (each is commented with what to compare):
 
 - `common/scripted_triggers/leo_mvd_triggers.txt` — mirrors the inline gates of `give_vassal_directive_interaction` (`game/common/character_interactions/00_vassal_interactions.txt`).
 - `common/customizable_localization/00_vassal_custom_loc.txt` — full copy of the vanilla file with exemption-marker twin entries.
+- `gui/leo_mvd_panel.gui` — the panel latches onto the vanilla Subjects-tab directives button and its `mass_directives_window` GUI variable (`game/gui/window_my_realm.gui`); confirm that button/variable still exist.
+- `gui/leo_mvd_texticons.gui` — grey twins of the vanilla directive texticons (`game/gui/texticons.gui`); confirm the source textures still exist.
 
 ## File layout
 
 ```
 common/character_interactions/leo_mvd_interactions.txt   exempt / include toggle interactions
-common/customizable_localization/00_vassal_custom_loc.txt  VANILLA OVERRIDE: ❌ exemption marker
-common/customizable_localization/leo_mvd_custom_loc.txt  settings summary for the config menu
-common/decisions/leo_mvd_decisions.txt                   config + apply-now decisions
+common/customizable_localization/00_vassal_custom_loc.txt  VANILLA OVERRIDE: greyed exemption marker
 common/on_action/leo_mvd_on_actions.txt                  game-start bootstrap, succession carry-over, yearly watchdog
 common/script_values/leo_mvd_values.txt                  tier-scaled threshold (tunable multipliers)
 common/scripted_effects/leo_mvd_effects.txt              the waterfall core
+common/scripted_guis/leo_mvd_sguis.txt                   panel button/toggle logic (synchronized)
 common/scripted_triggers/leo_mvd_triggers.txt            eligibility (vanilla triggers + mirrored gates)
-events/leo_mvd_events.txt                                monthly pulse + config menu events
+events/leo_mvd_events.txt                                monthly self-rescheduling pulse
+gui/leo_mvd_panel.gui                                    the configuration panel
+gui/leo_mvd_texticons.gui                                grey directive icons for the exempt marker
+gui/scripted_widgets/leo_mvd_widgets.txt                 registers the panel as a standalone widget
 localization/english/leo_mvd_l_english.yml               all mod text
 ```
 
@@ -71,6 +78,7 @@ localization/english/leo_mvd_l_english.yml               all mod text
 
 - Vanilla directives are character flags (`vassal_directive_*`); assignment matches the vanilla interaction exactly (`remove_vassal_directives` + `add_character_flag`).
 - The mod tracks what it assigned via a `leo_mvd_managed` variable on each vassal, so it can clean up after itself without ever clearing a player's manual assignment.
+- The panel is a standalone widget (registered via `gui/scripted_widgets/`), shown/hidden by the vanilla Subjects-tab directives button, so it overrides no vanilla GUI file. Its toggles and buttons run script through synchronized scripted GUIs (`common/scripted_guis/`).
 - There is no monthly on_action in vanilla, so a self-rescheduling hidden event (`leo_mvd.1`) drives the auto-run, with a heartbeat flag and a yearly watchdog to restart it after loading pre-mod saves or switching characters.
 - Vanilla on_actions are extended via their additive `on_actions` list (never by redefining `effect`, which would replace vanilla's logic).
 

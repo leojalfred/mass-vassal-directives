@@ -44,10 +44,6 @@ leo_mvd_on_death = {
 			}
 			player_heir = {
 				if = {
-					limit = { root = { has_variable = leo_mvd_enabled } }
-					set_variable = leo_mvd_enabled
-				}
-				if = {
 					limit = { root = { has_variable = leo_mvd_auto } }
 					set_variable = leo_mvd_auto
 				}
