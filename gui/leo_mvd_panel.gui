@@ -9,7 +9,10 @@
 ### scrolls instead of overflowing), and a fixed action-button footer. Each
 ### settings group is a collapsible fold-out section (BindFoldOutContext +
 ### button_expandable_toggle_field + visible = PdxGuiFoldOut.IsUnfolded),
-### matching the vanilla Subjects tab's collapsible vassal categories.
+### matching the vanilla Subjects tab's collapsible vassal categories. The
+### Directive and Baseline sections are conditionally rendered by fallback
+### mode, but sit at the top level so they share the other sections' margins
+### and spacing.
 
 window = {
 	name = "leo_mvd_panel"
@@ -112,8 +115,7 @@ window = {
 					### Fallback section (collapsible). One radio per fallback
 					### mode; the current selection is marked by its scripted
 					### GUI's is_shown state, converted to the radio's selected
-					### frame via BoolTo1And2. The blanket / threshold sub-lists
-					### below are each shown only for their matching mode.
+					### frame via BoolTo1And2.
 					vbox = {
 						layoutpolicy_horizontal = expanding
 						oncreate = "[BindFoldOutContext]"
@@ -155,86 +157,6 @@ window = {
 								}
 							}
 
-							### Blanket directive choice - shown only while the
-							### fallback mode is "Single Directive for All".
-							vbox = {
-								visible = "[GetScriptedGui('leo_mvd_p3_blanket').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-								layoutpolicy_horizontal = expanding
-								margin_left = 22
-								spacing = 2
-
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_blanket_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_3').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_blanket_3"
-									}
-								}
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_blanket_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_4').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_blanket_4"
-									}
-								}
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_blanket_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_5').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_blanket_5"
-									}
-								}
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_blanket_6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_6').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_blanket_6"
-									}
-								}
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_blanket_7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_7').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_blanket_7"
-									}
-								}
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_blanket_8').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_8').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_blanket_8"
-									}
-								}
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_blanket_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_9').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_blanket_9"
-									}
-								}
-							}
-
 							button_radio_label = {
 								layoutpolicy_horizontal = expanding
 								onclick = "[GetScriptedGui('leo_mvd_p3_branch').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
@@ -246,58 +168,164 @@ window = {
 									text = "leo_mvd_ui_p3_branch"
 								}
 							}
+						}
+					}
 
-							### Strength threshold choice - shown only while the
-							### fallback mode is "By Military Strength".
-							vbox = {
-								visible = "[GetScriptedGui('leo_mvd_p3_branch').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					### Directive section (collapsible). Rendered only while the
+					### fallback mode is "Single Directive for All"; starts open.
+					vbox = {
+						visible = "[GetScriptedGui('leo_mvd_p3_blanket').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						oncreate = "[BindFoldOutContext]"
+						oncreate = "[PdxGuiFoldOut.Unfold]"
+
+						button_expandable_toggle_field = {
+							blockoverride "text" {
+								text = "leo_mvd_ui_blanket_heading"
+							}
+						}
+
+						vbox = {
+							visible = "[PdxGuiFoldOut.IsUnfolded]"
+							layoutpolicy_horizontal = expanding
+							margin = { 12 4 }
+							spacing = 2
+
+							button_radio_label = {
 								layoutpolicy_horizontal = expanding
-								margin_left = 22
-								spacing = 2
+								onclick = "[GetScriptedGui('leo_mvd_blanket_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_3').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_blanket_3"
+								}
+							}
+							button_radio_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_blanket_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_4').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_blanket_4"
+								}
+							}
+							button_radio_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_blanket_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_5').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_blanket_5"
+								}
+							}
+							button_radio_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_blanket_6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_6').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_blanket_6"
+								}
+							}
+							button_radio_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_blanket_7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_7').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_blanket_7"
+								}
+							}
+							button_radio_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_blanket_8').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_8').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_blanket_8"
+								}
+							}
+							button_radio_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_blanket_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_blanket_9').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_blanket_9"
+								}
+							}
+						}
+					}
 
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_threshold_500').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									tooltip = "leo_mvd_ui_threshold_tt"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_threshold_500').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_threshold_500"
-									}
+					### Baseline section (collapsible). Rendered only while the
+					### fallback mode is "By Military Strength"; starts open.
+					vbox = {
+						visible = "[GetScriptedGui('leo_mvd_p3_branch').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+						layoutpolicy_horizontal = expanding
+						oncreate = "[BindFoldOutContext]"
+						oncreate = "[PdxGuiFoldOut.Unfold]"
+
+						button_expandable_toggle_field = {
+							blockoverride "text" {
+								text = "leo_mvd_ui_threshold_heading"
+							}
+						}
+
+						vbox = {
+							visible = "[PdxGuiFoldOut.IsUnfolded]"
+							layoutpolicy_horizontal = expanding
+							margin = { 12 4 }
+							spacing = 2
+
+							button_radio_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_threshold_500').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "leo_mvd_ui_threshold_tt"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_threshold_500').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 								}
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_threshold_1000').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									tooltip = "leo_mvd_ui_threshold_tt"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_threshold_1000').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_threshold_1000"
-									}
+								blockoverride "text" {
+									text = "leo_mvd_ui_threshold_500"
 								}
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_threshold_2000').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									tooltip = "leo_mvd_ui_threshold_tt"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_threshold_2000').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_threshold_2000"
-									}
+							}
+							button_radio_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_threshold_1000').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "leo_mvd_ui_threshold_tt"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_threshold_1000').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
 								}
-								button_radio_label = {
-									layoutpolicy_horizontal = expanding
-									onclick = "[GetScriptedGui('leo_mvd_threshold_5000').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									tooltip = "leo_mvd_ui_threshold_tt"
-									blockoverride "radio" {
-										frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_threshold_5000').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
-									}
-									blockoverride "text" {
-										text = "leo_mvd_ui_threshold_5000"
-									}
+								blockoverride "text" {
+									text = "leo_mvd_ui_threshold_1000"
+								}
+							}
+							button_radio_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_threshold_2000').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "leo_mvd_ui_threshold_tt"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_threshold_2000').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_threshold_2000"
+								}
+							}
+							button_radio_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_threshold_5000').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "leo_mvd_ui_threshold_tt"
+								blockoverride "radio" {
+									frame = "[BoolTo1And2( GetScriptedGui('leo_mvd_threshold_5000').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End ) )]"
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_threshold_5000"
 								}
 							}
 						}

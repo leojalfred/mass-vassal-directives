@@ -3,20 +3,22 @@
  leo_mvd_panel_title: "Vassal Directive Automation"
  leo_mvd_ui_heading_automation: "Automation"
  leo_mvd_ui_auto: "Automatically Reassign Vassal Directives"
- leo_mvd_ui_auto_tt: "When on the [directive|E] priority waterfall re-runs across all eligible [vassals|E] every month and again whenever you change a setting here. Turning it on applies directives once immediately.\n\n#weak Manual assignments on non-exempt vassals are overwritten by each run; exempt a vassal to protect your choice.#!"
+ leo_mvd_ui_auto_tt: "When enabled, the [directive|E] priority waterfall re-runs across all eligible [vassals|E] every month and again whenever you change a setting here. Turning it on applies directives immediately.\n\n#weak Manual assignments on non-exempt vassals are overwritten by each run. Exempt a vassal through their interaction menu to protect your choice.#!"
  leo_mvd_ui_prioritize: "Prioritize Faith and Culture Conversion"
- leo_mvd_ui_prioritize_tt: "When on, vassals who share your [faith|E] and hold counties of another faith are told to Convert Faith first, then same-[culture|E] vassals to Promote Culture, then the fallback applies.\n\nWhen off, the two conversion tiers are skipped and every eligible vassal goes straight to your configured fallback."
+ leo_mvd_ui_prioritize_tt: "When enabled, vassals who share your [faith|E] and hold counties of another faith are told to Convert Faith first, then same-[culture|E] vassals to Promote Culture, then the fallback applies.\n\nWhen off, the initial faith and culture conversion priorities are skipped and every eligible vassal goes straight to your configured fallback."
  leo_mvd_ui_apply: "Apply Now"
- leo_mvd_ui_apply_tt: "Run the [directive|E] priority waterfall across all eligible, non-exempt [vassals|E] right now."
+ leo_mvd_ui_apply_tt: "Apply the configured [directive|E] priority across all eligible, non-exempt [vassals|E] now."
  leo_mvd_ui_remove_all: "Remove All"
  leo_mvd_ui_remove_all_tt: "Remove every [directive|E] this automation assigned, clear all exemptions, and turn automation off. Directives you assigned manually are kept."
  leo_mvd_ui_heading_fallback: "Fallback"
- leo_mvd_ui_fallback_tt: "What to assign a vassal when neither conversion priority applies (or when conversion is not prioritized).\n\n#weak None:#! leave them without a [directive|E].\n#weak Single Directive for All:#! give every remaining vassal one [directive|E] of your choice.\n#weak By Military Strength:#! weaker vassals build [military_buildings|E], stronger ones improve [development|E] (or build [economic_buildings|E] where development does not apply)."
+ leo_mvd_ui_fallback_tt: "What to assign a vassal when neither conversion priority applies (or when conversion is not prioritized).\n\n#weak None:#! leave them without a [directive|E].\n#weak Single Directive for All:#! give every remaining vassal the [directive|E] of your choice.\n#weak By Military Strength:#! weaker vassals build [military_buildings|E], stronger ones improve [development|E] (or build [economic_buildings|E] where development does not apply)."
  leo_mvd_ui_p3_none: "None"
  leo_mvd_ui_p3_blanket: "Single Directive for All"
  leo_mvd_ui_p3_branch: "By Military Strength"
  # Blanket directive choices (shown when the fallback mode is Single Directive for All).
  # The $directive$ keys already include the directive's icon.
+ leo_mvd_ui_blanket_heading: "Directive"
+ leo_mvd_ui_threshold_heading: "Military Strength Baseline"
  leo_mvd_ui_blanket_3: "$improve_development$"
  leo_mvd_ui_blanket_4: "$train_commanders$"
  leo_mvd_ui_blanket_5: "$build_maa$"
@@ -26,10 +28,10 @@
  leo_mvd_ui_blanket_9: "$building_focus_economy$"
  # Strength thresholds (shown when the fallback mode is By Military Strength)
  leo_mvd_ui_threshold_tt: "The value is the #V duchy#! baseline. It scales by [title|E] tier so it stays meaningful at every realm size: counts x0.5, dukes x1, kings x3, emperors x6.\n\nVassals below their scaled threshold build [military_buildings|E]; those at or above improve [development|E] (or build [economic_buildings|E] where development does not apply)."
- leo_mvd_ui_threshold_500: "Baseline 500"
- leo_mvd_ui_threshold_1000: "Baseline 1000"
- leo_mvd_ui_threshold_2000: "Baseline 2000"
- leo_mvd_ui_threshold_5000: "Baseline 5000"
+ leo_mvd_ui_threshold_500: "500"
+ leo_mvd_ui_threshold_1000: "1000"
+ leo_mvd_ui_threshold_2000: "2000"
+ leo_mvd_ui_threshold_5000: "5000"
 
  ### Decisions
  leo_mvd_config_decision: "Vassal Directive Automation"
@@ -80,7 +82,7 @@
 
  ### Threshold picker (leo_mvd.102)
  leo_mvd.102.t: "Military Strength Threshold"
- leo_mvd.102.desc: "Fallback branch: remaining eligible [vassals|E] below the threshold are directed to @directive_military! construct [military_buildings|E]; those at or above it @task_develop_county! improve [development|E].\n\n#weak Improve Development keeps its vanilla requirements (administrative government, duchy tier or higher) — strong vassals who do not qualify @directive_economical! construct [economic_buildings|E] instead.#!\n\nThe threshold you pick is the #V duchy#! baseline and scales by [title|E] tier so it stays meaningful at every realm size: counts x0.5, dukes x1, kings x3, emperors x6."
+ leo_mvd.102.desc: "Fallback branch: remaining eligible [vassals|E] below the threshold are directed to @directive_military! construct [military_buildings|E]; those at or above it @task_develop_county! improve [development|E].\n\n#weak Improve Development keeps its vanilla requirements (administrative government, duchy tier or higher) — strong vassals who do not qualify @directive_economical! construct [economic_buildings|E] instead.#!\n\nThe threshold you pick is the #V duchy#! military strength baseline and scales by [title|E] tier so it stays meaningful at every realm size: counts x0.5, dukes x1, kings x3, emperors x6."
  leo_mvd.102.t500: "Baseline #V 500#! #weak (counts 250, kings 1500, emperors 3000)#!"
  leo_mvd.102.t1000: "Baseline #V 1000#! #weak (counts 500, kings 3000, emperors 6000)#!"
  leo_mvd.102.t2000: "Baseline #V 2000#! #weak (counts 1000, kings 6000, emperors 12000)#!"
