@@ -22,7 +22,6 @@ leo_mvd.1 = {
 		}
 		if = {
 			limit = {
-				has_variable = leo_mvd_enabled
 				has_variable = leo_mvd_auto
 				is_ruler = yes
 			}

@@ -1,4 +1,7 @@
 ﻿l_english:
+ ### Configuration panel
+ leo_mvd_panel_title: "Vassal Directive Automation"
+
  ### Decisions
  leo_mvd_config_decision: "Vassal Directive Automation"
  leo_mvd_config_decision_desc: "Configure the automated [directive|E] waterfall for your [vassals|E]: same-[faith|E] vassals convert stray counties first, then same-[culture|E] vassals promote culture, then your configured fallback applies."
