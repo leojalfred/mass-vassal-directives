@@ -51,19 +51,81 @@ window = {
 		}
 
 		### Body - expands to fill everything below the header, so the header
-		### stays flush at the top.
+		### stays flush at the top. Section content packs at the top; the
+		### expand spacer pushes the action buttons to the bottom.
 		vbox = {
 			layoutpolicy_horizontal = expanding
 			layoutpolicy_vertical = expanding
-			margin = { 15 10 }
+			margin_top = 0
+			margin_right = 12
+			margin_bottom = 12
+			margin_left = 12
+			spacing = 6
 
-			text_single = {
+			### Section heading. The label autoresizes so its background stays
+			### snug to the text; the trailing expand spacer pushes it to the
+			### left of the full-width row.
+			hbox = {
 				layoutpolicy_horizontal = expanding
-				autoresize = no
-				multiline = yes
-				size = { 0 100 }
 
-				raw_text = "If you can read this, the scripted_widgets panel is registering and docking correctly."
+				text_label_left = {
+					layoutpolicy_horizontal = expanding
+					text = "leo_mvd_ui_heading_automation"
+				}
+			}
+
+			### Each checkbox reflects a scripted GUI's is_shown as its checked
+			### state and runs its effect on click. They are expanding so their
+			### content left-aligns (non-expanding children are centered by the
+			### vbox).
+			button_checkbox_label = {
+				layoutpolicy_horizontal = expanding
+				onclick = "[GetScriptedGui('leo_mvd_toggle_auto').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				enabled = "[GetScriptedGui('leo_mvd_toggle_auto').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "leo_mvd_ui_auto_tt"
+				blockoverride "checkbox" {
+					checked = "[GetScriptedGui('leo_mvd_toggle_auto').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
+				blockoverride "text" {
+					text = "leo_mvd_ui_auto"
+				}
+			}
+
+			button_checkbox_label = {
+				layoutpolicy_horizontal = expanding
+				onclick = "[GetScriptedGui('leo_mvd_prioritize_conversion').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				tooltip = "leo_mvd_ui_prioritize_tt"
+				blockoverride "checkbox" {
+					checked = "[GetScriptedGui('leo_mvd_prioritize_conversion').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+				}
+				blockoverride "text" {
+					text = "leo_mvd_ui_prioritize"
+				}
+			}
+
+			### Spacer: eats the leftover vertical space so the sections above
+			### pack to the top and the action row sits at the bottom.
+			expand = {}
+
+			### Action buttons. Expanding so they split the row evenly.
+			hbox = {
+				layoutpolicy_horizontal = expanding
+				spacing = 6
+
+				button_standard = {
+					layoutpolicy_horizontal = expanding
+					text = "leo_mvd_ui_apply"
+					onclick = "[GetScriptedGui('leo_mvd_apply_now').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					enabled = "[GetScriptedGui('leo_mvd_apply_now').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "leo_mvd_ui_apply_tt"
+				}
+
+				button_standard = {
+					layoutpolicy_horizontal = expanding
+					text = "leo_mvd_ui_remove_all"
+					onclick = "[GetScriptedGui('leo_mvd_remove_all').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+					tooltip = "leo_mvd_ui_remove_all_tt"
+				}
 			}
 		}
 	}

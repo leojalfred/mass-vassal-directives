@@ -1,6 +1,15 @@
 ﻿l_english:
  ### Configuration panel
  leo_mvd_panel_title: "Vassal Directive Automation"
+ leo_mvd_ui_heading_automation: "Automation"
+ leo_mvd_ui_auto: "Automatically Reassign Vassal Directives"
+ leo_mvd_ui_auto_tt: "When on the [directive|E] priority waterfall re-runs across all eligible [vassals|E] every month and again whenever you change a setting here. Turning it on applies directives once immediately.\n\n#weak Manual assignments on non-exempt vassals are overwritten by each run; exempt a vassal to protect your choice.#!"
+ leo_mvd_ui_prioritize: "Prioritize Faith and Culture Conversion"
+ leo_mvd_ui_prioritize_tt: "When on, vassals who share your [faith|E] and hold counties of another faith are told to Convert Faith first, then same-[culture|E] vassals to Promote Culture, then the fallback applies.\n\nWhen off, the two conversion tiers are skipped and every eligible vassal goes straight to your configured fallback."
+ leo_mvd_ui_apply: "Apply Now"
+ leo_mvd_ui_apply_tt: "Run the [directive|E] priority waterfall across all eligible, non-exempt [vassals|E] right now."
+ leo_mvd_ui_remove_all: "Remove All"
+ leo_mvd_ui_remove_all_tt: "Remove every [directive|E] this automation assigned, clear all exemptions, and turn automation off. Directives you assigned manually are kept."
 
  ### Decisions
  leo_mvd_config_decision: "Vassal Directive Automation"
