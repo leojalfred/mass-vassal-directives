@@ -1,0 +1,72 @@
+﻿### Leo VI's Mass Vassal Directives - docked panel
+###
+### Phase 1 smoke test: minimal panel to confirm the scripted_widgets
+### auto-instantiation mechanism (gui/scripted_widgets/leo_mvd_widgets.txt)
+### works, and that it correctly shows/hides alongside the vanilla
+### Subjects-tab directives button (window_my_realm.gui line ~3460, which
+### toggles the 'mass_directives_window' GUI variable).
+###
+### Layout modeled on the vanilla visible side-panel window
+### window_activity_guest_list.gui: outer vbox fills the window, the
+### header_pattern sits at the top, and the body below it uses
+### layoutpolicy_vertical = expanding to consume all remaining vertical
+### space - that is what keeps the header pinned flush to the top (without
+### it, the box distributes the slack and pushes the header down).
+
+window = {
+	name = "leo_mvd_panel"
+	size = { 500 300 }
+
+	parentanchor = top|right
+	position = { -645 70 }
+
+	using = Window_Background_Subwindow
+	layer = top
+	movable = yes
+
+	visible = "[GetVariableSystem.Exists('mass_directives_window')]"
+
+	state = {
+		name = _show
+		using = Animation_FadeIn_Quick
+	}
+
+	state = {
+		name = _hide
+		using = Animation_FadeOut_Quick
+	}
+
+	vbox = {
+		layoutpolicy_horizontal = expanding
+		layoutpolicy_vertical = expanding
+
+		header_pattern = {
+			layoutpolicy_horizontal = expanding
+
+			blockoverride "header_text" {
+				raw_text = "MVD Panel - Phase 1 Test"
+			}
+
+			blockoverride "button_close" {
+				onclick = "[GetVariableSystem.Clear('mass_directives_window')]"
+			}
+		}
+
+		### Body - expands to fill everything below the header, so the header
+		### stays flush at the top.
+		vbox = {
+			layoutpolicy_horizontal = expanding
+			layoutpolicy_vertical = expanding
+			margin = { 15 10 }
+
+			text_single = {
+				layoutpolicy_horizontal = expanding
+				autoresize = no
+				multiline = yes
+				size = { 0 100 }
+
+				raw_text = "If you can read this, the scripted_widgets panel is registering and docking correctly."
+			}
+		}
+	}
+}
