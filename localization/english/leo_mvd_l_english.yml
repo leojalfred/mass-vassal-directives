@@ -15,6 +15,21 @@
  leo_mvd_ui_p3_none: "None"
  leo_mvd_ui_p3_blanket: "Single Directive for All"
  leo_mvd_ui_p3_branch: "By Military Strength"
+ # Blanket directive choices (shown when the fallback mode is Single Directive for All).
+ # The $directive$ keys already include the directive's icon.
+ leo_mvd_ui_blanket_3: "$improve_development$"
+ leo_mvd_ui_blanket_4: "$train_commanders$"
+ leo_mvd_ui_blanket_5: "$build_maa$"
+ leo_mvd_ui_blanket_6: "$improve_cultural_acceptance$"
+ leo_mvd_ui_blanket_7: "$building_focus_fortification$"
+ leo_mvd_ui_blanket_8: "$building_focus_military$"
+ leo_mvd_ui_blanket_9: "$building_focus_economy$"
+ # Strength thresholds (shown when the fallback mode is By Military Strength)
+ leo_mvd_ui_threshold_tt: "The value is the #V duchy#! baseline. It scales by [title|E] tier so it stays meaningful at every realm size: counts x0.5, dukes x1, kings x3, emperors x6.\n\nVassals below their scaled threshold build [military_buildings|E]; those at or above improve [development|E] (or build [economic_buildings|E] where development does not apply)."
+ leo_mvd_ui_threshold_500: "Baseline 500"
+ leo_mvd_ui_threshold_1000: "Baseline 1000"
+ leo_mvd_ui_threshold_2000: "Baseline 2000"
+ leo_mvd_ui_threshold_5000: "Baseline 5000"
 
  ### Decisions
  leo_mvd_config_decision: "Vassal Directive Automation"
