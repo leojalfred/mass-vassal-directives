@@ -1,0 +1,27 @@
+﻿### Leo VI's Mass Vassal Directives - grey texticons
+###
+### Grey-tinted duplicates of the vanilla vassal-directive texticons, used to
+### mark a vassal's directive icon as "exempt from automation" (a dimmed
+### version of their normal directive icon) instead of the old cross overlay.
+###
+### Each entry copies the vanilla iconsize block verbatim (same texture, size,
+### offset, fontsize - see game/gui/texticons.gui) and adds `color = color_dark_gray`.
+### The color line inside iconsize is the vanilla-supported tint mechanism
+### (e.g. texticons.gui:3417 color = "color_red"). color_dark_gray is a named
+### format from game/gui/preload/textformatting.gui - chosen over color_gray,
+### which was too subtle a dim against the gold directive art.
+###
+### Phase 2 smoke test: only the directive_none twin is defined here, to
+### confirm a mod-added texticon file registers and the grey tint renders
+### (confirmed in-game). The remaining 14 twins are added in Phase 5.
+
+texticon = {
+	icon = leo_mvd_grey_directive_none
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/no_directive.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_dark_gray"
+	}
+}
