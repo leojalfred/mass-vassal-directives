@@ -49,7 +49,7 @@
  ### Interactions
  leo_mvd_exempt_interaction: "Exempt from Directive Automation"
  leo_mvd_exempt_interaction_desc: "Exclude [recipient.GetFullName] from your automated [directive|E] assignments so you can manage [recipient.GetHerHim] manually."
- leo_mvd_exempt_tt: "@cross_icon! [recipient.GetFullName] will be skipped by directive automation. Assign [recipient.GetHerHis] [directive|E] manually with #V Give Vassal Directive#!."
+ leo_mvd_exempt_tt: "[recipient.GetFullName] will be skipped by directive automation and their directive icon shown dimmed. Assign [recipient.GetHerHis] [directive|E] manually with #V Give Vassal Directive#!."
  leo_mvd_unexempt_interaction: "Include in Directive Automation"
  leo_mvd_unexempt_interaction_desc: "Let the automated [directive|E] waterfall manage [recipient.GetFullName] again."
  leo_mvd_unexempt_tt: "[recipient.GetFullName] will be managed by directive automation again on the next run."
@@ -105,23 +105,26 @@
  leo_mvd_sum_p3_br5000: "Military/development branch #weak (baseline 5000)#!"
 
  ### Exemption marker (customizable localization override keys)
- leo_mvd_exempt_suffix: "\n#weak @cross_icon! Exempt from directive automation#!"
+ # Exempt vassals show a dark-grey (dimmed) version of their directive icon
+ # instead of the normal one. The icon keys below point at the grey texticon
+ # twins defined in gui/leo_mvd_texticons.gui.
+ leo_mvd_exempt_suffix: "\n#weak Exempt from directive automation#!"
  # icon variants
- leo_mvd_x_no_directive_icon: "@cross_icon!$no_directive_icon$"
- leo_mvd_x_directive_refusal_icon: "@cross_icon!$directive_refusal_icon$"
- leo_mvd_x_improve_development_icon: "@cross_icon!$improve_development_icon$"
- leo_mvd_x_train_commanders_icon: "@cross_icon!$train_commanders_icon$"
- leo_mvd_x_build_maa_icon: "@cross_icon!$build_maa_icon$"
- leo_mvd_x_convert_faith_icon: "@cross_icon!$convert_faith_icon$"
- leo_mvd_x_convert_culture_icon: "@cross_icon!$convert_culture_icon$"
- leo_mvd_x_improve_cultural_acceptance_icon: "@cross_icon!$improve_cultural_acceptance_icon$"
- leo_mvd_x_building_focus_fortification_icon: "@cross_icon!$building_focus_fortification_icon$"
- leo_mvd_x_building_focus_military_icon: "@cross_icon!$building_focus_military_icon$"
- leo_mvd_x_building_focus_economy_icon: "@cross_icon!$building_focus_economy_icon$"
- leo_mvd_x_manage_fertility_icon: "@cross_icon!$manage_fertility_icon$"
- leo_mvd_x_explore_cultures_icon: "@cross_icon!$explore_cultures_icon$"
- leo_mvd_x_raid_innovation_intent_icon: "@cross_icon!$raid_innovation_intent_icon$"
- leo_mvd_x_raid_herd_intent_icon: "@cross_icon!$raid_herd_intent_icon$"
+ leo_mvd_x_no_directive_icon: "@leo_mvd_grey_directive_none!"
+ leo_mvd_x_directive_refusal_icon: "@leo_mvd_grey_directive_refusal!"
+ leo_mvd_x_improve_development_icon: "@leo_mvd_grey_task_develop_county!"
+ leo_mvd_x_train_commanders_icon: "@leo_mvd_grey_task_train_commanders!"
+ leo_mvd_x_build_maa_icon: "@leo_mvd_grey_directive_maa!"
+ leo_mvd_x_convert_faith_icon: "@leo_mvd_grey_task_conversion!"
+ leo_mvd_x_convert_culture_icon: "@leo_mvd_grey_task_promote_culture!"
+ leo_mvd_x_improve_cultural_acceptance_icon: "@leo_mvd_grey_task_accept_culture!"
+ leo_mvd_x_building_focus_fortification_icon: "@leo_mvd_grey_directive_fortification!"
+ leo_mvd_x_building_focus_military_icon: "@leo_mvd_grey_directive_military!"
+ leo_mvd_x_building_focus_economy_icon: "@leo_mvd_grey_directive_economical!"
+ leo_mvd_x_manage_fertility_icon: "@leo_mvd_grey_county_fertility_icon!"
+ leo_mvd_x_explore_cultures_icon: "@leo_mvd_grey_explore_cultures_icon!"
+ leo_mvd_x_raid_innovation_intent_icon: "@leo_mvd_grey_culture_icon!"
+ leo_mvd_x_raid_herd_intent_icon: "@leo_mvd_grey_herd_icon!"
  # text variants
  leo_mvd_x_no_directive_text: "$no_directive_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_refusing_directive_text: "$refusing_directive_text$$leo_mvd_exempt_suffix$"
@@ -138,19 +141,7 @@
  leo_mvd_x_explore_cultures_text: "$explore_cultures_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_culture_text: "$culture_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_herd_text: "$herd_text$$leo_mvd_exempt_suffix$"
- # text-and-icon variants
- leo_mvd_x_no_directive: "@cross_icon!$no_directive$"
- leo_mvd_x_refusing_directive: "@cross_icon!$refusing_directive$"
- leo_mvd_x_improve_development: "@cross_icon!$improve_development$"
- leo_mvd_x_train_commanders: "@cross_icon!$train_commanders$"
- leo_mvd_x_build_maa: "@cross_icon!$build_maa$"
- leo_mvd_x_convert_faith: "@cross_icon!$convert_faith$"
- leo_mvd_x_convert_culture: "@cross_icon!$convert_culture$"
- leo_mvd_x_improve_cultural_acceptance: "@cross_icon!$improve_cultural_acceptance$"
- leo_mvd_x_building_focus_fortification: "@cross_icon!$building_focus_fortification$"
- leo_mvd_x_building_focus_military: "@cross_icon!$building_focus_military$"
- leo_mvd_x_building_focus_economy: "@cross_icon!$building_focus_economy$"
- leo_mvd_x_county_fertility: "@cross_icon!$county_fertility$"
- leo_mvd_x_explore_cultures: "@cross_icon!$explore_cultures$"
- leo_mvd_x_culture_directive: "@cross_icon!$culture_directive$"
- leo_mvd_x_herd_directive: "@cross_icon!$herd_directive$"
+ # No text-and-icon override: an exempt vassal's text-and-icon display is left
+ # as vanilla (the grey icon comes from the icon variant, and the exempt note
+ # from the text variant), so the override file keeps vanilla's text_and_icon
+ # block unchanged and no leo_mvd_x_* text-and-icon keys are needed.

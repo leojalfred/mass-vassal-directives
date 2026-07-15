@@ -1,10 +1,15 @@
 ﻿# OVERRIDE of vanilla 00_vassal_custom_loc.txt (Leo VI's Mass Vassal Directives)
 #
-# Change vs vanilla: each text entry in vassal_directive_icon,
-# vassal_directive_text and vassal_directive_text_and_icon gets a preceding
-# twin entry with the identical trigger plus `has_variable = leo_mvd_exempt`,
-# pointing at a leo_mvd_x_* loc key that composes the vanilla key with an
-# exemption marker. Everything else is a verbatim copy of vanilla.
+# Change vs vanilla: in vassal_directive_icon and vassal_directive_text, each
+# text entry gets a preceding twin with the identical trigger plus
+# `has_variable = leo_mvd_exempt`, pointing at a leo_mvd_x_* loc key that
+# renders the exempt version (a grey directive icon, or the text plus an
+# exempt note). vassal_directive_text_and_icon is left as a verbatim vanilla
+# copy - an exempt vassal's grey icon and exempt note already come from the
+# other two functions, so this one needs no change.
+#
+# This whole file is a copy of the vanilla file because a same-path override
+# replaces it wholesale; the two unchanged functions must stay present.
 # Re-diff this file against vanilla after every game patch.
 
 powerful_vassals_loc = {
@@ -663,28 +668,6 @@ vassal_directive_text_and_icon = {
 	type = character
 
 	text = {
-		localization_key = leo_mvd_x_no_directive
-		trigger = {
-			has_variable = leo_mvd_exempt
-			NOR = {
-				has_character_flag = vassal_directive_improve_development
-				has_character_flag = vassal_directive_train_commanders
-				has_character_flag = vassal_directive_build_maa
-				has_character_flag = vassal_directive_convert_faith
-				has_character_flag = vassal_directive_convert_culture
-				has_character_flag = vassal_directive_improve_cultural_acceptance
-				has_character_flag = vassal_directive_building_focus_fortification
-				has_character_flag = vassal_directive_building_focus_military
-				has_character_flag = vassal_directive_building_focus_economy
-				has_character_flag = vassal_directive_manage_fertility
-				has_character_flag = vassal_directive_explore_cultures
-				has_character_flag = vassal_directive_raid_innovation_intent
-				has_character_flag = vassal_directive_raid_herd_intent
-			}
-		}
-	}
-
-	text = {
 		localization_key = no_directive
 		trigger = {
 			NOR = {
@@ -702,30 +685,6 @@ vassal_directive_text_and_icon = {
 				has_character_flag = vassal_directive_raid_innovation_intent
 				has_character_flag = vassal_directive_raid_herd_intent
 			}
-		}
-	}
-
-	text = {
-		localization_key = leo_mvd_x_refusing_directive
-		trigger = {
-			has_variable = leo_mvd_exempt
-			OR = {
-				has_character_flag = vassal_directive_improve_development
-				has_character_flag = vassal_directive_train_commanders
-				has_character_flag = vassal_directive_build_maa
-				has_character_flag = vassal_directive_convert_faith
-				has_character_flag = vassal_directive_convert_culture
-				has_character_flag = vassal_directive_improve_cultural_acceptance
-				has_character_flag = vassal_directive_building_focus_fortification
-				has_character_flag = vassal_directive_building_focus_military
-				has_character_flag = vassal_directive_building_focus_economy
-				has_character_flag = vassal_directive_manage_fertility
-				has_character_flag = vassal_directive_explore_cultures
-				has_character_flag = vassal_directive_raid_innovation_intent
-				has_character_flag = vassal_directive_raid_herd_intent
-			}
-			save_temporary_scope_as = vassal_scope
-			NOT = { vassal_is_valid_and_follows_directive_trigger = { VASSAL = scope:vassal_scope LIEGE = scope:vassal_scope.liege } }
 		}
 	}
 
@@ -753,25 +712,9 @@ vassal_directive_text_and_icon = {
 	}
 
 	text = {
-		localization_key = leo_mvd_x_improve_development
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_improve_development
-		}
-	}
-
-	text = {
 		localization_key = improve_development
 		trigger = {
 			has_character_flag = vassal_directive_improve_development
-		}
-	}
-
-	text = {
-		localization_key = leo_mvd_x_train_commanders
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_train_commanders
 		}
 	}
 
@@ -783,25 +726,9 @@ vassal_directive_text_and_icon = {
 	}
 
 	text = {
-		localization_key = leo_mvd_x_build_maa
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_build_maa
-		}
-	}
-
-	text = {
 		localization_key = build_maa
 		trigger = {
 			has_character_flag = vassal_directive_build_maa
-		}
-	}
-
-	text = {
-		localization_key = leo_mvd_x_convert_faith
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_convert_faith
 		}
 	}
 
@@ -813,25 +740,9 @@ vassal_directive_text_and_icon = {
 	}
 
 	text = {
-		localization_key = leo_mvd_x_convert_culture
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_convert_culture
-		}
-	}
-
-	text = {
 		localization_key = convert_culture
 		trigger = {
 			has_character_flag = vassal_directive_convert_culture
-		}
-	}
-
-	text = {
-		localization_key = leo_mvd_x_improve_cultural_acceptance
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_improve_cultural_acceptance
 		}
 	}
 
@@ -843,25 +754,9 @@ vassal_directive_text_and_icon = {
 	}
 
 	text = {
-		localization_key = leo_mvd_x_building_focus_fortification
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_building_focus_fortification
-		}
-	}
-
-	text = {
 		localization_key = building_focus_fortification
 		trigger = {
 			has_character_flag = vassal_directive_building_focus_fortification
-		}
-	}
-
-	text = {
-		localization_key = leo_mvd_x_building_focus_military
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_building_focus_military
 		}
 	}
 
@@ -873,25 +768,9 @@ vassal_directive_text_and_icon = {
 	}
 
 	text = {
-		localization_key = leo_mvd_x_building_focus_economy
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_building_focus_economy
-		}
-	}
-
-	text = {
 		localization_key = building_focus_economy
 		trigger = {
 			has_character_flag = vassal_directive_building_focus_economy
-		}
-	}
-
-	text = {
-		localization_key = leo_mvd_x_county_fertility
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_manage_fertility
 		}
 	}
 
@@ -902,36 +781,15 @@ vassal_directive_text_and_icon = {
 		}
 	}
 	text = {
-		localization_key = leo_mvd_x_explore_cultures
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_explore_cultures
-		}
-	}
-	text = {
 		localization_key = explore_cultures
 		trigger = {
 			has_character_flag = vassal_directive_explore_cultures
 		}
 	}
 	text = {
-		localization_key = leo_mvd_x_culture_directive
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_raid_innovation_intent
-		}
-	}
-	text = {
 		localization_key = culture_directive
 		trigger = {
 			has_character_flag = vassal_directive_raid_innovation_intent
-		}
-	}
-	text = {
-		localization_key = leo_mvd_x_herd_directive
-		trigger = {
-			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_raid_herd_intent
 		}
 	}
 	text = {

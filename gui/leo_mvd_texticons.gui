@@ -5,15 +5,16 @@
 ### version of their normal directive icon) instead of the old cross overlay.
 ###
 ### Each entry copies the vanilla iconsize block verbatim (same texture, size,
-### offset, fontsize - see game/gui/texticons.gui) and adds `color = color_dark_gray`.
-### The color line inside iconsize is the vanilla-supported tint mechanism
-### (e.g. texticons.gui:3417 color = "color_red"). color_dark_gray is a named
-### format from game/gui/preload/textformatting.gui - chosen over color_gray,
-### which was too subtle a dim against the gold directive art.
+### offset, fontsize, uv - see game/gui/texticons.gui) and adds
+### `color = color_gray`. The color line inside iconsize is the
+### vanilla-supported tint mechanism (e.g. texticons.gui:3417 color = "color_red").
+### color_gray is a named format from game/gui/preload/textformatting.gui.
 ###
-### Directive codes and their vanilla texticons are listed alongside the
-### matching customizable-localization keys in leo_mvd_l_english.yml.
+### These twins map one-to-one to the directive icons resolved by the vanilla
+### *_icon localization keys; see the exemption-marker section of
+### leo_mvd_l_english.yml for the mapping.
 
+# Directive icons (35x35).
 texticon = {
 	icon = leo_mvd_grey_directive_none
 	iconsize = {
@@ -21,6 +22,151 @@ texticon = {
 		size = { 35 35 }
 		offset = { 0 11 }
 		fontsize = 16
-		color = "color_dark_gray"
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_directive_refusal
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/refusal.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_task_develop_county
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/improve_development.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_task_train_commanders
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/boost_men_at_arms.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_directive_maa
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/recruit_men_at_arms.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_task_conversion
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/convert_faith.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_task_promote_culture
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/promote_culture.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_task_accept_culture
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/improve_cultural_acceptance.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_directive_fortification
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/construct_fortification_buildings.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_directive_military
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/construct_military_buildings.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_directive_economical
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/construct_economic_buildings.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+
+# Nomad / herder intent icons (25x25).
+texticon = {
+	icon = leo_mvd_grey_county_fertility_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_county_fertility.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+		uv = { 0.05 0.05 1 1 }
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_explore_cultures_icon
+	iconsize = {
+		texture = "gfx/interface/icons/council_task_types/task_kurultai_culture.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+		uv = { 0.05 0.05 1 1 }
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_culture_icon
+	iconsize = {
+		texture = "gfx/interface/icons/message_feed/culture.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+		uv = { 0.05 0.05 1 1 }
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_grey_herd_icon
+	iconsize = {
+		texture = "gfx/interface/icons/icon_herd.dds"
+		size = { 25 25 }
+		offset = { 0 6 }
+		fontsize = 16
+		color = "color_gray"
 	}
 }
