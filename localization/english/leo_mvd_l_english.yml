@@ -2,6 +2,7 @@
  ### Configuration panel
  leo_mvd_panel_title: "Vassal Directive Automation"
  leo_mvd_ui_heading_automation: "Automation"
+ leo_mvd_ui_heading_description: "Description"
  leo_mvd_ui_auto: "Automatically Reassign Vassal Directives"
  leo_mvd_ui_auto_tt: "When enabled, the [directive|E] priority waterfall re-runs across all eligible [vassals|E] every month and again whenever you change a setting here. Turning it on applies directives immediately.\n\n#weak Manual assignments on non-exempt vassals are overwritten by each run. Exempt a vassal through their interaction menu to protect your choice.#!"
  leo_mvd_ui_apply: "Apply Now"
@@ -12,9 +13,10 @@
  # A preset is a rule set: an ordered list of priorities, where each vassal gets
  # the first one that applies to them. The $directive$ keys already include the
  # directive's icon.
- leo_mvd_ui_heading_preset: "Preset"
  leo_mvd_ui_preset_0: "None"
- leo_mvd_ui_preset_0_tt: "Assign nothing. Your [vassals|E] keep whatever [directives|E] you gave them yourself.\n\n#weak This is the default: the automation never assigns a directive until you choose a preset. Selecting None again clears every directive it assigned.#!"
+ # Doubles as the panel's Description text while None is selected, so it has to
+ # both say what None does and point a new player somewhere useful.
+ leo_mvd_ui_preset_0_tt: "Nothing is assigned. Your [vassals|E] keep whatever [directives|E] you gave them yourself.\n\nA preset is a running order: each [vassal|E] is given the first [directive|E] in it that suits them. Pick one above and its plan appears here.\n\nOr choose #V Custom#! to write the order yourself, priority by priority - give every [vassal|E] the same [directive|E], or ask a question about them and send each answer its own way.\n\n#weak Nothing happens until you choose.#!"
  leo_mvd_ui_preset_1: "Convert and Develop"
  leo_mvd_ui_preset_1_tt: "Bring your [vassals|E] into the fold, then grow them.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $convert_faith$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $convert_culture$.\n#weak 3.#! Of the rest, the militarily strong $improve_development$ and the weak $building_focus_military$.\n#weak 4.#! Anyone left over builds $building_focus_economy$."
  leo_mvd_ui_preset_2: "Unify the Realm"

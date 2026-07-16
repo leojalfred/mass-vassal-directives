@@ -151,19 +151,25 @@ emit_dd_list_open() { local depth=$1 id=$2
 	p "layoutpolicy_horizontal = expanding"
 	p "using = Background_DropDown"
 	p "margin = { 4 4 }"
+	# Since an open list pushes the rows below it down rather than floating over
+	# them, it needs to hold them off itself.
+	p "margin_bottom = 10"
 	p "spacing = 1"
 }
 
 # One option row. Three clicks in order: point the cursor at the node, write the
 # value to it, close the list. GUI cannot hand script a number, so the node
 # cannot simply be an argument - the cursor is what stands in for it.
-# <1> depth <2> node <3> id <4> setter sgui <5> label expr-or-key <6> literal?
-emit_dd_row() { local depth=$1 node=$2 id=$3 setter=$4 label=$5
+# <1> depth <2> node <3> id <4> setter sgui <5> label expr-or-key <6> visible?
+# <7> tooltip key?
+emit_dd_row() { local depth=$1 node=$2 id=$3 setter=$4 label=$5 vis=${6:-} tt=${7:-}
 	ind "$depth"
 	p "leo_mvd_button_dropdown = {"
 	ind $((depth+1))
 	p "layoutpolicy_horizontal = expanding"
 	p "size = { -1 30 }"
+	[ -n "$vis" ] && p "visible = \"[$vis]\""
+	[ -n "$tt" ] && p "tooltip = \"$tt\""
 	p "onclick = \"$(sgui "leo_mvd_focus_${node}")\""
 	p "onclick = \"$(sgui "$setter")\""
 	p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]\""
@@ -171,11 +177,25 @@ emit_dd_row() { local depth=$1 node=$2 id=$3 setter=$4 label=$5
 	ind "$depth"; p "}"
 }
 
+# Whether condition <1> should be offered on a node whose parent condition lives
+# in variable <2>.
+#
+# Re-asking a yes/no question its parent already settled can only ever give the
+# same answer, so those are hidden. The measured conditions are left alone: a
+# branch of "Military Strength is at Least 1000" asking "is it at least 500?"
+# is how you carve out a middle band, and is worth keeping.
+cond_row_visible() { local c=$1 parent_var=$2
+	[ -z "$parent_var" ] && return
+	[ "$c" -ge 9 ] && return
+	echo "Not( $(veq "$parent_var" "$c") )"
+}
+
 emit_dd_close() { ind "$1"; p "}"; }
 
 ### One node's editor.
 
-emit_node() { local depth=$1 prio=$2 n=$3 level=$4
+# <1> depth <2> priority <3> node number <4> level <5> parent's cond var, if any
+emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	local node="r${prio}_n${n}"
 	local kinds="1 2 0"; [ "$level" -ge 2 ] && kinds="1 0"
 
@@ -187,7 +207,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4
 	for k in $kinds; do
 		local kl="leo_mvd_ui_kind_$k"
 		[ "$k" = 0 ] && kl="[$(kind0_key "$prio")]"
-		emit_dd_row $((depth+1)) "$node" "${node}_kind" "leo_mvd_set_kind_$k" "$kl"
+		emit_dd_row $((depth+1)) "$node" "${node}_kind" "leo_mvd_set_kind_$k" "$kl" "" "leo_mvd_ui_kind_${k}_tt"
 	done
 	emit_dd_close "$depth"
 
@@ -220,7 +240,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4
 	emit_dd_button $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
 	emit_dd_list_open $((depth+1)) "${node}_cond"
 	for c in $CONDS; do
-		emit_dd_row $((depth+2)) "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c"
+		emit_dd_row $((depth+2)) "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$(cond_row_visible "$c" "$parent_cond")"
 	done
 	emit_dd_close $((depth+1))
 
@@ -261,7 +281,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4
 		ind $((depth+2)); p "layoutpolicy_horizontal = expanding"
 		p "text = \"leo_mvd_ui_branch_$which\""
 		ind $((depth+1)); p "}"
-		emit_node $((depth+1)) "$prio" "$kid" $((level+1))
+		emit_node $((depth+1)) "$prio" "$kid" $((level+1)) "leo_mvd_${node}_cond"
 	done
 	ind "$depth"; p "}"
 }
@@ -407,7 +427,14 @@ window = {
 					layoutpolicy_horizontal = expanding
 					spacing = 8
 
-					### Automation section (collapsible).
+					### Automation section (collapsible). Holds the two controls
+					### that decide whether anything happens at all: the monthly
+					### run, and which rule set it runs. The preset is a dropdown
+					### and names itself, so it needs no heading of its own.
+					###
+					### None is selected by default - the mod assigns nothing
+					### until a rule set is chosen. Custom keeps whatever rules
+					### are loaded and opens them for editing below.
 					vbox = {
 						layoutpolicy_horizontal = expanding
 						oncreate = "[BindFoldOutContext]"
@@ -419,54 +446,15 @@ window = {
 							}
 						}
 
-						### The checkbox reflects a scripted GUI's is_shown as its
-						### checked state and runs its effect on click. It is
-						### expanding so its content left-aligns.
 						vbox = {
 							visible = "[PdxGuiFoldOut.IsUnfolded]"
 							layoutpolicy_horizontal = expanding
 							margin = { 12 4 }
 							spacing = 4
 
-							button_checkbox_label = {
-								layoutpolicy_horizontal = expanding
-								onclick = "[GetScriptedGui('leo_mvd_toggle_auto').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-								enabled = "[GetScriptedGui('leo_mvd_toggle_auto').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-								tooltip = "leo_mvd_ui_auto_tt"
-								blockoverride "checkbox" {
-									checked = "[GetScriptedGui('leo_mvd_toggle_auto').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-								}
-								blockoverride "text" {
-									text = "leo_mvd_ui_auto"
-								}
-							}
-						}
-					}
-
-					### Preset section (collapsible). None is selected by default
-					### - the mod assigns nothing until a rule set is chosen.
-					### Custom keeps whatever rules are loaded and opens them for
-					### editing below.
-					vbox = {
-						layoutpolicy_horizontal = expanding
-						oncreate = "[BindFoldOutContext]"
-						oncreate = "[PdxGuiFoldOut.Unfold]"
-
-						button_expandable_toggle_field = {
-							blockoverride "text" {
-								text = "leo_mvd_ui_heading_preset"
-							}
-						}
-
-						vbox = {
-							visible = "[PdxGuiFoldOut.IsUnfolded]"
-							layoutpolicy_horizontal = expanding
-							margin = { 12 4 }
-							spacing = 2
-
 HEAD
 
-	# The preset dropdown.
+	# The preset comes first: it decides what the monthly run would even do.
 	emit_dd_button 7 preset "$(vkey 'leo_mvd_ui_preset_' leo_mvd_preset)"
 	emit_dd_list_open 7 preset
 	for n in 0 1 2 3 4 5; do
@@ -484,9 +472,62 @@ HEAD
 	emit_dd_close 7
 
 cat << 'MID'
+
+							### The checkbox reflects a scripted GUI's is_shown
+							### as its checked state and runs its effect on
+							### click. It is expanding so its content left-aligns.
+							button_checkbox_label = {
+								layoutpolicy_horizontal = expanding
+								onclick = "[GetScriptedGui('leo_mvd_toggle_auto').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								enabled = "[GetScriptedGui('leo_mvd_toggle_auto').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "leo_mvd_ui_auto_tt"
+								blockoverride "checkbox" {
+									checked = "[GetScriptedGui('leo_mvd_toggle_auto').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_auto"
+								}
+							}
 						}
 					}
 MID
+
+	# What the chosen preset actually does, in the panel rather than only in a
+	# tooltip. Reads the same key the dropdown's own tooltip does, so the two can
+	# never disagree. Hidden for Custom, where the rules are spelled out below
+	# anyway; on None it is what tells a new player where to start.
+	ind 5; p ""
+	p "### Description section (collapsible). Hidden while the player's own"
+	p "### rules are selected, since the editor below says the same thing."
+	p "vbox = {"
+	ind 6
+	p "visible = \"[Not( $(veq leo_mvd_preset 5) )]\""
+	p "layoutpolicy_horizontal = expanding"
+	p "oncreate = \"[BindFoldOutContext]\""
+	p "oncreate = \"[PdxGuiFoldOut.Unfold]\""
+	p ""
+	p "button_expandable_toggle_field = {"
+	ind 7; p "blockoverride \"text\" {"
+	ind 8; p "text = \"leo_mvd_ui_heading_description\""
+	ind 7; p "}"
+	ind 6; p "}"
+	p ""
+	p "vbox = {"
+	ind 7
+	p "visible = \"[PdxGuiFoldOut.IsUnfolded]\""
+	p "layoutpolicy_horizontal = expanding"
+	p "margin = { 12 4 }"
+	p ""
+	p "text_multi = {"
+	ind 8
+	p "layoutpolicy_horizontal = expanding"
+	p "autoresize = yes"
+	p "max_width = 440"
+	p "align = left|nobaseline"
+	p "text = \"[Localize(Concatenate(Concatenate('leo_mvd_ui_preset_', $(vint leo_mvd_preset)), '_tt'))]\""
+	ind 7; p "}"
+	ind 6; p "}"
+	ind 5; p "}"
 
 	# The rule editor: one collapsible section per priority in use.
 	for prio in $(seq 1 "$PRIORITIES"); do
@@ -640,9 +681,11 @@ emit_loc() {
 	echo
 	echo " leo_mvd_ui_kind_0: \"Continue to Next Priority\""
 	echo " leo_mvd_ui_kind_0_last: \"Leave Without a Directive\""
-	echo " leo_mvd_ui_kind_0_tt: \"Do nothing here. The [vassal|E] falls through to the next priority, or is left without a [directive|E] if this is the last one.\""
+	echo " leo_mvd_ui_kind_0_tt: \"Do nothing here, and let the next priority decide instead.\\n\\n#weak On the last priority there is no next one, so the [vassal|E] is simply left without a [directive|E].#!\""
 	echo " leo_mvd_ui_kind_1: \"Assign a Directive\""
+	echo " leo_mvd_ui_kind_1_tt: \"Give the [vassal|E] a [directive|E].\\n\\n#weak Vassals who cannot be given it - the game's own rules still apply - fall through to the next priority instead.#!\""
 	echo " leo_mvd_ui_kind_2: \"Check a Condition\""
+	echo " leo_mvd_ui_kind_2_tt: \"Ask something about the [vassal|E], and send each answer its own way.\""
 	echo
 	echo " leo_mvd_ui_branch_true: \"If True\""
 	echo " leo_mvd_ui_branch_false: \"If False\""
