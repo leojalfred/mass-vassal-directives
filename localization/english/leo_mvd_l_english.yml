@@ -1,7 +1,7 @@
 ﻿l_english:
  ### Configuration panel
  leo_mvd_panel_title: "Vassal Directive Automation"
- leo_mvd_ui_heading_automation: "Automation"
+ leo_mvd_ui_heading_preset: "Preset"
  leo_mvd_ui_heading_description: "Description"
  leo_mvd_ui_auto: "Automatically Reassign Vassal Directives"
  leo_mvd_ui_auto_tt: "When enabled, the [directive|E] priority waterfall re-runs across all eligible [vassals|E] every month and again whenever you change a setting here. Turning it on applies directives immediately.\n\n#weak Manual assignments on non-exempt vassals are overwritten by each run. Exempt a vassal through their interaction menu to protect your choice.#!"
@@ -22,9 +22,9 @@
  leo_mvd_ui_preset_2: "Unify the Realm"
  leo_mvd_ui_preset_2_tt: "Make the realm one people.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $convert_faith$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $convert_culture$.\n#weak 3.#! Those still holding foreign-[culture|E] counties work on $improve_cultural_acceptance$.\n#weak 4.#! Anyone left over builds $building_focus_economy$.\n\n#weak Converts harder than Convert and Develop, at the cost of growth.#!"
  leo_mvd_ui_preset_3: "Prepare for War"
- leo_mvd_ui_preset_3_tt: "Arm the realm, each [vassal|E] to their strength.\n\n#weak Strong vassals#! contribute what their government does best: administrative ones $build_maa$, the rest $building_focus_fortification$.\n#weak Weak vassals#! everywhere are told to $building_focus_military$ first.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_3_tt: "Arm the realm, each [vassal|E] to their strength.\n\nStrong vassals contribute what their government does best: administrative ones $build_maa$, the rest $building_focus_fortification$.\nWeak vassals everywhere are told to $building_focus_military$ first.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_4: "Grow the Economy"
- leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\n#weak Undeveloped vassals#! are told to $improve_development$.\n#weak Established vassals#! turn to $building_focus_economy$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\nUndeveloped vassals are told to $improve_development$.\nEstablished vassals turn to $building_focus_economy$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_5: "Custom"
  leo_mvd_ui_preset_5_tt: "Your own rules, built below.\n\n#weak Selecting this keeps whichever rules are loaded, so pick a preset first and then Custom to start from it rather than from nothing.#!"
 

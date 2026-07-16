@@ -26,6 +26,10 @@ cd "$(dirname "$0")/.."
 ### How much to generate.
 PRIORITIES=1          # main rule priorities to emit (max 6; see leo_mvd_rules.txt)
 
+### Look.
+DD_INSET=3            # px an open dropdown list is narrower than its button,
+                      # each side - see emit_dd_start for why it needs to be
+
 ### The rules, described once.
 
 # Directive codes -> vanilla loc key. The vanilla keys already embed the icon.
@@ -120,41 +124,99 @@ kind0_key() { echo "SelectLocalization( $(vge leo_mvd_rule_count $(($1 + 1))), '
 
 ### Dropdowns.
 #
-# A real popup is not possible here: every scrollarea is scissor = yes
-# (preload/defaults.gui:252), so anything a row draws outside its own bounds is
-# clipped - which is why vanilla never puts a dropdown inside a scrollbox. So
-# these open in flow, pushing the rows below them down, and the scrollbox
-# scrolls as it always did. The parts are vanilla's own dropdown parts, so it
-# still reads as one.
+# These open in flow, pushing the rows below them down, rather than floating
+# over them. That is forced, not preferred.
+#
+# Draw order is tree order and there is no z-index for a non-window widget, so a
+# list living inside its row is painted over by every row after it. Floating
+# would mean hoisting the open list into a later sibling, which needs either a
+# datamodel to mirror for alignment (script variable lists hold scopes, so rule
+# nodes cannot be items) or the button's screen position (no datafunction
+# returns one). Vanilla hits the same wall: game_rules.gui is this same panel -
+# a scrollbox of rows each needing a selector - and puts its dropdowns in the
+# header outside the scrollbox, while the rows inside use an arrow cycler.
+# Escaping the scrollarea's scissor (preload/defaults.gui:252) is possible via
+# viewportwidget, but un-clips the whole viewport, so scrolled-out rows would
+# bleed over the panel's own frame.
+#
+# The parts are vanilla's own dropdown parts, so it still reads as one.
 #
 # Which dropdown is open lives in a single GUI variable, so opening one closes
 # any other for free. GUI variables are client-local and never touch script.
 
+# Opens a dropdown: a group holding the button and its list, then the button,
+# then the list. Caller emits the rows, then calls emit_dd_end.
+#
+# The group exists to glue the two together. They are siblings, so whatever
+# spacing their parent uses would otherwise open a gap between the button and
+# the list hanging off it; the group's own spacing = 0 overrides that.
+#
 # <1> depth  <2> id  <3> label expression  <4> tooltip (may be empty)
-emit_dd_button() { local depth=$1 id=$2 label=$3 tt=${4:-}
+emit_dd_start() { local depth=$1 id=$2 label=$3 tt=${4:-}
 	ind "$depth"
-	p "leo_mvd_button_drop = {"
+	p "vbox = {"
 	ind $((depth+1))
+	p "layoutpolicy_horizontal = expanding"
+	p "spacing = 0"
+	p ""
+	p "leo_mvd_button_drop = {"
+	ind $((depth+2))
 	p "layoutpolicy_horizontal = expanding"
 	p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' ), 'none', '$id' ) )]\""
 	p "text = \"[$label]\""
 	[ -n "$tt" ] && p "tooltip = \"$tt\""
-	ind "$depth"; p "}"
-}
-
-# <1> depth  <2> id  -> opens the option list block; caller emits rows + closes.
-emit_dd_list_open() { local depth=$1 id=$2
-	ind "$depth"
-	p "vbox = {"
+	ind $((depth+1)); p "}"
+	p ""
+	# A wrapper whose only job is to be narrower than the button.
+	#
+	# The button and the list are the same width on paper, but
+	# leo_mvd_button_drop is Corneredtiled with spriteborder = { 75 11 }, so its
+	# texture stops short of its own box and it reads as narrower. The list has
+	# to actually shrink to match what the eye sees - and margin on the list
+	# itself will not do that, because an expanding widget is still stretched to
+	# its parent's width and the margin only insets what is inside it, leaving
+	# the background full width. So the inset goes here, on a parent, and the
+	# list expands into what is left. DD_INSET is the number to tune; horizontal
+	# only, since vertical would gap the list off the button above it.
 	ind $((depth+1))
+	p "vbox = {"
+	ind $((depth+2))
+	p "layoutpolicy_horizontal = expanding"
+	p "margin = { $DD_INSET 0 }"
+	p ""
+	p "vbox = {"
+	ind $((depth+3))
 	p "visible = \"[GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' )]\""
 	p "layoutpolicy_horizontal = expanding"
+	# The rows run the full width of the list and sit flush against each other,
+	# as vanilla's do. Their text is already inset by leo_mvd_button_dropdown.
 	p "using = Background_DropDown"
-	p "margin = { 4 4 }"
-	# Since an open list pushes the rows below it down rather than floating over
-	# them, it needs to hold them off itself.
-	p "margin_bottom = 10"
-	p "spacing = 1"
+	p "spacing = 0"
+
+	# Where the caller's rows go. Returned this way so that changing the shape
+	# above does not mean re-counting indents at every call site.
+	DD_ROW_DEPTH=$((depth+4))
+}
+
+# Closes a dropdown: the list, a gap, then the group.
+#
+# The gap is its own widget because margin is padding on the inside of a widget:
+# putting it on the list would just make the list's background taller. Since an
+# open list pushes what is below it down rather than floating over it, it needs
+# to hold that content off - but only while it is open, hence the same test the
+# list itself uses.
+#
+# <1> depth  <2> id
+emit_dd_end() { local depth=$1 id=$2
+	ind $((depth+2)); p "}"
+	ind $((depth+1)); p "}"
+	p ""
+	p "widget = {"
+	ind $((depth+2))
+	p "visible = \"[GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' )]\""
+	p "size = { 1 12 }"
+	ind $((depth+1)); p "}"
+	ind "$depth"; p "}"
 }
 
 # One option row. Three clicks in order: point the cursor at the node, write the
@@ -202,14 +264,13 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	# What this node does. Kind 0's label depends on whether a next priority
 	# exists, so the button has to ask before falling back to the generic key.
 	local kind_label="SelectLocalization( $(veq "leo_mvd_${node}_kind" 0), $(kind0_key "$prio"), $(vkey 'leo_mvd_ui_kind_' "leo_mvd_${node}_kind") )"
-	emit_dd_button "$depth" "${node}_kind" "$kind_label"
-	emit_dd_list_open "$depth" "${node}_kind"
+	emit_dd_start "$depth" "${node}_kind" "$kind_label"
 	for k in $kinds; do
 		local kl="leo_mvd_ui_kind_$k"
 		[ "$k" = 0 ] && kl="[$(kind0_key "$prio")]"
-		emit_dd_row $((depth+1)) "$node" "${node}_kind" "leo_mvd_set_kind_$k" "$kl" "" "leo_mvd_ui_kind_${k}_tt"
+		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_kind" "leo_mvd_set_kind_$k" "$kl" "" "leo_mvd_ui_kind_${k}_tt"
 	done
-	emit_dd_close "$depth"
+	emit_dd_end "$depth" "${node}_kind"
 
 	# Assign a Directive
 	ind "$depth"; p ""
@@ -219,12 +280,11 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
-	emit_dd_button $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")"
-	emit_dd_list_open $((depth+1)) "${node}_dir"
+	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")"
 	for d in $DIRS; do
-		emit_dd_row $((depth+2)) "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d"
+		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d"
 	done
-	emit_dd_close $((depth+1))
+	emit_dd_end $((depth+1)) "${node}_dir"
 	ind "$depth"; p "}"
 
 	[ "$level" -ge 2 ] && return
@@ -237,12 +297,11 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
-	emit_dd_button $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
-	emit_dd_list_open $((depth+1)) "${node}_cond"
+	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
 	for c in $CONDS; do
-		emit_dd_row $((depth+2)) "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$(cond_row_visible "$c" "$parent_cond")"
+		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$(cond_row_visible "$c" "$parent_cond")"
 	done
-	emit_dd_close $((depth+1))
+	emit_dd_end $((depth+1)) "${node}_cond"
 
 	# Its threshold, if it takes one. Only the chosen condition's list exists on
 	# screen, so the label prefix can be that condition's, spelled out.
@@ -253,12 +312,11 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 		p "visible = \"[$(veq "leo_mvd_${node}_cond" "$c")]\""
 		p "layoutpolicy_horizontal = expanding"
 		p "spacing = 2"
-		emit_dd_button $((depth+2)) "${node}_t${c}" "$(vkey "leo_mvd_ui_thresh_c${c}_" "leo_mvd_${node}_thresh")"
-		emit_dd_list_open $((depth+2)) "${node}_t${c}"
+		emit_dd_start $((depth+2)) "${node}_t${c}" "$(vkey "leo_mvd_ui_thresh_c${c}_" "leo_mvd_${node}_thresh")"
 		for t in $(cond_thresh "$c"); do
-			emit_dd_row $((depth+3)) "$node" "${node}_t${c}" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}"
+			emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_t${c}" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}"
 		done
-		emit_dd_close $((depth+2))
+		emit_dd_end $((depth+2)) "${node}_t${c}"
 		ind $((depth+1)); p "}"
 	done
 	ind "$depth"; p "}"
@@ -300,10 +358,13 @@ cat << 'HEAD'
 ### variable (and which the realm window clears when it closes).
 ###
 ### Structure: a fixed header, a scrollbox that fills the middle (so content
-### scrolls instead of overflowing), and a fixed action-button footer. Each
-### settings group is a collapsible fold-out section (BindFoldOutContext +
-### button_expandable_toggle_field + visible = PdxGuiFoldOut.IsUnfolded),
-### matching the vanilla Subjects tab's collapsible vassal categories.
+### scrolls instead of overflowing), and a fixed action-button footer.
+###
+### Only the priorities collapse (BindFoldOutContext +
+### button_expandable_toggle_field + visible = PdxGuiFoldOut.IsUnfolded, as the
+### vanilla Subjects tab does for its vassal categories) - they stack up and get
+### long. The other sections are short and always apply, so they are plain
+### headings.
 ###
 ### A control reads its state straight out of the script variable it
 ### represents rather than through a scripted GUI's is_shown - either as a
@@ -427,49 +488,47 @@ window = {
 					layoutpolicy_horizontal = expanding
 					spacing = 8
 
-					### Automation section (collapsible). Holds the two controls
-					### that decide whether anything happens at all: the monthly
-					### run, and which rule set it runs. The preset is a dropdown
-					### and names itself, so it needs no heading of its own.
+					### Automation section. Holds the two controls that decide
+					### whether anything happens at all: the monthly run, and
+					### which rule set it runs. Both always apply, so the section
+					### is a plain heading - only the priorities, which stack up
+					### and get long, are worth collapsing.
 					###
-					### None is selected by default - the mod assigns nothing
-					### until a rule set is chosen. Custom keeps whatever rules
-					### are loaded and opens them for editing below.
+					### The preset is a dropdown and names itself, so it needs no
+					### heading of its own. None is selected by default: the mod
+					### assigns nothing until a rule set is chosen. Custom keeps
+					### whatever rules are loaded and opens them for editing.
 					vbox = {
 						layoutpolicy_horizontal = expanding
-						oncreate = "[BindFoldOutContext]"
-						oncreate = "[PdxGuiFoldOut.Unfold]"
 
-						button_expandable_toggle_field = {
-							blockoverride "text" {
-								text = "leo_mvd_ui_heading_automation"
-							}
+						text_label_left = {
+							layoutpolicy_horizontal = expanding
+							text = "leo_mvd_ui_heading_preset"
 						}
 
 						vbox = {
-							visible = "[PdxGuiFoldOut.IsUnfolded]"
 							layoutpolicy_horizontal = expanding
-							margin = { 12 4 }
+							margin = { 6 4 }
+							margin_top = 8
 							spacing = 4
 
 HEAD
 
 	# The preset comes first: it decides what the monthly run would even do.
-	emit_dd_button 7 preset "$(vkey 'leo_mvd_ui_preset_' leo_mvd_preset)"
-	emit_dd_list_open 7 preset
+	emit_dd_start 7 preset "$(vkey 'leo_mvd_ui_preset_' leo_mvd_preset)"
 	for n in 0 1 2 3 4 5; do
-		ind 8
+		ind "$DD_ROW_DEPTH"
 		p "leo_mvd_button_dropdown = {"
-		ind 9
+		ind $((DD_ROW_DEPTH+1))
 		p "layoutpolicy_horizontal = expanding"
 		p "size = { -1 30 }"
 		p "onclick = \"$(sgui "leo_mvd_preset_${n}")\""
 		p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]\""
 		p "tooltip = \"leo_mvd_ui_preset_${n}_tt\""
 		p "text = \"leo_mvd_ui_preset_${n}\""
-		ind 8; p "}"
+		ind "$DD_ROW_DEPTH"; p "}"
 	done
-	emit_dd_close 7
+	emit_dd_end 7 preset
 
 cat << 'MID'
 
@@ -483,6 +542,10 @@ cat << 'MID'
 								tooltip = "leo_mvd_ui_auto_tt"
 								blockoverride "checkbox" {
 									checked = "[GetScriptedGui('leo_mvd_toggle_auto').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									### Vanilla's checkbox is 30x30, which reads as
+									### heavy next to a dropdown. The block sits
+									### after the type's own size, so this wins.
+									size = { 22 22 }
 								}
 								blockoverride "text" {
 									text = "leo_mvd_ui_auto"
@@ -497,26 +560,24 @@ MID
 	# never disagree. Hidden for Custom, where the rules are spelled out below
 	# anyway; on None it is what tells a new player where to start.
 	ind 5; p ""
-	p "### Description section (collapsible). Hidden while the player's own"
-	p "### rules are selected, since the editor below says the same thing."
+	p "### Description section. Hidden while the player's own rules are"
+	p "### selected, since the editor below says the same thing."
 	p "vbox = {"
 	ind 6
 	p "visible = \"[Not( $(veq leo_mvd_preset 5) )]\""
 	p "layoutpolicy_horizontal = expanding"
-	p "oncreate = \"[BindFoldOutContext]\""
-	p "oncreate = \"[PdxGuiFoldOut.Unfold]\""
 	p ""
-	p "button_expandable_toggle_field = {"
-	ind 7; p "blockoverride \"text\" {"
-	ind 8; p "text = \"leo_mvd_ui_heading_description\""
-	ind 7; p "}"
+	p "text_label_left = {"
+	ind 7
+	p "layoutpolicy_horizontal = expanding"
+	p "text = \"leo_mvd_ui_heading_description\""
 	ind 6; p "}"
 	p ""
 	p "vbox = {"
 	ind 7
-	p "visible = \"[PdxGuiFoldOut.IsUnfolded]\""
 	p "layoutpolicy_horizontal = expanding"
-	p "margin = { 12 4 }"
+	p "margin = { 6 4 }"
+	p "margin_top = 12"
 	p ""
 	p "text_multi = {"
 	ind 8
@@ -551,7 +612,7 @@ MID
 		ind 7
 		p "visible = \"[PdxGuiFoldOut.IsUnfolded]\""
 		p "layoutpolicy_horizontal = expanding"
-		p "margin = { 12 4 }"
+		p "margin = { 6 4 }"
 		p "spacing = 2"
 		p ""
 		emit_node 7 "$prio" 1 0
