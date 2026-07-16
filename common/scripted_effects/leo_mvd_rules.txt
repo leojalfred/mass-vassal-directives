@@ -210,6 +210,103 @@ leo_mvd_eval_priority_effect = {
 	}
 }
 
+### Editing.
+#
+# The panel cannot hand script a number, so "set node N's directive to D" cannot
+# be one call. Instead a radio click runs two scripted GUIs in order: the first
+# points leo_mvd_edit_node at the node, the second stages a field and value and
+# calls the dispatch below. That makes the cost of the editor one scripted GUI
+# per node plus one per option, rather than one per node-and-option pair.
+#
+# leo_mvd_edit_node addresses a node as priority * 10 + node, so r1_n1 is 11 and
+# r6_n7 is 67.
+
+# Current scope: the player. Writes the staged field to $NODE$.
+leo_mvd_write_node_effect = {
+	if = {
+		limit = { var:leo_mvd_stage_field = 1 }
+		set_variable = { name = leo_mvd_$NODE$_kind value = var:leo_mvd_stage_value }
+	}
+	else_if = {
+		limit = { var:leo_mvd_stage_field = 2 }
+		set_variable = { name = leo_mvd_$NODE$_cond value = var:leo_mvd_stage_value }
+	}
+	else_if = {
+		limit = { var:leo_mvd_stage_field = 3 }
+		set_variable = { name = leo_mvd_$NODE$_thresh value = var:leo_mvd_stage_value }
+	}
+	else_if = {
+		limit = { var:leo_mvd_stage_field = 4 }
+		set_variable = { name = leo_mvd_$NODE$_dir value = var:leo_mvd_stage_value }
+	}
+}
+
+# Current scope: the player. Routes the staged write to whichever node the
+# cursor points at. Written out in full because a variable name cannot be built
+# from a value at runtime.
+leo_mvd_write_field_effect = {
+	if = { limit = { var:leo_mvd_edit_node = 11 } leo_mvd_write_node_effect = { NODE = r1_n1 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 12 } leo_mvd_write_node_effect = { NODE = r1_n2 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 13 } leo_mvd_write_node_effect = { NODE = r1_n3 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 14 } leo_mvd_write_node_effect = { NODE = r1_n4 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 15 } leo_mvd_write_node_effect = { NODE = r1_n5 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 16 } leo_mvd_write_node_effect = { NODE = r1_n6 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 17 } leo_mvd_write_node_effect = { NODE = r1_n7 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 21 } leo_mvd_write_node_effect = { NODE = r2_n1 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 22 } leo_mvd_write_node_effect = { NODE = r2_n2 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 23 } leo_mvd_write_node_effect = { NODE = r2_n3 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 24 } leo_mvd_write_node_effect = { NODE = r2_n4 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 25 } leo_mvd_write_node_effect = { NODE = r2_n5 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 26 } leo_mvd_write_node_effect = { NODE = r2_n6 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 27 } leo_mvd_write_node_effect = { NODE = r2_n7 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 31 } leo_mvd_write_node_effect = { NODE = r3_n1 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 32 } leo_mvd_write_node_effect = { NODE = r3_n2 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 33 } leo_mvd_write_node_effect = { NODE = r3_n3 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 34 } leo_mvd_write_node_effect = { NODE = r3_n4 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 35 } leo_mvd_write_node_effect = { NODE = r3_n5 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 36 } leo_mvd_write_node_effect = { NODE = r3_n6 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 37 } leo_mvd_write_node_effect = { NODE = r3_n7 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 41 } leo_mvd_write_node_effect = { NODE = r4_n1 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 42 } leo_mvd_write_node_effect = { NODE = r4_n2 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 43 } leo_mvd_write_node_effect = { NODE = r4_n3 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 44 } leo_mvd_write_node_effect = { NODE = r4_n4 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 45 } leo_mvd_write_node_effect = { NODE = r4_n5 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 46 } leo_mvd_write_node_effect = { NODE = r4_n6 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 47 } leo_mvd_write_node_effect = { NODE = r4_n7 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 51 } leo_mvd_write_node_effect = { NODE = r5_n1 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 52 } leo_mvd_write_node_effect = { NODE = r5_n2 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 53 } leo_mvd_write_node_effect = { NODE = r5_n3 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 54 } leo_mvd_write_node_effect = { NODE = r5_n4 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 55 } leo_mvd_write_node_effect = { NODE = r5_n5 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 56 } leo_mvd_write_node_effect = { NODE = r5_n6 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 57 } leo_mvd_write_node_effect = { NODE = r5_n7 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 61 } leo_mvd_write_node_effect = { NODE = r6_n1 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 62 } leo_mvd_write_node_effect = { NODE = r6_n2 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 63 } leo_mvd_write_node_effect = { NODE = r6_n3 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 64 } leo_mvd_write_node_effect = { NODE = r6_n4 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 65 } leo_mvd_write_node_effect = { NODE = r6_n5 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 66 } leo_mvd_write_node_effect = { NODE = r6_n6 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 67 } leo_mvd_write_node_effect = { NODE = r6_n7 } }
+}
+
+# Current scope: the player. Point the cursor at $NODE$.
+leo_mvd_focus_effect = {
+	set_variable = { name = leo_mvd_edit_node value = $CODE$ }
+}
+
+# Current scope: the player. Stage field $FIELD$ = $VALUE$ and write it to the
+# focused node. Only ever reachable while the player's own rules are selected,
+# so it does not need to guard the built-ins.
+leo_mvd_edit_effect = {
+	set_variable = { name = leo_mvd_stage_field value = $FIELD$ }
+	set_variable = { name = leo_mvd_stage_value value = $VALUE$ }
+	leo_mvd_write_field_effect = yes
+	if = {
+		limit = { has_variable = leo_mvd_auto }
+		leo_mvd_run_waterfall_effect = yes
+	}
+}
+
 ### Rule authoring.
 #
 # Used to build the rule sets below, and by the panel's editor.
@@ -371,6 +468,19 @@ leo_mvd_preset_4_effect = {
 	leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 9 }
 
 	set_variable = { name = leo_mvd_preset value = 4 }
+}
+
+# Current scope: the player. The player's own rules.
+#
+# This keeps whatever rules are currently loaded rather than clearing them, so
+# picking a built-in and then Custom makes that built-in the starting point to
+# edit - which is the whole of "copy a preset to customise it".
+leo_mvd_preset_5_effect = {
+	if = {
+		limit = { var:leo_mvd_rule_count < 1 }
+		set_variable = { name = leo_mvd_rule_count value = 1 }
+	}
+	set_variable = { name = leo_mvd_preset value = 5 }
 }
 
 # Current scope: the player. Load preset $N$ and re-apply if automation is on.

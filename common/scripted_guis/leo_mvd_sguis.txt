@@ -88,6 +88,17 @@ leo_mvd_preset_4 = {
 	}
 }
 
+# The player's own rules, and the editor below them. Keeps whatever rules are
+# loaded, so picking a built-in and then Custom carries that built-in over as
+# the starting point to edit.
+leo_mvd_preset_5 = {
+	scope = character
+	effect = {
+		leo_mvd_init_defaults_effect = yes
+		leo_mvd_select_preset_effect = { N = 5 }
+	}
+}
+
 # Apply the priority waterfall across all eligible vassals right now.
 # Disabled while there are no rules, so that the button can never be the thing
 # that assigns a directive the player never chose.

@@ -118,4 +118,11 @@ leo_mvd_init_defaults_effect = {
 		limit = { NOT = { has_variable = leo_mvd_preset } }
 		leo_mvd_preset_0_effect = yes
 	}
+	# Editor state: which node the panel is writing to, and the pending write.
+	if = {
+		limit = { NOT = { has_variable = leo_mvd_edit_node } }
+		set_variable = { name = leo_mvd_edit_node value = 0 }
+		set_variable = { name = leo_mvd_stage_field value = 0 }
+		set_variable = { name = leo_mvd_stage_value value = 0 }
+	}
 }

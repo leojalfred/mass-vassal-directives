@@ -23,6 +23,8 @@
  leo_mvd_ui_preset_3_tt: "Arm the realm, each [vassal|E] to their strength.\n\n#weak Strong vassals#! contribute what their government does best: administrative ones $build_maa$, the rest $building_focus_fortification$.\n#weak Weak vassals#! everywhere are told to $building_focus_military$ first.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_4: "Grow the Economy"
  leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\n#weak Undeveloped vassals#! are told to $improve_development$.\n#weak Established vassals#! turn to $building_focus_economy$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_5: "Custom"
+ leo_mvd_ui_preset_5_tt: "Your own rules, built below.\n\n#weak Selecting this keeps whichever rules are loaded, so pick a preset first and then Custom to start from it rather than from nothing.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Exempt from Directive Automation"
