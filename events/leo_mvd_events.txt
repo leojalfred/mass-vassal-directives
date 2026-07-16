@@ -20,6 +20,11 @@ leo_mvd.1 = {
 			flag = leo_mvd_pulse_alive
 			days = 45
 		}
+		# The panel reads the configuration variables straight from GUI, so they
+		# have to exist before it is ever opened. This is idempotent, and makes
+		# a save that predates a config change heal itself within the month even
+		# if the panel is never touched.
+		leo_mvd_init_defaults_effect = yes
 		if = {
 			limit = {
 				has_variable = leo_mvd_auto

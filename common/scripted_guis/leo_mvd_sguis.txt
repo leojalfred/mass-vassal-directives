@@ -9,6 +9,11 @@
 #   is_valid  -> whether the control is enabled  (IsValid binding)
 #   effect    -> runs on click                    (Execute binding)
 #
+# A control's selected state does not always need a scripted GUI: where it is
+# simply "does this variable equal N", the panel reads the variable directly and
+# no entry is needed here. That is why the preset radios below define only an
+# effect - their selected state comes straight from leo_mvd_preset in the panel.
+#
 # Settings changes re-run the waterfall immediately only when automation is
 # already on, so that auto mode stays live; otherwise the change just updates
 # the configuration and the player applies it explicitly.
@@ -37,194 +42,62 @@ leo_mvd_toggle_auto = {
 	}
 }
 
-# Prioritize the faith/culture conversion tiers. Checked when prioritization
-# is on, i.e. when the skip flag is absent.
-leo_mvd_prioritize_conversion = {
+# Preset selection. Each loads a built-in rule set, replacing the rules in
+# place. leo_mvd_select_preset_effect re-applies when automation is on.
+#
+# None is the default and does exactly what it says: with no rules the mod
+# assigns nothing. It is a real choice rather than an absence of one, so that
+# the player can turn the automation off without unpicking anything else.
+leo_mvd_preset_0 = {
 	scope = character
-
-	is_shown = {
-		NOT = { has_variable = leo_mvd_skip_p12 }
-	}
 	effect = {
 		leo_mvd_init_defaults_effect = yes
-		if = {
-			limit = { has_variable = leo_mvd_skip_p12 }
-			remove_variable = leo_mvd_skip_p12
-		}
-		else = {
-			set_variable = leo_mvd_skip_p12
-		}
-		if = {
-			limit = { has_variable = leo_mvd_auto }
-			leo_mvd_run_waterfall_effect = yes
-		}
+		leo_mvd_select_preset_effect = { N = 0 }
 	}
 }
 
-# Fallback mode selector: none / blanket / strength-branch.
-leo_mvd_p3_none = {
+leo_mvd_preset_1 = {
 	scope = character
-
-	is_shown = {
-		has_variable = leo_mvd_p3_mode
-		var:leo_mvd_p3_mode = 0
-	}
 	effect = {
 		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_p3_mode value = 0 }
-		if = {
-			limit = { has_variable = leo_mvd_auto }
-			leo_mvd_run_waterfall_effect = yes
-		}
+		leo_mvd_select_preset_effect = { N = 1 }
 	}
 }
 
-leo_mvd_p3_blanket = {
+leo_mvd_preset_2 = {
 	scope = character
-
-	is_shown = {
-		has_variable = leo_mvd_p3_mode
-		var:leo_mvd_p3_mode = 1
-	}
 	effect = {
 		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_p3_mode value = 1 }
-		if = {
-			limit = { has_variable = leo_mvd_auto }
-			leo_mvd_run_waterfall_effect = yes
-		}
+		leo_mvd_select_preset_effect = { N = 2 }
 	}
 }
 
-leo_mvd_p3_branch = {
+leo_mvd_preset_3 = {
 	scope = character
-
-	is_shown = {
-		has_variable = leo_mvd_p3_mode
-		var:leo_mvd_p3_mode = 2
-	}
 	effect = {
 		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_p3_mode value = 2 }
-		if = {
-			limit = { has_variable = leo_mvd_auto }
-			leo_mvd_run_waterfall_effect = yes
-		}
+		leo_mvd_select_preset_effect = { N = 3 }
 	}
 }
 
-# Blanket directive picker (only reachable while the fallback is in blanket
-# mode). Each sets the directive code; codes match leo_mvd_effects.txt.
-leo_mvd_blanket_3 = {
+leo_mvd_preset_4 = {
 	scope = character
-	is_shown = { has_variable = leo_mvd_blanket  var:leo_mvd_blanket = 3 }
 	effect = {
 		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_blanket value = 3 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
-	}
-}
-leo_mvd_blanket_4 = {
-	scope = character
-	is_shown = { has_variable = leo_mvd_blanket  var:leo_mvd_blanket = 4 }
-	effect = {
-		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_blanket value = 4 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
-	}
-}
-leo_mvd_blanket_5 = {
-	scope = character
-	is_shown = { has_variable = leo_mvd_blanket  var:leo_mvd_blanket = 5 }
-	effect = {
-		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_blanket value = 5 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
-	}
-}
-leo_mvd_blanket_6 = {
-	scope = character
-	is_shown = { has_variable = leo_mvd_blanket  var:leo_mvd_blanket = 6 }
-	effect = {
-		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_blanket value = 6 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
-	}
-}
-leo_mvd_blanket_7 = {
-	scope = character
-	is_shown = { has_variable = leo_mvd_blanket  var:leo_mvd_blanket = 7 }
-	effect = {
-		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_blanket value = 7 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
-	}
-}
-leo_mvd_blanket_8 = {
-	scope = character
-	is_shown = { has_variable = leo_mvd_blanket  var:leo_mvd_blanket = 8 }
-	effect = {
-		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_blanket value = 8 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
-	}
-}
-leo_mvd_blanket_9 = {
-	scope = character
-	is_shown = { has_variable = leo_mvd_blanket  var:leo_mvd_blanket = 9 }
-	effect = {
-		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_blanket value = 9 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
-	}
-}
-
-# Strength-branch threshold picker (only reachable while the fallback is in
-# branch mode). The value is the duchy baseline; leo_mvd_values.txt scales it
-# per tier.
-leo_mvd_threshold_500 = {
-	scope = character
-	is_shown = { has_variable = leo_mvd_threshold  var:leo_mvd_threshold = 500 }
-	effect = {
-		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_threshold value = 500 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
-	}
-}
-leo_mvd_threshold_1000 = {
-	scope = character
-	is_shown = { has_variable = leo_mvd_threshold  var:leo_mvd_threshold = 1000 }
-	effect = {
-		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_threshold value = 1000 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
-	}
-}
-leo_mvd_threshold_2000 = {
-	scope = character
-	is_shown = { has_variable = leo_mvd_threshold  var:leo_mvd_threshold = 2000 }
-	effect = {
-		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_threshold value = 2000 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
-	}
-}
-leo_mvd_threshold_5000 = {
-	scope = character
-	is_shown = { has_variable = leo_mvd_threshold  var:leo_mvd_threshold = 5000 }
-	effect = {
-		leo_mvd_init_defaults_effect = yes
-		set_variable = { name = leo_mvd_threshold value = 5000 }
-		if = { limit = { has_variable = leo_mvd_auto } leo_mvd_run_waterfall_effect = yes }
+		leo_mvd_select_preset_effect = { N = 4 }
 	}
 }
 
 # Apply the priority waterfall across all eligible vassals right now.
+# Disabled while there are no rules, so that the button can never be the thing
+# that assigns a directive the player never chose.
 leo_mvd_apply_now = {
 	scope = character
 
 	is_valid = {
 		is_ruler = yes
+		has_variable = leo_mvd_rule_count
+		var:leo_mvd_rule_count >= 1
 	}
 	effect = {
 		leo_mvd_init_defaults_effect = yes

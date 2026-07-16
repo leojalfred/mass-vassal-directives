@@ -33,63 +33,193 @@ leo_mvd_base_eligible_trigger = {
 	NOT = { has_variable = leo_mvd_exempt }
 }
 
-# Current scope: vassal. Priority 1 - Convert Faith.
-# Vanilla gates mirror the convert_faith send_option (:3491-3508);
-# the same-faith-as-liege requirement is the mod's own targeting filter.
-leo_mvd_p1_convert_faith_trigger = {
+### Per-directive gates.
+#
+# One trigger per directive, each a verbatim mirror of that directive's
+# send_option block in give_vassal_directive_interaction. These are pure
+# vanilla: whose faith or culture a vassal should be steered toward is a
+# targeting choice, expressed as a rule condition below, and is never baked in
+# here.
+#
+# A vassal who fails the gate for the directive a rule picked is left alone and
+# falls through to the next priority, which is what vanilla does when a
+# send_option is unavailable.
+
+# Current scope: vassal. improve_development (:3455)
+leo_mvd_gate_improve_development_trigger = {
+	government_allows = administrative
+	highest_held_title_tier >= tier_duchy
+}
+
+# Current scope: vassal. train_commanders (:3469)
+leo_mvd_gate_train_commanders_trigger = {
+	government_allows = administrative
+}
+
+# Current scope: vassal. build_maa (:3480)
+leo_mvd_gate_build_maa_trigger = {
+	government_allows = administrative
+}
+
+# Current scope: vassal. convert_faith (:3491)
+leo_mvd_gate_convert_faith_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 	NOT = { government_has_flag = government_is_nomadic }
-	faith = $LIEGE$.faith
 	any_sub_realm_county = {
 		faith != scope:leo_mvd_vassal_tmp.faith
 	}
 }
 
-# Current scope: vassal. Priority 2 - Convert (Promote) Culture.
-# Vanilla gates mirror the convert_culture send_option (:3510-3527);
-# the same-culture-as-liege requirement is the mod's own targeting filter.
-leo_mvd_p2_convert_culture_trigger = {
+# Current scope: vassal. convert_culture (:3510)
+leo_mvd_gate_convert_culture_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 	NOT = { government_has_flag = government_is_nomadic }
-	culture = $LIEGE$.culture
 	any_sub_realm_county = {
 		culture != scope:leo_mvd_vassal_tmp.culture
 	}
 }
 
-# Current scope: vassal. Requires scope:leo_mvd_liege to be set (the player).
-# Vanilla per-directive gates for the configured blanket fallback directive,
-# mirroring the corresponding send_option blocks.
-# Codes: 3 improve_development, 4 train_commanders, 5 build_maa,
-# 6 improve_cultural_acceptance, 7/8/9 building_focus_fortification/military/economy
-leo_mvd_blanket_gate_trigger = {
+# Current scope: vassal. improve_cultural_acceptance (:3529)
+leo_mvd_gate_improve_cultural_acceptance_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
+	NOT = { government_has_flag = government_is_nomadic }
+	highest_held_title_tier >= tier_duchy
+	any_sub_realm_county = {
+		culture != scope:leo_mvd_vassal_tmp.culture
+	}
+}
+
+# Current scope: vassal. building_focus_fortification (:3549),
+# building_focus_military (:3560) and building_focus_economy (:3571) all share
+# the same single vanilla condition.
+leo_mvd_gate_building_focus_trigger = {
+	NOT = { government_has_flag = government_is_nomadic }
+}
+
+### Rule conditions.
+#
+# The closed set of conditions a rule can branch on, evaluated in the vassal's
+# scope with the liege as scope:leo_mvd_liege. Script cannot dispatch on a
+# condition chosen at runtime, so this is a single value-driven chain rather
+# than one trigger per node.
+#
+# Every numeric condition reads "is at least" (>=) so the true branch is always
+# the high side; no condition gets its own comparison direction.
+#
+# Requires scope:leo_mvd_cond_id (the condition's code) and scope:leo_mvd_thresh
+# (its threshold, 0 for the boolean conditions), both staged by
+# leo_mvd_stage_cond_effect.
+leo_mvd_cond_holds_trigger = {
+	save_temporary_scope_as = leo_mvd_vassal_tmp
+
+	# 1 - Faith is Yours
 	trigger_if = {
-		limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 3 } }
-		government_allows = administrative
-		highest_held_title_tier >= tier_duchy
+		limit = { scope:leo_mvd_cond_id = 1 }
+		faith = scope:leo_mvd_liege.faith
 	}
+	# 2 - Culture is Yours
 	trigger_else_if = {
-		limit = {
-			scope:leo_mvd_liege = {
-				OR = {
-					var:leo_mvd_blanket = 4
-					var:leo_mvd_blanket = 5
-				}
-			}
+		limit = { scope:leo_mvd_cond_id = 2 }
+		culture = scope:leo_mvd_liege.culture
+	}
+	# 3 - Holds Counties of Another Faith
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 3 }
+		any_sub_realm_county = {
+			faith != scope:leo_mvd_vassal_tmp.faith
 		}
-		government_allows = administrative
 	}
+	# 4 - Holds Counties of Another Culture
 	trigger_else_if = {
-		limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 6 } }
-		NOT = { government_has_flag = government_is_nomadic }
-		highest_held_title_tier >= tier_duchy
+		limit = { scope:leo_mvd_cond_id = 4 }
 		any_sub_realm_county = {
 			culture != scope:leo_mvd_vassal_tmp.culture
 		}
 	}
+	# 5 - Same Dynasty as You
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 5 }
+		has_dynasty = yes
+		scope:leo_mvd_liege = { has_dynasty = yes }
+		dynasty = scope:leo_mvd_liege.dynasty
+	}
+	# 6 - Administrative Government
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 6 }
+		government_allows = administrative
+	}
+	# 7 - Is a Powerful Vassal
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 7 }
+		is_powerful_vassal_of = scope:leo_mvd_liege
+	}
+	# 8 - Is on Your Council
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 8 }
+		is_councillor_of = scope:leo_mvd_liege
+	}
+	# 9 - Military Strength is at least. The chosen value is the duchy baseline;
+	# leo_mvd_effective_threshold scales it by the vassal's tier.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 9 }
+		max_military_strength >= leo_mvd_effective_threshold
+	}
+	# 10 - Title Tier is at least. Compared against the named tier constants so
+	# their numeric mapping never has to be assumed.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 10 }
+		trigger_if = {
+			limit = { scope:leo_mvd_thresh = 2 }
+			highest_held_title_tier >= tier_county
+		}
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 3 }
+			highest_held_title_tier >= tier_duchy
+		}
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 4 }
+			highest_held_title_tier >= tier_kingdom
+		}
+		trigger_else = {
+			highest_held_title_tier >= tier_empire
+		}
+	}
+	# 11 - Capital Development is at least
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 11 }
+		exists = capital_county
+		capital_county = {
+			development_level >= scope:leo_mvd_thresh
+		}
+	}
+	# 12 - Opinion of You is at least
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 12 }
+		opinion = {
+			target = scope:leo_mvd_liege
+			value >= scope:leo_mvd_thresh
+		}
+	}
+	# 13 - Counties Held is at least
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 13 }
+		any_held_county = {
+			count >= scope:leo_mvd_thresh
+		}
+	}
+	# 14 - Cultural Acceptance with You is at least
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 14 }
+		culture = {
+			cultural_acceptance = {
+				target = scope:leo_mvd_liege.culture
+				value >= scope:leo_mvd_thresh
+			}
+		}
+	}
+	# No condition picked yet: the branch is inert rather than silently true.
 	trigger_else = {
-		NOT = { government_has_flag = government_is_nomadic }
+		always = no
 	}
 }
 

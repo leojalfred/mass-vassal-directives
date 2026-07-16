@@ -4,34 +4,25 @@
  leo_mvd_ui_heading_automation: "Automation"
  leo_mvd_ui_auto: "Automatically Reassign Vassal Directives"
  leo_mvd_ui_auto_tt: "When enabled, the [directive|E] priority waterfall re-runs across all eligible [vassals|E] every month and again whenever you change a setting here. Turning it on applies directives immediately.\n\n#weak Manual assignments on non-exempt vassals are overwritten by each run. Exempt a vassal through their interaction menu to protect your choice.#!"
- leo_mvd_ui_prioritize: "Prioritize Faith and Culture Conversion"
- leo_mvd_ui_prioritize_tt: "When enabled, vassals who share your [faith|E] and hold counties of another faith are told to Convert Faith first, then same-[culture|E] vassals to Promote Culture, then the fallback applies.\n\nWhen off, the initial faith and culture conversion priorities are skipped and every eligible vassal goes straight to your configured fallback."
  leo_mvd_ui_apply: "Apply Now"
  leo_mvd_ui_apply_tt: "Apply the configured [directive|E] priority across all eligible, non-exempt [vassals|E] now."
  leo_mvd_ui_remove_all: "Remove All"
  leo_mvd_ui_remove_all_tt: "Remove every [directive|E] this automation assigned, clear all exemptions, and turn automation off. Directives you assigned manually are kept."
- leo_mvd_ui_heading_fallback: "Fallback"
- leo_mvd_ui_fallback_tt: "What to assign a vassal when neither conversion priority applies (or when conversion is not prioritized).\n\n#weak None:#! leave them without a [directive|E].\n#weak Single Directive for All:#! give every remaining vassal the [directive|E] of your choice.\n#weak By Military Strength:#! weaker vassals build [military_buildings|E], stronger ones improve [development|E] (or build [economic_buildings|E] where development does not apply)."
- leo_mvd_ui_p3_none: "None"
- leo_mvd_ui_p3_blanket: "Single Directive for All"
- leo_mvd_ui_p3_branch: "By Military Strength"
- # Blanket directive choices (shown when the fallback mode is Single Directive for All).
- # The $directive$ keys already include the directive's icon.
- leo_mvd_ui_blanket_heading: "Directive"
- leo_mvd_ui_threshold_heading: "Military Strength Baseline"
- leo_mvd_ui_blanket_3: "$improve_development$"
- leo_mvd_ui_blanket_4: "$train_commanders$"
- leo_mvd_ui_blanket_5: "$build_maa$"
- leo_mvd_ui_blanket_6: "$improve_cultural_acceptance$"
- leo_mvd_ui_blanket_7: "$building_focus_fortification$"
- leo_mvd_ui_blanket_8: "$building_focus_military$"
- leo_mvd_ui_blanket_9: "$building_focus_economy$"
- # Strength thresholds (shown when the fallback mode is By Military Strength)
- leo_mvd_ui_threshold_tt: "The value is the #V duchy#! baseline. It scales by [title|E] tier so it stays meaningful at every realm size: counts x0.5, dukes x1, kings x3, emperors x6.\n\nVassals below their scaled threshold build [military_buildings|E]; those at or above improve [development|E] (or build [economic_buildings|E] where development does not apply)."
- leo_mvd_ui_threshold_500: "500"
- leo_mvd_ui_threshold_1000: "1000"
- leo_mvd_ui_threshold_2000: "2000"
- leo_mvd_ui_threshold_5000: "5000"
+ ### Presets
+ # A preset is a rule set: an ordered list of priorities, where each vassal gets
+ # the first one that applies to them. The $directive$ keys already include the
+ # directive's icon.
+ leo_mvd_ui_heading_preset: "Preset"
+ leo_mvd_ui_preset_0: "None"
+ leo_mvd_ui_preset_0_tt: "Assign nothing. Your [vassals|E] keep whatever [directives|E] you gave them yourself.\n\n#weak This is the default: the automation never assigns a directive until you choose a preset. Selecting None again clears every directive it assigned.#!"
+ leo_mvd_ui_preset_1: "Convert and Develop"
+ leo_mvd_ui_preset_1_tt: "Bring your [vassals|E] into the fold, then grow them.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $convert_faith$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $convert_culture$.\n#weak 3.#! Of the rest, the militarily strong $improve_development$ and the weak $building_focus_military$.\n#weak 4.#! Anyone left over builds $building_focus_economy$."
+ leo_mvd_ui_preset_2: "Unify the Realm"
+ leo_mvd_ui_preset_2_tt: "Make the realm one people.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $convert_faith$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $convert_culture$.\n#weak 3.#! Those still holding foreign-[culture|E] counties work on $improve_cultural_acceptance$.\n#weak 4.#! Anyone left over builds $building_focus_economy$.\n\n#weak Converts harder than Convert and Develop, at the cost of growth.#!"
+ leo_mvd_ui_preset_3: "Prepare for War"
+ leo_mvd_ui_preset_3_tt: "Arm the realm, each [vassal|E] to their strength.\n\n#weak Strong vassals#! contribute what their government does best: administrative ones $build_maa$, the rest $building_focus_fortification$.\n#weak Weak vassals#! everywhere are told to $building_focus_military$ first.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_4: "Grow the Economy"
+ leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\n#weak Undeveloped vassals#! are told to $improve_development$.\n#weak Established vassals#! turn to $building_focus_economy$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Exempt from Directive Automation"

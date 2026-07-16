@@ -4,13 +4,18 @@
 # on_accept exactly: remove_vassal_directives (vanilla scripted effect,
 # 00_realm_effects.txt) followed by add_character_flag.
 #
-# Directive codes (stored in leo_mvd_managed / leo_mvd_blanket):
+# Directive codes (stored in leo_mvd_managed and in each rule node's dir):
 # 1 convert_faith, 2 convert_culture, 3 improve_development,
 # 4 train_commanders, 5 build_maa, 6 improve_cultural_acceptance,
 # 7 building_focus_fortification, 8 building_focus_military,
-# 9 building_focus_economy
+# 9 building_focus_economy. 0 means "continue to the next priority".
+#
+# Which directive a vassal gets is decided by the rule engine in
+# leo_mvd_rules.txt; this file is the machinery around it.
 
 # Current scope: vassal. Assign a directive and mark it as mod-managed.
+# leo_mvd_hit records that this vassal has been claimed, so that the priorities
+# after the one that assigned leave the vassal alone.
 leo_mvd_assign_effect = {
 	if = {
 		limit = {
@@ -23,6 +28,7 @@ leo_mvd_assign_effect = {
 		name = leo_mvd_managed
 		value = $CODE$
 	}
+	set_variable = leo_mvd_hit
 }
 
 # Current scope: vassal. Clear the directive only if the mod still owns it.
@@ -40,99 +46,22 @@ leo_mvd_clear_stale_effect = {
 }
 
 # Current scope: vassal. Requires scope:leo_mvd_liege (the player).
-# The priority waterfall: Convert Faith -> Convert Culture -> configured
-# fallback -> otherwise clear any stale mod-assigned directive.
-#
-# When the liege has set leo_mvd_skip_p12, the two conversion priorities are
-# skipped and every eligible vassal goes straight to the fallback.
+# Run the liege's rule set over this vassal: each priority in turn until one
+# assigns a directive. A vassal no priority claims keeps nothing the mod gave
+# them earlier.
 leo_mvd_evaluate_vassal_effect = {
+	leo_mvd_eval_priority_effect = { P = r1 N = 1 }
+	leo_mvd_eval_priority_effect = { P = r2 N = 2 }
+	leo_mvd_eval_priority_effect = { P = r3 N = 3 }
+	leo_mvd_eval_priority_effect = { P = r4 N = 4 }
+	leo_mvd_eval_priority_effect = { P = r5 N = 5 }
+	leo_mvd_eval_priority_effect = { P = r6 N = 6 }
+
 	if = {
-		limit = {
-			scope:leo_mvd_liege = { NOT = { has_variable = leo_mvd_skip_p12 } }
-			leo_mvd_p1_convert_faith_trigger = { LIEGE = scope:leo_mvd_liege }
-		}
-		leo_mvd_assign_effect = { DIRECTIVE = convert_faith CODE = 1 }
-	}
-	else_if = {
-		limit = {
-			scope:leo_mvd_liege = { NOT = { has_variable = leo_mvd_skip_p12 } }
-			leo_mvd_p2_convert_culture_trigger = { LIEGE = scope:leo_mvd_liege }
-		}
-		leo_mvd_assign_effect = { DIRECTIVE = convert_culture CODE = 2 }
-	}
-	else_if = {
-		# Fallback, blanket mode: assign one chosen directive to everyone
-		# who can validly receive it.
-		limit = {
-			scope:leo_mvd_liege = {
-				has_variable = leo_mvd_p3_mode
-				var:leo_mvd_p3_mode = 1
-				has_variable = leo_mvd_blanket
-			}
-			leo_mvd_blanket_gate_trigger = yes
-		}
-		if = {
-			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 3 } }
-			leo_mvd_assign_effect = { DIRECTIVE = improve_development CODE = 3 }
-		}
-		else_if = {
-			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 4 } }
-			leo_mvd_assign_effect = { DIRECTIVE = train_commanders CODE = 4 }
-		}
-		else_if = {
-			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 5 } }
-			leo_mvd_assign_effect = { DIRECTIVE = build_maa CODE = 5 }
-		}
-		else_if = {
-			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 6 } }
-			leo_mvd_assign_effect = { DIRECTIVE = improve_cultural_acceptance CODE = 6 }
-		}
-		else_if = {
-			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 7 } }
-			leo_mvd_assign_effect = { DIRECTIVE = building_focus_fortification CODE = 7 }
-		}
-		else_if = {
-			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 8 } }
-			leo_mvd_assign_effect = { DIRECTIVE = building_focus_military CODE = 8 }
-		}
-		else_if = {
-			limit = { scope:leo_mvd_liege = { var:leo_mvd_blanket = 9 } }
-			leo_mvd_assign_effect = { DIRECTIVE = building_focus_economy CODE = 9 }
-		}
-	}
-	else_if = {
-		# Fallback, strength-branch mode: vassals below the (tier-scaled)
-		# military threshold build military, vassals at or above it improve
-		# development where vanilla allows it, otherwise build economy.
-		# building_focus_* directives only require a non-nomadic government.
-		limit = {
-			scope:leo_mvd_liege = {
-				has_variable = leo_mvd_p3_mode
-				var:leo_mvd_p3_mode = 2
-				has_variable = leo_mvd_threshold
-			}
-			NOT = { government_has_flag = government_is_nomadic }
-		}
-		if = {
-			limit = { max_military_strength < leo_mvd_effective_threshold }
-			leo_mvd_assign_effect = { DIRECTIVE = building_focus_military CODE = 8 }
-		}
-		else_if = {
-			# Strong vassals: Improve Development where vanilla allows it
-			# (admin government + duchy or higher, per the vanilla send_option)
-			limit = {
-				government_allows = administrative
-				highest_held_title_tier >= tier_duchy
-			}
-			leo_mvd_assign_effect = { DIRECTIVE = improve_development CODE = 3 }
-		}
-		else = {
-			# Strong vassals not eligible for Improve Development
-			leo_mvd_assign_effect = { DIRECTIVE = building_focus_economy CODE = 9 }
-		}
+		limit = { has_variable = leo_mvd_hit }
+		remove_variable = leo_mvd_hit
 	}
 	else = {
-		# No priority applies: clear the directive only if the mod assigned it
 		leo_mvd_clear_stale_effect = yes
 	}
 }
@@ -175,36 +104,18 @@ leo_mvd_remove_all_effect = {
 	remove_variable = leo_mvd_auto
 }
 
-# Current scope: the player. Idempotent config defaults, plus a one-time
-# migration off the retired leo_mvd_enabled master switch.
+# Current scope: the player. Idempotent config defaults.
+#
+# The default is deliberately no rules and no preset selected: the mod must
+# never assign a directive the player did not ask for, so it does nothing at all
+# until a preset is picked.
+#
+# Clearing the rule set writes every rule variable, so this one call is also
+# what guarantees they all exist - which the panel depends on, since it reads
+# them directly from GUI rather than through a scripted GUI.
 leo_mvd_init_defaults_effect = {
 	if = {
-		limit = { NOT = { has_variable = leo_mvd_p3_mode } }
-		set_variable = { name = leo_mvd_p3_mode value = 0 }
-	}
-	if = {
-		limit = { NOT = { has_variable = leo_mvd_blanket } }
-		set_variable = { name = leo_mvd_blanket value = 9 }
-	}
-	if = {
-		limit = { NOT = { has_variable = leo_mvd_threshold } }
-		set_variable = { name = leo_mvd_threshold value = 1000 }
-	}
-	# Migration from the old two-switch model: automation was on only when
-	# both leo_mvd_enabled and leo_mvd_auto were set. If a save from that
-	# version has auto set without enabled, automation was actually off, so
-	# clear auto. Then drop the now-unused enabled flag. Guarded so it runs
-	# at most once per character.
-	if = {
-		limit = { NOT = { has_variable = leo_mvd_v2 } }
-		if = {
-			limit = {
-				has_variable = leo_mvd_auto
-				NOT = { has_variable = leo_mvd_enabled }
-			}
-			remove_variable = leo_mvd_auto
-		}
-		remove_variable = leo_mvd_enabled
-		set_variable = leo_mvd_v2
+		limit = { NOT = { has_variable = leo_mvd_preset } }
+		leo_mvd_preset_0_effect = yes
 	}
 }

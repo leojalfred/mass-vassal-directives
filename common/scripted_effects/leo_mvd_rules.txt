@@ -1,0 +1,416 @@
+﻿# Leo VI's Mass Vassal Directives - the rule engine
+#
+# A rule set is an ordered list of priorities. Each priority is a small tree of
+# nodes; the first priority that assigns a directive wins, and a vassal that no
+# priority claims is left without one.
+#
+# A node is one of three kinds:
+#   0  continue  - do nothing; fall through to the next priority (the default)
+#   1  directive - assign this directive, if the vassal passes vanilla's gate
+#   2  condition - test a condition and descend into the matching branch
+#
+# Nodes are heap-addressed within a priority: n1 is the root, n2/n3 are its
+# branches, and n4..n7 are the grandchildren. n4..n7 are leaves and can only be
+# "continue" or "directive". That depth cap is deliberate: the script language
+# forbids a scripted effect from calling itself, so the walk cannot recurse and
+# each level is instead written out as its own effect below.
+#
+# Rules live in variables on the player: leo_mvd_r<P>_n<N>_{kind,dir,cond,thresh}
+# for priorities 1..6. leo_mvd_rule_count is how many of them are in use.
+#
+# Two things script cannot do shape the rest of this file: a variable name
+# cannot be composed at runtime, and a condition cannot be chosen at runtime.
+# So node access is macro-expanded with literal names ($NODE$), while the
+# per-directive and per-condition chains - which would otherwise be duplicated
+# into every node - are written once and driven by a value staged into a
+# temporary scope.
+
+### Staging.
+
+# Current scope: vassal. Stages $NODE$'s directive for leo_mvd_try_assign_effect.
+leo_mvd_stage_dir_effect = {
+	save_temporary_scope_value_as = {
+		name = leo_mvd_dir_id
+		value = scope:leo_mvd_liege.var:leo_mvd_$NODE$_dir
+	}
+}
+
+# Current scope: vassal. Stages $NODE$'s condition for leo_mvd_cond_holds_trigger.
+leo_mvd_stage_cond_effect = {
+	save_temporary_scope_value_as = {
+		name = leo_mvd_cond_id
+		value = scope:leo_mvd_liege.var:leo_mvd_$NODE$_cond
+	}
+	save_temporary_scope_value_as = {
+		name = leo_mvd_thresh
+		value = scope:leo_mvd_liege.var:leo_mvd_$NODE$_thresh
+	}
+}
+
+### Assignment.
+
+# Current scope: vassal. Requires scope:leo_mvd_dir_id (staged above).
+# Assigns the staged directive if the vassal passes vanilla's gate for it, and
+# does nothing at all otherwise - so an ineligible vassal simply falls through
+# to the next priority, exactly as vanilla hides an unavailable send_option.
+#
+# The leo_mvd_hit guard is what stops later priorities from overwriting an
+# earlier one's assignment; leo_mvd_assign_effect sets it.
+leo_mvd_try_assign_effect = {
+	if = {
+		limit = { NOT = { has_variable = leo_mvd_hit } }
+
+		if = {
+			limit = {
+				scope:leo_mvd_dir_id = 1
+				leo_mvd_gate_convert_faith_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = convert_faith CODE = 1 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 2
+				leo_mvd_gate_convert_culture_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = convert_culture CODE = 2 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 3
+				leo_mvd_gate_improve_development_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = improve_development CODE = 3 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 4
+				leo_mvd_gate_train_commanders_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = train_commanders CODE = 4 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 5
+				leo_mvd_gate_build_maa_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = build_maa CODE = 5 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 6
+				leo_mvd_gate_improve_cultural_acceptance_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = improve_cultural_acceptance CODE = 6 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 7
+				leo_mvd_gate_building_focus_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = building_focus_fortification CODE = 7 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 8
+				leo_mvd_gate_building_focus_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = building_focus_military CODE = 8 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 9
+				leo_mvd_gate_building_focus_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = building_focus_economy CODE = 9 }
+		}
+	}
+}
+
+### The walk.
+#
+# One effect per tree level. These are near-identical by necessity: a scripted
+# effect cannot call itself, so the recursion is unrolled by hand instead.
+
+# Current scope: vassal. A leaf: continue, or assign a directive.
+leo_mvd_eval_leaf_effect = {
+	if = {
+		limit = {
+			scope:leo_mvd_liege = { var:leo_mvd_$NODE$_kind = 1 }
+		}
+		leo_mvd_stage_dir_effect = { NODE = $NODE$ }
+		leo_mvd_try_assign_effect = yes
+	}
+}
+
+# Current scope: vassal. A mid node: its branches must be leaves.
+leo_mvd_eval_mid_effect = {
+	if = {
+		limit = {
+			scope:leo_mvd_liege = { var:leo_mvd_$NODE$_kind = 2 }
+		}
+		leo_mvd_stage_cond_effect = { NODE = $NODE$ }
+		if = {
+			limit = { leo_mvd_cond_holds_trigger = yes }
+			leo_mvd_eval_leaf_effect = { NODE = $LEFT$ }
+		}
+		else = {
+			leo_mvd_eval_leaf_effect = { NODE = $RIGHT$ }
+		}
+	}
+	else_if = {
+		limit = {
+			scope:leo_mvd_liege = { var:leo_mvd_$NODE$_kind = 1 }
+		}
+		leo_mvd_stage_dir_effect = { NODE = $NODE$ }
+		leo_mvd_try_assign_effect = yes
+	}
+}
+
+# Current scope: vassal. A priority's root node; its branches may be conditions.
+leo_mvd_eval_root_effect = {
+	if = {
+		limit = {
+			scope:leo_mvd_liege = { var:leo_mvd_$NODE$_kind = 2 }
+		}
+		leo_mvd_stage_cond_effect = { NODE = $NODE$ }
+		if = {
+			limit = { leo_mvd_cond_holds_trigger = yes }
+			leo_mvd_eval_mid_effect = { NODE = $LEFT$ LEFT = $LL$ RIGHT = $LR$ }
+		}
+		else = {
+			leo_mvd_eval_mid_effect = { NODE = $RIGHT$ LEFT = $RL$ RIGHT = $RR$ }
+		}
+	}
+	else_if = {
+		limit = {
+			scope:leo_mvd_liege = { var:leo_mvd_$NODE$_kind = 1 }
+		}
+		leo_mvd_stage_dir_effect = { NODE = $NODE$ }
+		leo_mvd_try_assign_effect = yes
+	}
+}
+
+# Current scope: vassal. Evaluates priority $P$ of the main rule set.
+# Priorities beyond leo_mvd_rule_count are skipped, so the unused slots a rule
+# set does not fill cost nothing.
+leo_mvd_eval_priority_effect = {
+	if = {
+		limit = {
+			scope:leo_mvd_liege = { var:leo_mvd_rule_count >= $N$ }
+		}
+		leo_mvd_eval_root_effect = {
+			NODE = $P$_n1
+			LEFT = $P$_n2
+			RIGHT = $P$_n3
+			LL = $P$_n4
+			LR = $P$_n5
+			RL = $P$_n6
+			RR = $P$_n7
+		}
+	}
+}
+
+### Rule authoring.
+#
+# Used to build the rule sets below, and by the panel's editor.
+
+# Current scope: the player. Reset one node to "continue to next priority".
+leo_mvd_clear_node_effect = {
+	set_variable = { name = leo_mvd_$NODE$_kind value = 0 }
+	set_variable = { name = leo_mvd_$NODE$_dir value = 0 }
+	set_variable = { name = leo_mvd_$NODE$_cond value = 0 }
+	set_variable = { name = leo_mvd_$NODE$_thresh value = 0 }
+}
+
+# Current scope: the player. Reset every node of priority $P$.
+leo_mvd_clear_priority_effect = {
+	leo_mvd_clear_node_effect = { NODE = $P$_n1 }
+	leo_mvd_clear_node_effect = { NODE = $P$_n2 }
+	leo_mvd_clear_node_effect = { NODE = $P$_n3 }
+	leo_mvd_clear_node_effect = { NODE = $P$_n4 }
+	leo_mvd_clear_node_effect = { NODE = $P$_n5 }
+	leo_mvd_clear_node_effect = { NODE = $P$_n6 }
+	leo_mvd_clear_node_effect = { NODE = $P$_n7 }
+}
+
+# Current scope: the player. Reset the whole main rule set to empty. Also the
+# one place that guarantees every rule variable exists, which the panel relies
+# on: it reads them straight from GUI, where an undefined variable has no
+# defined reading.
+#
+# rule_count 0 means there are no priorities at all, so the waterfall assigns
+# nothing and merely cleans up after itself.
+leo_mvd_clear_rules_effect = {
+	leo_mvd_clear_priority_effect = { P = r1 }
+	leo_mvd_clear_priority_effect = { P = r2 }
+	leo_mvd_clear_priority_effect = { P = r3 }
+	leo_mvd_clear_priority_effect = { P = r4 }
+	leo_mvd_clear_priority_effect = { P = r5 }
+	leo_mvd_clear_priority_effect = { P = r6 }
+	set_variable = { name = leo_mvd_rule_count value = 0 }
+}
+
+# Current scope: the player. Make $NODE$ assign directive $DIR$.
+leo_mvd_set_node_dir_effect = {
+	set_variable = { name = leo_mvd_$NODE$_kind value = 1 }
+	set_variable = { name = leo_mvd_$NODE$_dir value = $DIR$ }
+}
+
+# Current scope: the player. Make $NODE$ test condition $COND$ against $THRESH$
+# ($THRESH$ is ignored by the boolean conditions; pass 0).
+leo_mvd_set_node_cond_effect = {
+	set_variable = { name = leo_mvd_$NODE$_kind value = 2 }
+	set_variable = { name = leo_mvd_$NODE$_cond value = $COND$ }
+	set_variable = { name = leo_mvd_$NODE$_thresh value = $THRESH$ }
+}
+
+### Built-in rule sets.
+#
+# Built-ins are rule data, not hardcoded logic: each one loads a rule set that
+# the engine then evaluates by the same path as a hand-built one. So there is a
+# single implementation of the waterfall, and "Convert and Develop" reproducing
+# the mod's original behavior doubles as the engine's regression test.
+#
+# Selecting one overwrites the rule set. leo_mvd_preset records which is loaded:
+# 0 none, 1-4 built-in, 5 the player's own rules.
+
+# Current scope: the player.
+# No rules at all, and the default for a player who has not chosen yet. The mod
+# assigns nothing until a preset is picked; the waterfall still runs when
+# automation is on, but with no priorities it only clears directives the mod
+# assigned earlier, leaving manual ones alone.
+leo_mvd_preset_0_effect = {
+	leo_mvd_clear_rules_effect = yes
+	set_variable = { name = leo_mvd_preset value = 0 }
+}
+
+# Current scope: the player.
+# Steer vassals onto your faith, then your culture, then grow them: strong
+# vassals develop their land, weaker ones build up their military.
+leo_mvd_preset_1_effect = {
+	leo_mvd_clear_rules_effect = yes
+	set_variable = { name = leo_mvd_rule_count value = 4 }
+
+	# 1: Faith is Yours -> Convert Faith. Vanilla's gate only asks whether a
+	# vassal holds an off-faith county, not whose faith they hold, so without
+	# this condition an off-faith vassal would be told to spread their own.
+	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 1 THRESH = 0 }
+	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 1 }
+
+	# 2: Culture is Yours -> Promote Culture (the same reasoning)
+	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 2 THRESH = 0 }
+	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 2 }
+
+	# 3: strong vassals develop, weak ones build military
+	leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = 1000 }
+	leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 3 }
+	leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 8 }
+
+	# 4: catches the strong vassals who fail Improve Development's gate
+	leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
+
+	set_variable = { name = leo_mvd_preset value = 1 }
+}
+
+# Current scope: the player.
+# Homogenise the realm: convert faith, then culture, then grind down what is
+# left with cultural acceptance.
+leo_mvd_preset_2_effect = {
+	leo_mvd_clear_rules_effect = yes
+	set_variable = { name = leo_mvd_rule_count value = 4 }
+
+	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 1 THRESH = 0 }
+	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 1 }
+
+	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 2 THRESH = 0 }
+	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 2 }
+
+	# 3: no condition needed - the directive's own vanilla gate already limits
+	# it to duchy-tier vassals who still hold off-culture counties
+	leo_mvd_set_node_dir_effect = { NODE = r3_n1 DIR = 6 }
+
+	leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
+
+	set_variable = { name = leo_mvd_preset value = 2 }
+}
+
+# Current scope: the player.
+# Arm the realm. Strong vassals contribute what their government is good at -
+# administrative ones raise men-at-arms, the rest fortify - while weak vassals
+# everywhere build up their military infrastructure first.
+leo_mvd_preset_3_effect = {
+	leo_mvd_clear_rules_effect = yes
+	set_variable = { name = leo_mvd_rule_count value = 2 }
+
+	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 6 THRESH = 0 }
+	leo_mvd_set_node_cond_effect = { NODE = r1_n2 COND = 9 THRESH = 1000 }
+	leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 9 THRESH = 1000 }
+	leo_mvd_set_node_dir_effect = { NODE = r1_n4 DIR = 5 }
+	leo_mvd_set_node_dir_effect = { NODE = r1_n5 DIR = 8 }
+	leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 7 }
+	leo_mvd_set_node_dir_effect = { NODE = r1_n7 DIR = 8 }
+
+	# 2: catch-all for anyone the tree above could not place
+	leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 8 }
+
+	set_variable = { name = leo_mvd_preset value = 3 }
+}
+
+# Current scope: the player.
+# Build wealth. Underdeveloped vassals raise their development first; once they
+# are established they turn to economic buildings.
+leo_mvd_preset_4_effect = {
+	leo_mvd_clear_rules_effect = yes
+	set_variable = { name = leo_mvd_rule_count value = 2 }
+
+	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 11 THRESH = 40 }
+	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 9 }
+	leo_mvd_set_node_dir_effect = { NODE = r1_n3 DIR = 3 }
+
+	# 2: catches vassals who fail Improve Development's gate
+	leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 9 }
+
+	set_variable = { name = leo_mvd_preset value = 4 }
+}
+
+# Current scope: the player. Load preset $N$ and re-apply if automation is on.
+leo_mvd_select_preset_effect = {
+	leo_mvd_preset_$N$_effect = yes
+	if = {
+		limit = { has_variable = leo_mvd_auto }
+		leo_mvd_run_waterfall_effect = yes
+	}
+}
+
+### Succession.
+
+# Current scope: the heir. Copies one node from root (the dying player).
+leo_mvd_copy_node_effect = {
+	set_variable = { name = leo_mvd_$NODE$_kind value = root.var:leo_mvd_$NODE$_kind }
+	set_variable = { name = leo_mvd_$NODE$_dir value = root.var:leo_mvd_$NODE$_dir }
+	set_variable = { name = leo_mvd_$NODE$_cond value = root.var:leo_mvd_$NODE$_cond }
+	set_variable = { name = leo_mvd_$NODE$_thresh value = root.var:leo_mvd_$NODE$_thresh }
+}
+
+# Current scope: the heir. Copies priority $P$ from root.
+leo_mvd_copy_priority_effect = {
+	leo_mvd_copy_node_effect = { NODE = $P$_n1 }
+	leo_mvd_copy_node_effect = { NODE = $P$_n2 }
+	leo_mvd_copy_node_effect = { NODE = $P$_n3 }
+	leo_mvd_copy_node_effect = { NODE = $P$_n4 }
+	leo_mvd_copy_node_effect = { NODE = $P$_n5 }
+	leo_mvd_copy_node_effect = { NODE = $P$_n6 }
+	leo_mvd_copy_node_effect = { NODE = $P$_n7 }
+}
+
+# Current scope: the heir. Carries the whole rule set over from root.
+leo_mvd_copy_rules_effect = {
+	set_variable = { name = leo_mvd_preset value = root.var:leo_mvd_preset }
+	set_variable = { name = leo_mvd_rule_count value = root.var:leo_mvd_rule_count }
+	leo_mvd_copy_priority_effect = { P = r1 }
+	leo_mvd_copy_priority_effect = { P = r2 }
+	leo_mvd_copy_priority_effect = { P = r3 }
+	leo_mvd_copy_priority_effect = { P = r4 }
+	leo_mvd_copy_priority_effect = { P = r5 }
+	leo_mvd_copy_priority_effect = { P = r6 }
+}

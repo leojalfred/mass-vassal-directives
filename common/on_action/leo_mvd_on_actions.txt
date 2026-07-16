@@ -39,7 +39,7 @@ leo_mvd_on_death = {
 		if = {
 			limit = {
 				is_ai = no
-				has_variable = leo_mvd_p3_mode
+				has_variable = leo_mvd_preset
 				exists = player_heir
 			}
 			player_heir = {
@@ -47,22 +47,7 @@ leo_mvd_on_death = {
 					limit = { root = { has_variable = leo_mvd_auto } }
 					set_variable = leo_mvd_auto
 				}
-				if = {
-					limit = { root = { has_variable = leo_mvd_skip_p12 } }
-					set_variable = leo_mvd_skip_p12
-				}
-				set_variable = {
-					name = leo_mvd_p3_mode
-					value = root.var:leo_mvd_p3_mode
-				}
-				set_variable = {
-					name = leo_mvd_blanket
-					value = root.var:leo_mvd_blanket
-				}
-				set_variable = {
-					name = leo_mvd_threshold
-					value = root.var:leo_mvd_threshold
-				}
+				leo_mvd_copy_rules_effect = yes
 				if = {
 					limit = {
 						NOT = { has_character_flag = leo_mvd_pulse_alive }
