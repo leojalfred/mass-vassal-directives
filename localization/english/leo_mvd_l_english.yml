@@ -28,7 +28,7 @@
  leo_mvd_ui_preset_4: "Grow the Economy"
  leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\nUndeveloped vassals are told to $leo_mvd_ui_dir_3$.\nEstablished vassals turn to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_5: "Custom"
- leo_mvd_ui_preset_5_tt: "Your own rules, written below.\n\n#weak Starts from nothing, not from the preset you had selected.#!"
+ leo_mvd_ui_preset_5_tt: "Your own rules, written below.\n\n#weak Choosing Custom here starts from nothing. To start from a preset instead, simply change one of its rules - the preset becomes yours, as it was, with your change.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Exempt from Directive Automation"

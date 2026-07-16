@@ -140,11 +140,12 @@ sgui() { echo "[GetScriptedGui('$1').Execute( GuiScope.SetRoot( GetPlayer.MakeSc
 # Same behaviour either way, so only the label changes.
 kind0_key() { echo "SelectLocalization( $(vge leo_mvd_rule_count $(($1 + 1))), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' )"; }
 
-# The rules are shown whichever preset is selected, so that a preset can be read
-# rather than taken on trust - but only the player's own rules can be changed.
-# A built-in's rules are shown greyed out; editing one would quietly turn it into
-# something that is no longer the preset it claims to be.
-DD_EDITABLE="$(veq leo_mvd_preset 5)"
+# The rules are shown and editable whichever preset is selected, so a preset can
+# be read rather than taken on trust, and used as a starting point rather than a
+# take-it-or-leave-it. Changing anything makes the rules the player's own -
+# leo_mvd_edit_effect switches the selection to Custom - so a built-in is never
+# edited in place into something that is no longer the preset it claims to be.
+DD_EDITABLE=""
 
 ### Dropdowns.
 #

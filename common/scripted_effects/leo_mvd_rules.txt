@@ -295,12 +295,18 @@ leo_mvd_focus_effect = {
 }
 
 # Current scope: the player. Stage field $FIELD$ = $VALUE$ and write it to the
-# focused node. Only ever reachable while the player's own rules are selected,
-# so it does not need to guard the built-ins.
+# focused node.
+#
+# Changing anything makes the rules the player's own, whatever preset they came
+# from. That is what lets a preset be a starting point: tweak one of its rules
+# and you keep the rest of it, rather than building the whole waterfall again to
+# change one directive. A built-in cannot be edited in place because it would no
+# longer be the preset it still claimed to be.
 leo_mvd_edit_effect = {
 	set_variable = { name = leo_mvd_stage_field value = $FIELD$ }
 	set_variable = { name = leo_mvd_stage_value value = $VALUE$ }
 	leo_mvd_write_field_effect = yes
+	set_variable = { name = leo_mvd_preset value = 5 }
 	if = {
 		limit = { has_variable = leo_mvd_auto }
 		leo_mvd_run_waterfall_effect = yes
@@ -472,16 +478,24 @@ leo_mvd_preset_4_effect = {
 
 # Current scope: the player. The player's own rules.
 #
-# Starts blank - one priority, waiting for a directive - rather than carrying the
-# loaded preset over. Inheriting sounds helpful but isn't: anyone reaching for
-# Custom wants their own waterfall, and would have to dismantle four priorities
-# of someone else's before writing a word of it.
+# Picking Custom from a preset starts blank - one priority, waiting for a
+# directive - rather than carrying that preset over. Inheriting on selection
+# sounds helpful but isn't: someone who picks Custom outright wants their own
+# waterfall, and would have to dismantle four priorities of someone else's
+# first. Starting from a preset is a different gesture, and it already works:
+# change one of its rules and leo_mvd_edit_effect makes the whole thing yours.
+#
+# Doing nothing when Custom is already selected matters for exactly that reason
+# - otherwise picking Custom over rules that are already yours would wipe them.
 leo_mvd_preset_5_effect = {
-	leo_mvd_clear_rules_effect = yes
-	set_variable = { name = leo_mvd_rule_count value = 1 }
-	# Kind 1 with no directive chosen yet: the first thing to pick is right
-	# there, and an unset directive assigns nothing until it is.
-	leo_mvd_set_node_dir_effect = { NODE = r1_n1 DIR = 0 }
+	if = {
+		limit = { NOT = { var:leo_mvd_preset = 5 } }
+		leo_mvd_clear_rules_effect = yes
+		set_variable = { name = leo_mvd_rule_count value = 1 }
+		# Kind 1 with no directive chosen yet: the first thing to pick is right
+		# there, and an unset directive assigns nothing until it is.
+		leo_mvd_set_node_dir_effect = { NODE = r1_n1 DIR = 0 }
+	}
 	set_variable = { name = leo_mvd_preset value = 5 }
 }
 
