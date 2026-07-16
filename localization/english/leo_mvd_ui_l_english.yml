@@ -11,15 +11,15 @@
  leo_mvd_ui_priority_6: "Priority 6"
 
  leo_mvd_ui_kind_0: "Continue to Next Priority"
- leo_mvd_ui_kind_0_tt: "Do nothing here. The [vassal|E] falls through to the next priority.\n\n#weak On the last priority this leaves them without a [directive|E].#!"
+ leo_mvd_ui_kind_0_last: "Leave Without a Directive"
+ leo_mvd_ui_kind_0_tt: "Do nothing here. The [vassal|E] falls through to the next priority, or is left without a [directive|E] if this is the last one."
  leo_mvd_ui_kind_1: "Assign a Directive"
- leo_mvd_ui_kind_1_tt: "Give the [vassal|E] a [directive|E].\n\n#weak Vassals who cannot be given it - the game's own rules still apply - fall through to the next priority instead.#!"
  leo_mvd_ui_kind_2: "Check a Condition"
- leo_mvd_ui_kind_2_tt: "Test something about the [vassal|E] and act on the answer."
 
  leo_mvd_ui_branch_true: "If True"
  leo_mvd_ui_branch_false: "If False"
 
+ leo_mvd_ui_dir_0: "#weak Choose a Directive#!"
  leo_mvd_ui_dir_1: "$convert_faith$"
  leo_mvd_ui_dir_2: "$convert_culture$"
  leo_mvd_ui_dir_3: "$improve_development$"
@@ -30,6 +30,7 @@
  leo_mvd_ui_dir_8: "$building_focus_military$"
  leo_mvd_ui_dir_9: "$building_focus_economy$"
 
+ leo_mvd_ui_cond_0: "#weak Choose a Condition#!"
  leo_mvd_ui_cond_1: "Faith is Yours"
  leo_mvd_ui_cond_2: "Culture is Yours"
  leo_mvd_ui_cond_3: "Holds Counties of Another Faith"
@@ -58,7 +59,6 @@
  leo_mvd_ui_thresh_c11_40: "40"
  leo_mvd_ui_thresh_c11_60: "60"
  leo_mvd_ui_thresh_c11_80: "80"
- leo_mvd_ui_thresh_c12_n50: "-50"
  leo_mvd_ui_thresh_c12_0: "0"
  leo_mvd_ui_thresh_c12_25: "25"
  leo_mvd_ui_thresh_c12_50: "50"

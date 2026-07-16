@@ -5,16 +5,15 @@
 # The rule editor is the same handful of widgets repeated for every node of
 # every priority, differing only in the variable name they bind to. There is no
 # way to factor that out in GUI - blockoverride cannot parameterise the variable
-# name inside a binding - so a priority's editor is ~200 near-identical widgets
-# and six of them would be some 12000 lines. Generating it keeps the repetition
-# consistent and makes changing the pattern a one-line edit here.
+# name inside a binding - so generating it keeps the repetition consistent and
+# makes changing the pattern a one-line edit here.
 #
 # Emits three files, from one description of the rules, so that the panel, the
 # scripted GUIs it calls, and the localization it names cannot drift apart:
 #
-#   gui/leo_mvd_panel.gui                     the panel
-#   common/scripted_guis/leo_mvd_edit.txt     focus/set scripted GUIs
-#   localization/english/leo_mvd_ui_l_english.yml   editor labels
+#   gui/leo_mvd_panel.gui                            the panel
+#   common/scripted_guis/leo_mvd_edit.txt            focus/set scripted GUIs
+#   localization/english/leo_mvd_ui_l_english.yml    editor labels
 #
 # Hand edits to those three files will be overwritten. Tune the layout here
 # instead - the skeleton and the margins live in emit_panel below.
@@ -32,9 +31,9 @@ PRIORITIES=1          # main rule priorities to emit (max 6; see leo_mvd_rules.t
 # Directive codes -> vanilla loc key. The vanilla keys already embed the icon.
 DIRS="1 2 3 4 5 6 7 8 9"
 dir_loc() { case $1 in
-	1) echo convert_faith ;;               2) echo convert_culture ;;
-	3) echo improve_development ;;         4) echo train_commanders ;;
-	5) echo build_maa ;;                   6) echo improve_cultural_acceptance ;;
+	1) echo convert_faith ;;                2) echo convert_culture ;;
+	3) echo improve_development ;;          4) echo train_commanders ;;
+	5) echo build_maa ;;                    6) echo improve_cultural_acceptance ;;
 	7) echo building_focus_fortification ;; 8) echo building_focus_military ;;
 	9) echo building_focus_economy ;;
 esac; }
@@ -58,33 +57,37 @@ cond_name() { case $1 in
 	14) echo "Cultural Acceptance with You is at Least" ;;
 esac; }
 
-# Thresholds, per numeric condition. Tokens, because a name cannot hold a minus.
+# Thresholds, per numeric condition. All non-negative: a label key is built by
+# pasting the value onto a prefix at runtime, and a minus sign in a key is not
+# worth the risk.
 NUMERIC_CONDS="9 10 11 12 13 14"
 cond_thresh() { case $1 in
 	9)  echo "500 1000 2000 5000" ;;
 	10) echo "2 3 4 5" ;;
 	11) echo "10 20 40 60 80" ;;
-	12) echo "n50 0 25 50 75" ;;
+	12) echo "0 25 50 75" ;;
 	13) echo "1 2 3 5 10" ;;
 	14) echo "10 25 50 75 90" ;;
 esac; }
 
-# Token -> the number it means.
-tok_value() { case $1 in n*) echo "-${1#n}" ;; *) echo "$1" ;; esac; }
+# Picking a condition also sets this, so a threshold is never left at 0 - which
+# would name a label key that does not exist.
+cond_default_thresh() { case $1 in
+	9) echo 1000 ;; 10) echo 3 ;; 11) echo 40 ;; 12) echo 50 ;; 13) echo 3 ;; 14) echo 50 ;;
+	*) echo 0 ;;
+esac; }
 
-# Token -> its label, which depends on the condition asking.
+# A threshold's label depends on the condition asking for it.
 thresh_label() { local c=$1 t=$2
 	case $c in
 	10) case $t in 2) echo "County" ;; 3) echo "Duchy" ;; 4) echo "Kingdom" ;; 5) echo "Empire" ;; esac ;;
 	14) echo "$t%" ;;
-	12) tok_value "$t" ;;
 	13) case $t in 1) echo "1 County" ;; *) echo "$t Counties" ;; esac ;;
 	*)  echo "$t" ;;
 	esac
 }
 
-# Every distinct threshold token, across all conditions.
-all_thresh_tokens() { for c in $NUMERIC_CONDS; do cond_thresh "$c"; done | tr ' ' '\n' | sort -u; }
+all_thresh_values() { for c in $NUMERIC_CONDS; do cond_thresh "$c"; done | tr ' ' '\n' | sort -un; }
 
 # A priority's node tree: n1 root, n2/n3 its branches, n4..n7 the grandchildren.
 # n4..n7 are leaves - no condition - which is the depth cap standing in for the
@@ -93,45 +96,100 @@ node_children() { case $1 in 1) echo "2 3" ;; 2) echo "4 5" ;; 3) echo "6 7" ;; 
 
 ### Emit helpers.
 
-I=""                       # current indent
+I=""
 ind() { I=$(printf '\t%.0s' $(seq 1 "$1")); }
 p() { echo "${I}$1"; }
 
 # A GUI bool: does variable <1> equal <2>?
 veq() { echo "EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('$1').GetValue, '(CFixedPoint)$2' )"; }
+# A GUI bool: is variable <1> at least <2>?
+vge() { echo "GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('$1').GetValue, '(CFixedPoint)$2' )"; }
+# Variable <1> as an int, for pasting into a string.
+vint() { echo "IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('$1').GetValue))"; }
+# The loc key <prefix><value of variable>, resolved. This is what lets a button
+# show its current selection without a 14-way branch: vanilla builds keys the
+# same way (window_ledger.gui:417, shared/coa_designer.gui:1659).
+vkey() { echo "Localize(Concatenate('$1', $(vint "$2")))"; }
 # Run scripted GUI <1> with the player as root.
 sgui() { echo "[GetScriptedGui('$1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"; }
 
-# A radio that writes <field> = <value> to <node>, and lights up when it holds.
-# The two onclick lines are the whole trick: GUI cannot hand script a number, so
-# the first points the cursor at the node and the second writes the value.
-# Vanilla stacks onclick this way (tournament_widget_types.gui:281-283); it runs
-# them in order. Bracket chaining "[A][B]" is not a thing - do not try it.
-emit_radio() { local depth=$1 node=$2 code=$3 field=$4 value=$5 loc=$6 tt=${7:-}
+# Kind 0 means "fall through to the next priority" - but on the last priority
+# there is no next one, and it means "leave this vassal without a directive".
+# Same behaviour either way, so only the label changes.
+kind0_key() { echo "SelectLocalization( $(vge leo_mvd_rule_count $(($1 + 1))), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' )"; }
+
+### Dropdowns.
+#
+# A real popup is not possible here: every scrollarea is scissor = yes
+# (preload/defaults.gui:252), so anything a row draws outside its own bounds is
+# clipped - which is why vanilla never puts a dropdown inside a scrollbox. So
+# these open in flow, pushing the rows below them down, and the scrollbox
+# scrolls as it always did. The parts are vanilla's own dropdown parts, so it
+# still reads as one.
+#
+# Which dropdown is open lives in a single GUI variable, so opening one closes
+# any other for free. GUI variables are client-local and never touch script.
+
+# <1> depth  <2> id  <3> label expression  <4> tooltip (may be empty)
+emit_dd_button() { local depth=$1 id=$2 label=$3 tt=${4:-}
 	ind "$depth"
-	p "button_radio_label = {"
+	p "leo_mvd_button_drop = {"
 	ind $((depth+1))
 	p "layoutpolicy_horizontal = expanding"
-	p "onclick = \"$(sgui "leo_mvd_focus_${node}")\""
-	p "onclick = \"$(sgui "leo_mvd_set_${field}_${value}")\""
+	p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' ), 'none', '$id' ) )]\""
+	p "text = \"[$label]\""
 	[ -n "$tt" ] && p "tooltip = \"$tt\""
-	p "blockoverride \"radio\" {"
-	ind $((depth+2)); p "frame = \"[BoolTo1And2( $(veq "leo_mvd_${node}_${field}" "$(tok_value "$value")") )]\""
-	ind $((depth+1)); p "}"
-	p "blockoverride \"text\" {"
-	ind $((depth+2)); p "text = \"$loc\""
-	ind $((depth+1)); p "}"
 	ind "$depth"; p "}"
 }
 
-# One node's editor. leaf nodes cannot branch, so they get no condition option.
-emit_node() { local depth=$1 prio=$2 n=$3 level=$4
-	local node="r${prio}_n${n}" code=$((prio*10+n))
-	local kinds="0 1 2"; [ "$level" -ge 2 ] && kinds="0 1"
+# <1> depth  <2> id  -> opens the option list block; caller emits rows + closes.
+emit_dd_list_open() { local depth=$1 id=$2
+	ind "$depth"
+	p "vbox = {"
+	ind $((depth+1))
+	p "visible = \"[GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' )]\""
+	p "layoutpolicy_horizontal = expanding"
+	p "using = Background_DropDown"
+	p "margin = { 4 4 }"
+	p "spacing = 1"
+}
 
+# One option row. Three clicks in order: point the cursor at the node, write the
+# value to it, close the list. GUI cannot hand script a number, so the node
+# cannot simply be an argument - the cursor is what stands in for it.
+# <1> depth <2> node <3> id <4> setter sgui <5> label expr-or-key <6> literal?
+emit_dd_row() { local depth=$1 node=$2 id=$3 setter=$4 label=$5
+	ind "$depth"
+	p "leo_mvd_button_dropdown = {"
+	ind $((depth+1))
+	p "layoutpolicy_horizontal = expanding"
+	p "size = { -1 30 }"
+	p "onclick = \"$(sgui "leo_mvd_focus_${node}")\""
+	p "onclick = \"$(sgui "$setter")\""
+	p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]\""
+	p "text = \"$label\""
+	ind "$depth"; p "}"
+}
+
+emit_dd_close() { ind "$1"; p "}"; }
+
+### One node's editor.
+
+emit_node() { local depth=$1 prio=$2 n=$3 level=$4
+	local node="r${prio}_n${n}"
+	local kinds="1 2 0"; [ "$level" -ge 2 ] && kinds="1 0"
+
+	# What this node does. Kind 0's label depends on whether a next priority
+	# exists, so the button has to ask before falling back to the generic key.
+	local kind_label="SelectLocalization( $(veq "leo_mvd_${node}_kind" 0), $(kind0_key "$prio"), $(vkey 'leo_mvd_ui_kind_' "leo_mvd_${node}_kind") )"
+	emit_dd_button "$depth" "${node}_kind" "$kind_label"
+	emit_dd_list_open "$depth" "${node}_kind"
 	for k in $kinds; do
-		emit_radio "$depth" "$node" "$code" kind "$k" "leo_mvd_ui_kind_$k" "leo_mvd_ui_kind_${k}_tt"
+		local kl="leo_mvd_ui_kind_$k"
+		[ "$k" = 0 ] && kl="[$(kind0_key "$prio")]"
+		emit_dd_row $((depth+1)) "$node" "${node}_kind" "leo_mvd_set_kind_$k" "$kl"
 	done
+	emit_dd_close "$depth"
 
 	# Assign a Directive
 	ind "$depth"; p ""
@@ -141,9 +199,12 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
+	emit_dd_button $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")"
+	emit_dd_list_open $((depth+1)) "${node}_dir"
 	for d in $DIRS; do
-		emit_radio $((depth+1)) "$node" "$code" dir "$d" "leo_mvd_ui_dir_$d"
+		emit_dd_row $((depth+2)) "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d"
 	done
+	emit_dd_close $((depth+1))
 	ind "$depth"; p "}"
 
 	[ "$level" -ge 2 ] && return
@@ -156,30 +217,36 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
+	emit_dd_button $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
+	emit_dd_list_open $((depth+1)) "${node}_cond"
 	for c in $CONDS; do
-		emit_radio $((depth+1)) "$node" "$code" cond "$c" "leo_mvd_ui_cond_$c"
+		emit_dd_row $((depth+2)) "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c"
 	done
+	emit_dd_close $((depth+1))
 
-	# Its threshold, if it takes one. Only the chosen condition's list shows.
+	# Its threshold, if it takes one. Only the chosen condition's list exists on
+	# screen, so the label prefix can be that condition's, spelled out.
 	for c in $NUMERIC_CONDS; do
 		ind $((depth+1)); p ""
 		p "vbox = {"
 		ind $((depth+2))
 		p "visible = \"[$(veq "leo_mvd_${node}_cond" "$c")]\""
 		p "layoutpolicy_horizontal = expanding"
-		p "margin_left = 16"
 		p "spacing = 2"
+		emit_dd_button $((depth+2)) "${node}_t${c}" "$(vkey "leo_mvd_ui_thresh_c${c}_" "leo_mvd_${node}_thresh")"
+		emit_dd_list_open $((depth+2)) "${node}_t${c}"
 		for t in $(cond_thresh "$c"); do
-			emit_radio $((depth+2)) "$node" "$code" thresh "$t" "leo_mvd_ui_thresh_c${c}_${t}"
+			emit_dd_row $((depth+3)) "$node" "${node}_t${c}" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}"
 		done
+		emit_dd_close $((depth+2))
 		ind $((depth+1)); p "}"
 	done
 	ind "$depth"; p "}"
 
 	# Its branches. Only rendered once this node is actually a condition, so an
 	# unused level costs the player nothing to look at.
-	local kids; kids=$(node_children "$n")
-	local kt kf; kt=$(echo "$kids" | cut -d' ' -f1); kf=$(echo "$kids" | cut -d' ' -f2)
+	local kids kt kf; kids=$(node_children "$n")
+	kt=$(echo "$kids" | cut -d' ' -f1); kf=$(echo "$kids" | cut -d' ' -f2)
 	ind "$depth"; p ""
 	p "vbox = {"
 	ind $((depth+1))
@@ -201,25 +268,6 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4
 
 ### The panel.
 
-# A GUI bool: is variable <1> at least <2>?
-vge() { echo "GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('$1').GetValue, '(CFixedPoint)$2' )"; }
-
-emit_preset_radio() { local n=$1
-	ind 7
-	p "button_radio_label = {"
-	ind 8
-	p "layoutpolicy_horizontal = expanding"
-	p "onclick = \"$(sgui "leo_mvd_preset_${n}")\""
-	p "tooltip = \"leo_mvd_ui_preset_${n}_tt\""
-	p "blockoverride \"radio\" {"
-	ind 9; p "frame = \"[BoolTo1And2( $(veq leo_mvd_preset "$n") )]\""
-	ind 8; p "}"
-	p "blockoverride \"text\" {"
-	ind 9; p "text = \"leo_mvd_ui_preset_${n}\""
-	ind 8; p "}"
-	ind 7; p "}"
-}
-
 emit_panel() {
 cat << 'HEAD'
 ### Leo VI's Mass Vassal Directives - docked configuration panel.
@@ -237,12 +285,74 @@ cat << 'HEAD'
 ### button_expandable_toggle_field + visible = PdxGuiFoldOut.IsUnfolded),
 ### matching the vanilla Subjects tab's collapsible vassal categories.
 ###
-### A radio's selected state is read straight out of the script variable it
-### represents - EqualTo_CFixedPoint against Var(...).GetValue - rather than
-### through a scripted GUI's is_shown. Only clicking one runs script, so the
-### panel costs no per-frame script evaluation however many radios it grows.
-### Note that .GetValue yields a CFixedPoint, so literals must be written in
-### the cast-and-quoted form '(CFixedPoint)1'.
+### A control reads its state straight out of the script variable it
+### represents rather than through a scripted GUI's is_shown - either as a
+### bool (EqualTo_CFixedPoint against Var(...).GetValue) or, for the text on
+### a dropdown, by pasting the value onto a loc key prefix and resolving it.
+### Only clicking a control runs script, so the panel costs no per-frame
+### script evaluation however many controls it grows. Note that .GetValue
+### yields a CFixedPoint, so literals take the form '(CFixedPoint)1'.
+
+### The dropdown parts.
+###
+### These copy vanilla's button_drop and button_dropdown (shared/buttons.gui
+### :1427 and :1456) so the dropdowns look like the game's own - minus one
+### line. Both vanilla types set button_trigger = none, because they are only
+### ever used inside a C++ dropDown, which handles the click itself; inheriting
+### that leaves our own onclick never firing. Copies rather than overrides, so
+### no vanilla file is touched. Re-diff after a game patch.
+types leo_mvd_dropdown_types {
+	type leo_mvd_button_drop = button_normal {
+		size = { 100% 33 }
+		gfxtype = framedbuttongfx
+		effectname = "NoHighlight"
+		upframe = 1
+		overframe = 2
+		downframe = 3
+		disableframe = 4
+		texture = "gfx/interface/buttons/button_drop_down.dds"
+		framesize = { 225 33 }
+		spriteType = Corneredtiled
+		spriteborder = { 75 11 }
+		clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_checkbox"
+
+		buttonText = {
+			text_single = {
+				size = { 100% 100% }
+				autoresize = no
+				margin = { 15 0 }
+				margin_right = 25
+				align = left|nobaseline
+				default_format = "#clickable"
+				alwaystransparent = yes
+			}
+		}
+	}
+
+	type leo_mvd_button_dropdown = button_normal {
+		size = { 225 30 }
+		gfxtype = framedbuttongfx
+		effectname = "NoHighlight"
+		shaderfile = "gfx/FX/pdxgui_pushbutton.shader"
+		upframe = 1
+		overframe = 2
+		downframe = 3
+		disableframe = 1
+		texture = "gfx/interface/buttons/button_interaction_menu.dds"
+		framesize = { 317 30 }
+		clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_checkbox"
+
+		buttonText = {
+			text_single = {
+				size = { 100% 100% }
+				autoresize = no
+				margin_left = 10
+				align = left|nobaseline
+				alwaystransparent = yes
+			}
+		}
+	}
+}
 
 window = {
 	name = "leo_mvd_panel"
@@ -262,9 +372,12 @@ window = {
 		using = Animation_FadeIn_Quick
 	}
 
+	### Closing the panel also closes any open dropdown, so it does not come
+	### back open the next time.
 	state = {
 		name = _hide
 		using = Animation_FadeOut_Quick
+		on_start = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 	}
 
 	vbox = {
@@ -330,11 +443,10 @@ window = {
 						}
 					}
 
-					### Preset section (collapsible). One radio per built-in rule
-					### set; clicking one loads it, replacing the rules in place.
-					### None is selected by default - the mod assigns nothing
-					### until a rule set is chosen. Custom keeps whatever rules
-					### are loaded and opens them for editing below.
+					### Preset section (collapsible). None is selected by default
+					### - the mod assigns nothing until a rule set is chosen.
+					### Custom keeps whatever rules are loaded and opens them for
+					### editing below.
 					vbox = {
 						layoutpolicy_horizontal = expanding
 						oncreate = "[BindFoldOutContext]"
@@ -354,7 +466,22 @@ window = {
 
 HEAD
 
-	for n in 0 1 2 3 4 5; do emit_preset_radio "$n"; echo; done
+	# The preset dropdown.
+	emit_dd_button 7 preset "$(vkey 'leo_mvd_ui_preset_' leo_mvd_preset)"
+	emit_dd_list_open 7 preset
+	for n in 0 1 2 3 4 5; do
+		ind 8
+		p "leo_mvd_button_dropdown = {"
+		ind 9
+		p "layoutpolicy_horizontal = expanding"
+		p "size = { -1 30 }"
+		p "onclick = \"$(sgui "leo_mvd_preset_${n}")\""
+		p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]\""
+		p "tooltip = \"leo_mvd_ui_preset_${n}_tt\""
+		p "text = \"leo_mvd_ui_preset_${n}\""
+		ind 8; p "}"
+	done
+	emit_dd_close 7
 
 cat << 'MID'
 						}
@@ -425,7 +552,7 @@ cat << 'TAIL'
 TAIL
 }
 
-### The scripted GUIs the panel's radios call.
+### The scripted GUIs the panel's dropdowns call.
 
 emit_sguis() {
 cat << 'HEAD'
@@ -433,14 +560,14 @@ cat << 'HEAD'
 #
 # GENERATED by tools/gen_panel.sh - edits here will be overwritten.
 #
-# A radio click runs two of these in order: a focus, which points the cursor at
-# the node being edited, then a set, which writes one field to it. That split is
-# what keeps this file to one entry per node plus one per option, instead of one
-# per node-and-option pair - GUI cannot hand script a number, so the node cannot
-# simply be an argument.
+# Choosing an option runs two of these in order: a focus, which points a cursor
+# at the node being edited, then a set, which writes one field to whatever the
+# cursor points at. That split is what keeps this file to one entry per node
+# plus one per option, instead of one per node-and-option pair - GUI cannot hand
+# script a number, so the node cannot simply be an argument.
 #
-# None of these need is_shown: a radio reads its selected state straight from
-# the variable it represents.
+# None of these need is_shown: a control reads its own state straight from the
+# variable it represents.
 HEAD
 
 	for prio in $(seq 1 "$PRIORITIES"); do
@@ -464,20 +591,24 @@ HEAD
 	done
 
 	echo
-	echo "### Conditions."
+	echo "### Conditions. Each also sets a sensible threshold, so that a numeric"
+	echo "### condition is never left sitting at a value it has no label for."
 	for c in $CONDS; do
 		echo "leo_mvd_set_cond_${c} = {"
 		echo -e "\tscope = character"
-		echo -e "\teffect = { leo_mvd_edit_effect = { FIELD = 2 VALUE = $c } }"
+		echo -e "\teffect = {"
+		echo -e "\t\tleo_mvd_edit_effect = { FIELD = 2 VALUE = $c }"
+		echo -e "\t\tleo_mvd_edit_effect = { FIELD = 3 VALUE = $(cond_default_thresh "$c") }"
+		echo -e "\t}"
 		echo "}"
 	done
 
 	echo
-	echo "### Thresholds. Shared by value across conditions; only the labels differ."
-	for t in $(all_thresh_tokens); do
+	echo "### Thresholds. Shared by value across conditions; only labels differ."
+	for t in $(all_thresh_values); do
 		echo "leo_mvd_set_thresh_${t} = {"
 		echo -e "\tscope = character"
-		echo -e "\teffect = { leo_mvd_edit_effect = { FIELD = 3 VALUE = $(tok_value "$t") } }"
+		echo -e "\teffect = { leo_mvd_edit_effect = { FIELD = 3 VALUE = $t } }"
 		echo "}"
 	done
 
@@ -492,6 +623,10 @@ HEAD
 }
 
 ### The editor's labels.
+#
+# A dropdown builds its label key by pasting the variable's value onto a prefix,
+# so every value a variable can hold needs a key here - including 0, which is
+# what a node starts on.
 
 emit_loc() {
 	echo "l_english:"
@@ -504,19 +639,20 @@ emit_loc() {
 	done
 	echo
 	echo " leo_mvd_ui_kind_0: \"Continue to Next Priority\""
-	echo " leo_mvd_ui_kind_0_tt: \"Do nothing here. The [vassal|E] falls through to the next priority.\\n\\n#weak On the last priority this leaves them without a [directive|E].#!\""
+	echo " leo_mvd_ui_kind_0_last: \"Leave Without a Directive\""
+	echo " leo_mvd_ui_kind_0_tt: \"Do nothing here. The [vassal|E] falls through to the next priority, or is left without a [directive|E] if this is the last one.\""
 	echo " leo_mvd_ui_kind_1: \"Assign a Directive\""
-	echo " leo_mvd_ui_kind_1_tt: \"Give the [vassal|E] a [directive|E].\\n\\n#weak Vassals who cannot be given it - the game's own rules still apply - fall through to the next priority instead.#!\""
 	echo " leo_mvd_ui_kind_2: \"Check a Condition\""
-	echo " leo_mvd_ui_kind_2_tt: \"Test something about the [vassal|E] and act on the answer.\""
 	echo
 	echo " leo_mvd_ui_branch_true: \"If True\""
 	echo " leo_mvd_ui_branch_false: \"If False\""
 	echo
+	echo " leo_mvd_ui_dir_0: \"#weak Choose a Directive#!\""
 	for d in $DIRS; do
 		echo " leo_mvd_ui_dir_${d}: \"\$$(dir_loc "$d")\$\""
 	done
 	echo
+	echo " leo_mvd_ui_cond_0: \"#weak Choose a Condition#!\""
 	for c in $CONDS; do
 		echo " leo_mvd_ui_cond_${c}: \"$(cond_name "$c")\""
 	done
