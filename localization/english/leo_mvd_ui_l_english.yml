@@ -21,6 +21,11 @@
  leo_mvd_ui_branch_true: "If True"
  leo_mvd_ui_branch_false: "If False"
 
+ leo_mvd_ui_add_priority: "Add Priority"
+ leo_mvd_ui_add_priority_tt: "Add a priority to the end of the waterfall, for [vassals|E] none of the ones above it claimed."
+ leo_mvd_ui_remove_priority: "Remove"
+ leo_mvd_ui_remove_priority_tt: "Drop this priority. The ones below it move up to close the gap.\n\n#weak A rule set always keeps at least one priority - to assign nothing at all, choose the None preset.#!"
+
  leo_mvd_ui_dir_0: "#weak Choose a Directive#!"
  leo_mvd_ui_dir_1: "@leo_mvd_dir_icon_convert_faith! Convert [faith|E]"
  leo_mvd_ui_dir_2: "@leo_mvd_dir_icon_convert_culture! Promote [culture|E]"

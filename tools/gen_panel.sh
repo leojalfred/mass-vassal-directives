@@ -23,8 +23,16 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+# Build to temporary files and move them into place at the end, rather than
+# writing the real ones as we go. A run takes the better part of a minute, and
+# an interrupted one that had been appending directly would leave a half-written
+# panel behind - or, if another run had started meanwhile, two of them
+# interleaved into the same file.
+TMP=$(mktemp -d)
+trap 'rm -rf "$TMP"' EXIT
+
 ### How much to generate.
-PRIORITIES=1          # main rule priorities to emit (max 6; see leo_mvd_rules.txt)
+PRIORITIES=6          # main rule priorities to emit (max 6; see leo_mvd_rules.txt)
 
 ### Look.
 DD_INSET=3            # px an open dropdown list is narrower than its button,
@@ -118,8 +126,11 @@ node_children() { case $1 in 1) echo "2 3" ;; 2) echo "4 5" ;; 3) echo "6 7" ;; 
 
 ### Emit helpers.
 
+# Indent by parameter expansion, not a subshell per line: six priorities is
+# around 12000 lines, and forking twice for each of them takes minutes.
+TABS=$'\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t'
 I=""
-ind() { I=$(printf '\t%.0s' $(seq 1 "$1")); }
+ind() { I="${TABS:0:$1}"; }
 p() { echo "${I}$1"; }
 
 # A GUI bool: does variable <1> equal <2>?
@@ -134,6 +145,8 @@ vint() { echo "IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('$1').GetValu
 vkey() { echo "Localize(Concatenate('$1', $(vint "$2")))"; }
 # Run scripted GUI <1> with the player as root.
 sgui() { echo "[GetScriptedGui('$1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"; }
+# Whether scripted GUI <1> is currently allowed, for an `enabled` binding.
+sgui_valid() { echo "[GetScriptedGui('$1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"; }
 
 # Kind 0 means "fall through to the next priority" - but on the last priority
 # there is no next one, and it means "leave this vassal without a directive".
@@ -644,9 +657,49 @@ MID
 		p "spacing = 2"
 		p ""
 		emit_node 7 "$prio" 1 0
+
+		# Drop this priority. Disabled on the last one standing - a rule set with
+		# no priorities at all is what None is for.
+		ind 7; p ""
+		p "hbox = {"
+		ind 8
+		p "layoutpolicy_horizontal = expanding"
+		p "margin_top = 6"
+		p ""
+		p "button_standard = {"
+		ind 9
+		p "text = \"leo_mvd_ui_remove_priority\""
+		p "onclick = \"$(sgui "leo_mvd_remove_priority_${prio}")\""
+		p "enabled = \"$(sgui_valid "leo_mvd_remove_priority_${prio}")\""
+		p "tooltip = \"leo_mvd_ui_remove_priority_tt\""
+		ind 8; p "}"
+		p ""
+		p "expand = {}"
+		ind 7; p "}"
+
 		ind 6; p "}"
 		ind 5; p "}"
 	done
+
+	# Append a priority. Hidden on None, which has no waterfall to extend, and
+	# once the last slot is in use.
+	ind 5; p ""
+	p "### Add a priority to the end of the waterfall."
+	p "hbox = {"
+	ind 6
+	p "visible = \"[And( $(vge leo_mvd_rule_count 1), Not( $(vge leo_mvd_rule_count $((PRIORITIES + 1))) ) )]\""
+	p "layoutpolicy_horizontal = expanding"
+	p "margin = { 6 4 }"
+	p ""
+	p "button_standard = {"
+	ind 7
+	p "text = \"leo_mvd_ui_add_priority\""
+	p "onclick = \"$(sgui leo_mvd_add_priority)\""
+	p "tooltip = \"leo_mvd_ui_add_priority_tt\""
+	ind 6; p "}"
+	p ""
+	p "expand = {}"
+	ind 5; p "}"
 
 cat << 'TAIL'
 				}
@@ -709,6 +762,21 @@ HEAD
 			echo -e "\teffect = { leo_mvd_focus_effect = { CODE = $((prio*10+n)) } }"
 			echo "}"
 		done
+	done
+
+	echo
+	echo "### Adding and removing priorities."
+	echo "leo_mvd_add_priority = {"
+	echo -e "\tscope = character"
+	echo -e "\teffect = { leo_mvd_add_priority_effect = yes }"
+	echo "}"
+	for prio in $(seq 1 "$PRIORITIES"); do
+		echo "leo_mvd_remove_priority_${prio} = {"
+		echo -e "\tscope = character"
+		echo -e "\t# Never down to nothing: a rule set with no priorities is None."
+		echo -e "\tis_valid = { var:leo_mvd_rule_count > 1 }"
+		echo -e "\teffect = { leo_mvd_remove_priority_${prio}_effect = yes }"
+		echo "}"
 	done
 
 	echo
@@ -779,6 +847,11 @@ emit_loc() {
 	echo " leo_mvd_ui_branch_true: \"If True\""
 	echo " leo_mvd_ui_branch_false: \"If False\""
 	echo
+	echo " leo_mvd_ui_add_priority: \"Add Priority\""
+	echo " leo_mvd_ui_add_priority_tt: \"Add a priority to the end of the waterfall, for [vassals|E] none of the ones above it claimed.\""
+	echo " leo_mvd_ui_remove_priority: \"Remove\""
+	echo " leo_mvd_ui_remove_priority_tt: \"Drop this priority. The ones below it move up to close the gap.\\n\\n#weak A rule set always keeps at least one priority - to assign nothing at all, choose the None preset.#!\""
+	echo
 	echo " leo_mvd_ui_dir_0: \"#weak Choose a Directive#!\""
 	for d in $DIRS; do
 		echo " leo_mvd_ui_dir_${d}: \"@leo_mvd_dir_icon_$(dir_icon "$d")! $(dir_name "$d")\""
@@ -798,16 +871,26 @@ emit_loc() {
 
 ### Write them out, each with the UTF-8 BOM the game requires.
 
-write_bom() { printf '\xEF\xBB\xBF' > "$1"; }
+# <1> emitter  <2> destination. Built aside, checked, then moved into place, so
+# a run that dies partway leaves the real file untouched rather than truncated.
+emit_to() {
+	local emitter=$1
+	local dest=$2
+	local tmp="$TMP/$(basename "$dest")"
+	printf '\xEF\xBB\xBF' > "$tmp"
+	"$emitter" >> "$tmp"
+	local o c
+	o=$(tr -cd '{' < "$tmp" | wc -c); c=$(tr -cd '}' < "$tmp" | wc -c)
+	if [ "$o" != "$c" ]; then
+		echo "ABORT: $dest came out unbalanced ({=$o }=$c) - not written" >&2
+		exit 1
+	fi
+	mv "$tmp" "$dest"
+}
 
-write_bom gui/leo_mvd_panel.gui
-emit_panel >> gui/leo_mvd_panel.gui
-
-write_bom common/scripted_guis/leo_mvd_edit.txt
-emit_sguis >> common/scripted_guis/leo_mvd_edit.txt
-
-write_bom localization/english/leo_mvd_ui_l_english.yml
-emit_loc >> localization/english/leo_mvd_ui_l_english.yml
+emit_to emit_panel gui/leo_mvd_panel.gui
+emit_to emit_sguis common/scripted_guis/leo_mvd_edit.txt
+emit_to emit_loc   localization/english/leo_mvd_ui_l_english.yml
 
 echo "Generated $PRIORITIES priority editor(s):"
 wc -l gui/leo_mvd_panel.gui common/scripted_guis/leo_mvd_edit.txt localization/english/leo_mvd_ui_l_english.yml

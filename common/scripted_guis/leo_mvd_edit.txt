@@ -41,6 +41,198 @@ leo_mvd_focus_r1_n7 = {
 	effect = { leo_mvd_focus_effect = { CODE = 17 } }
 }
 
+### Priority 2 nodes.
+leo_mvd_focus_r2_n1 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 21 } }
+}
+leo_mvd_focus_r2_n2 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 22 } }
+}
+leo_mvd_focus_r2_n3 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 23 } }
+}
+leo_mvd_focus_r2_n4 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 24 } }
+}
+leo_mvd_focus_r2_n5 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 25 } }
+}
+leo_mvd_focus_r2_n6 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 26 } }
+}
+leo_mvd_focus_r2_n7 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 27 } }
+}
+
+### Priority 3 nodes.
+leo_mvd_focus_r3_n1 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 31 } }
+}
+leo_mvd_focus_r3_n2 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 32 } }
+}
+leo_mvd_focus_r3_n3 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 33 } }
+}
+leo_mvd_focus_r3_n4 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 34 } }
+}
+leo_mvd_focus_r3_n5 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 35 } }
+}
+leo_mvd_focus_r3_n6 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 36 } }
+}
+leo_mvd_focus_r3_n7 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 37 } }
+}
+
+### Priority 4 nodes.
+leo_mvd_focus_r4_n1 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 41 } }
+}
+leo_mvd_focus_r4_n2 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 42 } }
+}
+leo_mvd_focus_r4_n3 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 43 } }
+}
+leo_mvd_focus_r4_n4 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 44 } }
+}
+leo_mvd_focus_r4_n5 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 45 } }
+}
+leo_mvd_focus_r4_n6 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 46 } }
+}
+leo_mvd_focus_r4_n7 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 47 } }
+}
+
+### Priority 5 nodes.
+leo_mvd_focus_r5_n1 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 51 } }
+}
+leo_mvd_focus_r5_n2 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 52 } }
+}
+leo_mvd_focus_r5_n3 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 53 } }
+}
+leo_mvd_focus_r5_n4 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 54 } }
+}
+leo_mvd_focus_r5_n5 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 55 } }
+}
+leo_mvd_focus_r5_n6 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 56 } }
+}
+leo_mvd_focus_r5_n7 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 57 } }
+}
+
+### Priority 6 nodes.
+leo_mvd_focus_r6_n1 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 61 } }
+}
+leo_mvd_focus_r6_n2 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 62 } }
+}
+leo_mvd_focus_r6_n3 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 63 } }
+}
+leo_mvd_focus_r6_n4 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 64 } }
+}
+leo_mvd_focus_r6_n5 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 65 } }
+}
+leo_mvd_focus_r6_n6 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 66 } }
+}
+leo_mvd_focus_r6_n7 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 67 } }
+}
+
+### Adding and removing priorities.
+leo_mvd_add_priority = {
+	scope = character
+	effect = { leo_mvd_add_priority_effect = yes }
+}
+leo_mvd_remove_priority_1 = {
+	scope = character
+	# Never down to nothing: a rule set with no priorities is None.
+	is_valid = { var:leo_mvd_rule_count > 1 }
+	effect = { leo_mvd_remove_priority_1_effect = yes }
+}
+leo_mvd_remove_priority_2 = {
+	scope = character
+	# Never down to nothing: a rule set with no priorities is None.
+	is_valid = { var:leo_mvd_rule_count > 1 }
+	effect = { leo_mvd_remove_priority_2_effect = yes }
+}
+leo_mvd_remove_priority_3 = {
+	scope = character
+	# Never down to nothing: a rule set with no priorities is None.
+	is_valid = { var:leo_mvd_rule_count > 1 }
+	effect = { leo_mvd_remove_priority_3_effect = yes }
+}
+leo_mvd_remove_priority_4 = {
+	scope = character
+	# Never down to nothing: a rule set with no priorities is None.
+	is_valid = { var:leo_mvd_rule_count > 1 }
+	effect = { leo_mvd_remove_priority_4_effect = yes }
+}
+leo_mvd_remove_priority_5 = {
+	scope = character
+	# Never down to nothing: a rule set with no priorities is None.
+	is_valid = { var:leo_mvd_rule_count > 1 }
+	effect = { leo_mvd_remove_priority_5_effect = yes }
+}
+leo_mvd_remove_priority_6 = {
+	scope = character
+	# Never down to nothing: a rule set with no priorities is None.
+	is_valid = { var:leo_mvd_rule_count > 1 }
+	effect = { leo_mvd_remove_priority_6_effect = yes }
+}
+
 ### Node kind.
 leo_mvd_set_kind_0 = {
 	scope = character

@@ -306,11 +306,7 @@ leo_mvd_edit_effect = {
 	set_variable = { name = leo_mvd_stage_field value = $FIELD$ }
 	set_variable = { name = leo_mvd_stage_value value = $VALUE$ }
 	leo_mvd_write_field_effect = yes
-	set_variable = { name = leo_mvd_preset value = 5 }
-	if = {
-		limit = { has_variable = leo_mvd_auto }
-		leo_mvd_run_waterfall_effect = yes
-	}
+	leo_mvd_after_edit_effect = yes
 }
 
 ### Rule authoring.
@@ -365,6 +361,64 @@ leo_mvd_set_node_cond_effect = {
 	set_variable = { name = leo_mvd_$NODE$_kind value = 2 }
 	set_variable = { name = leo_mvd_$NODE$_cond value = $COND$ }
 	set_variable = { name = leo_mvd_$NODE$_thresh value = $THRESH$ }
+}
+
+# Current scope: the player. A priority the player has yet to fill in: one node,
+# ready to assign a directive, with no directive chosen. An unset directive
+# matches nothing, so it stays inert until it is picked.
+leo_mvd_init_priority_effect = {
+	leo_mvd_clear_priority_effect = { P = $P$ }
+	leo_mvd_set_node_dir_effect = { NODE = $P$_n1 DIR = 0 }
+}
+
+# Current scope: the player. Copy one node onto another, on the same character.
+leo_mvd_copy_node_between_effect = {
+	set_variable = { name = leo_mvd_$TO$_kind value = var:leo_mvd_$FROM$_kind }
+	set_variable = { name = leo_mvd_$TO$_dir value = var:leo_mvd_$FROM$_dir }
+	set_variable = { name = leo_mvd_$TO$_cond value = var:leo_mvd_$FROM$_cond }
+	set_variable = { name = leo_mvd_$TO$_thresh value = var:leo_mvd_$FROM$_thresh }
+}
+
+# Current scope: the player. Copy a whole priority onto another.
+leo_mvd_copy_priority_between_effect = {
+	leo_mvd_copy_node_between_effect = { FROM = $FROM$_n1 TO = $TO$_n1 }
+	leo_mvd_copy_node_between_effect = { FROM = $FROM$_n2 TO = $TO$_n2 }
+	leo_mvd_copy_node_between_effect = { FROM = $FROM$_n3 TO = $TO$_n3 }
+	leo_mvd_copy_node_between_effect = { FROM = $FROM$_n4 TO = $TO$_n4 }
+	leo_mvd_copy_node_between_effect = { FROM = $FROM$_n5 TO = $TO$_n5 }
+	leo_mvd_copy_node_between_effect = { FROM = $FROM$_n6 TO = $TO$_n6 }
+	leo_mvd_copy_node_between_effect = { FROM = $FROM$_n7 TO = $TO$_n7 }
+}
+
+### The Custom slot.
+#
+# There is one live rule set, and selecting a preset overwrites it - so the
+# player's own rules are kept aside in a parallel set while a built-in is
+# loaded, and handed back when they return to Custom. Without this, trying a
+# preset would cost you your own waterfall.
+
+# Current scope: the player. Set the live rules aside as the player's own.
+leo_mvd_backup_custom_effect = {
+	leo_mvd_copy_priority_between_effect = { FROM = r1 TO = cr1 }
+	leo_mvd_copy_priority_between_effect = { FROM = r2 TO = cr2 }
+	leo_mvd_copy_priority_between_effect = { FROM = r3 TO = cr3 }
+	leo_mvd_copy_priority_between_effect = { FROM = r4 TO = cr4 }
+	leo_mvd_copy_priority_between_effect = { FROM = r5 TO = cr5 }
+	leo_mvd_copy_priority_between_effect = { FROM = r6 TO = cr6 }
+	set_variable = { name = leo_mvd_crule_count value = var:leo_mvd_rule_count }
+	set_variable = leo_mvd_has_custom
+}
+
+# Current scope: the player. Put the player's own rules back.
+# Only ever called when leo_mvd_has_custom says there are some.
+leo_mvd_restore_custom_effect = {
+	leo_mvd_copy_priority_between_effect = { FROM = cr1 TO = r1 }
+	leo_mvd_copy_priority_between_effect = { FROM = cr2 TO = r2 }
+	leo_mvd_copy_priority_between_effect = { FROM = cr3 TO = r3 }
+	leo_mvd_copy_priority_between_effect = { FROM = cr4 TO = r4 }
+	leo_mvd_copy_priority_between_effect = { FROM = cr5 TO = r5 }
+	leo_mvd_copy_priority_between_effect = { FROM = cr6 TO = r6 }
+	set_variable = { name = leo_mvd_rule_count value = var:leo_mvd_crule_count }
 }
 
 ### Built-in rule sets.
@@ -490,22 +544,122 @@ leo_mvd_preset_4_effect = {
 leo_mvd_preset_5_effect = {
 	if = {
 		limit = { NOT = { var:leo_mvd_preset = 5 } }
-		leo_mvd_clear_rules_effect = yes
-		set_variable = { name = leo_mvd_rule_count value = 1 }
-		# Kind 1 with no directive chosen yet: the first thing to pick is right
-		# there, and an unset directive assigns nothing until it is.
-		leo_mvd_set_node_dir_effect = { NODE = r1_n1 DIR = 0 }
+		if = {
+			# Rules of their own, set aside when they last left Custom.
+			limit = { has_variable = leo_mvd_has_custom }
+			leo_mvd_restore_custom_effect = yes
+		}
+		else = {
+			leo_mvd_clear_rules_effect = yes
+			set_variable = { name = leo_mvd_rule_count value = 1 }
+			leo_mvd_init_priority_effect = { P = r1 }
+		}
 	}
 	set_variable = { name = leo_mvd_preset value = 5 }
 }
 
 # Current scope: the player. Load preset $N$ and re-apply if automation is on.
+#
+# Leaving Custom sets the player's rules aside first, so that trying a preset
+# does not cost them their own waterfall.
 leo_mvd_select_preset_effect = {
+	if = {
+		limit = { var:leo_mvd_preset = 5 }
+		leo_mvd_backup_custom_effect = yes
+	}
 	leo_mvd_preset_$N$_effect = yes
 	if = {
 		limit = { has_variable = leo_mvd_auto }
 		leo_mvd_run_waterfall_effect = yes
 	}
+}
+
+### Adding and removing priorities.
+
+# Current scope: the player. Everything an edit implies: the rules become the
+# player's own, and automation picks the change up at once.
+leo_mvd_after_edit_effect = {
+	set_variable = { name = leo_mvd_preset value = 5 }
+	if = {
+		limit = { has_variable = leo_mvd_auto }
+		leo_mvd_run_waterfall_effect = yes
+	}
+}
+
+# Current scope: the player. Append an empty priority to the waterfall.
+leo_mvd_add_priority_effect = {
+	if = {
+		limit = { var:leo_mvd_rule_count < 6 }
+		change_variable = { name = leo_mvd_rule_count add = 1 }
+		# Which slot that just became. A variable name cannot be built from a
+		# value, so the new priority has to be named outright.
+		if = {
+			limit = { var:leo_mvd_rule_count = 2 }
+			leo_mvd_init_priority_effect = { P = r2 }
+		}
+		else_if = {
+			limit = { var:leo_mvd_rule_count = 3 }
+			leo_mvd_init_priority_effect = { P = r3 }
+		}
+		else_if = {
+			limit = { var:leo_mvd_rule_count = 4 }
+			leo_mvd_init_priority_effect = { P = r4 }
+		}
+		else_if = {
+			limit = { var:leo_mvd_rule_count = 5 }
+			leo_mvd_init_priority_effect = { P = r5 }
+		}
+		else_if = {
+			limit = { var:leo_mvd_rule_count = 6 }
+			leo_mvd_init_priority_effect = { P = r6 }
+		}
+		leo_mvd_after_edit_effect = yes
+	}
+}
+
+# Current scope: the player. Shared tail of removing a priority: the ones below
+# it have already moved up, so the last slot is now a duplicate.
+leo_mvd_finish_remove_effect = {
+	leo_mvd_clear_priority_effect = { P = r6 }
+	change_variable = { name = leo_mvd_rule_count add = -1 }
+	leo_mvd_after_edit_effect = yes
+}
+
+# Current scope: the player. Drop a priority and close the gap, so that the
+# waterfall stays an unbroken running order. Written out per slot because the
+# shift depends on which one went.
+leo_mvd_remove_priority_1_effect = {
+	leo_mvd_copy_priority_between_effect = { FROM = r2 TO = r1 }
+	leo_mvd_copy_priority_between_effect = { FROM = r3 TO = r2 }
+	leo_mvd_copy_priority_between_effect = { FROM = r4 TO = r3 }
+	leo_mvd_copy_priority_between_effect = { FROM = r5 TO = r4 }
+	leo_mvd_copy_priority_between_effect = { FROM = r6 TO = r5 }
+	leo_mvd_finish_remove_effect = yes
+}
+leo_mvd_remove_priority_2_effect = {
+	leo_mvd_copy_priority_between_effect = { FROM = r3 TO = r2 }
+	leo_mvd_copy_priority_between_effect = { FROM = r4 TO = r3 }
+	leo_mvd_copy_priority_between_effect = { FROM = r5 TO = r4 }
+	leo_mvd_copy_priority_between_effect = { FROM = r6 TO = r5 }
+	leo_mvd_finish_remove_effect = yes
+}
+leo_mvd_remove_priority_3_effect = {
+	leo_mvd_copy_priority_between_effect = { FROM = r4 TO = r3 }
+	leo_mvd_copy_priority_between_effect = { FROM = r5 TO = r4 }
+	leo_mvd_copy_priority_between_effect = { FROM = r6 TO = r5 }
+	leo_mvd_finish_remove_effect = yes
+}
+leo_mvd_remove_priority_4_effect = {
+	leo_mvd_copy_priority_between_effect = { FROM = r5 TO = r4 }
+	leo_mvd_copy_priority_between_effect = { FROM = r6 TO = r5 }
+	leo_mvd_finish_remove_effect = yes
+}
+leo_mvd_remove_priority_5_effect = {
+	leo_mvd_copy_priority_between_effect = { FROM = r6 TO = r5 }
+	leo_mvd_finish_remove_effect = yes
+}
+leo_mvd_remove_priority_6_effect = {
+	leo_mvd_finish_remove_effect = yes
 }
 
 ### Succession.
@@ -529,7 +683,9 @@ leo_mvd_copy_priority_effect = {
 	leo_mvd_copy_node_effect = { NODE = $P$_n7 }
 }
 
-# Current scope: the heir. Carries the whole rule set over from root.
+# Current scope: the heir. Carries the whole rule set over from root, including
+# the Custom slot - an heir who inherits a preset should still find their
+# predecessor's own rules waiting under Custom.
 leo_mvd_copy_rules_effect = {
 	set_variable = { name = leo_mvd_preset value = root.var:leo_mvd_preset }
 	set_variable = { name = leo_mvd_rule_count value = root.var:leo_mvd_rule_count }
@@ -539,4 +695,15 @@ leo_mvd_copy_rules_effect = {
 	leo_mvd_copy_priority_effect = { P = r4 }
 	leo_mvd_copy_priority_effect = { P = r5 }
 	leo_mvd_copy_priority_effect = { P = r6 }
+	if = {
+		limit = { root = { has_variable = leo_mvd_has_custom } }
+		set_variable = leo_mvd_has_custom
+		set_variable = { name = leo_mvd_crule_count value = root.var:leo_mvd_crule_count }
+		leo_mvd_copy_priority_effect = { P = cr1 }
+		leo_mvd_copy_priority_effect = { P = cr2 }
+		leo_mvd_copy_priority_effect = { P = cr3 }
+		leo_mvd_copy_priority_effect = { P = cr4 }
+		leo_mvd_copy_priority_effect = { P = cr5 }
+		leo_mvd_copy_priority_effect = { P = cr6 }
+	}
 }
