@@ -262,3 +262,47 @@ texticon = {
 		fontsize = 16
 	}
 }
+
+# Inline nomad directive icons (20x20).
+#
+# The vanilla nomad icons are 25x25 at offset { 0 6 }, and three of the four are
+# cropped by a uv - kept here, or they would show their own padding.
+texticon = {
+	icon = leo_mvd_dir_icon_manage_fertility
+	iconsize = {
+		texture = "gfx/interface/icons/icon_county_fertility.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+		uv = { 0.05 0.05 1 1 }
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_explore_cultures
+	iconsize = {
+		texture = "gfx/interface/icons/council_task_types/task_kurultai_culture.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+		uv = { 0.05 0.05 1 1 }
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_raid_innovation_intent
+	iconsize = {
+		texture = "gfx/interface/icons/message_feed/culture.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+		uv = { 0.05 0.05 1 1 }
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_raid_herd_intent
+	iconsize = {
+		texture = "gfx/interface/icons/icon_herd.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}

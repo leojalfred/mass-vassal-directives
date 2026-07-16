@@ -123,6 +123,34 @@ leo_mvd_try_assign_effect = {
 			}
 			leo_mvd_assign_effect = { DIRECTIVE = building_focus_economy CODE = 9 }
 		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 10
+				leo_mvd_gate_manage_fertility_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = manage_fertility CODE = 10 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 11
+				leo_mvd_gate_explore_cultures_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = explore_cultures CODE = 11 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 12
+				leo_mvd_gate_raid_innovation_intent_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = raid_innovation_intent CODE = 12 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 13
+				leo_mvd_gate_raid_herd_intent_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = raid_herd_intent CODE = 13 }
+		}
 	}
 }
 
@@ -190,13 +218,13 @@ leo_mvd_eval_root_effect = {
 	}
 }
 
-# Current scope: vassal. Evaluates priority $P$ of the main rule set.
-# Priorities beyond leo_mvd_rule_count are skipped, so the unused slots a rule
-# set does not fill cost nothing.
+# Current scope: vassal. Evaluates priority $P$, the $N$th of the rule set whose
+# length is $COUNT$. Priorities beyond that are skipped, so the unused slots a
+# rule set does not fill cost nothing.
 leo_mvd_eval_priority_effect = {
 	if = {
 		limit = {
-			scope:leo_mvd_liege = { var:leo_mvd_rule_count >= $N$ }
+			scope:leo_mvd_liege = { var:$COUNT$ >= $N$ }
 		}
 		leo_mvd_eval_root_effect = {
 			NODE = $P$_n1
@@ -287,6 +315,27 @@ leo_mvd_write_field_effect = {
 	else_if = { limit = { var:leo_mvd_edit_node = 65 } leo_mvd_write_node_effect = { NODE = r6_n5 } }
 	else_if = { limit = { var:leo_mvd_edit_node = 66 } leo_mvd_write_node_effect = { NODE = r6_n6 } }
 	else_if = { limit = { var:leo_mvd_edit_node = 67 } leo_mvd_write_node_effect = { NODE = r6_n7 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 111 } leo_mvd_write_node_effect = { NODE = q1_n1 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 112 } leo_mvd_write_node_effect = { NODE = q1_n2 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 113 } leo_mvd_write_node_effect = { NODE = q1_n3 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 114 } leo_mvd_write_node_effect = { NODE = q1_n4 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 115 } leo_mvd_write_node_effect = { NODE = q1_n5 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 116 } leo_mvd_write_node_effect = { NODE = q1_n6 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 117 } leo_mvd_write_node_effect = { NODE = q1_n7 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 121 } leo_mvd_write_node_effect = { NODE = q2_n1 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 122 } leo_mvd_write_node_effect = { NODE = q2_n2 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 123 } leo_mvd_write_node_effect = { NODE = q2_n3 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 124 } leo_mvd_write_node_effect = { NODE = q2_n4 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 125 } leo_mvd_write_node_effect = { NODE = q2_n5 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 126 } leo_mvd_write_node_effect = { NODE = q2_n6 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 127 } leo_mvd_write_node_effect = { NODE = q2_n7 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 131 } leo_mvd_write_node_effect = { NODE = q3_n1 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 132 } leo_mvd_write_node_effect = { NODE = q3_n2 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 133 } leo_mvd_write_node_effect = { NODE = q3_n3 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 134 } leo_mvd_write_node_effect = { NODE = q3_n4 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 135 } leo_mvd_write_node_effect = { NODE = q3_n5 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 136 } leo_mvd_write_node_effect = { NODE = q3_n6 } }
+	else_if = { limit = { var:leo_mvd_edit_node = 137 } leo_mvd_write_node_effect = { NODE = q3_n7 } }
 }
 
 # Current scope: the player. Point the cursor at $NODE$.
@@ -347,6 +396,10 @@ leo_mvd_clear_rules_effect = {
 	leo_mvd_clear_priority_effect = { P = r5 }
 	leo_mvd_clear_priority_effect = { P = r6 }
 	set_variable = { name = leo_mvd_rule_count value = 0 }
+	leo_mvd_clear_priority_effect = { P = q1 }
+	leo_mvd_clear_priority_effect = { P = q2 }
+	leo_mvd_clear_priority_effect = { P = q3 }
+	set_variable = { name = leo_mvd_qrule_count value = 0 }
 }
 
 # Current scope: the player. Make $NODE$ assign directive $DIR$.
@@ -406,6 +459,10 @@ leo_mvd_backup_custom_effect = {
 	leo_mvd_copy_priority_between_effect = { FROM = r5 TO = cr5 }
 	leo_mvd_copy_priority_between_effect = { FROM = r6 TO = cr6 }
 	set_variable = { name = leo_mvd_crule_count value = var:leo_mvd_rule_count }
+	leo_mvd_copy_priority_between_effect = { FROM = q1 TO = cq1 }
+	leo_mvd_copy_priority_between_effect = { FROM = q2 TO = cq2 }
+	leo_mvd_copy_priority_between_effect = { FROM = q3 TO = cq3 }
+	set_variable = { name = leo_mvd_cqrule_count value = var:leo_mvd_qrule_count }
 	set_variable = leo_mvd_has_custom
 }
 
@@ -419,6 +476,10 @@ leo_mvd_restore_custom_effect = {
 	leo_mvd_copy_priority_between_effect = { FROM = cr5 TO = r5 }
 	leo_mvd_copy_priority_between_effect = { FROM = cr6 TO = r6 }
 	set_variable = { name = leo_mvd_rule_count value = var:leo_mvd_crule_count }
+	leo_mvd_copy_priority_between_effect = { FROM = cq1 TO = q1 }
+	leo_mvd_copy_priority_between_effect = { FROM = cq2 TO = q2 }
+	leo_mvd_copy_priority_between_effect = { FROM = cq3 TO = q3 }
+	set_variable = { name = leo_mvd_qrule_count value = var:leo_mvd_cqrule_count }
 }
 
 ### Built-in rule sets.
@@ -466,6 +527,11 @@ leo_mvd_preset_1_effect = {
 	# 4: catches the strong vassals who fail Improve Development's gate
 	leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
 
+	# Nomads: learn from the neighbours they hold, otherwise grow.
+	set_variable = { name = leo_mvd_qrule_count value = 2 }
+	leo_mvd_set_node_dir_effect = { NODE = q1_n1 DIR = 11 }
+	leo_mvd_set_node_dir_effect = { NODE = q2_n1 DIR = 10 }
+
 	set_variable = { name = leo_mvd_preset value = 1 }
 }
 
@@ -487,6 +553,11 @@ leo_mvd_preset_2_effect = {
 	leo_mvd_set_node_dir_effect = { NODE = r3_n1 DIR = 6 }
 
 	leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
+
+	# Nomads: learn from the neighbours they hold, otherwise grow.
+	set_variable = { name = leo_mvd_qrule_count value = 2 }
+	leo_mvd_set_node_dir_effect = { NODE = q1_n1 DIR = 11 }
+	leo_mvd_set_node_dir_effect = { NODE = q2_n1 DIR = 10 }
 
 	set_variable = { name = leo_mvd_preset value = 2 }
 }
@@ -510,6 +581,11 @@ leo_mvd_preset_3_effect = {
 	# 2: catch-all for anyone the tree above could not place
 	leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 8 }
 
+	# Nomads: raid for herd, and grow what they hold.
+	set_variable = { name = leo_mvd_qrule_count value = 2 }
+	leo_mvd_set_node_dir_effect = { NODE = q1_n1 DIR = 13 }
+	leo_mvd_set_node_dir_effect = { NODE = q2_n1 DIR = 10 }
+
 	set_variable = { name = leo_mvd_preset value = 3 }
 }
 
@@ -526,6 +602,10 @@ leo_mvd_preset_4_effect = {
 
 	# 2: catches vassals who fail Improve Development's gate
 	leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 9 }
+
+	# Nomads: grow what they hold.
+	set_variable = { name = leo_mvd_qrule_count value = 1 }
+	leo_mvd_set_node_dir_effect = { NODE = q1_n1 DIR = 10 }
 
 	set_variable = { name = leo_mvd_preset value = 4 }
 }
@@ -662,6 +742,50 @@ leo_mvd_remove_priority_6_effect = {
 	leo_mvd_finish_remove_effect = yes
 }
 
+### The same, for the nomad waterfall.
+
+leo_mvd_add_qpriority_effect = {
+	if = {
+		limit = { var:leo_mvd_qrule_count < 3 }
+		change_variable = { name = leo_mvd_qrule_count add = 1 }
+		if = {
+			limit = { var:leo_mvd_qrule_count = 1 }
+			leo_mvd_init_priority_effect = { P = q1 }
+		}
+		else_if = {
+			limit = { var:leo_mvd_qrule_count = 2 }
+			leo_mvd_init_priority_effect = { P = q2 }
+		}
+		else_if = {
+			limit = { var:leo_mvd_qrule_count = 3 }
+			leo_mvd_init_priority_effect = { P = q3 }
+		}
+		leo_mvd_after_edit_effect = yes
+	}
+}
+
+# Unlike the main waterfall, this one is allowed to empty: a realm with no
+# nomad vassals has no use for it, and leaving nomads alone is the mod's
+# behaviour until someone says otherwise.
+leo_mvd_finish_qremove_effect = {
+	leo_mvd_clear_priority_effect = { P = q3 }
+	change_variable = { name = leo_mvd_qrule_count add = -1 }
+	leo_mvd_after_edit_effect = yes
+}
+
+leo_mvd_remove_qpriority_1_effect = {
+	leo_mvd_copy_priority_between_effect = { FROM = q2 TO = q1 }
+	leo_mvd_copy_priority_between_effect = { FROM = q3 TO = q2 }
+	leo_mvd_finish_qremove_effect = yes
+}
+leo_mvd_remove_qpriority_2_effect = {
+	leo_mvd_copy_priority_between_effect = { FROM = q3 TO = q2 }
+	leo_mvd_finish_qremove_effect = yes
+}
+leo_mvd_remove_qpriority_3_effect = {
+	leo_mvd_finish_qremove_effect = yes
+}
+
 ### Succession.
 
 # Current scope: the heir. Copies one node from root (the dying player).
@@ -695,6 +819,10 @@ leo_mvd_copy_rules_effect = {
 	leo_mvd_copy_priority_effect = { P = r4 }
 	leo_mvd_copy_priority_effect = { P = r5 }
 	leo_mvd_copy_priority_effect = { P = r6 }
+	set_variable = { name = leo_mvd_qrule_count value = root.var:leo_mvd_qrule_count }
+	leo_mvd_copy_priority_effect = { P = q1 }
+	leo_mvd_copy_priority_effect = { P = q2 }
+	leo_mvd_copy_priority_effect = { P = q3 }
 	if = {
 		limit = { root = { has_variable = leo_mvd_has_custom } }
 		set_variable = leo_mvd_has_custom
@@ -705,5 +833,9 @@ leo_mvd_copy_rules_effect = {
 		leo_mvd_copy_priority_effect = { P = cr4 }
 		leo_mvd_copy_priority_effect = { P = cr5 }
 		leo_mvd_copy_priority_effect = { P = cr6 }
+		set_variable = { name = leo_mvd_cqrule_count value = root.var:leo_mvd_cqrule_count }
+		leo_mvd_copy_priority_effect = { P = cq1 }
+		leo_mvd_copy_priority_effect = { P = cq2 }
+		leo_mvd_copy_priority_effect = { P = cq3 }
 	}
 }

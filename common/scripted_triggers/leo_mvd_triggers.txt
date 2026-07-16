@@ -96,6 +96,48 @@ leo_mvd_gate_building_focus_trigger = {
 	NOT = { government_has_flag = government_is_nomadic }
 }
 
+### Nomad directives.
+#
+# The four directives only nomads can be given. Every directive above requires
+# either an administrative government or a non-nomadic one, so these and those
+# divide the eligible vassals exactly between them - which is why the nomad
+# rules are their own waterfall rather than a special case inside the main one.
+#
+# Herders are not part of this: vanilla's is_shown excludes them from directives
+# altogether (:3440), and leo_mvd_base_eligible_trigger mirrors that.
+
+# Current scope: vassal. manage_fertility (:3582). Vanilla asks nothing further.
+leo_mvd_gate_manage_fertility_trigger = {
+	government_has_flag = government_is_nomadic
+}
+
+# Current scope: vassal. explore_cultures (:3592)
+leo_mvd_gate_explore_cultures_trigger = {
+	save_temporary_scope_as = leo_mvd_vassal_tmp
+	government_has_flag = government_is_nomadic
+	any_sub_realm_county = {
+		NOT = { culture = scope:leo_mvd_vassal_tmp.culture }
+	}
+}
+
+# Current scope: vassal. raid_innovation_intent (:3610)
+#
+# Vanilla also refuses this to a vassal who already has it - alone among the
+# thirteen. That is a menu nicety: it greys out an option that would do nothing.
+# Mirrored literally it would mean the mod could never leave the directive in
+# place - the vassal holding it would fail their own rule, fall through, and
+# have it taken off them a month after it was given. What the rules can reach is
+# unchanged, since a vassal with this directive is one vanilla would allow; only
+# the pointless re-offer is dropped.
+leo_mvd_gate_raid_innovation_intent_trigger = {
+	government_has_flag = government_is_nomadic
+}
+
+# Current scope: vassal. raid_herd_intent (:3628). Vanilla asks nothing further.
+leo_mvd_gate_raid_herd_intent_trigger = {
+	government_has_flag = government_is_nomadic
+}
+
 ### Rule conditions.
 #
 # The closed set of conditions a rule can branch on, evaluated in the vassal's
@@ -262,6 +304,22 @@ leo_mvd_managed_matches_trigger = {
 		AND = {
 			var:leo_mvd_managed = 9
 			has_character_flag = vassal_directive_building_focus_economy
+		}
+		AND = {
+			var:leo_mvd_managed = 10
+			has_character_flag = vassal_directive_manage_fertility
+		}
+		AND = {
+			var:leo_mvd_managed = 11
+			has_character_flag = vassal_directive_explore_cultures
+		}
+		AND = {
+			var:leo_mvd_managed = 12
+			has_character_flag = vassal_directive_raid_innovation_intent
+		}
+		AND = {
+			var:leo_mvd_managed = 13
+			has_character_flag = vassal_directive_raid_herd_intent
 		}
 	}
 }

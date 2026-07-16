@@ -9,6 +9,9 @@
  leo_mvd_ui_priority_4: "Priority 4"
  leo_mvd_ui_priority_5: "Priority 5"
  leo_mvd_ui_priority_6: "Priority 6"
+ leo_mvd_ui_qpriority_1: "Priority 1"
+ leo_mvd_ui_qpriority_2: "Priority 2"
+ leo_mvd_ui_qpriority_3: "Priority 3"
 
  leo_mvd_ui_kind_0: "Continue to Next Priority"
  leo_mvd_ui_kind_0_last: "Leave Without a Directive"
@@ -36,6 +39,10 @@
  leo_mvd_ui_dir_7: "@leo_mvd_dir_icon_building_focus_fortification! Construct [fortification_buildings|E]"
  leo_mvd_ui_dir_8: "@leo_mvd_dir_icon_building_focus_military! Construct [military_buildings|E]"
  leo_mvd_ui_dir_9: "@leo_mvd_dir_icon_building_focus_economy! Construct [economic_buildings|E]"
+ leo_mvd_ui_dir_10: "@leo_mvd_dir_icon_manage_fertility! Increase [county_fertility|E]"
+ leo_mvd_ui_dir_11: "@leo_mvd_dir_icon_explore_cultures! Explore [cultures|E]"
+ leo_mvd_ui_dir_12: "@leo_mvd_dir_icon_raid_innovation_intent! Set [raid_intent|E] to [innovations|E]"
+ leo_mvd_ui_dir_13: "@leo_mvd_dir_icon_raid_herd_intent! Set [raid_intent|E] to [herd|E]"
 
  leo_mvd_ui_cond_0: "#weak Choose a Condition#!"
  leo_mvd_ui_cond_1: "Faith is Yours"

@@ -50,12 +50,24 @@ leo_mvd_clear_stale_effect = {
 # assigns a directive. A vassal no priority claims keeps nothing the mod gave
 # them earlier.
 leo_mvd_evaluate_vassal_effect = {
-	leo_mvd_eval_priority_effect = { P = r1 N = 1 }
-	leo_mvd_eval_priority_effect = { P = r2 N = 2 }
-	leo_mvd_eval_priority_effect = { P = r3 N = 3 }
-	leo_mvd_eval_priority_effect = { P = r4 N = 4 }
-	leo_mvd_eval_priority_effect = { P = r5 N = 5 }
-	leo_mvd_eval_priority_effect = { P = r6 N = 6 }
+	if = {
+		# Nomads have four directives of their own and can be given none of the
+		# other nine, so they follow their own waterfall. The two sets of
+		# directives divide the eligible vassals exactly, since every directive
+		# below requires an administrative or a non-nomadic government.
+		limit = { government_has_flag = government_is_nomadic }
+		leo_mvd_eval_priority_effect = { P = q1 N = 1 COUNT = leo_mvd_qrule_count }
+		leo_mvd_eval_priority_effect = { P = q2 N = 2 COUNT = leo_mvd_qrule_count }
+		leo_mvd_eval_priority_effect = { P = q3 N = 3 COUNT = leo_mvd_qrule_count }
+	}
+	else = {
+		leo_mvd_eval_priority_effect = { P = r1 N = 1 COUNT = leo_mvd_rule_count }
+		leo_mvd_eval_priority_effect = { P = r2 N = 2 COUNT = leo_mvd_rule_count }
+		leo_mvd_eval_priority_effect = { P = r3 N = 3 COUNT = leo_mvd_rule_count }
+		leo_mvd_eval_priority_effect = { P = r4 N = 4 COUNT = leo_mvd_rule_count }
+		leo_mvd_eval_priority_effect = { P = r5 N = 5 COUNT = leo_mvd_rule_count }
+		leo_mvd_eval_priority_effect = { P = r6 N = 6 COUNT = leo_mvd_rule_count }
+	}
 
 	if = {
 		limit = { has_variable = leo_mvd_hit }

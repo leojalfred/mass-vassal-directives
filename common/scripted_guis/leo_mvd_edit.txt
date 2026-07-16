@@ -191,6 +191,96 @@ leo_mvd_focus_r6_n7 = {
 	effect = { leo_mvd_focus_effect = { CODE = 67 } }
 }
 
+### Nomad priority 1 nodes.
+leo_mvd_focus_q1_n1 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 111 } }
+}
+leo_mvd_focus_q1_n2 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 112 } }
+}
+leo_mvd_focus_q1_n3 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 113 } }
+}
+leo_mvd_focus_q1_n4 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 114 } }
+}
+leo_mvd_focus_q1_n5 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 115 } }
+}
+leo_mvd_focus_q1_n6 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 116 } }
+}
+leo_mvd_focus_q1_n7 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 117 } }
+}
+
+### Nomad priority 2 nodes.
+leo_mvd_focus_q2_n1 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 121 } }
+}
+leo_mvd_focus_q2_n2 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 122 } }
+}
+leo_mvd_focus_q2_n3 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 123 } }
+}
+leo_mvd_focus_q2_n4 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 124 } }
+}
+leo_mvd_focus_q2_n5 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 125 } }
+}
+leo_mvd_focus_q2_n6 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 126 } }
+}
+leo_mvd_focus_q2_n7 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 127 } }
+}
+
+### Nomad priority 3 nodes.
+leo_mvd_focus_q3_n1 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 131 } }
+}
+leo_mvd_focus_q3_n2 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 132 } }
+}
+leo_mvd_focus_q3_n3 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 133 } }
+}
+leo_mvd_focus_q3_n4 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 134 } }
+}
+leo_mvd_focus_q3_n5 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 135 } }
+}
+leo_mvd_focus_q3_n6 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 136 } }
+}
+leo_mvd_focus_q3_n7 = {
+	scope = character
+	effect = { leo_mvd_focus_effect = { CODE = 137 } }
+}
+
 ### Adding and removing priorities.
 leo_mvd_add_priority = {
 	scope = character
@@ -231,6 +321,25 @@ leo_mvd_remove_priority_6 = {
 	# Never down to nothing: a rule set with no priorities is None.
 	is_valid = { var:leo_mvd_rule_count > 1 }
 	effect = { leo_mvd_remove_priority_6_effect = yes }
+}
+leo_mvd_add_qpriority = {
+	scope = character
+	effect = { leo_mvd_add_qpriority_effect = yes }
+}
+leo_mvd_remove_qpriority_1 = {
+	scope = character
+	# This one may empty: a realm with no nomads has no use for it.
+	effect = { leo_mvd_remove_qpriority_1_effect = yes }
+}
+leo_mvd_remove_qpriority_2 = {
+	scope = character
+	# This one may empty: a realm with no nomads has no use for it.
+	effect = { leo_mvd_remove_qpriority_2_effect = yes }
+}
+leo_mvd_remove_qpriority_3 = {
+	scope = character
+	# This one may empty: a realm with no nomads has no use for it.
+	effect = { leo_mvd_remove_qpriority_3_effect = yes }
 }
 
 ### Node kind.
@@ -462,4 +571,20 @@ leo_mvd_set_dir_8 = {
 leo_mvd_set_dir_9 = {
 	scope = character
 	effect = { leo_mvd_edit_effect = { FIELD = 4 VALUE = 9 } }
+}
+leo_mvd_set_dir_10 = {
+	scope = character
+	effect = { leo_mvd_edit_effect = { FIELD = 4 VALUE = 10 } }
+}
+leo_mvd_set_dir_11 = {
+	scope = character
+	effect = { leo_mvd_edit_effect = { FIELD = 4 VALUE = 11 } }
+}
+leo_mvd_set_dir_12 = {
+	scope = character
+	effect = { leo_mvd_edit_effect = { FIELD = 4 VALUE = 12 } }
+}
+leo_mvd_set_dir_13 = {
+	scope = character
+	effect = { leo_mvd_edit_effect = { FIELD = 4 VALUE = 13 } }
 }

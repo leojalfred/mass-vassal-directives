@@ -33,6 +33,7 @@ trap 'rm -rf "$TMP"' EXIT
 
 ### How much to generate.
 PRIORITIES=6          # main rule priorities to emit (max 6; see leo_mvd_rules.txt)
+QPRIORITIES=3         # nomad rule priorities to emit (max 3)
 
 ### Look.
 DD_INSET=3            # px an open dropdown list is narrower than its button,
@@ -49,12 +50,19 @@ DD_INSET=3            # px an open dropdown list is narrower than its button,
 # directive themselves and reach for the inline-sized icons in
 # gui/leo_mvd_texticons.gui instead. Wording follows vanilla's.
 DIRS="1 2 3 4 5 6 7 8 9"
+# Only nomads can be given these four, and they can be given nothing else.
+NOMAD_DIRS="10 11 12 13"
+# Every directive there is. A setter and a label are needed for each, whichever
+# waterfall offers it.
+ALL_DIRS="$DIRS $NOMAD_DIRS"
 dir_icon() { case $1 in
 	1) echo convert_faith ;;                2) echo convert_culture ;;
 	3) echo improve_development ;;          4) echo train_commanders ;;
 	5) echo build_maa ;;                    6) echo improve_cultural_acceptance ;;
 	7) echo building_focus_fortification ;; 8) echo building_focus_military ;;
 	9) echo building_focus_economy ;;
+	10) echo manage_fertility ;;             11) echo explore_cultures ;;
+	12) echo raid_innovation_intent ;;      13) echo raid_herd_intent ;;
 esac; }
 dir_name() { case $1 in
 	1) echo "Convert [faith|E]" ;;
@@ -66,10 +74,17 @@ dir_name() { case $1 in
 	7) echo "Construct [fortification_buildings|E]" ;;
 	8) echo "Construct [military_buildings|E]" ;;
 	9) echo "Construct [economic_buildings|E]" ;;
+	10) echo "Increase [county_fertility|E]" ;;
+	11) echo "Explore [cultures|E]" ;;
+	12) echo "Set [raid_intent|E] to [innovations|E]" ;;
+	13) echo "Set [raid_intent|E] to [herd|E]" ;;
 esac; }
 
 # Condition codes. Must match leo_mvd_cond_holds_trigger.
 CONDS="1 2 3 4 5 6 7 8 9 10 11 12 13 14"
+# 6 (Administrative Government) is left out for nomads: no nomad is
+# administrative, so it could only ever answer no.
+NOMAD_CONDS="1 2 3 4 5 7 8 9 10 11 12 13 14"
 cond_name() { case $1 in
 	1) echo "Faith is Yours" ;;
 	2) echo "Culture is Yours" ;;
@@ -151,7 +166,7 @@ sgui_valid() { echo "[GetScriptedGui('$1').IsValid( GuiScope.SetRoot( GetPlayer.
 # Kind 0 means "fall through to the next priority" - but on the last priority
 # there is no next one, and it means "leave this vassal without a directive".
 # Same behaviour either way, so only the label changes.
-kind0_key() { echo "SelectLocalization( $(vge leo_mvd_rule_count $(($1 + 1))), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' )"; }
+kind0_key() { echo "SelectLocalization( $(vge "$COUNT_VAR" $(($1 + 1))), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' )"; }
 
 # The rules are shown and editable whichever preset is selected, so a preset can
 # be read rather than taken on trust, and used as a starting point rather than a
@@ -298,7 +313,7 @@ emit_dd_close() { ind "$1"; p "}"; }
 
 # <1> depth <2> priority <3> node number <4> level <5> parent's cond var, if any
 emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
-	local node="r${prio}_n${n}"
+	local node="${NODE_PREFIX}${prio}_n${n}"
 	local kinds="1 2 0"; [ "$level" -ge 2 ] && kinds="1 0"
 
 	# What this node does. Kind 0's label depends on whether a next priority
@@ -321,7 +336,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "margin_left = 16"
 	p "spacing = 2"
 	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")" "" "$DD_EDITABLE"
-	for d in $DIRS; do
+	for d in $CUR_DIRS; do
 		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d"
 	done
 	emit_dd_end $((depth+1)) "${node}_dir"
@@ -338,7 +353,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "margin_left = 16"
 	p "spacing = 2"
 	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")" "" "$DD_EDITABLE"
-	for c in $CONDS; do
+	for c in $CUR_CONDS; do
 		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$(cond_row_visible "$c" "$parent_cond")"
 	done
 	emit_dd_end $((depth+1)) "${node}_cond"
@@ -382,6 +397,156 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 		emit_node $((depth+1)) "$prio" "$kid" $((level+1)) "leo_mvd_${node}_cond"
 	done
 	ind "$depth"; p "}"
+}
+
+### A waterfall.
+#
+# There are two, and they are the same editor over different rules: the main one
+# for settled vassals, and the nomads' own. Nomads have four directives no one
+# else can be given and can be given none of the other nine, so they cannot
+# share a running order with the rest - the two sets divide the eligible vassals
+# exactly between them.
+#
+# Which one is being emitted lives in these, since emit_node reaches for them
+# several levels down.
+NODE_PREFIX=r
+COUNT_VAR=leo_mvd_rule_count
+CUR_DIRS="$DIRS"
+CUR_CONDS="$CONDS"
+
+# <1> main | nomad
+emit_waterfall() {
+	local which=$1
+	local max heading add_sgui remove_prefix prio_loc empty_ok
+	if [ "$which" = nomad ]; then
+		NODE_PREFIX=q; COUNT_VAR=leo_mvd_qrule_count
+		CUR_DIRS="$NOMAD_DIRS"; CUR_CONDS="$NOMAD_CONDS"
+		max=$QPRIORITIES; heading=leo_mvd_ui_heading_nomads
+		add_sgui=leo_mvd_add_qpriority; remove_prefix=leo_mvd_remove_qpriority
+		prio_loc=leo_mvd_ui_qpriority
+	else
+		NODE_PREFIX=r; COUNT_VAR=leo_mvd_rule_count
+		CUR_DIRS="$DIRS"; CUR_CONDS="$CONDS"
+		max=$PRIORITIES; heading=leo_mvd_ui_heading_priorities
+		add_sgui=leo_mvd_add_priority; remove_prefix=leo_mvd_remove_priority
+		prio_loc=leo_mvd_ui_priority
+	fi
+
+	# Heads the waterfall, so the rules read as their own thing rather than as
+	# more of the preset's description.
+	#
+	# The nomad heading stays put even with no nomad rules, since its Add is the
+	# only way to make some; the main one goes with None, which has no waterfall
+	# and no way to start one short of picking a preset.
+	ind 5; p ""
+	p "### The $which waterfall."
+	p "text_label_left = {"
+	ind 6
+	if [ "$which" = nomad ]; then
+		p "visible = \"[$(vge leo_mvd_rule_count 1)]\""
+	else
+		p "visible = \"[$(vge "$COUNT_VAR" 1)]\""
+	fi
+	p "layoutpolicy_horizontal = expanding"
+	p "text = \"$heading\""
+	ind 5; p "}"
+
+	# One collapsible section per priority in use.
+	for prio in $(seq 1 "$max"); do
+		ind 5; p ""
+		p "### $which priority $prio (collapsible). Shown whenever the rule set in"
+		p "### place reaches this far - for a built-in preset too, so its plan can"
+		p "### be read rather than taken on trust."
+		p "vbox = {"
+		ind 6
+		p "visible = \"[$(vge "$COUNT_VAR" "$prio")]\""
+		p "layoutpolicy_horizontal = expanding"
+		p "oncreate = \"[BindFoldOutContext]\""
+		p "oncreate = \"[PdxGuiFoldOut.Unfold]\""
+		p ""
+		p "button_expandable_toggle_field = {"
+		ind 7; p "blockoverride \"text\" {"
+		ind 8; p "text = \"${prio_loc}_$prio\""
+		ind 7; p "}"
+		ind 6; p "}"
+		p ""
+		p "vbox = {"
+		ind 7
+		p "visible = \"[PdxGuiFoldOut.IsUnfolded]\""
+		p "layoutpolicy_horizontal = expanding"
+		p "margin = { 6 4 }"
+		p "spacing = 2"
+		p ""
+		emit_node 7 "$prio" 1 0
+
+		# Extend or shorten the waterfall.
+		#
+		# Add only appears on the end of it, and only while there is room to
+		# extend it - a priority is always appended, so offering it halfway up
+		# would say otherwise. Everywhere else Remove has the row to itself,
+		# which it gets because the visible sits on Add's half rather than on
+		# Add: a hidden widget takes no space, so the half collapses instead of
+		# standing empty.
+		ind 7; p ""
+		p "hbox = {"
+		ind 8
+		p "layoutpolicy_horizontal = expanding"
+		p "margin_top = 8"
+		p "spacing = 6"
+		p ""
+		p "hbox = {"
+		ind 9
+		p "visible = \"[And( $(veq "$COUNT_VAR" "$prio"), Not( $(vge "$COUNT_VAR" "$max") ) )]\""
+		p "layoutpolicy_horizontal = expanding"
+		p ""
+		p "button_standard = {"
+		ind 10
+		p "layoutpolicy_horizontal = expanding"
+		p "text = \"leo_mvd_ui_add_priority\""
+		p "onclick = \"$(sgui "$add_sgui")\""
+		p "tooltip = \"leo_mvd_ui_add_priority_tt\""
+		ind 9; p "}"
+		ind 8; p "}"
+		p ""
+		p "hbox = {"
+		ind 9
+		p "layoutpolicy_horizontal = expanding"
+		p ""
+		p "button_standard = {"
+		ind 10
+		p "layoutpolicy_horizontal = expanding"
+		p "text = \"leo_mvd_ui_remove_priority\""
+		p "onclick = \"$(sgui "${remove_prefix}_${prio}")\""
+		p "enabled = \"$(sgui_valid "${remove_prefix}_${prio}")\""
+		p "tooltip = \"leo_mvd_ui_remove_priority_tt\""
+		ind 9; p "}"
+		ind 8; p "}"
+		ind 7; p "}"
+
+		ind 6; p "}"
+		ind 5; p "}"
+	done
+
+	# With no nomad rules there is no priority to hang an Add off, so the
+	# section needs one of its own to get started.
+	if [ "$which" = nomad ]; then
+		ind 5; p ""
+		p "### Start a nomad waterfall, when there is not one yet."
+		p "hbox = {"
+		ind 6
+		p "visible = \"[And( $(vge leo_mvd_rule_count 1), Not( $(vge "$COUNT_VAR" 1) ) )]\""
+		p "layoutpolicy_horizontal = expanding"
+		p "margin = { 6 4 }"
+		p ""
+		p "button_standard = {"
+		ind 7
+		p "layoutpolicy_horizontal = expanding"
+		p "text = \"leo_mvd_ui_add_priority\""
+		p "onclick = \"$(sgui "$add_sgui")\""
+		p "tooltip = \"leo_mvd_ui_nomads_empty_tt\""
+		ind 6; p "}"
+		ind 5; p "}"
+	fi
 }
 
 ### The panel.
@@ -636,94 +801,8 @@ MID
 	ind 6; p "}"
 	ind 5; p "}"
 
-	# Heads the waterfall itself, so the rules read as their own thing rather
-	# than as more of the preset's description. Gone on None, which has none.
-	ind 5; p ""
-	p "### The waterfall."
-	p "text_label_left = {"
-	ind 6
-	p "visible = \"[$(vge leo_mvd_rule_count 1)]\""
-	p "layoutpolicy_horizontal = expanding"
-	p "text = \"leo_mvd_ui_heading_priorities\""
-	ind 5; p "}"
-
-	# The rule editor: one collapsible section per priority in use.
-	for prio in $(seq 1 "$PRIORITIES"); do
-		ind 5; p ""
-		p "### Priority $prio (collapsible). Shown whenever the rule set in place"
-		p "### reaches this far - for a built-in preset too, so its plan can be"
-		p "### read rather than taken on trust. Only editable in Custom."
-		p "vbox = {"
-		ind 6
-		p "visible = \"[$(vge leo_mvd_rule_count "$prio")]\""
-		p "layoutpolicy_horizontal = expanding"
-		p "oncreate = \"[BindFoldOutContext]\""
-		p "oncreate = \"[PdxGuiFoldOut.Unfold]\""
-		p ""
-		p "button_expandable_toggle_field = {"
-		ind 7; p "blockoverride \"text\" {"
-		ind 8; p "text = \"leo_mvd_ui_priority_$prio\""
-		ind 7; p "}"
-		ind 6; p "}"
-		p ""
-		p "vbox = {"
-		ind 7
-		p "visible = \"[PdxGuiFoldOut.IsUnfolded]\""
-		p "layoutpolicy_horizontal = expanding"
-		p "margin = { 6 4 }"
-		p "spacing = 2"
-		p ""
-		emit_node 7 "$prio" 1 0
-
-		# Extend or shorten the waterfall.
-		#
-		# Add only appears on the end of the waterfall, and only while there is
-		# room to extend it - a priority is always appended, so offering it
-		# halfway up would say otherwise. Everywhere else Remove has the row to
-		# itself.
-		#
-		# The visible sits on Add's half rather than on Add: a hidden widget
-		# takes no space, so the half collapses and Remove spreads across the
-		# whole row. Hiding only the button would leave its half standing empty.
-		ind 7; p ""
-		p "hbox = {"
-		ind 8
-		p "layoutpolicy_horizontal = expanding"
-		p "margin_top = 8"
-		p "spacing = 6"
-		p ""
-		p "hbox = {"
-		ind 9
-		p "visible = \"[And( $(veq leo_mvd_rule_count "$prio"), Not( $(vge leo_mvd_rule_count "$PRIORITIES") ) )]\""
-		p "layoutpolicy_horizontal = expanding"
-		p ""
-		p "button_standard = {"
-		ind 10
-		p "layoutpolicy_horizontal = expanding"
-		p "text = \"leo_mvd_ui_add_priority\""
-		p "onclick = \"$(sgui leo_mvd_add_priority)\""
-		p "tooltip = \"leo_mvd_ui_add_priority_tt\""
-		ind 9; p "}"
-		ind 8; p "}"
-		p ""
-		p "hbox = {"
-		ind 9
-		p "layoutpolicy_horizontal = expanding"
-		p ""
-		p "button_standard = {"
-		ind 10
-		p "layoutpolicy_horizontal = expanding"
-		p "text = \"leo_mvd_ui_remove_priority\""
-		p "onclick = \"$(sgui "leo_mvd_remove_priority_${prio}")\""
-		p "enabled = \"$(sgui_valid "leo_mvd_remove_priority_${prio}")\""
-		p "tooltip = \"leo_mvd_ui_remove_priority_tt\""
-		ind 9; p "}"
-		ind 8; p "}"
-		ind 7; p "}"
-
-		ind 6; p "}"
-		ind 5; p "}"
-	done
+	emit_waterfall main
+	emit_waterfall nomad
 
 cat << 'TAIL'
 				}
@@ -788,6 +867,18 @@ HEAD
 		done
 	done
 
+	# The nomad tree, addressed from 100 up so the two cannot collide.
+	for prio in $(seq 1 "$QPRIORITIES"); do
+		echo
+		echo "### Nomad priority $prio nodes."
+		for n in 1 2 3 4 5 6 7; do
+			echo "leo_mvd_focus_q${prio}_n${n} = {"
+			echo -e "\tscope = character"
+			echo -e "\teffect = { leo_mvd_focus_effect = { CODE = $((100+prio*10+n)) } }"
+			echo "}"
+		done
+	done
+
 	echo
 	echo "### Adding and removing priorities."
 	echo "leo_mvd_add_priority = {"
@@ -800,6 +891,18 @@ HEAD
 		echo -e "\t# Never down to nothing: a rule set with no priorities is None."
 		echo -e "\tis_valid = { var:leo_mvd_rule_count > 1 }"
 		echo -e "\teffect = { leo_mvd_remove_priority_${prio}_effect = yes }"
+		echo "}"
+	done
+
+	echo "leo_mvd_add_qpriority = {"
+	echo -e "\tscope = character"
+	echo -e "\teffect = { leo_mvd_add_qpriority_effect = yes }"
+	echo "}"
+	for prio in $(seq 1 "$QPRIORITIES"); do
+		echo "leo_mvd_remove_qpriority_${prio} = {"
+		echo -e "\tscope = character"
+		echo -e "\t# This one may empty: a realm with no nomads has no use for it."
+		echo -e "\teffect = { leo_mvd_remove_qpriority_${prio}_effect = yes }"
 		echo "}"
 	done
 
@@ -836,7 +939,7 @@ HEAD
 
 	echo
 	echo "### Directives."
-	for d in $DIRS; do
+	for d in $ALL_DIRS; do
 		echo "leo_mvd_set_dir_${d} = {"
 		echo -e "\tscope = character"
 		echo -e "\teffect = { leo_mvd_edit_effect = { FIELD = 4 VALUE = $d } }"
@@ -859,6 +962,9 @@ emit_loc() {
 	for prio in $(seq 1 6); do
 		echo " leo_mvd_ui_priority_${prio}: \"Priority ${prio}\""
 	done
+	for prio in $(seq 1 3); do
+		echo " leo_mvd_ui_qpriority_${prio}: \"Priority ${prio}\""
+	done
 	echo
 	echo " leo_mvd_ui_kind_0: \"Continue to Next Priority\""
 	echo " leo_mvd_ui_kind_0_last: \"Leave Without a Directive\""
@@ -877,7 +983,7 @@ emit_loc() {
 	echo " leo_mvd_ui_remove_priority_tt: \"Drop this priority. The ones below it move up to close the gap.\\n\\n#weak A rule set always keeps at least one priority - to assign nothing at all, choose the None preset.#!\""
 	echo
 	echo " leo_mvd_ui_dir_0: \"#weak Choose a Directive#!\""
-	for d in $DIRS; do
+	for d in $ALL_DIRS; do
 		echo " leo_mvd_ui_dir_${d}: \"@leo_mvd_dir_icon_$(dir_icon "$d")! $(dir_name "$d")\""
 	done
 	echo
