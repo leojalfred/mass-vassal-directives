@@ -1,6 +1,10 @@
 ﻿# Leo VI's Mass Vassal Directives - exempt toggle interactions
-# Exempted vassals are skipped by the automated directive waterfall; set their
-# directive manually via the vanilla Give Vassal Directive interaction.
+#
+# An exempt vassal is passed over by the rules entirely, and shows their
+# directive icon dimmed; set theirs by hand with vanilla's Give Vassal Directive.
+#
+# No ai_potential or ai_targets, so the AI never uses these - they are the
+# player's way of carving a vassal out of their own automation.
 
 leo_mvd_exempt_interaction = {
 	category = interaction_category_vassal
