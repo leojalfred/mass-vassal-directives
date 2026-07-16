@@ -32,14 +32,32 @@ DD_INSET=3            # px an open dropdown list is narrower than its button,
 
 ### The rules, described once.
 
-# Directive codes -> vanilla loc key. The vanilla keys already embed the icon.
+# Directive codes -> the name they go by.
+#
+# Vanilla has a loc key per directive that pairs the name with its icon, but
+# that icon is 35x35 at offset { 0 11 } - meant for a row of its own in the
+# Subjects tab. In a sentence it forces the line apart and strands the name on
+# the next one, and it overflows a 30px dropdown row. So these name the
+# directive themselves and reach for the inline-sized icons in
+# gui/leo_mvd_texticons.gui instead. Wording follows vanilla's.
 DIRS="1 2 3 4 5 6 7 8 9"
-dir_loc() { case $1 in
+dir_icon() { case $1 in
 	1) echo convert_faith ;;                2) echo convert_culture ;;
 	3) echo improve_development ;;          4) echo train_commanders ;;
 	5) echo build_maa ;;                    6) echo improve_cultural_acceptance ;;
 	7) echo building_focus_fortification ;; 8) echo building_focus_military ;;
 	9) echo building_focus_economy ;;
+esac; }
+dir_name() { case $1 in
+	1) echo "Convert [faith|E]" ;;
+	2) echo "Promote [culture|E]" ;;
+	3) echo "Improve [development|E]" ;;
+	4) echo "Boost [men_at_arms|E]" ;;
+	5) echo "Recruit [men_at_arms|E]" ;;
+	6) echo "Improve [cultural_acceptance|E]" ;;
+	7) echo "Construct [fortification_buildings|E]" ;;
+	8) echo "Construct [military_buildings|E]" ;;
+	9) echo "Construct [economic_buildings|E]" ;;
 esac; }
 
 # Condition codes. Must match leo_mvd_cond_holds_trigger.
@@ -753,7 +771,7 @@ emit_loc() {
 	echo
 	echo " leo_mvd_ui_dir_0: \"#weak Choose a Directive#!\""
 	for d in $DIRS; do
-		echo " leo_mvd_ui_dir_${d}: \"\$$(dir_loc "$d")\$\""
+		echo " leo_mvd_ui_dir_${d}: \"@leo_mvd_dir_icon_$(dir_icon "$d")! $(dir_name "$d")\""
 	done
 	echo
 	echo " leo_mvd_ui_cond_0: \"#weak Choose a Condition#!\""

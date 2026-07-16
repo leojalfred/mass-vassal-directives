@@ -170,3 +170,95 @@ texticon = {
 		color = "color_gray"
 	}
 }
+
+### Inline directive icons (20x20).
+###
+### The vanilla directive texticons are 35x35 at offset { 0 11 } - built to sit
+### in a row of their own in the Subjects tab, not inside a sentence. Used in
+### running text they force the line apart and strand the name on the next line,
+### and they overflow a 30px dropdown row. These are the same textures at a size
+### that sits on a line of text.
+###
+### Same textures as the grey twins above; re-diff both against
+### game/gui/texticons.gui after a game patch.
+texticon = {
+	icon = leo_mvd_dir_icon_convert_faith
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/convert_faith.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_convert_culture
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/promote_culture.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_improve_development
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/improve_development.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_train_commanders
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/boost_men_at_arms.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_build_maa
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/recruit_men_at_arms.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_improve_cultural_acceptance
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/improve_cultural_acceptance.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_building_focus_fortification
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/construct_fortification_buildings.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_building_focus_military
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/construct_military_buildings.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_building_focus_economy
+	iconsize = {
+		texture = "gfx/interface/icons/vassal_directives/construct_economic_buildings.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}

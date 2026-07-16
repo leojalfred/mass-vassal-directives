@@ -11,20 +11,22 @@
  leo_mvd_ui_remove_all_tt: "Remove every [directive|E] this automation assigned, clear all exemptions, and turn automation off. Directives you assigned manually are kept."
  ### Presets
  # A preset is a rule set: an ordered list of priorities, where each vassal gets
- # the first one that applies to them. The $directive$ keys already include the
- # directive's icon.
+ # the first one that applies to them. The $leo_mvd_ui_dir_N$ keys are the
+ # directive names, with an inline-sized icon; they are generated into
+ # leo_mvd_ui_l_english.yml. Do not use vanilla's $convert_faith$ and friends
+ # here - their icons are sized for a row of their own and break running text.
  leo_mvd_ui_preset_0: "None"
  # Doubles as the panel's Description text while None is selected, so it has to
  # both say what None does and point a new player somewhere useful.
- leo_mvd_ui_preset_0_tt: "Nothing is assigned. Your [vassals|E] keep whatever [directives|E] you gave them yourself.\n\nA preset is a running order: each [vassal|E] is given the first [directive|E] in it that suits them. Pick one above and its plan appears here.\n\nOr choose #V Custom#! to write the order yourself, priority by priority - give every [vassal|E] the same [directive|E], or ask a question about them and send each answer its own way.\n\n#weak Nothing happens until you choose.#!"
+ leo_mvd_ui_preset_0_tt: "Nothing is assigned. Your [vassals|E] keep whatever [directives|E] you gave them yourself.\n\nA preset is a running order: each [vassal|E] is given the first [directive|E] in it that suits them. Pick one above and its plan appears here.\n\nOr choose #V Custom#! to write the order yourself, priority by priority - hand every [vassal|E] the same [directive|E], or judge them on what you choose, from [faith|E] and [culture|E] to strength, [development|E] and standing, and give each the [directive|E] that fits.\n\n#weak Nothing happens until you choose.#!"
  leo_mvd_ui_preset_1: "Convert and Develop"
- leo_mvd_ui_preset_1_tt: "Bring your [vassals|E] into the fold, then grow them.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $convert_faith$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $convert_culture$.\n#weak 3.#! Of the rest, the militarily strong $improve_development$ and the weak $building_focus_military$.\n#weak 4.#! Anyone left over builds $building_focus_economy$."
+ leo_mvd_ui_preset_1_tt: "Bring your [vassals|E] into the fold, then grow them.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $leo_mvd_ui_dir_1$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $leo_mvd_ui_dir_2$.\n#weak 3.#! Of the rest, the militarily strong $leo_mvd_ui_dir_3$ and the weak $leo_mvd_ui_dir_8$.\n#weak 4.#! Anyone left over builds $leo_mvd_ui_dir_9$."
  leo_mvd_ui_preset_2: "Unify the Realm"
- leo_mvd_ui_preset_2_tt: "Make the realm one people.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $convert_faith$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $convert_culture$.\n#weak 3.#! Those still holding foreign-[culture|E] counties work on $improve_cultural_acceptance$.\n#weak 4.#! Anyone left over builds $building_focus_economy$.\n\n#weak Converts harder than Convert and Develop, at the cost of growth.#!"
+ leo_mvd_ui_preset_2_tt: "Make the realm one people.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $leo_mvd_ui_dir_1$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $leo_mvd_ui_dir_2$.\n#weak 3.#! Those still holding foreign-[culture|E] counties work on $leo_mvd_ui_dir_6$.\n#weak 4.#! Anyone left over builds $leo_mvd_ui_dir_9$.\n\n#weak Converts harder than Convert and Develop, at the cost of growth.#!"
  leo_mvd_ui_preset_3: "Prepare for War"
- leo_mvd_ui_preset_3_tt: "Arm the realm, each [vassal|E] to their strength.\n\nStrong vassals contribute what their government does best: administrative ones $build_maa$, the rest $building_focus_fortification$.\nWeak vassals everywhere are told to $building_focus_military$ first.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_3_tt: "Arm the realm, each [vassal|E] to their strength.\n\nStrong vassals contribute what their government does best: administrative ones $leo_mvd_ui_dir_5$, the rest $leo_mvd_ui_dir_7$.\nWeak vassals everywhere are told to $leo_mvd_ui_dir_8$ first.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_4: "Grow the Economy"
- leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\nUndeveloped vassals are told to $improve_development$.\nEstablished vassals turn to $building_focus_economy$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\nUndeveloped vassals are told to $leo_mvd_ui_dir_3$.\nEstablished vassals turn to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_5: "Custom"
  leo_mvd_ui_preset_5_tt: "Your own rules, built below.\n\n#weak Selecting this keeps whichever rules are loaded, so pick a preset first and then Custom to start from it rather than from nothing.#!"
 
