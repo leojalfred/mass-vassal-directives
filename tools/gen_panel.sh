@@ -477,7 +477,13 @@ types leo_mvd_dropdown_types {
 
 window = {
 	name = "leo_mvd_panel"
-	size = { 500 700 }
+	# Sized off the character finder, the panel this most resembles: as wide as
+	# its Filters (window_character_filter.gui:77, size = { 510 800 }, and which
+	# is likewise a movable Window_Background_Subwindow), and as tall as the
+	# finder itself (shared/windows.gui:79, Window_Size_CharacterList, 88%). A
+	# full rule set is long, and 88% is what vanilla considers as much of the
+	# screen as a window may take.
+	size = { 510 88% }
 
 	parentanchor = top|right
 	position = { -645 70 }
@@ -630,6 +636,17 @@ MID
 	ind 6; p "}"
 	ind 5; p "}"
 
+	# Heads the waterfall itself, so the rules read as their own thing rather
+	# than as more of the preset's description. Gone on None, which has none.
+	ind 5; p ""
+	p "### The waterfall."
+	p "text_label_left = {"
+	ind 6
+	p "visible = \"[$(vge leo_mvd_rule_count 1)]\""
+	p "layoutpolicy_horizontal = expanding"
+	p "text = \"leo_mvd_ui_heading_priorities\""
+	ind 5; p "}"
+
 	# The rule editor: one collapsible section per priority in use.
 	for prio in $(seq 1 "$PRIORITIES"); do
 		ind 5; p ""
@@ -658,48 +675,55 @@ MID
 		p ""
 		emit_node 7 "$prio" 1 0
 
-		# Drop this priority. Disabled on the last one standing - a rule set with
-		# no priorities at all is what None is for.
+		# Extend or shorten the waterfall.
+		#
+		# Add only appears on the end of the waterfall, and only while there is
+		# room to extend it - a priority is always appended, so offering it
+		# halfway up would say otherwise. Everywhere else Remove has the row to
+		# itself.
+		#
+		# The visible sits on Add's half rather than on Add: a hidden widget
+		# takes no space, so the half collapses and Remove spreads across the
+		# whole row. Hiding only the button would leave its half standing empty.
 		ind 7; p ""
 		p "hbox = {"
 		ind 8
 		p "layoutpolicy_horizontal = expanding"
-		p "margin_top = 6"
+		p "margin_top = 8"
+		p "spacing = 6"
+		p ""
+		p "hbox = {"
+		ind 9
+		p "visible = \"[And( $(veq leo_mvd_rule_count "$prio"), Not( $(vge leo_mvd_rule_count "$PRIORITIES") ) )]\""
+		p "layoutpolicy_horizontal = expanding"
 		p ""
 		p "button_standard = {"
+		ind 10
+		p "layoutpolicy_horizontal = expanding"
+		p "text = \"leo_mvd_ui_add_priority\""
+		p "onclick = \"$(sgui leo_mvd_add_priority)\""
+		p "tooltip = \"leo_mvd_ui_add_priority_tt\""
+		ind 9; p "}"
+		ind 8; p "}"
+		p ""
+		p "hbox = {"
 		ind 9
+		p "layoutpolicy_horizontal = expanding"
+		p ""
+		p "button_standard = {"
+		ind 10
+		p "layoutpolicy_horizontal = expanding"
 		p "text = \"leo_mvd_ui_remove_priority\""
 		p "onclick = \"$(sgui "leo_mvd_remove_priority_${prio}")\""
 		p "enabled = \"$(sgui_valid "leo_mvd_remove_priority_${prio}")\""
 		p "tooltip = \"leo_mvd_ui_remove_priority_tt\""
+		ind 9; p "}"
 		ind 8; p "}"
-		p ""
-		p "expand = {}"
 		ind 7; p "}"
 
 		ind 6; p "}"
 		ind 5; p "}"
 	done
-
-	# Append a priority. Hidden on None, which has no waterfall to extend, and
-	# once the last slot is in use.
-	ind 5; p ""
-	p "### Add a priority to the end of the waterfall."
-	p "hbox = {"
-	ind 6
-	p "visible = \"[And( $(vge leo_mvd_rule_count 1), Not( $(vge leo_mvd_rule_count $((PRIORITIES + 1))) ) )]\""
-	p "layoutpolicy_horizontal = expanding"
-	p "margin = { 6 4 }"
-	p ""
-	p "button_standard = {"
-	ind 7
-	p "text = \"leo_mvd_ui_add_priority\""
-	p "onclick = \"$(sgui leo_mvd_add_priority)\""
-	p "tooltip = \"leo_mvd_ui_add_priority_tt\""
-	ind 6; p "}"
-	p ""
-	p "expand = {}"
-	ind 5; p "}"
 
 cat << 'TAIL'
 				}

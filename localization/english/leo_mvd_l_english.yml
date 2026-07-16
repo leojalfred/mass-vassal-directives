@@ -3,6 +3,10 @@
  leo_mvd_panel_title: "Vassal Directive Automation"
  leo_mvd_ui_heading_preset: "Preset"
  leo_mvd_ui_heading_description: "Description"
+ # Heads the waterfall itself. "Priorities" rather than "Configuration" because
+ # it names what is under it - the sections below are Priority 1, 2, 3 - and the
+ # whole panel is configuration.
+ leo_mvd_ui_heading_priorities: "Priorities"
  leo_mvd_ui_auto: "Automatically Reassign Vassal Directives"
  leo_mvd_ui_auto_tt: "When enabled, the [directive|E] priority waterfall re-runs across all eligible [vassals|E] every month and again whenever you change a setting here. Turning it on applies directives immediately.\n\n#weak Manual assignments on non-exempt vassals are overwritten by each run. Exempt a vassal through their interaction menu to protect your choice.#!"
  leo_mvd_ui_apply: "Apply Now"

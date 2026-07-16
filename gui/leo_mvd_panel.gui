@@ -87,7 +87,13 @@ types leo_mvd_dropdown_types {
 
 window = {
 	name = "leo_mvd_panel"
-	size = { 500 700 }
+	# Sized off the character finder, the panel this most resembles: as wide as
+	# its Filters (window_character_filter.gui:77, size = { 510 800 }, and which
+	# is likewise a movable Window_Background_Subwindow), and as tall as the
+	# finder itself (shared/windows.gui:79, Window_Size_CharacterList, 88%). A
+	# full rule set is long, and 88% is what vanilla considers as much of the
+	# screen as a window may take.
+	size = { 510 88% }
 
 	parentanchor = top|right
 	position = { -645 70 }
@@ -284,6 +290,13 @@ window = {
 								text = "[Localize(Concatenate(Concatenate('leo_mvd_ui_preset_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue))), '_tt'))]"
 							}
 						}
+					}
+					
+					### The waterfall.
+					text_label_left = {
+						visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)1' )]"
+						layoutpolicy_horizontal = expanding
+						text = "leo_mvd_ui_heading_priorities"
 					}
 					
 					### Priority 1 (collapsible). Shown whenever the rule set in place
@@ -3141,16 +3154,32 @@ window = {
 							
 							hbox = {
 								layoutpolicy_horizontal = expanding
-								margin_top = 6
+								margin_top = 8
+								spacing = 6
 								
-								button_standard = {
-									text = "leo_mvd_ui_remove_priority"
-									onclick = "[GetScriptedGui('leo_mvd_remove_priority_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									enabled = "[GetScriptedGui('leo_mvd_remove_priority_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									tooltip = "leo_mvd_ui_remove_priority_tt"
+								hbox = {
+									visible = "[And( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)1' ), Not( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)6' ) ) )]"
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_add_priority"
+										onclick = "[GetScriptedGui('leo_mvd_add_priority').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_add_priority_tt"
+									}
 								}
 								
-								expand = {}
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_remove_priority"
+										onclick = "[GetScriptedGui('leo_mvd_remove_priority_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										enabled = "[GetScriptedGui('leo_mvd_remove_priority_1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_remove_priority_tt"
+									}
+								}
 							}
 						}
 					}
@@ -6010,16 +6039,32 @@ window = {
 							
 							hbox = {
 								layoutpolicy_horizontal = expanding
-								margin_top = 6
+								margin_top = 8
+								spacing = 6
 								
-								button_standard = {
-									text = "leo_mvd_ui_remove_priority"
-									onclick = "[GetScriptedGui('leo_mvd_remove_priority_2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									enabled = "[GetScriptedGui('leo_mvd_remove_priority_2').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									tooltip = "leo_mvd_ui_remove_priority_tt"
+								hbox = {
+									visible = "[And( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)2' ), Not( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)6' ) ) )]"
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_add_priority"
+										onclick = "[GetScriptedGui('leo_mvd_add_priority').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_add_priority_tt"
+									}
 								}
 								
-								expand = {}
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_remove_priority"
+										onclick = "[GetScriptedGui('leo_mvd_remove_priority_2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										enabled = "[GetScriptedGui('leo_mvd_remove_priority_2').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_remove_priority_tt"
+									}
+								}
 							}
 						}
 					}
@@ -8879,16 +8924,32 @@ window = {
 							
 							hbox = {
 								layoutpolicy_horizontal = expanding
-								margin_top = 6
+								margin_top = 8
+								spacing = 6
 								
-								button_standard = {
-									text = "leo_mvd_ui_remove_priority"
-									onclick = "[GetScriptedGui('leo_mvd_remove_priority_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									enabled = "[GetScriptedGui('leo_mvd_remove_priority_3').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									tooltip = "leo_mvd_ui_remove_priority_tt"
+								hbox = {
+									visible = "[And( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)3' ), Not( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)6' ) ) )]"
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_add_priority"
+										onclick = "[GetScriptedGui('leo_mvd_add_priority').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_add_priority_tt"
+									}
 								}
 								
-								expand = {}
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_remove_priority"
+										onclick = "[GetScriptedGui('leo_mvd_remove_priority_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										enabled = "[GetScriptedGui('leo_mvd_remove_priority_3').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_remove_priority_tt"
+									}
+								}
 							}
 						}
 					}
@@ -11748,16 +11809,32 @@ window = {
 							
 							hbox = {
 								layoutpolicy_horizontal = expanding
-								margin_top = 6
+								margin_top = 8
+								spacing = 6
 								
-								button_standard = {
-									text = "leo_mvd_ui_remove_priority"
-									onclick = "[GetScriptedGui('leo_mvd_remove_priority_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									enabled = "[GetScriptedGui('leo_mvd_remove_priority_4').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									tooltip = "leo_mvd_ui_remove_priority_tt"
+								hbox = {
+									visible = "[And( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)4' ), Not( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)6' ) ) )]"
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_add_priority"
+										onclick = "[GetScriptedGui('leo_mvd_add_priority').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_add_priority_tt"
+									}
 								}
 								
-								expand = {}
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_remove_priority"
+										onclick = "[GetScriptedGui('leo_mvd_remove_priority_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										enabled = "[GetScriptedGui('leo_mvd_remove_priority_4').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_remove_priority_tt"
+									}
+								}
 							}
 						}
 					}
@@ -14617,16 +14694,32 @@ window = {
 							
 							hbox = {
 								layoutpolicy_horizontal = expanding
-								margin_top = 6
+								margin_top = 8
+								spacing = 6
 								
-								button_standard = {
-									text = "leo_mvd_ui_remove_priority"
-									onclick = "[GetScriptedGui('leo_mvd_remove_priority_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									enabled = "[GetScriptedGui('leo_mvd_remove_priority_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									tooltip = "leo_mvd_ui_remove_priority_tt"
+								hbox = {
+									visible = "[And( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)5' ), Not( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)6' ) ) )]"
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_add_priority"
+										onclick = "[GetScriptedGui('leo_mvd_add_priority').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_add_priority_tt"
+									}
 								}
 								
-								expand = {}
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_remove_priority"
+										onclick = "[GetScriptedGui('leo_mvd_remove_priority_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										enabled = "[GetScriptedGui('leo_mvd_remove_priority_5').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_remove_priority_tt"
+									}
+								}
 							}
 						}
 					}
@@ -17486,33 +17579,34 @@ window = {
 							
 							hbox = {
 								layoutpolicy_horizontal = expanding
-								margin_top = 6
+								margin_top = 8
+								spacing = 6
 								
-								button_standard = {
-									text = "leo_mvd_ui_remove_priority"
-									onclick = "[GetScriptedGui('leo_mvd_remove_priority_6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									enabled = "[GetScriptedGui('leo_mvd_remove_priority_6').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-									tooltip = "leo_mvd_ui_remove_priority_tt"
+								hbox = {
+									visible = "[And( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)6' ), Not( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)6' ) ) )]"
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_add_priority"
+										onclick = "[GetScriptedGui('leo_mvd_add_priority').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_add_priority_tt"
+									}
 								}
 								
-								expand = {}
+								hbox = {
+									layoutpolicy_horizontal = expanding
+									
+									button_standard = {
+										layoutpolicy_horizontal = expanding
+										text = "leo_mvd_ui_remove_priority"
+										onclick = "[GetScriptedGui('leo_mvd_remove_priority_6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										enabled = "[GetScriptedGui('leo_mvd_remove_priority_6').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+										tooltip = "leo_mvd_ui_remove_priority_tt"
+									}
+								}
 							}
 						}
-					}
-					
-					### Add a priority to the end of the waterfall.
-					hbox = {
-						visible = "[And( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)1' ), Not( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)7' ) ) )]"
-						layoutpolicy_horizontal = expanding
-						margin = { 6 4 }
-						
-						button_standard = {
-							text = "leo_mvd_ui_add_priority"
-							onclick = "[GetScriptedGui('leo_mvd_add_priority').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-							tooltip = "leo_mvd_ui_add_priority_tt"
-						}
-						
-						expand = {}
 					}
 				}
 			}
