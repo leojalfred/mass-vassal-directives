@@ -4,11 +4,17 @@
 # on_accept exactly: remove_vassal_directives (vanilla scripted effect,
 # 00_realm_effects.txt) followed by add_character_flag.
 #
-# Directive codes (stored in leo_mvd_managed and in each rule node's dir):
+# Directive codes (stored in leo_mvd_managed and in each rule node's dir).
+# 0 means no directive chosen. Settled vassals:
 # 1 convert_faith, 2 convert_culture, 3 improve_development,
 # 4 train_commanders, 5 build_maa, 6 improve_cultural_acceptance,
 # 7 building_focus_fortification, 8 building_focus_military,
-# 9 building_focus_economy. 0 means "continue to the next priority".
+# 9 building_focus_economy. Nomads, who can be given no others:
+# 10 manage_fertility, 11 explore_cultures, 12 raid_innovation_intent,
+# 13 raid_herd_intent.
+#
+# The same numbers suffix the leo_mvd_ui_dir_N loc keys, which the panel builds
+# at runtime - keep them aligned.
 #
 # Which directive a vassal gets is decided by the rule engine in
 # leo_mvd_rules.txt; this file is the machinery around it.

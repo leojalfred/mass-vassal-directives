@@ -42,6 +42,7 @@ Every odd-looking decision here follows from one of these. All confirmed, none g
 
 ## Adding things
 
+- The vanilla is_shown mirror lives once, in `leo_mvd_directive_shown_trigger` - both the rules and the exempt interaction call it. Keep it that way.
 - **A condition** — add to `leo_mvd_cond_holds_trigger` (the chain, keyed on `scope:leo_mvd_cond_id`), then `CONDS`/`cond_name` in the generator. If it takes a number, also `NUMERIC_CONDS`, `cond_thresh`, `cond_default_thresh`, `thresh_label`. Guard anything that changes scope with `exists`. Add it to `NOMAD_CONDS` unless a nomad could never answer yes.
 - **A directive** — a gate trigger mirroring its vanilla `send_option`, a branch in `leo_mvd_try_assign_effect`, a case in `leo_mvd_managed_matches_trigger`, an inline icon in `gui/leo_mvd_texticons.gui`, and `dir_icon`/`dir_name`/`DIRS` in the generator.
 - **A preset** — a `leo_mvd_preset_N_effect` (rule data, not logic), an sgui, loc for its name and `_tt`, and the dropdown's range in `emit_panel`.

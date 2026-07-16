@@ -88,9 +88,9 @@ leo_mvd_preset_4 = {
 	}
 }
 
-# The player's own rules, and the editor below them. Keeps whatever rules are
-# loaded, so picking a built-in and then Custom carries that built-in over as
-# the starting point to edit.
+# The player's own rules. Picking Custom from a preset starts blank; starting
+# from a preset is a different gesture - change one of its rules and
+# leo_mvd_edit_effect makes the whole thing yours.
 leo_mvd_preset_5 = {
 	scope = character
 	effect = {

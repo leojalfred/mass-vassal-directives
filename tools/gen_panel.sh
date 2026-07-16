@@ -86,20 +86,20 @@ CONDS="1 2 3 4 5 6 7 8 9 10 11 12 13 14"
 # administrative, so it could only ever answer no.
 NOMAD_CONDS="1 2 3 4 5 7 8 9 10 11 12 13 14"
 cond_name() { case $1 in
-	1) echo "Faith is Yours" ;;
-	2) echo "Culture is Yours" ;;
-	3) echo "Holds Counties of Another Faith" ;;
-	4) echo "Holds Counties of Another Culture" ;;
-	5) echo "Same Dynasty as You" ;;
-	6) echo "Administrative Government" ;;
-	7) echo "Is a Powerful Vassal" ;;
-	8) echo "Is on Your Council" ;;
+	1) echo "[faith|E] is Yours" ;;
+	2) echo "[culture|E] is Yours" ;;
+	3) echo "Holds [counties|E] of Another [faith|E]" ;;
+	4) echo "Holds [counties|E] of Another [culture|E]" ;;
+	5) echo "Same [dynasty|E] as You" ;;
+	6) echo "[administrative|E] [government|E]" ;;
+	7) echo "Is a [powerful_vassal|E]" ;;
+	8) echo "Is on Your [council|E]" ;;
 	9) echo "Military Strength is at Least" ;;
-	10) echo "Title Tier is at Least" ;;
-	11) echo "Capital Development is at Least" ;;
-	12) echo "Opinion of You is at Least" ;;
-	13) echo "Counties Held is at Least" ;;
-	14) echo "Cultural Acceptance with You is at Least" ;;
+	10) echo "[title|E] Tier is at Least" ;;
+	11) echo "Capital [development|E] is at Least" ;;
+	12) echo "[opinion|E] of You is at Least" ;;
+	13) echo "[counties|E] Held is at Least" ;;
+	14) echo "[cultural_acceptance|E] with You is at Least" ;;
 esac; }
 
 # Thresholds, per numeric condition. All non-negative: a label key is built by
@@ -125,9 +125,9 @@ esac; }
 # A threshold's label depends on the condition asking for it.
 thresh_label() { local c=$1 t=$2
 	case $c in
-	10) case $t in 2) echo "County" ;; 3) echo "Duchy" ;; 4) echo "Kingdom" ;; 5) echo "Empire" ;; esac ;;
+	10) case $t in 2) echo "[county|E]" ;; 3) echo "[duchy|E]" ;; 4) echo "[kingdom|E]" ;; 5) echo "[empire|E]" ;; esac ;;
 	14) echo "$t%" ;;
-	13) case $t in 1) echo "1 County" ;; *) echo "$t Counties" ;; esac ;;
+	13) case $t in 1) echo "1 [county|E]" ;; *) echo "$t [counties|E]" ;; esac ;;
 	*)  echo "$t" ;;
 	esac
 }
@@ -168,14 +168,14 @@ sgui_valid() { echo "[GetScriptedGui('$1').IsValid( GuiScope.SetRoot( GetPlayer.
 # Same behaviour either way, so only the label changes.
 kind0_key() { echo "SelectLocalization( $(vge "$COUNT_VAR" $(($1 + 1))), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' )"; }
 
+### Dropdowns.
+#
 # The rules are shown and editable whichever preset is selected, so a preset can
 # be read rather than taken on trust, and used as a starting point rather than a
-# take-it-or-leave-it. Changing anything makes the rules the player's own -
-# leo_mvd_edit_effect switches the selection to Custom - so a built-in is never
-# edited in place into something that is no longer the preset it claims to be.
-DD_EDITABLE=""
-
-### Dropdowns.
+# take-it-or-leave-it. Nothing here gates on which preset is loaded: changing
+# anything makes the rules the player's own, because leo_mvd_edit_effect
+# switches the selection to Custom - so a built-in is never edited in place into
+# something that is no longer the preset it claims to be.
 #
 # These open in flow, pushing the rows below them down, rather than floating
 # over them. That is forced, not preferred.
@@ -206,7 +206,7 @@ DD_EDITABLE=""
 #
 # <1> depth  <2> id  <3> label expression  <4> tooltip (may be empty)
 # <5> enabled expression (may be empty - always enabled)
-emit_dd_start() { local depth=$1 id=$2 label=$3 tt=${4:-} en=${5:-}
+emit_dd_start() { local depth=$1 id=$2 label=$3
 	ind "$depth"
 	p "vbox = {"
 	ind $((depth+1))
@@ -218,8 +218,6 @@ emit_dd_start() { local depth=$1 id=$2 label=$3 tt=${4:-} en=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' ), 'none', '$id' ) )]\""
 	p "text = \"[$label]\""
-	[ -n "$en" ] && p "enabled = \"[$en]\""
-	[ -n "$tt" ] && p "tooltip = \"$tt\""
 	ind $((depth+1)); p "}"
 	p ""
 	# A wrapper whose only job is to be narrower than the button.
@@ -307,8 +305,6 @@ cond_row_visible() { local c=$1 parent_var=$2
 	echo "Not( $(veq "$parent_var" "$c") )"
 }
 
-emit_dd_close() { ind "$1"; p "}"; }
-
 ### One node's editor.
 
 # <1> depth <2> priority <3> node number <4> level <5> parent's cond var, if any
@@ -319,7 +315,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	# What this node does. Kind 0's label depends on whether a next priority
 	# exists, so the button has to ask before falling back to the generic key.
 	local kind_label="SelectLocalization( $(veq "leo_mvd_${node}_kind" 0), $(kind0_key "$prio"), $(vkey 'leo_mvd_ui_kind_' "leo_mvd_${node}_kind") )"
-	emit_dd_start "$depth" "${node}_kind" "$kind_label" "" "$DD_EDITABLE"
+	emit_dd_start "$depth" "${node}_kind" "$kind_label"
 	for k in $kinds; do
 		local kl="leo_mvd_ui_kind_$k"
 		[ "$k" = 0 ] && kl="[$(kind0_key "$prio")]"
@@ -335,7 +331,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
-	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")" "" "$DD_EDITABLE"
+	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")"
 	for d in $CUR_DIRS; do
 		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d"
 	done
@@ -352,7 +348,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
-	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")" "" "$DD_EDITABLE"
+	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
 	for c in $CUR_CONDS; do
 		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$(cond_row_visible "$c" "$parent_cond")"
 	done
@@ -367,7 +363,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 		p "visible = \"[$(veq "leo_mvd_${node}_cond" "$c")]\""
 		p "layoutpolicy_horizontal = expanding"
 		p "spacing = 2"
-		emit_dd_start $((depth+2)) "${node}_t${c}" "$(vkey "leo_mvd_ui_thresh_c${c}_" "leo_mvd_${node}_thresh")" "" "$DD_EDITABLE"
+		emit_dd_start $((depth+2)) "${node}_t${c}" "$(vkey "leo_mvd_ui_thresh_c${c}_" "leo_mvd_${node}_thresh")"
 		for t in $(cond_thresh "$c"); do
 			emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_t${c}" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}"
 		done
@@ -417,19 +413,23 @@ CUR_CONDS="$CONDS"
 # <1> main | nomad
 emit_waterfall() {
 	local which=$1
-	local max heading add_sgui remove_prefix prio_loc empty_ok
+	local max heading add_sgui remove_prefix prio_loc remove_tt
 	if [ "$which" = nomad ]; then
 		NODE_PREFIX=q; COUNT_VAR=leo_mvd_qrule_count
 		CUR_DIRS="$NOMAD_DIRS"; CUR_CONDS="$NOMAD_CONDS"
 		max=$QPRIORITIES; heading=leo_mvd_ui_heading_nomads
 		add_sgui=leo_mvd_add_qpriority; remove_prefix=leo_mvd_remove_qpriority
 		prio_loc=leo_mvd_ui_qpriority
+		# This waterfall may empty; the main one may not. Same button, different
+		# promise.
+		remove_tt=leo_mvd_ui_remove_qpriority_tt
 	else
 		NODE_PREFIX=r; COUNT_VAR=leo_mvd_rule_count
 		CUR_DIRS="$DIRS"; CUR_CONDS="$CONDS"
 		max=$PRIORITIES; heading=leo_mvd_ui_heading_priorities
 		add_sgui=leo_mvd_add_priority; remove_prefix=leo_mvd_remove_priority
 		prio_loc=leo_mvd_ui_priority
+		remove_tt=leo_mvd_ui_remove_priority_tt
 	fi
 
 	# Heads the waterfall, so the rules read as their own thing rather than as
@@ -493,21 +493,28 @@ emit_waterfall() {
 		p "layoutpolicy_horizontal = expanding"
 		p "margin_top = 8"
 		p "spacing = 6"
-		p ""
-		p "hbox = {"
-		ind 9
-		p "visible = \"[And( $(veq "$COUNT_VAR" "$prio"), Not( $(vge "$COUNT_VAR" "$max") ) )]\""
-		p "layoutpolicy_horizontal = expanding"
-		p ""
-		p "button_standard = {"
-		ind 10
-		p "layoutpolicy_horizontal = expanding"
-		p "text = \"leo_mvd_ui_add_priority\""
-		p "onclick = \"$(sgui "$add_sgui")\""
-		p "tooltip = \"leo_mvd_ui_add_priority_tt\""
-		ind 9; p "}"
-		ind 8; p "}"
-		p ""
+
+		# The last slot can never be the end of a waterfall with room left in
+		# it, so it gets no Add at all rather than one that cannot show.
+		if [ "$prio" -lt "$max" ]; then
+			p ""
+			p "hbox = {"
+			ind 9
+			# Only "is this the end", since prio < max already settles the rest.
+			p "visible = \"[$(veq "$COUNT_VAR" "$prio")]\""
+			p "layoutpolicy_horizontal = expanding"
+			p ""
+			p "button_standard = {"
+			ind 10
+			p "layoutpolicy_horizontal = expanding"
+			p "text = \"leo_mvd_ui_add_priority\""
+			p "onclick = \"$(sgui "$add_sgui")\""
+			p "tooltip = \"leo_mvd_ui_add_priority_tt\""
+			ind 9; p "}"
+			ind 8; p "}"
+		fi
+
+		ind 8; p ""
 		p "hbox = {"
 		ind 9
 		p "layoutpolicy_horizontal = expanding"
@@ -517,8 +524,10 @@ emit_waterfall() {
 		p "layoutpolicy_horizontal = expanding"
 		p "text = \"leo_mvd_ui_remove_priority\""
 		p "onclick = \"$(sgui "${remove_prefix}_${prio}")\""
-		p "enabled = \"$(sgui_valid "${remove_prefix}_${prio}")\""
-		p "tooltip = \"leo_mvd_ui_remove_priority_tt\""
+		# The nomad waterfall may empty, so its Remove has no is_valid and needs
+		# no enabled - the binding would only ever answer yes.
+		[ "$which" = main ] && p "enabled = \"$(sgui_valid "${remove_prefix}_${prio}")\""
+		p "tooltip = \"$remove_tt\""
 		ind 9; p "}"
 		ind 8; p "}"
 		ind 7; p "}"
@@ -959,17 +968,17 @@ emit_loc() {
 	echo " # GENERATED by tools/gen_panel.sh - edits here will be overwritten."
 	echo " # Static panel text lives in leo_mvd_l_english.yml instead."
 	echo
-	for prio in $(seq 1 6); do
+	for prio in $(seq 1 "$PRIORITIES"); do
 		echo " leo_mvd_ui_priority_${prio}: \"Priority ${prio}\""
 	done
-	for prio in $(seq 1 3); do
+	for prio in $(seq 1 "$QPRIORITIES"); do
 		echo " leo_mvd_ui_qpriority_${prio}: \"Priority ${prio}\""
 	done
 	echo
 	echo " leo_mvd_ui_kind_0: \"Continue to Next Priority\""
-	echo " leo_mvd_ui_kind_0_last: \"Leave Without a Directive\""
+	echo " leo_mvd_ui_kind_0_last: \"Leave Without a [directive|E]\""
 	echo " leo_mvd_ui_kind_0_tt: \"Do nothing here, and let the next priority decide instead.\\n\\n#weak On the last priority there is no next one, so the [vassal|E] is simply left without a [directive|E].#!\""
-	echo " leo_mvd_ui_kind_1: \"Assign a Directive\""
+	echo " leo_mvd_ui_kind_1: \"Assign a [directive|E]\""
 	echo " leo_mvd_ui_kind_1_tt: \"Give the [vassal|E] a [directive|E].\\n\\n#weak Vassals who cannot be given it - the game's own rules still apply - fall through to the next priority instead.#!\""
 	echo " leo_mvd_ui_kind_2: \"Check a Condition\""
 	echo " leo_mvd_ui_kind_2_tt: \"Ask something about the [vassal|E], and send each answer its own way.\""
@@ -981,6 +990,7 @@ emit_loc() {
 	echo " leo_mvd_ui_add_priority_tt: \"Add a priority to the end of the waterfall, for [vassals|E] none of the ones above it claimed.\""
 	echo " leo_mvd_ui_remove_priority: \"Remove\""
 	echo " leo_mvd_ui_remove_priority_tt: \"Drop this priority. The ones below it move up to close the gap.\\n\\n#weak A rule set always keeps at least one priority - to assign nothing at all, choose the None preset.#!\""
+	echo " leo_mvd_ui_remove_qpriority_tt: \"Drop this priority. The ones below it move up to close the gap.\n\n#weak Removing them all is allowed - your [nomad|E] [vassals|E] are then left alone.#!\""
 	echo
 	echo " leo_mvd_ui_dir_0: \"#weak Choose a Directive#!\""
 	for d in $ALL_DIRS; do

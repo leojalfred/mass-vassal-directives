@@ -8,9 +8,13 @@
 # Re-diff those mirrored lines against vanilla after each game patch.
 
 # Current scope: vassal candidate. $LIEGE$ = the liege issuing directives.
-# Mirrors the interaction's is_shown + is_valid + is_valid_showing_failures_only.
-leo_mvd_base_eligible_trigger = {
-	# is_shown mirror (00_vassal_interactions.txt:3428-3444)
+#
+# Verbatim mirror of give_vassal_directive_interaction's is_shown
+# (00_vassal_interactions.txt:3428-3444) - the vassals vanilla will even offer a
+# directive for. Re-diff this against vanilla after each game patch; it is the
+# one block both the rules and the exempt interaction depend on, so a drift here
+# is a drift everywhere.
+leo_mvd_directive_shown_trigger = {
 	trigger_if = {
 		limit = {
 			$LIEGE$ = { government_allows = administrative }
@@ -24,6 +28,14 @@ leo_mvd_base_eligible_trigger = {
 	NOT = { government_has_flag = government_is_herder }
 	highest_held_title_tier >= tier_county
 	is_ai = yes
+}
+
+# Current scope: vassal candidate. $LIEGE$ = the liege issuing directives.
+# Everything vanilla asks before a directive may be given, plus the mod's own
+# exemption. Mirrors the interaction's is_shown + is_valid +
+# is_valid_showing_failures_only.
+leo_mvd_base_eligible_trigger = {
+	leo_mvd_directive_shown_trigger = { LIEGE = $LIEGE$ }
 	# is_valid_showing_failures_only mirror (:3450-3453); the follows/valid
 	# sub-triggers are both included in the vanilla composite below
 	is_physically_able = yes

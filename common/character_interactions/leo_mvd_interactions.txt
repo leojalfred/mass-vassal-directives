@@ -14,25 +14,14 @@ leo_mvd_exempt_interaction = {
 
 	auto_accept = yes
 
-	# Shown for exactly the vassals that vanilla's Give Vassal Directive is
-	# shown for (its is_shown block, mirrored below), and additionally only
-	# for the human actor and only when the vassal is not already exempt.
+	# Shown for exactly the vassals vanilla's Give Vassal Directive is shown for,
+	# and additionally only for a human actor and a vassal not already exempt.
+	# The vanilla mirror lives in one place, so it cannot drift between here and
+	# the rules.
 	is_shown = {
 		scope:actor = { is_ai = no }
 		scope:recipient = {
-			trigger_if = {
-				limit = {
-					scope:actor = { government_allows = administrative }
-				}
-				is_vassal_or_below_of = scope:actor
-			}
-			trigger_else = {
-				is_vassal_of = scope:actor
-			}
-			is_landed = yes
-			NOT = { government_has_flag = government_is_herder }
-			highest_held_title_tier >= tier_county
-			is_ai = yes
+			leo_mvd_directive_shown_trigger = { LIEGE = scope:actor }
 			NOT = { has_variable = leo_mvd_exempt }
 		}
 	}

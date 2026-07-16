@@ -65,7 +65,7 @@ Settings are stored per playthrough and carry over to your heir on succession.
 
 A few files mirror or copy vanilla content and should be re-diffed against the game files after each CK3 patch (each is commented with what to compare):
 
-- `common/scripted_triggers/leo_mvd_triggers.txt` — mirrors `give_vassal_directive_interaction`'s eligibility and its per-directive gates (`game/common/character_interactions/00_vassal_interactions.txt:3420+`).
+- `common/scripted_triggers/leo_mvd_triggers.txt` — mirrors `give_vassal_directive_interaction`'s eligibility and its per-directive gates (`game/common/character_interactions/00_vassal_interactions.txt:3420+`). `leo_mvd_directive_shown_trigger` is the one copy of vanilla's is_shown, used by both the rules and the exempt interaction.
 - `common/customizable_localization/00_vassal_custom_loc.txt` — full copy of the vanilla file with exemption-marker twin entries.
 - `gui/leo_mvd_panel.gui` — latches onto the vanilla Subjects-tab directives button and its `mass_directives_window` GUI variable (`game/gui/window_my_realm.gui`); confirm that button and variable still exist. Also carries copies of vanilla's `button_drop` and `button_dropdown` (`game/gui/shared/buttons.gui`).
 - `gui/leo_mvd_texticons.gui` — grey and inline-sized twins of the vanilla directive texticons (`game/gui/texticons.gui`); confirm the source textures still exist.
