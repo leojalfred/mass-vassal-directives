@@ -286,10 +286,11 @@ window = {
 						}
 					}
 					
-					### Priority 1 (collapsible). Shown only while the player's own
-					### rules are selected and this priority is in use.
+					### Priority 1 (collapsible). Shown whenever the rule set in place
+					### reaches this far - for a built-in preset too, so its plan can be
+					### read rather than taken on trust. Only editable in Custom.
 					vbox = {
-						visible = "[And( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)1' ) )]"
+						visible = "[GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)1' )]"
 						layoutpolicy_horizontal = expanding
 						oncreate = "[BindFoldOutContext]"
 						oncreate = "[PdxGuiFoldOut.Unfold]"
@@ -314,6 +315,7 @@ window = {
 									layoutpolicy_horizontal = expanding
 									onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n1_kind' ), 'none', 'r1_n1_kind' ) )]"
 									text = "[SelectLocalization( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_kind').GetValue, '(CFixedPoint)0' ), SelectLocalization( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)2' ), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' ), Localize(Concatenate('leo_mvd_ui_kind_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n1_kind').GetValue)))) )]"
+									enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 								}
 								
 								vbox = {
@@ -374,6 +376,7 @@ window = {
 										layoutpolicy_horizontal = expanding
 										onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n1_dir' ), 'none', 'r1_n1_dir' ) )]"
 										text = "[Localize(Concatenate('leo_mvd_ui_dir_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n1_dir').GetValue))))]"
+										enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 									}
 									
 									vbox = {
@@ -480,6 +483,7 @@ window = {
 										layoutpolicy_horizontal = expanding
 										onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n1_cond' ), 'none', 'r1_n1_cond' ) )]"
 										text = "[Localize(Concatenate('leo_mvd_ui_cond_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue))))]"
+										enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 									}
 									
 									vbox = {
@@ -624,6 +628,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n1_t9' ), 'none', 'r1_n1_t9' ) )]"
 											text = "[Localize(Concatenate('leo_mvd_ui_thresh_c9_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n1_thresh').GetValue))))]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -689,6 +694,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n1_t10' ), 'none', 'r1_n1_t10' ) )]"
 											text = "[Localize(Concatenate('leo_mvd_ui_thresh_c10_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n1_thresh').GetValue))))]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -754,6 +760,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n1_t11' ), 'none', 'r1_n1_t11' ) )]"
 											text = "[Localize(Concatenate('leo_mvd_ui_thresh_c11_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n1_thresh').GetValue))))]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -827,6 +834,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n1_t12' ), 'none', 'r1_n1_t12' ) )]"
 											text = "[Localize(Concatenate('leo_mvd_ui_thresh_c12_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n1_thresh').GetValue))))]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -892,6 +900,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n1_t13' ), 'none', 'r1_n1_t13' ) )]"
 											text = "[Localize(Concatenate('leo_mvd_ui_thresh_c13_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n1_thresh').GetValue))))]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -965,6 +974,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n1_t14' ), 'none', 'r1_n1_t14' ) )]"
 											text = "[Localize(Concatenate('leo_mvd_ui_thresh_c14_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n1_thresh').GetValue))))]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -1045,6 +1055,7 @@ window = {
 										layoutpolicy_horizontal = expanding
 										onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n2_kind' ), 'none', 'r1_n2_kind' ) )]"
 										text = "[SelectLocalization( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_kind').GetValue, '(CFixedPoint)0' ), SelectLocalization( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)2' ), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' ), Localize(Concatenate('leo_mvd_ui_kind_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n2_kind').GetValue)))) )]"
+										enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 									}
 									
 									vbox = {
@@ -1105,6 +1116,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n2_dir' ), 'none', 'r1_n2_dir' ) )]"
 											text = "[Localize(Concatenate('leo_mvd_ui_dir_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n2_dir').GetValue))))]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -1211,6 +1223,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n2_cond' ), 'none', 'r1_n2_cond' ) )]"
 											text = "[Localize(Concatenate('leo_mvd_ui_cond_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue))))]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -1363,6 +1376,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n2_t9' ), 'none', 'r1_n2_t9' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c9_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n2_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -1428,6 +1442,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n2_t10' ), 'none', 'r1_n2_t10' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c10_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n2_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -1493,6 +1508,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n2_t11' ), 'none', 'r1_n2_t11' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c11_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n2_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -1566,6 +1582,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n2_t12' ), 'none', 'r1_n2_t12' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c12_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n2_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -1631,6 +1648,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n2_t13' ), 'none', 'r1_n2_t13' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c13_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n2_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -1704,6 +1722,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n2_t14' ), 'none', 'r1_n2_t14' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c14_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n2_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -1784,6 +1803,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n4_kind' ), 'none', 'r1_n4_kind' ) )]"
 											text = "[SelectLocalization( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n4_kind').GetValue, '(CFixedPoint)0' ), SelectLocalization( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)2' ), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' ), Localize(Concatenate('leo_mvd_ui_kind_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n4_kind').GetValue)))) )]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -1835,6 +1855,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n4_dir' ), 'none', 'r1_n4_dir' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_dir_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n4_dir').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -1940,6 +1961,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n5_kind' ), 'none', 'r1_n5_kind' ) )]"
 											text = "[SelectLocalization( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n5_kind').GetValue, '(CFixedPoint)0' ), SelectLocalization( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)2' ), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' ), Localize(Concatenate('leo_mvd_ui_kind_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n5_kind').GetValue)))) )]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -1991,6 +2013,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n5_dir' ), 'none', 'r1_n5_dir' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_dir_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n5_dir').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -2097,6 +2120,7 @@ window = {
 										layoutpolicy_horizontal = expanding
 										onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n3_kind' ), 'none', 'r1_n3_kind' ) )]"
 										text = "[SelectLocalization( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_kind').GetValue, '(CFixedPoint)0' ), SelectLocalization( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)2' ), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' ), Localize(Concatenate('leo_mvd_ui_kind_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n3_kind').GetValue)))) )]"
+										enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 									}
 									
 									vbox = {
@@ -2157,6 +2181,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n3_dir' ), 'none', 'r1_n3_dir' ) )]"
 											text = "[Localize(Concatenate('leo_mvd_ui_dir_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n3_dir').GetValue))))]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -2263,6 +2288,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n3_cond' ), 'none', 'r1_n3_cond' ) )]"
 											text = "[Localize(Concatenate('leo_mvd_ui_cond_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue))))]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -2415,6 +2441,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n3_t9' ), 'none', 'r1_n3_t9' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c9_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n3_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -2480,6 +2507,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n3_t10' ), 'none', 'r1_n3_t10' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c10_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n3_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -2545,6 +2573,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n3_t11' ), 'none', 'r1_n3_t11' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c11_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n3_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -2618,6 +2647,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n3_t12' ), 'none', 'r1_n3_t12' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c12_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n3_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -2683,6 +2713,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n3_t13' ), 'none', 'r1_n3_t13' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c13_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n3_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -2756,6 +2787,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n3_t14' ), 'none', 'r1_n3_t14' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_thresh_c14_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n3_thresh').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -2836,6 +2868,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n6_kind' ), 'none', 'r1_n6_kind' ) )]"
 											text = "[SelectLocalization( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n6_kind').GetValue, '(CFixedPoint)0' ), SelectLocalization( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)2' ), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' ), Localize(Concatenate('leo_mvd_ui_kind_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n6_kind').GetValue)))) )]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -2887,6 +2920,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n6_dir' ), 'none', 'r1_n6_dir' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_dir_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n6_dir').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {
@@ -2992,6 +3026,7 @@ window = {
 											layoutpolicy_horizontal = expanding
 											onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n7_kind' ), 'none', 'r1_n7_kind' ) )]"
 											text = "[SelectLocalization( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n7_kind').GetValue, '(CFixedPoint)0' ), SelectLocalization( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)2' ), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' ), Localize(Concatenate('leo_mvd_ui_kind_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n7_kind').GetValue)))) )]"
+											enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 										}
 										
 										vbox = {
@@ -3043,6 +3078,7 @@ window = {
 												layoutpolicy_horizontal = expanding
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'r1_n7_dir' ), 'none', 'r1_n7_dir' ) )]"
 												text = "[Localize(Concatenate('leo_mvd_ui_dir_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_r1_n7_dir').GetValue))))]"
+												enabled = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue, '(CFixedPoint)5' )]"
 											}
 											
 											vbox = {

@@ -472,14 +472,16 @@ leo_mvd_preset_4_effect = {
 
 # Current scope: the player. The player's own rules.
 #
-# This keeps whatever rules are currently loaded rather than clearing them, so
-# picking a built-in and then Custom makes that built-in the starting point to
-# edit - which is the whole of "copy a preset to customise it".
+# Starts blank - one priority, waiting for a directive - rather than carrying the
+# loaded preset over. Inheriting sounds helpful but isn't: anyone reaching for
+# Custom wants their own waterfall, and would have to dismantle four priorities
+# of someone else's before writing a word of it.
 leo_mvd_preset_5_effect = {
-	if = {
-		limit = { var:leo_mvd_rule_count < 1 }
-		set_variable = { name = leo_mvd_rule_count value = 1 }
-	}
+	leo_mvd_clear_rules_effect = yes
+	set_variable = { name = leo_mvd_rule_count value = 1 }
+	# Kind 1 with no directive chosen yet: the first thing to pick is right
+	# there, and an unset directive assigns nothing until it is.
+	leo_mvd_set_node_dir_effect = { NODE = r1_n1 DIR = 0 }
 	set_variable = { name = leo_mvd_preset value = 5 }
 }
 

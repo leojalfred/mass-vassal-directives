@@ -140,6 +140,12 @@ sgui() { echo "[GetScriptedGui('$1').Execute( GuiScope.SetRoot( GetPlayer.MakeSc
 # Same behaviour either way, so only the label changes.
 kind0_key() { echo "SelectLocalization( $(vge leo_mvd_rule_count $(($1 + 1))), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' )"; }
 
+# The rules are shown whichever preset is selected, so that a preset can be read
+# rather than taken on trust - but only the player's own rules can be changed.
+# A built-in's rules are shown greyed out; editing one would quietly turn it into
+# something that is no longer the preset it claims to be.
+DD_EDITABLE="$(veq leo_mvd_preset 5)"
+
 ### Dropdowns.
 #
 # These open in flow, pushing the rows below them down, rather than floating
@@ -170,7 +176,8 @@ kind0_key() { echo "SelectLocalization( $(vge leo_mvd_rule_count $(($1 + 1))), '
 # the list hanging off it; the group's own spacing = 0 overrides that.
 #
 # <1> depth  <2> id  <3> label expression  <4> tooltip (may be empty)
-emit_dd_start() { local depth=$1 id=$2 label=$3 tt=${4:-}
+# <5> enabled expression (may be empty - always enabled)
+emit_dd_start() { local depth=$1 id=$2 label=$3 tt=${4:-} en=${5:-}
 	ind "$depth"
 	p "vbox = {"
 	ind $((depth+1))
@@ -182,6 +189,7 @@ emit_dd_start() { local depth=$1 id=$2 label=$3 tt=${4:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' ), 'none', '$id' ) )]\""
 	p "text = \"[$label]\""
+	[ -n "$en" ] && p "enabled = \"[$en]\""
 	[ -n "$tt" ] && p "tooltip = \"$tt\""
 	ind $((depth+1)); p "}"
 	p ""
@@ -282,7 +290,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	# What this node does. Kind 0's label depends on whether a next priority
 	# exists, so the button has to ask before falling back to the generic key.
 	local kind_label="SelectLocalization( $(veq "leo_mvd_${node}_kind" 0), $(kind0_key "$prio"), $(vkey 'leo_mvd_ui_kind_' "leo_mvd_${node}_kind") )"
-	emit_dd_start "$depth" "${node}_kind" "$kind_label"
+	emit_dd_start "$depth" "${node}_kind" "$kind_label" "" "$DD_EDITABLE"
 	for k in $kinds; do
 		local kl="leo_mvd_ui_kind_$k"
 		[ "$k" = 0 ] && kl="[$(kind0_key "$prio")]"
@@ -298,7 +306,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
-	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")"
+	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")" "" "$DD_EDITABLE"
 	for d in $DIRS; do
 		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d"
 	done
@@ -315,7 +323,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
-	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
+	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")" "" "$DD_EDITABLE"
 	for c in $CONDS; do
 		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$(cond_row_visible "$c" "$parent_cond")"
 	done
@@ -330,7 +338,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 		p "visible = \"[$(veq "leo_mvd_${node}_cond" "$c")]\""
 		p "layoutpolicy_horizontal = expanding"
 		p "spacing = 2"
-		emit_dd_start $((depth+2)) "${node}_t${c}" "$(vkey "leo_mvd_ui_thresh_c${c}_" "leo_mvd_${node}_thresh")"
+		emit_dd_start $((depth+2)) "${node}_t${c}" "$(vkey "leo_mvd_ui_thresh_c${c}_" "leo_mvd_${node}_thresh")" "" "$DD_EDITABLE"
 		for t in $(cond_thresh "$c"); do
 			emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_t${c}" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}"
 		done
@@ -611,11 +619,12 @@ MID
 	# The rule editor: one collapsible section per priority in use.
 	for prio in $(seq 1 "$PRIORITIES"); do
 		ind 5; p ""
-		p "### Priority $prio (collapsible). Shown only while the player's own"
-		p "### rules are selected and this priority is in use."
+		p "### Priority $prio (collapsible). Shown whenever the rule set in place"
+		p "### reaches this far - for a built-in preset too, so its plan can be"
+		p "### read rather than taken on trust. Only editable in Custom."
 		p "vbox = {"
 		ind 6
-		p "visible = \"[And( $(veq leo_mvd_preset 5), $(vge leo_mvd_rule_count "$prio") )]\""
+		p "visible = \"[$(vge leo_mvd_rule_count "$prio")]\""
 		p "layoutpolicy_horizontal = expanding"
 		p "oncreate = \"[BindFoldOutContext]\""
 		p "oncreate = \"[PdxGuiFoldOut.Unfold]\""
