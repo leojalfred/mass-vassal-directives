@@ -48,12 +48,12 @@ All configuration lives in a panel docked to the **Realm → Subjects** tab.
 1. **Open it**: in the Realm window's Subjects tab, click the directives button in the header (next to _Toggle Compact List_). The panel appears alongside; drag it wherever you like.
 2. **Choose a preset.** Nothing is assigned until you do.
 3. **Tick Automatically Reassign Vassal Directives** to run the rules every month and again whenever you change anything. **Apply Now** runs them once, on demand.
-4. **Exempt individuals**: right-click a vassal's portrait → Vassal section → **"Exempt from Directive Automation"**. Exempt vassals show their directive icon **dimmed gray** everywhere in the UI and are skipped entirely; manage them by hand with the vanilla _Give Vassal Directive_ interaction. Undo with **"Include in Directive Automation"**.
+4. **Exempt individuals**: right-click a vassal's portrait → Vassal section → **"Exempt from Directive Automation"**. Exempt vassals show their directive icon **dimmed gray** everywhere in the UI and are skipped entirely; manage them by hand with the vanilla _Give Vassal Directive_ interaction. Undo with **"Include in Directive Automation"**. A vassal also exempts itself the moment you re-assign a directive the mod had given it, so overriding the automation by hand is never undone.
 5. **Escape hatch**: **Remove All** clears every directive the mod assigned, removes all exemptions, and turns automation off.
 
 Settings are stored per playthrough and carry over to your heir on succession.
 
-⚠️ The rules **overwrite manual directive assignments on non-exempt vassals** on their next run. Exemption is how you protect a manual choice. Directives you assigned by hand are otherwise never touched. The mod only ever clears a directive it still recognizes as its own.
+⚠️ When automation is on, the rules can **overwrite a directive you set by hand** on a vassal the mod is not already managing. But change a directive the automation itself assigned, and the mod reads that as you taking over and **exempts the vassal for you**, so your choice stands. To protect a vassal from the start, exempt it yourself. The mod only ever clears a directive it still recognizes as its own.
 
 ## Compatibility
 
@@ -61,7 +61,7 @@ Settings are stored per playthrough and carry over to your heir on succession.
 - **Achievements**: not affected. Since CK3 1.9, mods do not disable achievements.
 - **Existing saves**: safe to add mid-run (automation bootstraps within a game-year, or immediately from the panel) and safe to remove (mod-assigned directives are ordinary vanilla directives; leftover mod variables are inert).
 - **Multiplayer**: settings and automation are per-player; every button routes through a synchronized scripted GUI.
-- **Other mods**: the only vanilla file override is `common/customizable_localization/00_vassal_custom_loc.txt` (adds the grayed exemption marker). Any mod overriding the same file will conflict on that cosmetic feature only. The panel is added as a standalone widget and overrides no vanilla GUI file.
+- **Other mods**: the mod replaces no vanilla file. Its one point of contact with vanilla is a by-name override of two customizable-localization functions (`vassal_directive_icon` and `vassal_directive_text`) that draw the vassal-directive display, so an exempt vassal's icon can be dimmed. It conflicts only with another mod that redefines those exact two functions (resolved by load order), not with any mod that merely touches the same vanilla file. The panel is added as a standalone widget and overrides no vanilla GUI file.
 - **Herders**: vanilla gives herders no directives at all, so neither does the mod.
 
 ## Updating after game patches
@@ -69,7 +69,7 @@ Settings are stored per playthrough and carry over to your heir on succession.
 A few files mirror or copy vanilla content and should be re-diffed against the game files after each CK3 patch (each is commented with what to compare):
 
 - `common/scripted_triggers/leo_mvd_triggers.txt`: mirrors `give_vassal_directive_interaction`'s eligibility and its per-directive gates (`game/common/character_interactions/00_vassal_interactions.txt:3420+`). `leo_mvd_directive_shown_trigger` is the one copy of vanilla's is_shown, used by both the rules and the exempt interaction.
-- `common/customizable_localization/00_vassal_custom_loc.txt`: full copy of the vanilla file with exemption-marker twin entries.
+- `common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt`: a by-name override of vanilla's `vassal_directive_icon` and `vassal_directive_text` (from `game/common/customizable_localization/00_vassal_custom_loc.txt`), each vanilla entry paired with an exempt twin. Re-diff those two functions after a patch; a new directive means new twins.
 - `gui/leo_mvd_panel.gui`: latches onto the vanilla Subjects-tab directives button and its `mass_directives_window` GUI variable (`game/gui/window_my_realm.gui`); confirm that button and variable still exist. Also carries copies of vanilla's `button_drop` and `button_dropdown` (`game/gui/shared/buttons.gui`).
 - `gui/leo_mvd_texticons.gui`: gray and inline-sized twins of the vanilla directive texticons (`game/gui/texticons.gui`); confirm the source textures still exist.
 
@@ -77,7 +77,7 @@ A few files mirror or copy vanilla content and should be re-diffed against the g
 
 ```
 common/character_interactions/leo_mvd_interactions.txt   exempt / include toggle interactions
-common/customizable_localization/00_vassal_custom_loc.txt  VANILLA OVERRIDE: grayed exemption marker
+common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt  by-name override: dimmed exemption marker
 common/on_action/leo_mvd_on_actions.txt                  game-start bootstrap, succession carry-over, yearly watchdog
 common/script_values/leo_mvd_values.txt                  tier-scaled military threshold (tunable multipliers)
 common/scripted_effects/leo_mvd_effects.txt              assignment, cleanup, the run across all vassals
@@ -112,7 +112,6 @@ Most of the interesting decisions here were forced by what CK3's script and GUI 
 ## Roadmap / ideas
 
 - Exemption inheritance when a vassal dies.
-- Optional auto-exempt when a directive is assigned manually (requires overriding the vanilla interaction file, so deferred).
 - More conditions: the set is a closed list in script (`leo_mvd_cond_holds_trigger`), since a condition cannot be chosen at runtime, but adding to it is mechanical.
 
 ## Maintenance & contributions

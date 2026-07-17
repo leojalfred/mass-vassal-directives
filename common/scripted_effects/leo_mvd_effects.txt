@@ -56,31 +56,50 @@ leo_mvd_clear_stale_effect = {
 # assigns a directive. A vassal no priority claims keeps nothing the mod gave
 # them earlier.
 leo_mvd_evaluate_vassal_effect = {
+	# If the player has re-assigned this vassal's directive by hand since the mod
+	# last set it, respect that: exempt the vassal so automation leaves it be and
+	# hand ownership back. This runs before the waterfall, so the manual choice is
+	# never overwritten. Only vassals the mod was managing are auto-exempted - a
+	# directive on one it never touched is not a change of ours to protect, and
+	# the match check is nested so an unmanaged vassal's variable is never read.
 	if = {
-		# Nomads have four directives of their own and can be given none of the
-		# other nine, so they follow their own waterfall. The two sets of
-		# directives divide the eligible vassals exactly, since every directive
-		# below requires an administrative or a non-nomadic government.
-		limit = { government_has_flag = government_is_nomadic }
-		leo_mvd_eval_priority_effect = { P = q1 N = 1 COUNT = leo_mvd_qrule_count }
-		leo_mvd_eval_priority_effect = { P = q2 N = 2 COUNT = leo_mvd_qrule_count }
-		leo_mvd_eval_priority_effect = { P = q3 N = 3 COUNT = leo_mvd_qrule_count }
-	}
-	else = {
-		leo_mvd_eval_priority_effect = { P = r1 N = 1 COUNT = leo_mvd_rule_count }
-		leo_mvd_eval_priority_effect = { P = r2 N = 2 COUNT = leo_mvd_rule_count }
-		leo_mvd_eval_priority_effect = { P = r3 N = 3 COUNT = leo_mvd_rule_count }
-		leo_mvd_eval_priority_effect = { P = r4 N = 4 COUNT = leo_mvd_rule_count }
-		leo_mvd_eval_priority_effect = { P = r5 N = 5 COUNT = leo_mvd_rule_count }
-		leo_mvd_eval_priority_effect = { P = r6 N = 6 COUNT = leo_mvd_rule_count }
+		limit = { has_variable = leo_mvd_managed }
+		if = {
+			limit = { NOT = { leo_mvd_managed_matches_trigger = yes } }
+			set_variable = leo_mvd_exempt
+			remove_variable = leo_mvd_managed
+		}
 	}
 
+	# Run the rules, unless the check above just stood this vassal down.
 	if = {
-		limit = { has_variable = leo_mvd_hit }
-		remove_variable = leo_mvd_hit
-	}
-	else = {
-		leo_mvd_clear_stale_effect = yes
+		limit = { NOT = { has_variable = leo_mvd_exempt } }
+		if = {
+			# Nomads have four directives of their own and can be given none of the
+			# other nine, so they follow their own waterfall. The two sets of
+			# directives divide the eligible vassals exactly, since every directive
+			# below requires an administrative or a non-nomadic government.
+			limit = { government_has_flag = government_is_nomadic }
+			leo_mvd_eval_priority_effect = { P = q1 N = 1 COUNT = leo_mvd_qrule_count }
+			leo_mvd_eval_priority_effect = { P = q2 N = 2 COUNT = leo_mvd_qrule_count }
+			leo_mvd_eval_priority_effect = { P = q3 N = 3 COUNT = leo_mvd_qrule_count }
+		}
+		else = {
+			leo_mvd_eval_priority_effect = { P = r1 N = 1 COUNT = leo_mvd_rule_count }
+			leo_mvd_eval_priority_effect = { P = r2 N = 2 COUNT = leo_mvd_rule_count }
+			leo_mvd_eval_priority_effect = { P = r3 N = 3 COUNT = leo_mvd_rule_count }
+			leo_mvd_eval_priority_effect = { P = r4 N = 4 COUNT = leo_mvd_rule_count }
+			leo_mvd_eval_priority_effect = { P = r5 N = 5 COUNT = leo_mvd_rule_count }
+			leo_mvd_eval_priority_effect = { P = r6 N = 6 COUNT = leo_mvd_rule_count }
+		}
+
+		if = {
+			limit = { has_variable = leo_mvd_hit }
+			remove_variable = leo_mvd_hit
+		}
+		else = {
+			leo_mvd_clear_stale_effect = yes
+		}
 	}
 }
 
