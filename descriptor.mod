@@ -4,5 +4,6 @@ tags={
 	"Gameplay"
 }
 name="Leo VI's Mass Vassal Directives"
-supported_version="1.19.*"
 picture="thumbnail.png"
+supported_version="1.19.*"
+remote_file_id="3766246044"
