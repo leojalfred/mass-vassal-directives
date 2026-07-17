@@ -1,6 +1,6 @@
-﻿### Leo VI's Mass Vassal Directives - grey texticons
+﻿### Leo VI's Mass Vassal Directives - gray texticons
 ###
-### Grey-tinted duplicates of the vanilla vassal-directive texticons, used to
+### Gray-tinted duplicates of the vanilla vassal-directive texticons, used to
 ### mark a vassal's directive icon as "exempt from automation" (a dimmed
 ### version of their normal directive icon) instead of the old cross overlay.
 ###
@@ -16,7 +16,7 @@
 
 # Directive icons (35x35).
 texticon = {
-	icon = leo_mvd_grey_directive_none
+	icon = leo_mvd_gray_directive_none
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/no_directive.dds"
 		size = { 35 35 }
@@ -26,7 +26,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_directive_refusal
+	icon = leo_mvd_gray_directive_refusal
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/refusal.dds"
 		size = { 35 35 }
@@ -36,7 +36,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_task_develop_county
+	icon = leo_mvd_gray_task_develop_county
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/improve_development.dds"
 		size = { 35 35 }
@@ -46,7 +46,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_task_train_commanders
+	icon = leo_mvd_gray_task_train_commanders
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/boost_men_at_arms.dds"
 		size = { 35 35 }
@@ -56,7 +56,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_directive_maa
+	icon = leo_mvd_gray_directive_maa
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/recruit_men_at_arms.dds"
 		size = { 35 35 }
@@ -66,7 +66,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_task_conversion
+	icon = leo_mvd_gray_task_conversion
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/convert_faith.dds"
 		size = { 35 35 }
@@ -76,7 +76,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_task_promote_culture
+	icon = leo_mvd_gray_task_promote_culture
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/promote_culture.dds"
 		size = { 35 35 }
@@ -86,7 +86,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_task_accept_culture
+	icon = leo_mvd_gray_task_accept_culture
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/improve_cultural_acceptance.dds"
 		size = { 35 35 }
@@ -96,7 +96,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_directive_fortification
+	icon = leo_mvd_gray_directive_fortification
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/construct_fortification_buildings.dds"
 		size = { 35 35 }
@@ -106,7 +106,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_directive_military
+	icon = leo_mvd_gray_directive_military
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/construct_military_buildings.dds"
 		size = { 35 35 }
@@ -116,7 +116,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_directive_economical
+	icon = leo_mvd_gray_directive_economical
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/construct_economic_buildings.dds"
 		size = { 35 35 }
@@ -128,7 +128,7 @@ texticon = {
 
 # Nomad / herder intent icons (25x25).
 texticon = {
-	icon = leo_mvd_grey_county_fertility_icon
+	icon = leo_mvd_gray_county_fertility_icon
 	iconsize = {
 		texture = "gfx/interface/icons/icon_county_fertility.dds"
 		size = { 25 25 }
@@ -139,7 +139,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_explore_cultures_icon
+	icon = leo_mvd_gray_explore_cultures_icon
 	iconsize = {
 		texture = "gfx/interface/icons/council_task_types/task_kurultai_culture.dds"
 		size = { 25 25 }
@@ -150,7 +150,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_culture_icon
+	icon = leo_mvd_gray_culture_icon
 	iconsize = {
 		texture = "gfx/interface/icons/message_feed/culture.dds"
 		size = { 25 25 }
@@ -161,7 +161,7 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_grey_herd_icon
+	icon = leo_mvd_gray_herd_icon
 	iconsize = {
 		texture = "gfx/interface/icons/icon_herd.dds"
 		size = { 25 25 }
@@ -179,7 +179,7 @@ texticon = {
 ### and they overflow a 30px dropdown row. These are the same textures at a size
 ### that sits on a line of text.
 ###
-### Same textures as the grey twins above; re-diff both against
+### Same textures as the gray twins above; re-diff both against
 ### game/gui/texticons.gui after a game patch.
 texticon = {
 	icon = leo_mvd_dir_icon_convert_faith

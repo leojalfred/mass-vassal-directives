@@ -1,17 +1,17 @@
 Steam Workshop description for Leo VI's Mass Vassal Directives.
 
-Written in BBCode - paste the block below the line straight into the Workshop
+Written in BBCode. Paste the block below the line straight into the Workshop
 item's description box. Markdown will not render there.
 
 Screenshots: upload them to the Workshop item first, then open each one, copy its
 image address, and swap it in for the matching SCREENSHOT_N_URL placeholder. Or
-just delete the [img] lines - the description reads fine without them, and the
+just delete the [img] lines. The description reads fine without them, and the
 Workshop shows uploaded screenshots in a carousel anyway.
 
 Placeholders to fill in:
   SCREENSHOT_1_URL   the panel open beside the Subjects tab, a preset selected
   SCREENSHOT_2_URL   the Preset dropdown open, showing the five presets
-  SCREENSHOT_3_URL   a Custom rule set - a priority with a condition and both
+  SCREENSHOT_3_URL   a Custom rule set: a priority with a condition and both
                      branches filled in
   SCREENSHOT_4_URL   the Subjects tab with directives assigned, one vassal's
                      icon dimmed to show an exemption
@@ -26,16 +26,16 @@ Stop clicking through every vassal one by one. Write the rules once, and let the
 
 [h2]How it works[/h2]
 
-You give the mod a [b]running order[/b]. Each vassal gets the first directive in it that suits them - and a vassal no rule claims is simply left alone.
+You give the mod a [b]running order[/b]. Each vassal gets the first directive in it that suits them. A vassal no rule claims is simply left alone.
 
 A priority is one of three things:
 [list]
-[*][b]Assign a Directive[/b] - give it to every vassal who reaches this far.
-[*][b]Check a Condition[/b] - ask something about the vassal, and send each answer its own way. Either branch can ask again, so one priority can weigh two questions.
-[*][b]Continue to Next Priority[/b] - do nothing here, and let the next one decide.
+[*][b]Assign a Directive[/b]: give it to every vassal who reaches this far.
+[*][b]Check a Condition[/b]: ask something about the vassal, and send each answer its own way. Either branch can ask again, so one priority can weigh two questions.
+[*][b]Continue to Next Priority[/b]: do nothing here, and let the next one decide.
 [/list]
 
-The trick to reading a rule set: a vassal who [i]cannot[/i] be given a directive falls through to the next priority. That is the game's own doing - it never offers a directive it would not allow - so a rule can say "improve development" without you worrying about the vassals who cannot.
+The trick to reading a rule set: a vassal who [i]cannot[/i] be given a directive falls through to the next priority. That is the game's own doing (it never offers a directive it would not allow), so a rule can say "improve development" without you worrying about the vassals who cannot.
 
 [h2]Presets[/h2]
 
@@ -44,12 +44,12 @@ The trick to reading a rule set: a vassal who [i]cannot[/i] be given a directive
 Pick one and its plan appears in the panel, so you can read what it actually does rather than take the name on trust.
 
 [list]
-[*][b]None[/b] - nothing is assigned. The default: the mod does nothing until you choose.
-[*][b]Convert and Develop[/b] - faith, then culture, then growth: the strong develop their land, the weak build up their military.
-[*][b]Unify the Realm[/b] - converts harder, at the cost of growth.
-[*][b]Prepare for War[/b] - arms the realm, each vassal to their strength.
-[*][b]Grow the Economy[/b] - wealth first: the undeveloped develop, the established build.
-[*][b]Custom[/b] - your own rules.
+[*][b]None[/b]: nothing is assigned. The default: the mod does nothing until you choose.
+[*][b]Convert and Develop[/b]: faith, then culture, then growth. The strong develop their land, the weak build up their military.
+[*][b]Unify the Realm[/b]: converts harder, at the cost of growth.
+[*][b]Prepare for War[/b]: arms the realm, each vassal to their strength.
+[*][b]Grow the Economy[/b]: wealth first. The undeveloped develop, the established build.
+[*][b]Custom[/b]: your own rules.
 [/list]
 
 [b]A preset is a starting point, not a take-it-or-leave-it.[/b] Change any of its rules and the whole thing becomes yours, exactly as it was, plus your change. Your own rules are kept aside while a preset is loaded, so trying one never costs you your work.
@@ -60,14 +60,14 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 
 Up to six priorities, plus three for nomads, judged on any of fourteen conditions:
 
-Faith is Yours - Culture is Yours - Holds Counties of Another Faith - Holds Counties of Another Culture - Same Dynasty as You - Administrative Government - Is a Powerful Vassal - Is on Your Council - Military Strength - Title Tier - Capital Development - Opinion of You - Counties Held - Cultural Acceptance with You
+Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Administrative Government · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You
 
 Nomads keep a running order of their own: they have four directives no one else can be given, and can be given none of the other nine.
 
 [h2]Using it[/h2]
 
 [olist]
-[*]Open the [b]Realm[/b] window, go to [b]Subjects[/b], and click the directives button in the header, next to [i]Toggle Compact List[/i]. The panel appears alongside - drag it wherever you like.
+[*]Open the [b]Realm[/b] window, go to [b]Subjects[/b], and click the directives button in the header, next to [i]Toggle Compact List[/i]. The panel appears alongside. Drag it wherever you like.
 [*]Choose a preset. [b]Nothing is assigned until you do.[/b]
 [*]Tick [b]Automatically Reassign Vassal Directives[/b] to run the rules every month and again whenever you change anything. Or leave it off and use [b]Apply Now[/b] when you feel like it.
 [/olist]
@@ -76,7 +76,7 @@ Nomads keep a running order of their own: they have four directives no one else 
 
 [b]Want to handle someone yourself?[/b] Right-click their portrait and choose [b]Exempt from Directive Automation[/b]. They are passed over entirely, and their directive icon shows dimmed so you can see at a glance who you are managing by hand.
 
-[b]Changed your mind about all of it?[/b] [b]Remove All[/b] clears every directive the mod assigned and turns it off. Anything you assigned by hand is left alone - the mod only ever clears a directive it recognises as its own.
+[b]Changed your mind about all of it?[/b] [b]Remove All[/b] clears every directive the mod assigned and turns it off. Anything you assigned by hand is left alone. The mod only ever clears a directive it recognizes as its own.
 
 [h2]The fine print[/h2]
 
@@ -85,9 +85,9 @@ Nomads keep a running order of their own: they have four directives no one else 
 [*][b]No DLC required, every expansion supported.[/b] The administrative directives come from Roads to Power and nomad vassals from Khans of the Steppe; the mod folds in whatever you own and quietly hides the rest, so the panel and presets only ever show what your game can do.
 [*][b]Achievements still work.[/b] Since 1.9, mods do not disable them.
 [*][b]Safe to add to an existing save[/b], and safe to remove from one.
-[*][b]Multiplayer[/b] - every player gets their own rules, on their own character.
+[*][b]Multiplayer[/b]: every player gets their own rules, on their own character.
 [*][b]The AI is untouched.[/b] Your rules are yours; AI rulers manage their own vassals as always.
-[*][b]Compatibility[/b] - the panel is a standalone window and overrides no vanilla interface file. The only vanilla file touched at all is the one that draws the dimmed icon for an exempt vassal.
+[*][b]Compatibility[/b]: the panel is a standalone window and overrides no vanilla interface file. The only vanilla file touched at all is the one that draws the dimmed icon for an exempt vassal.
 [*][b]Herders[/b] get no directives in the base game, so they get none here either.
 [/list]
 
@@ -95,6 +95,6 @@ Nomads keep a running order of their own: they have four directives no one else 
 
 [h2]Bugs and contributions[/h2]
 
-I am one person with a real job, so please be patient if a patch breaks something. Bug reports are welcome - an [i]error.log[/i] excerpt and what you expected goes a long way. Contributions and translations are very welcome too.
+I am one person with a real job, so please be patient if a patch breaks something. Bug reports are welcome. An [i]error.log[/i] excerpt and what you expected goes a long way. Contributions and translations are very welcome too.
 
-[b]Requires:[/b] Crusader Kings III 1.19.x — and no DLC. Every expansion is supported; none is needed.
+[b]Requires:[/b] Crusader Kings III 1.19.x. No DLC is needed, and every expansion is supported.

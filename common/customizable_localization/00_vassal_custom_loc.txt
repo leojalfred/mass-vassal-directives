@@ -3,9 +3,9 @@
 # Change vs vanilla: in vassal_directive_icon and vassal_directive_text, each
 # text entry gets a preceding twin with the identical trigger plus
 # `has_variable = leo_mvd_exempt`, pointing at a leo_mvd_x_* loc key that
-# renders the exempt version (a grey directive icon, or the text plus an
+# renders the exempt version (a gray directive icon, or the text plus an
 # exempt note). vassal_directive_text_and_icon is left as a verbatim vanilla
-# copy - an exempt vassal's grey icon and exempt note already come from the
+# copy - an exempt vassal's gray icon and exempt note already come from the
 # other two functions, so this one needs no change.
 #
 # This whole file is a copy of the vanilla file because a same-path override

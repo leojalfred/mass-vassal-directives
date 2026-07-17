@@ -20,7 +20,7 @@ bash tools/gen_panel.sh        # ~35s
 
 That includes layout tweaks — margins and the window skeleton live in the generator too. It builds to a temp dir, brace-checks, and only then moves files into place, so a failed run leaves the real ones alone.
 
-Why generated: the editor is the same widgets repeated per node, differing only in the variable they bind to, and GUI cannot factor that out — `blockoverride` cannot parameterise a variable name inside a binding.
+Why generated: the editor is the same widgets repeated per node, differing only in the variable they bind to, and GUI cannot factor that out — `blockoverride` cannot parameterize a variable name inside a binding.
 
 ## Four limits that explain the whole design
 
@@ -67,6 +67,7 @@ Then have the user run it with `-debug_mode` and watch `logs/error.log` for `leo
 ## Conventions
 
 - Prefix everything `leo_mvd_`.
-- Directive codes 1-9 settled, 10-13 nomad, 0 = none. They appear in `leo_mvd_managed`, node `dir` variables, and loc key suffixes — keep them aligned.
+- Directive codes 1-9 settled, 10-13 nomad, 0 = none. They appear in `leo_mvd_managed`, node `dir` variables, and loc key suffixes. Keep them aligned.
 - Scripted GUIs: `is_shown` = checked/selected state, `is_valid` = enabled, `effect` = onclick. Controls that read their own state from a variable need no entry at all.
 - Comments say **why**, not what. The what is readable; the why is usually "the script language wouldn't let me do the obvious thing".
+- **Text style.** Anything user-facing (game loc, `README.md`, the Workshop description) uses American spelling (recognize, gray, behavior, color, not recognise/grey/behaviour/colour) and no em-dash or spaced-hyphen separators between clauses. End the sentence and start a new one, or use a colon, parentheses, or a comma where that reads better. Genuine compound hyphens stay (quality-of-life, off-faith, duchy-tier). Hold comments and identifiers to the same spelling so the codebase stays consistent (`leo_mvd_gray_*`, not `grey`).

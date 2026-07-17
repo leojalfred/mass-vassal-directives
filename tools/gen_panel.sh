@@ -4,7 +4,7 @@
 #
 # The rule editor is the same handful of widgets repeated for every node of
 # every priority, differing only in the variable name they bind to. There is no
-# way to factor that out in GUI - blockoverride cannot parameterise the variable
+# way to factor that out in GUI - blockoverride cannot parameterize the variable
 # name inside a binding - so generating it keeps the repetition consistent and
 # makes changing the pattern a one-line edit here.
 #
@@ -190,7 +190,7 @@ cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; esac; }
 
 # Kind 0 means "fall through to the next priority" - but on the last priority
 # there is no next one, and it means "leave this vassal without a directive".
-# Same behaviour either way, so only the label changes.
+# Same behavior either way, so only the label changes.
 kind0_key() { echo "SelectLocalization( $(vge "$COUNT_VAR" $(($1 + 1))), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' )"; }
 
 ### Dropdowns.
@@ -1013,7 +1013,7 @@ emit_loc() {
 	echo " leo_mvd_ui_kind_0_last: \"Leave Without a [directive|E]\""
 	echo " leo_mvd_ui_kind_0_tt: \"Do nothing here, and let the next priority decide instead.\\n\\n#weak On the last priority there is no next one, so the [vassal|E] is simply left without a [directive|E].#!\""
 	echo " leo_mvd_ui_kind_1: \"Assign a [directive|E]\""
-	echo " leo_mvd_ui_kind_1_tt: \"Give the [vassal|E] a [directive|E].\\n\\n#weak Vassals who cannot be given it - the game's own rules still apply - fall through to the next priority instead.#!\""
+	echo " leo_mvd_ui_kind_1_tt: \"Give the [vassal|E] a [directive|E].\\n\\n#weak Vassals who cannot be given it (the game's own rules still apply) fall through to the next priority instead.#!\""
 	echo " leo_mvd_ui_kind_2: \"Check a Condition\""
 	echo " leo_mvd_ui_kind_2_tt: \"Ask something about the [vassal|E], and send each answer its own way.\""
 	echo
@@ -1023,8 +1023,8 @@ emit_loc() {
 	echo " leo_mvd_ui_add_priority: \"Add Priority\""
 	echo " leo_mvd_ui_add_priority_tt: \"Add a priority to the end of the waterfall, for [vassals|E] none of the ones above it claimed.\""
 	echo " leo_mvd_ui_remove_priority: \"Remove\""
-	echo " leo_mvd_ui_remove_priority_tt: \"Drop this priority. The ones below it move up to close the gap.\\n\\n#weak A rule set always keeps at least one priority - to assign nothing at all, choose the None preset.#!\""
-	echo " leo_mvd_ui_remove_qpriority_tt: \"Drop this priority. The ones below it move up to close the gap.\n\n#weak Removing them all is allowed - your [nomad|E] [vassals|E] are then left alone.#!\""
+	echo " leo_mvd_ui_remove_priority_tt: \"Drop this priority. The ones below it move up to close the gap.\\n\\n#weak A rule set always keeps at least one priority. To assign nothing at all, choose the None preset.#!\""
+	echo " leo_mvd_ui_remove_qpriority_tt: \"Drop this priority. The ones below it move up to close the gap.\n\n#weak Removing them all is allowed. Your [nomad|E] [vassals|E] are then left alone.#!\""
 	echo
 	echo " leo_mvd_ui_dir_0: \"#weak Choose a Directive#!\""
 	for d in $ALL_DIRS; do

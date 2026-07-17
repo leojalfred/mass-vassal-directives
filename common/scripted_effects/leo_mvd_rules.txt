@@ -537,7 +537,7 @@ leo_mvd_preset_1_effect = {
 		leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 8 }
 	}
 
-	# Nomads: learn from the neighbours they hold, otherwise grow.
+	# Nomads: learn from the neighbors they hold, otherwise grow.
 	set_variable = { name = leo_mvd_qrule_count value = 2 }
 	leo_mvd_set_node_dir_effect = { NODE = q1_n1 DIR = 11 }
 	leo_mvd_set_node_dir_effect = { NODE = q2_n1 DIR = 10 }
@@ -546,7 +546,7 @@ leo_mvd_preset_1_effect = {
 }
 
 # Current scope: the player.
-# Homogenise the realm: convert faith, then culture, then grind down what is
+# Homogenize the realm: convert faith, then culture, then grind down what is
 # left with cultural acceptance.
 leo_mvd_preset_2_effect = {
 	leo_mvd_clear_rules_effect = yes
@@ -564,7 +564,7 @@ leo_mvd_preset_2_effect = {
 
 	leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
 
-	# Nomads: learn from the neighbours they hold, otherwise grow.
+	# Nomads: learn from the neighbors they hold, otherwise grow.
 	set_variable = { name = leo_mvd_qrule_count value = 2 }
 	leo_mvd_set_node_dir_effect = { NODE = q1_n1 DIR = 11 }
 	leo_mvd_set_node_dir_effect = { NODE = q2_n1 DIR = 10 }
@@ -799,7 +799,7 @@ leo_mvd_add_qpriority_effect = {
 
 # Unlike the main waterfall, this one is allowed to empty: a realm with no
 # nomad vassals has no use for it, and leaving nomads alone is the mod's
-# behaviour until someone says otherwise.
+# behavior until someone says otherwise.
 leo_mvd_finish_qremove_effect = {
 	leo_mvd_clear_priority_effect = { P = q3 }
 	change_variable = { name = leo_mvd_qrule_count add = -1 }
