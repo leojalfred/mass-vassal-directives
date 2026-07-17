@@ -17765,7 +17765,7 @@ window = {
 						
 						button_expandable_toggle_field = {
 							blockoverride "text" {
-								text = "leo_mvd_ui_qpriority_1"
+								text = "leo_mvd_ui_priority_1"
 							}
 						}
 						
@@ -20346,7 +20346,7 @@ window = {
 						
 						button_expandable_toggle_field = {
 							blockoverride "text" {
-								text = "leo_mvd_ui_qpriority_2"
+								text = "leo_mvd_ui_priority_2"
 							}
 						}
 						
@@ -22927,7 +22927,7 @@ window = {
 						
 						button_expandable_toggle_field = {
 							blockoverride "text" {
-								text = "leo_mvd_ui_qpriority_3"
+								text = "leo_mvd_ui_priority_3"
 							}
 						}
 						

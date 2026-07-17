@@ -9,9 +9,6 @@
  leo_mvd_ui_priority_4: "Priority 4"
  leo_mvd_ui_priority_5: "Priority 5"
  leo_mvd_ui_priority_6: "Priority 6"
- leo_mvd_ui_qpriority_1: "Priority 1"
- leo_mvd_ui_qpriority_2: "Priority 2"
- leo_mvd_ui_qpriority_3: "Priority 3"
 
  leo_mvd_ui_kind_0: "Continue to Next Priority"
  leo_mvd_ui_kind_0_last: "Leave Without a [directive|E]"
