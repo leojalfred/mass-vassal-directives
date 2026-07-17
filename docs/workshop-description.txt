@@ -89,12 +89,13 @@ Nomads keep a running order of their own: they have four directives no one else 
 [*][b]The AI is untouched.[/b] Your rules are yours; AI rulers manage their own vassals as always.
 [*][b]Compatibility[/b]: the panel is a standalone window and overrides no vanilla interface file. The mod replaces no vanilla file at all; it only redefines two named text functions so an exempt vassal's icon can be dimmed, and conflicts only with another mod that redefines those same two.
 [*][b]Herders[/b] get no directives in the base game, so they get none here either.
+[*][b]Every official language[/b] is supported. The English is written by hand; the rest are machine-translated, so please forgive any stiffness, and corrections are welcome.
 [/list]
 
 [b]Warning:[/b] while automation is on, the rules can overwrite a directive you set by hand on a vassal the mod is not already managing. But change a directive the automation itself gave a vassal, and it exempts them for you, so your choice stands. To protect a vassal from the start, exempt them yourself.
 
 [h2]Bugs and contributions[/h2]
 
-I am one person with a real job, so please be patient if a patch breaks something. Bug reports are welcome. An [i]error.log[/i] excerpt and what you expected goes a long way. Contributions and translations are very welcome too.
+I am one person with a real job, so please be patient if a patch breaks something. Bug reports are welcome. An [i]error.log[/i] excerpt and what you expected goes a long way. Contributions are very welcome too, including fixes to the machine-made translations.
 
 [b]Requires:[/b] Crusader Kings III 1.19.x. No DLC is needed, and every expansion is supported.

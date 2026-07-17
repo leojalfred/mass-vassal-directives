@@ -63,6 +63,7 @@ Settings are stored per playthrough and carry over to your heir on succession.
 - **Multiplayer**: settings and automation are per-player; every button routes through a synchronized scripted GUI.
 - **Other mods**: the mod replaces no vanilla file. Its one point of contact with vanilla is a by-name override of two customizable-localization functions (`vassal_directive_icon` and `vassal_directive_text`) that draw the vassal-directive display, so an exempt vassal's icon can be dimmed. It conflicts only with another mod that redefines those exact two functions (resolved by load order), not with any mod that merely touches the same vanilla file. The panel is added as a standalone widget and overrides no vanilla GUI file.
 - **Herders**: vanilla gives herders no directives at all, so neither does the mod.
+- **Languages**: available in every language Crusader Kings III officially supports (English, French, German, Spanish, Russian, Korean, Simplified Chinese, Japanese, and Polish). Only the English is written by hand; the rest are machine-generated and may read a little stiffly. Corrections and hand-written translations are very welcome.
 
 ## Updating after game patches
 
@@ -116,4 +117,4 @@ Most of the interesting decisions here were forced by what CK3's script and GUI 
 
 ## Maintenance & contributions
 
-I'm just one guy with a real job and a real life. This mod is a hobby project, so please be patient if patches break something and it takes me a while to get to it. Bug reports are welcome (an `error.log` excerpt and a description of what you expected goes a long way), and contributions are actively encouraged: if you want to fix a compatibility issue, tackle something from the roadmap, or add a localization, open a pull request. The implementation notes above and the comments in the script files should give you everything you need to find your way around. Start with `common/scripted_effects/leo_mvd_rules.txt`, which explains the shape of the whole thing.
+I'm just one guy with a real job and a real life. This mod is a hobby project, so please be patient if patches break something and it takes me a while to get to it. Bug reports are welcome (an `error.log` excerpt and a description of what you expected goes a long way), and contributions are actively encouraged: if you want to fix a compatibility issue, tackle something from the roadmap, or improve one of the machine-generated translations (or add a missing one), open a pull request. The implementation notes above and the comments in the script files should give you everything you need to find your way around. Start with `common/scripted_effects/leo_mvd_rules.txt`, which explains the shape of the whole thing.

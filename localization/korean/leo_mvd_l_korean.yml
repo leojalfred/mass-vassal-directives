@@ -1,0 +1,106 @@
+﻿l_korean:
+ ### Configuration panel
+ leo_mvd_panel_title: "대규모 봉신 지침"
+ leo_mvd_ui_heading_preset: "프리셋"
+ leo_mvd_ui_heading_description: "설명"
+ # Heads the waterfall itself. "Priorities" rather than "Configuration" because
+ # it names what is under it - the sections below are Priority 1, 2, 3 - and the
+ # whole panel is configuration.
+ leo_mvd_ui_heading_priorities: "우선순위"
+ # Nomads keep their own running order: they have four directives no one else
+ # can be given, and can be given none of the other nine.
+ leo_mvd_ui_heading_nomads: "유목민 우선순위"
+ leo_mvd_ui_nomads_empty_tt: "당신의 [nomad|E] [vassals|E]은(는) 그대로 둡니다.\n\n그들은 자신들만의 서열에 따라 움직입니다. 그들에게 내릴 수 있는 [directives|E]은(는) 오직 그들만의 것이기 때문입니다. 어떤 [nomad|E]도 [fortification_buildings|E]을(를) 세우지 않으며, 다른 누구도 [herd|E]을(를) 기르지 않습니다.\n\n#weak 우선순위를 추가하여 그들에게 임무를 맡기세요.#!"
+ leo_mvd_ui_auto: "봉신 지침 자동 재배정"
+ leo_mvd_ui_auto_tt: "활성화하면 [directive|E] 우선순위 폭포가 매달, 그리고 여기서 설정을 변경할 때마다 모든 자격 있는 [vassals|E]에게 다시 실행됩니다. 켜면 지침이 즉시 적용됩니다.\n\n#weak 자동화가 배정한 [directive|E]을(를) 변경하면 해당 [vassal|E]은(는) 자동으로 제외되어 당신의 선택이 유지됩니다. 그 전에 [vassal|E]을(를) 빼두려면 상호작용 메뉴에서 제외하세요.#!"
+ leo_mvd_ui_apply: "지금 적용"
+ leo_mvd_ui_apply_tt: "설정된 [directive|E] 우선순위를 자격 있고 제외되지 않은 모든 [vassals|E]에게 지금 적용합니다."
+ leo_mvd_ui_remove_all: "모두 제거"
+ leo_mvd_ui_remove_all_tt: "이 자동화가 배정한 모든 [directive|E]을(를) 제거하고, 모든 제외를 해제하며, 자동화를 끕니다. 직접 배정한 지침은 유지됩니다."
+ ### Presets
+ # A preset is a rule set: an ordered list of priorities, where each vassal gets
+ # the first one that applies to them. The $leo_mvd_ui_dir_N$ keys are the
+ # directive names, with an inline-sized icon; they are generated into
+ # leo_mvd_ui_l_english.yml. Do not use vanilla's $convert_faith$ and friends
+ # here - their icons are sized for a row of their own and break running text.
+ leo_mvd_ui_preset_0: "없음"
+ # Doubles as the panel's Description text while None is selected, so it has to
+ # both say what None does and point a new player somewhere useful.
+ leo_mvd_ui_preset_0_tt: "아무것도 배정되지 않으며, 자동화는 나눠준 [directives|E]을(를) 모두 회수합니다. 당신이 직접 [vassal|E]에게 내린 [directives|E]은(는) 그대로 둡니다.\n\n프리셋은 서열입니다. 각 [vassal|E]은(는) 그 안에서 자신에게 맞는 첫 번째 [directive|E]을(를) 받습니다. 위에서 하나를 고르면 그 계획이 여기에 나타납니다.\n\n또는 #V 커스텀#!을(를) 선택하여 우선순위별로 직접 서열을 작성하세요. 모든 [vassal|E]에게 같은 [directive|E]을(를) 내리거나, [faith|E]와(과) [culture|E]에서 무력, [development|E], 지위에 이르기까지 당신이 정한 기준으로 그들을 판단하여 각자에게 맞는 [directive|E]을(를) 내리세요.\n\n#weak 선택하기 전까지는 아무 일도 일어나지 않습니다.#!"
+ leo_mvd_ui_preset_1: "개종과 발전"
+ leo_mvd_ui_preset_1_tt: "[vassals|E]을(를) 품 안에 들인 뒤 성장시킵니다.\n\n#weak 1.#! 당신의 [faith|E]을(를) 따르면서 다른 신앙의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_1$을(를) 지시합니다.\n#weak 2.#! 당신의 [culture|E]을(를) 따르면서 다른 문화의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_2$을(를) 지시합니다.\n#weak 3.#! 나머지 중 군사적으로 강한 자는 $leo_mvd_ui_dir_3$, 약한 자는 $leo_mvd_ui_dir_8$.\n#weak 4.#! 남은 모든 봉신은 $leo_mvd_ui_dir_9$."
+ leo_mvd_ui_preset_2: "왕국 통합"
+ leo_mvd_ui_preset_2_tt: "왕국을 하나의 민족으로 만듭니다.\n\n#weak 1.#! 당신의 [faith|E]을(를) 따르면서 다른 신앙의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_1$을(를) 지시합니다.\n#weak 2.#! 당신의 [culture|E]을(를) 따르면서 다른 문화의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_2$을(를) 지시합니다.\n#weak 3.#! 여전히 이민족 [culture|E]의 백작령을 보유한 자는 $leo_mvd_ui_dir_6$에 힘씁니다.\n#weak 4.#! 남은 모든 봉신은 $leo_mvd_ui_dir_9$.\n\n#weak 성장을 희생하는 대신 개종과 발전보다 더 강하게 개종시킵니다.#!"
+ leo_mvd_ui_preset_3: "전쟁 준비"
+ leo_mvd_ui_preset_3_tt: "각 [vassal|E]의 무력에 맞춰 왕국을 무장시킵니다.\n\n강한 봉신은 자신의 정부가 가장 잘하는 것으로 기여합니다. 행정형은 $leo_mvd_ui_dir_5$, 나머지는 $leo_mvd_ui_dir_7$.\n어디서든 약한 봉신에게는 $leo_mvd_ui_dir_8$을(를) 지시합니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
+ leo_mvd_ui_preset_4: "경제 성장"
+ leo_mvd_ui_preset_4_tt: "무엇보다 먼저 부를 쌓습니다.\n\n미개발 봉신에게는 $leo_mvd_ui_dir_3$을(를) 지시합니다.\n자리를 잡은 봉신은 $leo_mvd_ui_dir_9$(으)로 돌아섭니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
+ leo_mvd_ui_preset_5: "커스텀"
+ leo_mvd_ui_preset_5_tt: "아래에 작성한 당신만의 규칙입니다.\n\n#weak 여기서 커스텀을 선택하면 아무것도 없는 상태에서 시작합니다. 대신 프리셋에서 시작하려면 그 규칙 중 하나를 바꾸기만 하면 됩니다. 그러면 프리셋은 원래 모습 그대로, 당신의 변경 사항이 더해진 당신의 것이 됩니다.#!"
+
+ # Without Roads to Power the administrative directives drop out, so the three
+ # built-ins that used them run a different flow (see the presets in
+ # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
+ # the presets whose flow does not change alias back to their base description.
+ leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
+ leo_mvd_ui_preset_1_tt_nodlc: "[vassals|E]을(를) 품 안에 들인 뒤 성장시킵니다.\n\n#weak 1.#! 당신의 [faith|E]을(를) 따르면서 다른 신앙의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_1$을(를) 지시합니다.\n#weak 2.#! 당신의 [culture|E]을(를) 따르면서 다른 문화의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_2$을(를) 지시합니다.\n#weak 3.#! 나머지 중 군사적으로 강한 자는 $leo_mvd_ui_dir_9$, 약한 자는 $leo_mvd_ui_dir_8$."
+ leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
+ leo_mvd_ui_preset_3_tt_nodlc: "각 [vassal|E]의 무력에 맞춰 왕국을 무장시킵니다.\n\n강한 봉신은 $leo_mvd_ui_dir_7$, 약한 자에게는 $leo_mvd_ui_dir_8$을(를) 지시합니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
+ leo_mvd_ui_preset_4_tt_nodlc: "무엇보다 먼저 부를 쌓습니다.\n\n모든 봉신에게 $leo_mvd_ui_dir_9$을(를) 지시합니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
+ leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
+
+ ### Conditions
+ # Most conditions are self-explanatory from their label; Military Strength is
+ # not, because its number is a duchy-tier yardstick scaled by the vassal's rank
+ # (see leo_mvd_values.txt). This tooltip is attached to that option only.
+ leo_mvd_ui_cond_9_tt: "이 수치는 [duchy|E] 등급을 기준으로 한 척도로, 각 [vassal|E]의 등급에 맞춰 조정되어 하나의 설정이 왕국 전역에서 의미를 유지하도록 합니다. 큰 왕국일수록 더 큰 군대를 일으킵니다.\n\n이 수치에 대해 [county|E] 등급 봉신에게는 0.4배, [duchy|E] 등급에게는 1배, [kingdom|E] 등급에게는 3배, [empire|E] 등급에게는 8배를 요구합니다.\n\n#weak 따라서 1000을 선택하면 백작에게는 400명, 공작에게는 1000명, 왕에게는 3000명, 황제에게는 8000명의 병력이 됩니다.#!"
+
+ ### Interactions
+ leo_mvd_exempt_interaction: "지침 자동화에서 제외"
+ leo_mvd_exempt_interaction_desc: "자동 [directive|E] 배정에서 [recipient.GetFullName]을(를) 제외하여 [recipient.GetHerHim] 직접 관리할 수 있도록 합니다."
+ leo_mvd_exempt_tt: "[recipient.GetFullName]은(는) 지침 자동화에서 건너뛰어지고 그 지침 아이콘이 흐리게 표시됩니다. #V 봉신 지침 부여#!(으)로 [recipient.GetHerHis] [directive|E]을(를) 직접 배정하세요."
+ leo_mvd_unexempt_interaction: "지침 자동화에 포함"
+ leo_mvd_unexempt_interaction_desc: "자동 [directive|E] 폭포가 [recipient.GetFullName]을(를) 다시 관리하도록 합니다."
+ leo_mvd_unexempt_tt: "[recipient.GetFullName]은(는) 다음 실행 시 다시 지침 자동화의 관리를 받습니다."
+
+ ### Exemption marker (customizable localization override keys)
+ # Exempt vassals show a dimmed (gray-tinted) version of their directive icon
+ # instead of the normal one. The icon keys below point at the gray texticon
+ # twins defined in gui/leo_mvd_texticons.gui.
+ leo_mvd_exempt_suffix: "\n#weak 지침 자동화에서 제외됨#!"
+ # icon variants
+ leo_mvd_x_no_directive_icon: "@leo_mvd_gray_directive_none!"
+ leo_mvd_x_directive_refusal_icon: "@leo_mvd_gray_directive_refusal!"
+ leo_mvd_x_improve_development_icon: "@leo_mvd_gray_task_develop_county!"
+ leo_mvd_x_train_commanders_icon: "@leo_mvd_gray_task_train_commanders!"
+ leo_mvd_x_build_maa_icon: "@leo_mvd_gray_directive_maa!"
+ leo_mvd_x_convert_faith_icon: "@leo_mvd_gray_task_conversion!"
+ leo_mvd_x_convert_culture_icon: "@leo_mvd_gray_task_promote_culture!"
+ leo_mvd_x_improve_cultural_acceptance_icon: "@leo_mvd_gray_task_accept_culture!"
+ leo_mvd_x_building_focus_fortification_icon: "@leo_mvd_gray_directive_fortification!"
+ leo_mvd_x_building_focus_military_icon: "@leo_mvd_gray_directive_military!"
+ leo_mvd_x_building_focus_economy_icon: "@leo_mvd_gray_directive_economical!"
+ leo_mvd_x_manage_fertility_icon: "@leo_mvd_gray_county_fertility_icon!"
+ leo_mvd_x_explore_cultures_icon: "@leo_mvd_gray_explore_cultures_icon!"
+ leo_mvd_x_raid_innovation_intent_icon: "@leo_mvd_gray_culture_icon!"
+ leo_mvd_x_raid_herd_intent_icon: "@leo_mvd_gray_herd_icon!"
+ # text variants
+ leo_mvd_x_no_directive_text: "$no_directive_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_refusing_directive_text: "$refusing_directive_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_improve_development_text: "$improve_development_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_train_commanders_text: "$train_commanders_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_build_maa_text: "$build_maa_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_convert_faith_text: "$convert_faith_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_convert_culture_text: "$convert_culture_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_improve_cultural_acceptance_text: "$improve_cultural_acceptance_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_building_focus_fortification_text: "$building_focus_fortification_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_building_focus_military_text: "$building_focus_military_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_building_focus_economy_text: "$building_focus_economy_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_county_fertility_text: "$county_fertility_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_explore_cultures_text: "$explore_cultures_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_culture_text: "$culture_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_herd_text: "$herd_text$$leo_mvd_exempt_suffix$"
+ # No text-and-icon override: an exempt vassal's text-and-icon display is left
+ # as vanilla (the gray icon comes from the icon variant, and the exempt note
+ # from the text variant), so the override file keeps vanilla's text_and_icon
+ # block unchanged and no leo_mvd_x_* text-and-icon keys are needed.

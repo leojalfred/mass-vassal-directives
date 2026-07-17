@@ -1,0 +1,106 @@
+﻿l_german:
+ ### Configuration panel
+ leo_mvd_panel_title: "Massen-Vasallenanweisungen"
+ leo_mvd_ui_heading_preset: "Vorlage"
+ leo_mvd_ui_heading_description: "Beschreibung"
+ # Heads the waterfall itself. "Priorities" rather than "Configuration" because
+ # it names what is under it - the sections below are Priority 1, 2, 3 - and the
+ # whole panel is configuration.
+ leo_mvd_ui_heading_priorities: "Prioritäten"
+ # Nomads keep their own running order: they have four directives no one else
+ # can be given, and can be given none of the other nine.
+ leo_mvd_ui_heading_nomads: "Nomaden-Prioritäten"
+ leo_mvd_ui_nomads_empty_tt: "Deine [nomad|E]-[vassals|E] bleiben unangetastet.\n\nSie folgen einer eigenen Reihenfolge, denn die [directives|E], die ihnen gegeben werden können, sind ihnen allein vorbehalten. Kein [nomad|E] errichtet [fortification_buildings|E], und niemand sonst hält eine [herd|E].\n\n#weak Füge eine Priorität hinzu, um sie zu beschäftigen.#!"
+ leo_mvd_ui_auto: "Vasallenanweisungen automatisch neu zuweisen"
+ leo_mvd_ui_auto_tt: "Wenn aktiviert, wird der [directive|E]-Prioritätenwasserfall jeden Monat und jedes Mal, wenn du hier eine Einstellung änderst, für alle infrage kommenden [vassals|E] erneut ausgeführt. Beim Einschalten werden die Anweisungen sofort angewandt.\n\n#weak Änderst du eine [directive|E], die die Automatik zugewiesen hat, wird dieser [vassal|E] für dich ausgenommen, sodass deine Wahl bestehen bleibt. Um einen [vassal|E] schon vorher herauszuhalten, nimm ihn über sein Interaktionsmenü aus.#!"
+ leo_mvd_ui_apply: "Jetzt anwenden"
+ leo_mvd_ui_apply_tt: "Wende die konfigurierte [directive|E]-Priorität jetzt auf alle infrage kommenden, nicht ausgenommenen [vassals|E] an."
+ leo_mvd_ui_remove_all: "Alle entfernen"
+ leo_mvd_ui_remove_all_tt: "Entferne jede [directive|E], die diese Automatik zugewiesen hat, hebe alle Ausnahmen auf und schalte die Automatik aus. Manuell zugewiesene Anweisungen bleiben erhalten."
+ ### Presets
+ # A preset is a rule set: an ordered list of priorities, where each vassal gets
+ # the first one that applies to them. The $leo_mvd_ui_dir_N$ keys are the
+ # directive names, with an inline-sized icon; they are generated into
+ # leo_mvd_ui_l_english.yml. Do not use vanilla's $convert_faith$ and friends
+ # here - their icons are sized for a row of their own and break running text.
+ leo_mvd_ui_preset_0: "Keine"
+ # Doubles as the panel's Description text while None is selected, so it has to
+ # both say what None does and point a new player somewhere useful.
+ leo_mvd_ui_preset_0_tt: "Es wird nichts zugewiesen, und die Automatik gibt alle [directives|E] auf, die sie erteilt hat. [directives|E], die du einem [vassal|E] selbst gegeben hast, bleiben unangetastet.\n\nEine Vorlage ist eine Reihenfolge: Jeder [vassal|E] erhält die erste [directive|E] darin, die zu ihm passt. Wähle oben eine aus, und ihr Plan erscheint hier.\n\nOder wähle #V Benutzerdefiniert#!, um die Reihenfolge selbst zu schreiben, Priorität für Priorität. Gib jedem [vassal|E] dieselbe [directive|E], oder beurteile sie nach dem, was du wählst, von [faith|E] und [culture|E] über Stärke, [development|E] bis hin zum Ansehen, und gib jedem die passende [directive|E].\n\n#weak Nichts geschieht, bis du wählst.#!"
+ leo_mvd_ui_preset_1: "Bekehren und entwickeln"
+ leo_mvd_ui_preset_1_tt: "Führe deine [vassals|E] zusammen und lasse sie dann wachsen.\n\n#weak 1.#! Vasallen deines [faith|E], die Grafschaften eines anderen halten, sollen $leo_mvd_ui_dir_1$.\n#weak 2.#! Vasallen deiner [culture|E], die Grafschaften einer anderen halten, sollen $leo_mvd_ui_dir_2$.\n#weak 3.#! Von den Übrigen sollen die militärisch Starken $leo_mvd_ui_dir_3$ und die Schwachen $leo_mvd_ui_dir_8$.\n#weak 4.#! Alle verbleibenden Vasallen sollen $leo_mvd_ui_dir_9$."
+ leo_mvd_ui_preset_2: "Das Reich einen"
+ leo_mvd_ui_preset_2_tt: "Mache das Reich zu einem Volk.\n\n#weak 1.#! Vasallen deines [faith|E], die Grafschaften eines anderen halten, sollen $leo_mvd_ui_dir_1$.\n#weak 2.#! Vasallen deiner [culture|E], die Grafschaften einer anderen halten, sollen $leo_mvd_ui_dir_2$.\n#weak 3.#! Wer noch Grafschaften fremder [culture|E] hält, soll $leo_mvd_ui_dir_6$.\n#weak 4.#! Alle verbleibenden Vasallen sollen $leo_mvd_ui_dir_9$.\n\n#weak Bekehrt stärker als Bekehren und entwickeln, auf Kosten des Wachstums.#!"
+ leo_mvd_ui_preset_3: "Für den Krieg rüsten"
+ leo_mvd_ui_preset_3_tt: "Rüste das Reich, jeden [vassal|E] nach seiner Stärke.\n\nStarke Vasallen tragen bei, was ihre Regierungsform am besten kann: administrative sollen $leo_mvd_ui_dir_5$, die Übrigen $leo_mvd_ui_dir_7$.\nSchwache Vasallen überall sollen $leo_mvd_ui_dir_8$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
+ leo_mvd_ui_preset_4: "Die Wirtschaft ausbauen"
+ leo_mvd_ui_preset_4_tt: "Schaffe Wohlstand vor allem anderen.\n\nUnentwickelte Vasallen sollen $leo_mvd_ui_dir_3$.\nEtablierte Vasallen sollen $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
+ leo_mvd_ui_preset_5: "Benutzerdefiniert"
+ leo_mvd_ui_preset_5_tt: "Deine eigenen Regeln, unten geschrieben.\n\n#weak Benutzerdefiniert hier zu wählen beginnt bei null. Um stattdessen von einer Vorlage auszugehen, ändere einfach eine ihrer Regeln. Die Vorlage wird zu deiner, wie sie war, mit deiner Änderung.#!"
+
+ # Without Roads to Power the administrative directives drop out, so the three
+ # built-ins that used them run a different flow (see the presets in
+ # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
+ # the presets whose flow does not change alias back to their base description.
+ leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
+ leo_mvd_ui_preset_1_tt_nodlc: "Führe deine [vassals|E] zusammen und lasse sie dann wachsen.\n\n#weak 1.#! Vasallen deines [faith|E], die Grafschaften eines anderen halten, sollen $leo_mvd_ui_dir_1$.\n#weak 2.#! Vasallen deiner [culture|E], die Grafschaften einer anderen halten, sollen $leo_mvd_ui_dir_2$.\n#weak 3.#! Von den Übrigen sollen die militärisch Starken $leo_mvd_ui_dir_9$ und die Schwachen $leo_mvd_ui_dir_8$."
+ leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
+ leo_mvd_ui_preset_3_tt_nodlc: "Rüste das Reich, jeden [vassal|E] nach seiner Stärke.\n\nStarke Vasallen sollen $leo_mvd_ui_dir_7$, während die Schwachen $leo_mvd_ui_dir_8$ sollen.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
+ leo_mvd_ui_preset_4_tt_nodlc: "Schaffe Wohlstand vor allem anderen.\n\nAlle Vasallen sollen $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
+ leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
+
+ ### Conditions
+ # Most conditions are self-explanatory from their label; Military Strength is
+ # not, because its number is a duchy-tier yardstick scaled by the vassal's rank
+ # (see leo_mvd_values.txt). This tooltip is attached to that option only.
+ leo_mvd_ui_cond_9_tt: "Die Zahl ist ein Maßstab auf [duchy|E]-Ebene, skaliert nach dem Rang jedes [vassal|E], damit eine einzige Einstellung im ganzen Reich sinnvoll bleibt. Größere Reiche stellen größere Heere auf.\n\nAnhand der Zahl wird von einem Vasallen auf [county|E]-Ebene 0.4x verlangt, auf [duchy|E]-Ebene 1x, auf [kingdom|E]-Ebene 3x, auf [empire|E]-Ebene 8x.\n\n#weak So ergibt eine Wahl von 1000 etwa 400 Soldaten für einen Grafen, 1000 für einen Herzog, 3000 für einen König und 8000 für einen Kaiser.#!"
+
+ ### Interactions
+ leo_mvd_exempt_interaction: "Von der Anweisungs-Automatik ausnehmen"
+ leo_mvd_exempt_interaction_desc: "Schließe [recipient.GetFullName] von deinen automatischen [directive|E]-Zuweisungen aus, damit du [recipient.GetHerHim] manuell verwalten kannst."
+ leo_mvd_exempt_tt: "[recipient.GetFullName] wird von der Anweisungs-Automatik übersprungen und das Anweisungssymbol abgedunkelt dargestellt. Weise [recipient.GetHerHis] [directive|E] manuell mit #V Vasallenanweisung erteilen#! zu."
+ leo_mvd_unexempt_interaction: "In die Anweisungs-Automatik aufnehmen"
+ leo_mvd_unexempt_interaction_desc: "Lasse den automatischen [directive|E]-Wasserfall [recipient.GetFullName] wieder verwalten."
+ leo_mvd_unexempt_tt: "[recipient.GetFullName] wird beim nächsten Durchlauf wieder von der Anweisungs-Automatik verwaltet."
+
+ ### Exemption marker (customizable localization override keys)
+ # Exempt vassals show a dimmed (gray-tinted) version of their directive icon
+ # instead of the normal one. The icon keys below point at the gray texticon
+ # twins defined in gui/leo_mvd_texticons.gui.
+ leo_mvd_exempt_suffix: "\n#weak Von der Anweisungs-Automatik ausgenommen#!"
+ # icon variants
+ leo_mvd_x_no_directive_icon: "@leo_mvd_gray_directive_none!"
+ leo_mvd_x_directive_refusal_icon: "@leo_mvd_gray_directive_refusal!"
+ leo_mvd_x_improve_development_icon: "@leo_mvd_gray_task_develop_county!"
+ leo_mvd_x_train_commanders_icon: "@leo_mvd_gray_task_train_commanders!"
+ leo_mvd_x_build_maa_icon: "@leo_mvd_gray_directive_maa!"
+ leo_mvd_x_convert_faith_icon: "@leo_mvd_gray_task_conversion!"
+ leo_mvd_x_convert_culture_icon: "@leo_mvd_gray_task_promote_culture!"
+ leo_mvd_x_improve_cultural_acceptance_icon: "@leo_mvd_gray_task_accept_culture!"
+ leo_mvd_x_building_focus_fortification_icon: "@leo_mvd_gray_directive_fortification!"
+ leo_mvd_x_building_focus_military_icon: "@leo_mvd_gray_directive_military!"
+ leo_mvd_x_building_focus_economy_icon: "@leo_mvd_gray_directive_economical!"
+ leo_mvd_x_manage_fertility_icon: "@leo_mvd_gray_county_fertility_icon!"
+ leo_mvd_x_explore_cultures_icon: "@leo_mvd_gray_explore_cultures_icon!"
+ leo_mvd_x_raid_innovation_intent_icon: "@leo_mvd_gray_culture_icon!"
+ leo_mvd_x_raid_herd_intent_icon: "@leo_mvd_gray_herd_icon!"
+ # text variants
+ leo_mvd_x_no_directive_text: "$no_directive_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_refusing_directive_text: "$refusing_directive_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_improve_development_text: "$improve_development_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_train_commanders_text: "$train_commanders_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_build_maa_text: "$build_maa_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_convert_faith_text: "$convert_faith_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_convert_culture_text: "$convert_culture_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_improve_cultural_acceptance_text: "$improve_cultural_acceptance_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_building_focus_fortification_text: "$building_focus_fortification_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_building_focus_military_text: "$building_focus_military_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_building_focus_economy_text: "$building_focus_economy_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_county_fertility_text: "$county_fertility_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_explore_cultures_text: "$explore_cultures_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_culture_text: "$culture_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_herd_text: "$herd_text$$leo_mvd_exempt_suffix$"
+ # No text-and-icon override: an exempt vassal's text-and-icon display is left
+ # as vanilla (the gray icon comes from the icon variant, and the exempt note
+ # from the text variant), so the override file keeps vanilla's text_and_icon
+ # block unchanged and no leo_mvd_x_* text-and-icon keys are needed.
