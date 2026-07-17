@@ -163,6 +163,31 @@ sgui() { echo "[GetScriptedGui('$1').Execute( GuiScope.SetRoot( GetPlayer.MakeSc
 # Whether scripted GUI <1> is currently allowed, for an `enabled` binding.
 sgui_valid() { echo "[GetScriptedGui('$1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"; }
 
+# A GUI bool: is DLC feature <1> active? Vanilla gates its own admin/nomad UI
+# this way (frontend_bookmarks.gui, shared/mapmodes.gui). References to the
+# gated governments stay safe without the DLC - they simply never occur - so
+# this only spares a DLC-less player options that could never do anything.
+vdlc() { echo "HasDlcFeature( '$1' )"; }
+# Combine visibility sub-expressions with And(), dropping empties. Returns one
+# expression, or nothing when every input is empty - so an unneeded gate leaves
+# the original binding untouched.
+vis_and() { local out=; for e in "$@"; do [ -z "$e" ] && continue
+	if [ -z "$out" ]; then out=$e; else out="And( $out, $e )"; fi; done; echo "$out"; }
+# The DLC gate a directive/condition needs, if any. The three administrative
+# directives (improve development, train commanders, build men-at-arms) and the
+# Administrative Government condition need Roads to Power. The feature is
+# 'roads_to_power' - the expansion flag vanilla's own vassal_follows_directive
+# trigger gates administrative on - not the finer 'admin_gov', which does not
+# track DLC ownership. The nomad directives need Khans of the Steppe, but their
+# whole section is gated as a block, so they need nothing here.
+dir_dlc_vis()  { case $1 in 3|4|5) vdlc roads_to_power ;; esac; }
+cond_dlc_vis() { case $1 in 6)     vdlc roads_to_power ;; esac; }
+
+# Explanatory tooltip for a condition option, if it needs one. Only Military
+# Strength does: its threshold is a duchy-tier baseline scaled by the vassal's
+# rank (leo_mvd_effective_threshold), which the plain label cannot convey.
+cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; esac; }
+
 # Kind 0 means "fall through to the next priority" - but on the last priority
 # there is no next one, and it means "leave this vassal without a directive".
 # Same behaviour either way, so only the label changes.
@@ -333,7 +358,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "spacing = 2"
 	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")"
 	for d in $CUR_DIRS; do
-		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d"
+		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d" "$(dir_dlc_vis "$d")"
 	done
 	emit_dd_end $((depth+1)) "${node}_dir"
 	ind "$depth"; p "}"
@@ -350,7 +375,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "spacing = 2"
 	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
 	for c in $CUR_CONDS; do
-		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$(cond_row_visible "$c" "$parent_cond")"
+		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$(vis_and "$(cond_row_visible "$c" "$parent_cond")" "$(cond_dlc_vis "$c")")" "$(cond_tt "$c")"
 	done
 	emit_dd_end $((depth+1)) "${node}_cond"
 
@@ -414,6 +439,10 @@ CUR_CONDS="$CONDS"
 emit_waterfall() {
 	local which=$1
 	local max heading add_sgui remove_prefix prio_loc remove_tt
+	# Hides the whole nomad section without Khans of the Steppe: no vassal is a
+	# nomad without it, so these rules could never fire. Empty for the main
+	# waterfall, so vis_and leaves its shared bindings untouched.
+	local dlc=; [ "$which" = nomad ] && dlc=$(vdlc khans_of_the_steppe)
 	if [ "$which" = nomad ]; then
 		NODE_PREFIX=q; COUNT_VAR=leo_mvd_qrule_count
 		CUR_DIRS="$NOMAD_DIRS"; CUR_CONDS="$NOMAD_CONDS"
@@ -443,7 +472,7 @@ emit_waterfall() {
 	p "text_label_left = {"
 	ind 6
 	if [ "$which" = nomad ]; then
-		p "visible = \"[$(vge leo_mvd_rule_count 1)]\""
+		p "visible = \"[$(vis_and "$dlc" "$(vge leo_mvd_rule_count 1)")]\""
 	else
 		p "visible = \"[$(vge "$COUNT_VAR" 1)]\""
 	fi
@@ -459,7 +488,7 @@ emit_waterfall() {
 		p "### be read rather than taken on trust."
 		p "vbox = {"
 		ind 6
-		p "visible = \"[$(vge "$COUNT_VAR" "$prio")]\""
+		p "visible = \"[$(vis_and "$dlc" "$(vge "$COUNT_VAR" "$prio")")]\""
 		p "layoutpolicy_horizontal = expanding"
 		p "oncreate = \"[BindFoldOutContext]\""
 		p "oncreate = \"[PdxGuiFoldOut.Unfold]\""
@@ -543,7 +572,7 @@ emit_waterfall() {
 		p "### Start a nomad waterfall, when there is not one yet."
 		p "hbox = {"
 		ind 6
-		p "visible = \"[And( $(vge leo_mvd_rule_count 1), Not( $(vge "$COUNT_VAR" 1) ) )]\""
+		p "visible = \"[$(vis_and "$dlc" "And( $(vge leo_mvd_rule_count 1), Not( $(vge "$COUNT_VAR" 1) ) )")]\""
 		p "layoutpolicy_horizontal = expanding"
 		p "margin = { 6 4 }"
 		p ""
@@ -744,7 +773,11 @@ HEAD
 		p "size = { -1 30 }"
 		p "onclick = \"$(sgui "leo_mvd_preset_${n}")\""
 		p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]\""
-		p "tooltip = \"leo_mvd_ui_preset_${n}_tt\""
+		# Built-ins 1/3/4 describe a different flow without Roads to Power, since
+		# their administrative directives drop out (see leo_mvd_rules.txt). The
+		# _nodlc key holds that flow; presets with no such change alias it back to
+		# the base description.
+		p "tooltip = \"[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_${n}_tt', 'leo_mvd_ui_preset_${n}_tt_nodlc' )]\""
 		p "text = \"leo_mvd_ui_preset_${n}\""
 		ind "$DD_ROW_DEPTH"; p "}"
 	done
@@ -776,8 +809,9 @@ cat << 'MID'
 MID
 
 	# What the chosen preset actually does, in the panel rather than only in a
-	# tooltip. Reads the same key the dropdown's own tooltip does, so the two can
-	# never disagree. Hidden for Custom, where the rules are spelled out below
+	# tooltip. Selects the same _tt / _tt_nodlc pair the dropdown's own tooltip
+	# does, so the two can never disagree - including which flow is shown without
+	# Roads to Power. Hidden for Custom, where the rules are spelled out below
 	# anyway; on None it is what tells a new player where to start.
 	ind 5; p ""
 	p "### Description section. Hidden while the player's own rules are"
@@ -805,7 +839,7 @@ MID
 	p "autoresize = yes"
 	p "max_width = 440"
 	p "align = left|nobaseline"
-	p "text = \"[Localize(Concatenate(Concatenate('leo_mvd_ui_preset_', $(vint leo_mvd_preset)), '_tt'))]\""
+	p "text = \"[Localize(Concatenate(Concatenate('leo_mvd_ui_preset_', $(vint leo_mvd_preset)), Select_CString( HasDlcFeature( 'roads_to_power' ), '_tt', '_tt_nodlc' )))]\""
 	ind 7; p "}"
 	ind 6; p "}"
 	ind 5; p "}"

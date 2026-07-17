@@ -507,7 +507,6 @@ leo_mvd_preset_0_effect = {
 # vassals develop their land, weaker ones build up their military.
 leo_mvd_preset_1_effect = {
 	leo_mvd_clear_rules_effect = yes
-	set_variable = { name = leo_mvd_rule_count value = 4 }
 
 	# 1: Faith is Yours -> Convert Faith. Vanilla's gate only asks whether a
 	# vassal holds an off-faith county, not whose faith they hold, so without
@@ -519,13 +518,24 @@ leo_mvd_preset_1_effect = {
 	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 2 THRESH = 0 }
 	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 2 }
 
-	# 3: strong vassals develop, weak ones build military
-	leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = 1000 }
-	leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 3 }
-	leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 8 }
-
-	# 4: catches the strong vassals who fail Improve Development's gate
-	leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
+	# 3+: grow the realm. With Roads to Power the strong develop their land, and
+	# a fourth priority catches those who fail Improve Development's duchy gate.
+	# Without it there is no Improve Development directive, so the strong build
+	# economy instead and the catch-all is not needed.
+	if = {
+		limit = { has_dlc_feature = roads_to_power }
+		set_variable = { name = leo_mvd_rule_count value = 4 }
+		leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = 1000 }
+		leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 3 }
+		leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 8 }
+		leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
+	}
+	else = {
+		set_variable = { name = leo_mvd_rule_count value = 3 }
+		leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = 1000 }
+		leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 9 }
+		leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 8 }
+	}
 
 	# Nomads: learn from the neighbours they hold, otherwise grow.
 	set_variable = { name = leo_mvd_qrule_count value = 2 }
@@ -568,18 +578,32 @@ leo_mvd_preset_2_effect = {
 # everywhere build up their military infrastructure first.
 leo_mvd_preset_3_effect = {
 	leo_mvd_clear_rules_effect = yes
-	set_variable = { name = leo_mvd_rule_count value = 2 }
 
-	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 6 THRESH = 0 }
-	leo_mvd_set_node_cond_effect = { NODE = r1_n2 COND = 9 THRESH = 1000 }
-	leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 9 THRESH = 1000 }
-	leo_mvd_set_node_dir_effect = { NODE = r1_n4 DIR = 5 }
-	leo_mvd_set_node_dir_effect = { NODE = r1_n5 DIR = 8 }
-	leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 7 }
-	leo_mvd_set_node_dir_effect = { NODE = r1_n7 DIR = 8 }
-
-	# 2: catch-all for anyone the tree above could not place
-	leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 8 }
+	# Priority 1 sorts the strong from the weak. With Roads to Power it first
+	# splits on government - administrative vassals raise men-at-arms, the rest
+	# fortify - then on strength, with a second priority to catch any vassal the
+	# tree could not place. Without it there are no administrative vassals and no
+	# men-at-arms directive, so it splits on strength alone - the strong fortify,
+	# the weak build military - which already places everyone, so one priority is
+	# enough (the weak branch does what the catch-all otherwise would).
+	if = {
+		limit = { has_dlc_feature = roads_to_power }
+		set_variable = { name = leo_mvd_rule_count value = 2 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 6 THRESH = 0 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n2 COND = 9 THRESH = 1000 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 9 THRESH = 1000 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n4 DIR = 5 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n5 DIR = 8 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 7 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n7 DIR = 8 }
+		leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 8 }
+	}
+	else = {
+		set_variable = { name = leo_mvd_rule_count value = 1 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 9 THRESH = 1000 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 7 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n3 DIR = 8 }
+	}
 
 	# Nomads: raid for herd, and grow what they hold.
 	set_variable = { name = leo_mvd_qrule_count value = 2 }
@@ -594,14 +618,23 @@ leo_mvd_preset_3_effect = {
 # are established they turn to economic buildings.
 leo_mvd_preset_4_effect = {
 	leo_mvd_clear_rules_effect = yes
-	set_variable = { name = leo_mvd_rule_count value = 2 }
 
-	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 11 THRESH = 40 }
-	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 9 }
-	leo_mvd_set_node_dir_effect = { NODE = r1_n3 DIR = 3 }
-
-	# 2: catches vassals who fail Improve Development's gate
-	leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 9 }
+	# With Roads to Power, underdeveloped vassals raise their development first
+	# and turn to economic buildings once established, with a second priority to
+	# catch those who fail Improve Development's gate. Without it there is no
+	# development directive, so growth is economic buildings for everyone.
+	if = {
+		limit = { has_dlc_feature = roads_to_power }
+		set_variable = { name = leo_mvd_rule_count value = 2 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 11 THRESH = 40 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 9 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n3 DIR = 3 }
+		leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 9 }
+	}
+	else = {
+		set_variable = { name = leo_mvd_rule_count value = 1 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n1 DIR = 9 }
+	}
 
 	# Nomads: grow what they hold.
 	set_variable = { name = leo_mvd_qrule_count value = 1 }

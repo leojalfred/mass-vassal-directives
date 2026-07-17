@@ -1,6 +1,6 @@
 ﻿l_english:
  ### Configuration panel
- leo_mvd_panel_title: "Vassal Directive Automation"
+ leo_mvd_panel_title: "Mass Vassal Directives"
  leo_mvd_ui_heading_preset: "Preset"
  leo_mvd_ui_heading_description: "Description"
  # Heads the waterfall itself. "Priorities" rather than "Configuration" because
@@ -26,7 +26,7 @@
  leo_mvd_ui_preset_0: "None"
  # Doubles as the panel's Description text while None is selected, so it has to
  # both say what None does and point a new player somewhere useful.
- leo_mvd_ui_preset_0_tt: "Nothing is assigned, and the automation gives up any [directives|E] it handed out. [directives|E] you gave a [vassal|E] yourself are left alone.\n\nA preset is a running order: each [vassal|E] is given the first [directive|E] in it that suits them. Pick one above and its plan appears here.\n\nOr choose #V Custom#! to write the order yourself, priority by priority - hand every [vassal|E] the same [directive|E], or judge them on what you choose, from [faith|E] and [culture|E] to strength, [development|E] and standing, and give each the [directive|E] that fits.\n\n#weak Nothing happens until you choose.#!"
+ leo_mvd_ui_preset_0_tt: "Nothing is assigned, and the automation gives up any [directives|E] it handed out. [directives|E] you gave a [vassal|E] yourself are left alone.\n\nA preset is a running order: each [vassal|E] is given the first [directive|E] in it that suits them. Pick one above and its plan appears here.\n\nOr choose #V Custom#! to write the order yourself, priority by priority. Hand every [vassal|E] the same [directive|E], or judge them on what you choose, from [faith|E] and [culture|E] to strength, [development|E], and standing, and give each the [directive|E] that fits.\n\n#weak Nothing happens until you choose.#!"
  leo_mvd_ui_preset_1: "Convert and Develop"
  leo_mvd_ui_preset_1_tt: "Bring your [vassals|E] into the fold, then grow them.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $leo_mvd_ui_dir_1$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $leo_mvd_ui_dir_2$.\n#weak 3.#! Of the rest, the militarily strong $leo_mvd_ui_dir_3$ and the weak $leo_mvd_ui_dir_8$.\n#weak 4.#! All left over vassals $leo_mvd_ui_dir_9$."
  leo_mvd_ui_preset_2: "Unify the Realm"
@@ -37,6 +37,23 @@
  leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\nUndeveloped vassals are told to $leo_mvd_ui_dir_3$.\nEstablished vassals turn to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_5: "Custom"
  leo_mvd_ui_preset_5_tt: "Your own rules, written below.\n\n#weak Choosing Custom here starts from nothing. To start from a preset instead, simply change one of its rules - the preset becomes yours, as it was, with your change.#!"
+
+ # Without Roads to Power the administrative directives drop out, so the three
+ # built-ins that used them run a different flow (see the presets in
+ # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
+ # the presets whose flow does not change alias back to their base description.
+ leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
+ leo_mvd_ui_preset_1_tt_nodlc: "Bring your [vassals|E] into the fold, then grow them.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $leo_mvd_ui_dir_1$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $leo_mvd_ui_dir_2$.\n#weak 3.#! Of the rest, the militarily strong $leo_mvd_ui_dir_9$ and the weak $leo_mvd_ui_dir_8$."
+ leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
+ leo_mvd_ui_preset_3_tt_nodlc: "Arm the realm, each [vassal|E] to their strength.\n\nStrong vassals $leo_mvd_ui_dir_7$, while the weak are told to $leo_mvd_ui_dir_8$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_4_tt_nodlc: "Build wealth before anything else.\n\nAll vassals are told to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
+
+ ### Conditions
+ # Most conditions are self-explanatory from their label; Military Strength is
+ # not, because its number is a duchy-tier yardstick scaled by the vassal's rank
+ # (see leo_mvd_values.txt). This tooltip is attached to that option only.
+ leo_mvd_ui_cond_9_tt: "The figure is a [duchy|E]-tier yardstick, scaled to each [vassal|E]'s rank so a single setting stays meaningful across the realm. Larger realms raise larger armies.\n\nAgainst the figure a [county|E]-tier vassal is asked 0.4x, a [duchy|E]-tier one 1x, a [kingdom|E]-tier one 3x, an [empire|E]-tier one 8x.\n\n#weak So a choice of 1000 comes out to 400 troops for a count, 1000 for a duke, 3000 for a king, and 8000 for an emperor.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Exempt from Directive Automation"
