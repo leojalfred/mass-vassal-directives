@@ -188,6 +188,16 @@ cond_dlc_vis() { case $1 in 6)     vdlc roads_to_power ;; esac; }
 # rank (leo_mvd_effective_threshold), which the plain label cannot convey.
 cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; esac; }
 
+# One shared threshold picker per node serves every numeric condition, instead
+# of one hidden picker per condition (which multiplied the panel's widget count).
+# Its label is built at runtime from the node's chosen condition and value,
+# leo_mvd_ui_thresh_c<cond>_<thresh>, and it is shown only while a numeric
+# condition is selected. <1> = the node's cond variable, <2> = its thresh var.
+thresh_label_dyn() { echo "Localize(Concatenate(Concatenate('leo_mvd_ui_thresh_c', Concatenate($(vint "$1"), '_')), $(vint "$2")))"; }
+# A GUI bool: is a condition that takes a threshold selected in variable <1>?
+numeric_cond_sel() { local var=$1 expr=; for c in $NUMERIC_CONDS; do local t; t="$(veq "$var" "$c")"
+	if [ -z "$expr" ]; then expr=$t; else expr="Or( $expr, $t )"; fi; done; echo "$expr"; }
+
 # Kind 0 means "fall through to the next priority" - but on the last priority
 # there is no next one, and it means "leave this vassal without a directive".
 # Same behavior either way, so only the label changes.
@@ -385,22 +395,25 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	done
 	emit_dd_end $((depth+1)) "${node}_cond"
 
-	# Its threshold, if it takes one. Only the chosen condition's list exists on
-	# screen, so the label prefix can be that condition's, spelled out.
+	# Its threshold, if it takes one. One picker per node rather than one per
+	# numeric condition: every numeric condition's rows live in a single dropdown,
+	# each row gated so only the chosen condition's values show, and the picker as
+	# a whole is hidden unless the chosen condition takes a threshold. The label is
+	# built from the chosen condition and value at runtime.
+	ind $((depth+1)); p ""
+	p "vbox = {"
+	ind $((depth+2))
+	p "visible = \"[$(numeric_cond_sel "leo_mvd_${node}_cond")]\""
+	p "layoutpolicy_horizontal = expanding"
+	p "spacing = 2"
+	emit_dd_start $((depth+2)) "${node}_t" "$(thresh_label_dyn "leo_mvd_${node}_cond" "leo_mvd_${node}_thresh")"
 	for c in $NUMERIC_CONDS; do
-		ind $((depth+1)); p ""
-		p "vbox = {"
-		ind $((depth+2))
-		p "visible = \"[$(veq "leo_mvd_${node}_cond" "$c")]\""
-		p "layoutpolicy_horizontal = expanding"
-		p "spacing = 2"
-		emit_dd_start $((depth+2)) "${node}_t${c}" "$(vkey "leo_mvd_ui_thresh_c${c}_" "leo_mvd_${node}_thresh")"
 		for t in $(cond_thresh "$c"); do
-			emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_t${c}" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}"
+			emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_t" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}" "$(veq "leo_mvd_${node}_cond" "$c")"
 		done
-		emit_dd_end $((depth+2)) "${node}_t${c}"
-		ind $((depth+1)); p "}"
 	done
+	emit_dd_end $((depth+2)) "${node}_t"
+	ind $((depth+1)); p "}"
 	ind "$depth"; p "}"
 
 	# Its branches. Only rendered once this node is actually a condition, so an
