@@ -4,6 +4,8 @@ A quality-of-life mod for **Crusader Kings III (1.19.x)** that hands out vassal 
 
 Nothing about directive _eligibility_ changes: the mod calls the game's own eligibility triggers and mirrors the vanilla interaction's conditions exactly. It only automates what you could already do by hand.
 
+It requires **no DLC, and supports them all**. The administrative directives come from _Roads to Power_ and nomad vassals from _Khans of the Steppe_; when you own a DLC the mod folds its content in, and when you do not, the panel hides what that DLC would add and the presets adjust their plans — so you only ever see options your game can actually use.
+
 ## How it works
 
 You give the mod a **running order**: a list of priorities, worked through from the top. Each vassal gets the first directive in it that suits them — and a vassal no priority claims is simply left alone.
@@ -37,7 +39,7 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 
 Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Administrative Government · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You
 
-Every measured condition reads the same way — **"is at least"** — so the true branch is always the high side. Military Strength is the exception worth knowing: the number you pick is the **duchy baseline**, and it scales by title tier so it stays meaningful at every realm size (counts ×0.5, dukes ×1, kings ×3, emperors ×6; tunable in `common/script_values/leo_mvd_values.txt`).
+Every measured condition reads the same way — **"is at least"** — so the true branch is always the high side. Military Strength is the exception worth knowing: the number you pick is the **duchy baseline**, and it scales by title tier so it stays meaningful at every realm size (counts ×0.4, dukes ×1, kings ×3, emperors ×8; tunable in `common/script_values/leo_mvd_values.txt`). Administrative Government appears only with _Roads to Power_.
 
 ## Using the mod
 
@@ -55,6 +57,7 @@ Settings are stored per playthrough and carry over to your heir on succession.
 
 ## Compatibility
 
+- **DLC**: none required, all supported. _Roads to Power_ adds the administrative directives (Improve Development, Train Commanders, Build Men-at-Arms) and the Administrative Government condition; _Khans of the Steppe_ adds nomad vassals and their four directives. Without a given DLC the panel hides what it would enable and the built-in presets adapt their plans, so nothing ever points at an option your game cannot use.
 - **Achievements**: not affected — since CK3 1.9, mods do not disable achievements.
 - **Existing saves**: safe to add mid-run (automation bootstraps within a game-year, or immediately from the panel) and safe to remove (mod-assigned directives are ordinary vanilla directives; leftover mod variables are inert).
 - **Multiplayer**: settings and automation are per-player; every button routes through a synchronized scripted GUI.

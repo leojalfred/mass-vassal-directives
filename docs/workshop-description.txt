@@ -82,6 +82,7 @@ Nomads keep a running order of their own: they have four directives no one else 
 
 [list]
 [*][b]Nothing about eligibility changes.[/b] The mod calls the game's own rules and mirrors the Give Vassal Directive interaction exactly. It only ever does what you could do by hand.
+[*][b]No DLC required, every expansion supported.[/b] The administrative directives come from Roads to Power and nomad vassals from Khans of the Steppe; the mod folds in whatever you own and quietly hides the rest, so the panel and presets only ever show what your game can do.
 [*][b]Achievements still work.[/b] Since 1.9, mods do not disable them.
 [*][b]Safe to add to an existing save[/b], and safe to remove from one.
 [*][b]Multiplayer[/b] - every player gets their own rules, on their own character.
@@ -96,4 +97,4 @@ Nomads keep a running order of their own: they have four directives no one else 
 
 I am one person with a real job, so please be patient if a patch breaks something. Bug reports are welcome - an [i]error.log[/i] excerpt and what you expected goes a long way. Contributions and translations are very welcome too.
 
-[b]Requires:[/b] Crusader Kings III 1.19.x
+[b]Requires:[/b] Crusader Kings III 1.19.x — and no DLC. Every expansion is supported; none is needed.
