@@ -573,22 +573,20 @@ leo_mvd_preset_2_effect = {
 }
 
 # Current scope: the player.
-# Arm the realm. Strong vassals contribute what their government is good at -
-# administrative ones raise men-at-arms, the rest fortify - while weak vassals
-# everywhere build up their military infrastructure first.
+# Arm the realm, each vassal to their strength. Administrative vassals raise
+# men-at-arms, the rest fortify, and the weak build up their military. A single
+# priority places every vassal, so it is the only one either way.
 leo_mvd_preset_3_effect = {
 	leo_mvd_clear_rules_effect = yes
+	set_variable = { name = leo_mvd_rule_count value = 1 }
 
-	# Priority 1 sorts the strong from the weak. With Roads to Power it first
-	# splits on government - administrative vassals raise men-at-arms, the rest
-	# fortify - then on strength, with a second priority to catch any vassal the
-	# tree could not place. Without it there are no administrative vassals and no
-	# men-at-arms directive, so it splits on strength alone - the strong fortify,
-	# the weak build military - which already places everyone, so one priority is
-	# enough (the weak branch does what the catch-all otherwise would).
+	# With Roads to Power the priority splits first on government (administrative
+	# vassals raise men-at-arms, the rest fortify), then on strength. Without it
+	# there are no administrative vassals and no men-at-arms directive, so it
+	# splits on strength alone: the strong fortify, the weak build military. Both
+	# trees place every vassal, so neither needs a catch-all priority behind it.
 	if = {
 		limit = { has_dlc_feature = roads_to_power }
-		set_variable = { name = leo_mvd_rule_count value = 2 }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 6 THRESH = 0 }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n2 COND = 9 THRESH = 1000 }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 9 THRESH = 1000 }
@@ -596,10 +594,8 @@ leo_mvd_preset_3_effect = {
 		leo_mvd_set_node_dir_effect = { NODE = r1_n5 DIR = 8 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 7 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n7 DIR = 8 }
-		leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 8 }
 	}
 	else = {
-		set_variable = { name = leo_mvd_rule_count value = 1 }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 9 THRESH = 1000 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 7 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n3 DIR = 8 }

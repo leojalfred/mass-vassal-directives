@@ -192,6 +192,9 @@ cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; esac; }
 # there is no next one, and it means "leave this vassal without a directive".
 # Same behavior either way, so only the label changes.
 kind0_key() { echo "SelectLocalization( $(vge "$COUNT_VAR" $(($1 + 1))), 'leo_mvd_ui_kind_0', 'leo_mvd_ui_kind_0_last' )"; }
+# The kind-0 tooltip tracks its label: the continue text when a later priority
+# exists, the leave text when this is the last one.
+kind0_tt_key() { echo "SelectLocalization( $(vge "$COUNT_VAR" $(($1 + 1))), 'leo_mvd_ui_kind_0_tt', 'leo_mvd_ui_kind_0_last_tt' )"; }
 
 ### Dropdowns.
 #
@@ -342,9 +345,12 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	local kind_label="SelectLocalization( $(veq "leo_mvd_${node}_kind" 0), $(kind0_key "$prio"), $(vkey 'leo_mvd_ui_kind_' "leo_mvd_${node}_kind") )"
 	emit_dd_start "$depth" "${node}_kind" "$kind_label"
 	for k in $kinds; do
-		local kl="leo_mvd_ui_kind_$k"
-		[ "$k" = 0 ] && kl="[$(kind0_key "$prio")]"
-		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_kind" "leo_mvd_set_kind_$k" "$kl" "" "leo_mvd_ui_kind_${k}_tt"
+		local kl="leo_mvd_ui_kind_$k" ktt="leo_mvd_ui_kind_${k}_tt"
+		if [ "$k" = 0 ]; then
+			kl="[$(kind0_key "$prio")]"
+			ktt="[$(kind0_tt_key "$prio")]"
+		fi
+		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_kind" "leo_mvd_set_kind_$k" "$kl" "" "$ktt"
 	done
 	emit_dd_end "$depth" "${node}_kind"
 
@@ -1011,7 +1017,8 @@ emit_loc() {
 	echo
 	echo " leo_mvd_ui_kind_0: \"Continue to Next Priority\""
 	echo " leo_mvd_ui_kind_0_last: \"Leave Without a [directive|E]\""
-	echo " leo_mvd_ui_kind_0_tt: \"Do nothing here, and let the next priority decide instead.\\n\\n#weak On the last priority there is no next one, so the [vassal|E] is simply left without a [directive|E].#!\""
+	echo " leo_mvd_ui_kind_0_tt: \"Do nothing here. The next priority decides this [vassal|E] instead.\""
+	echo " leo_mvd_ui_kind_0_last_tt: \"Nothing further is tried. A [vassal|E] who reaches this last priority is left without a [directive|E].\""
 	echo " leo_mvd_ui_kind_1: \"Assign a [directive|E]\""
 	echo " leo_mvd_ui_kind_1_tt: \"Give the [vassal|E] a [directive|E].\\n\\n#weak Vassals who cannot be given it (the game's own rules still apply) fall through to the next priority instead.#!\""
 	echo " leo_mvd_ui_kind_2: \"Check a Condition\""

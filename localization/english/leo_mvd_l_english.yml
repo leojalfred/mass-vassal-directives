@@ -32,7 +32,7 @@
  leo_mvd_ui_preset_2: "Unify the Realm"
  leo_mvd_ui_preset_2_tt: "Make the realm one people.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $leo_mvd_ui_dir_1$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $leo_mvd_ui_dir_2$.\n#weak 3.#! Those still holding foreign-[culture|E] counties work on $leo_mvd_ui_dir_6$.\n#weak 4.#! All left over vassals $leo_mvd_ui_dir_9$.\n\n#weak Converts harder than Convert and Develop, at the cost of growth.#!"
  leo_mvd_ui_preset_3: "Prepare for War"
- leo_mvd_ui_preset_3_tt: "Arm the realm, each [vassal|E] to their strength.\n\nStrong vassals contribute what their government does best: administrative ones $leo_mvd_ui_dir_5$, the rest $leo_mvd_ui_dir_7$.\nWeak vassals everywhere are told to $leo_mvd_ui_dir_8$ first.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_3_tt: "Arm the realm, each [vassal|E] to their strength.\n\nStrong vassals contribute what their government does best: administrative ones $leo_mvd_ui_dir_5$, the rest $leo_mvd_ui_dir_7$.\nWeak vassals everywhere are told to $leo_mvd_ui_dir_8$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_4: "Grow the Economy"
  leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\nUndeveloped vassals are told to $leo_mvd_ui_dir_3$.\nEstablished vassals turn to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_5: "Custom"

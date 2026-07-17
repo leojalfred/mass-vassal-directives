@@ -15,7 +15,8 @@
 
  leo_mvd_ui_kind_0: "Continue to Next Priority"
  leo_mvd_ui_kind_0_last: "Leave Without a [directive|E]"
- leo_mvd_ui_kind_0_tt: "Do nothing here, and let the next priority decide instead.\n\n#weak On the last priority there is no next one, so the [vassal|E] is simply left without a [directive|E].#!"
+ leo_mvd_ui_kind_0_tt: "Do nothing here. The next priority decides this [vassal|E] instead."
+ leo_mvd_ui_kind_0_last_tt: "Nothing further is tried. A [vassal|E] who reaches this last priority is left without a [directive|E]."
  leo_mvd_ui_kind_1: "Assign a [directive|E]"
  leo_mvd_ui_kind_1_tt: "Give the [vassal|E] a [directive|E].\n\n#weak Vassals who cannot be given it (the game's own rules still apply) fall through to the next priority instead.#!"
  leo_mvd_ui_kind_2: "Check a Condition"
