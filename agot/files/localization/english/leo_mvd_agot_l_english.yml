@@ -7,11 +7,11 @@ l_english:
  # AGOT-only presets (6, 7). Style follows the base presets: directive names are
  # $leo_mvd_ui_dir_N$ refs (so they track any rename and carry the inline icon).
  # Unlike the base presets these use no administrative directives (the Seven
- # Kingdoms are feudal), so nothing changes with Roads to Power and the _tt and
- # _tt_nodlc variants are identical.
+ # Kingdoms are feudal), so nothing changes with Roads to Power: each _tt_nodlc
+ # just aliases its _tt with a ref, the way the non-branching base presets do.
  leo_mvd_ui_preset_6: "Master of the Seven Kingdoms"
  leo_mvd_ui_preset_6_tt: "Rule a mixed realm, each [vassal|E] to their place.\n\n[vassals|E] who share your [faith|E] $leo_mvd_ui_dir_1$; off-[faith|E] ones are left alone.\nThe Ironborn $leo_mvd_ui_dir_8$.\nInside the Seven Kingdoms [vassals|E] $leo_mvd_ui_dir_9$; on the frontier they $leo_mvd_ui_dir_7$."
- leo_mvd_ui_preset_6_tt_nodlc: "Rule a mixed realm, each [vassal|E] to their place.\n\n[vassals|E] who share your [faith|E] $leo_mvd_ui_dir_1$; off-[faith|E] ones are left alone.\nThe Ironborn $leo_mvd_ui_dir_8$.\nInside the Seven Kingdoms [vassals|E] $leo_mvd_ui_dir_9$; on the frontier they $leo_mvd_ui_dir_7$."
+ leo_mvd_ui_preset_6_tt_nodlc: "$leo_mvd_ui_preset_6_tt$"
  leo_mvd_ui_preset_7: "Settle the Frontier"
  leo_mvd_ui_preset_7_tt: "Grow the settled realm and push the borders outward.\n\n[vassals|E] who share your [faith|E] $leo_mvd_ui_dir_1$.\nInside the Seven Kingdoms [vassals|E] $leo_mvd_ui_dir_9$; on the frontier they $leo_mvd_ui_dir_14$."
- leo_mvd_ui_preset_7_tt_nodlc: "Grow the settled realm and push the borders outward.\n\n[vassals|E] who share your [faith|E] $leo_mvd_ui_dir_1$.\nInside the Seven Kingdoms [vassals|E] $leo_mvd_ui_dir_9$; on the frontier they $leo_mvd_ui_dir_14$."
+ leo_mvd_ui_preset_7_tt_nodlc: "$leo_mvd_ui_preset_7_tt$"
