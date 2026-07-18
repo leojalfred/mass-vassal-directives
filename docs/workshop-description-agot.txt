@@ -6,18 +6,6 @@ base-game version has its own description in workshop-description.txt.
 Written in BBCode. Paste the block below the line straight into the Workshop
 item's description box. Markdown will not render there.
 
-Screenshots: upload them to the Workshop item first, then open each one, copy its
-image address, and swap it in for the matching SCREENSHOT_N_URL placeholder. Or
-just delete the [img] lines. The description reads fine without them.
-
-Placeholders to fill in:
-  SCREENSHOT_1_URL   the panel open beside the Subjects tab, a preset selected
-  SCREENSHOT_2_URL   the Preset dropdown open, showing the Westeros presets
-  SCREENSHOT_3_URL   a Custom rule set: a priority with a Westeros condition and
-                     both branches filled in
-  SCREENSHOT_4_URL   the Subjects tab with directives assigned, one vassal's
-                     icon dimmed to show an exemption
-
 --------------------------------------------------------------------------------
 
 [h1]Leo VI's Mass Vassal Directives (A Game of Thrones)[/h1]
@@ -26,7 +14,7 @@ Stop clicking through every vassal one by one. Write the rules once, and let the
 
 [b]This is the version to use with A Game of Thrones.[/b] For plain Crusader Kings III, use the base-game version instead. Load this mod after A Game of Thrones in your playset (see the fine print on why).
 
-[img]SCREENSHOT_1_URL[/img]
+[img]https://images.steamusercontent.com/ugc/13990648803007047094/B774B4E1DF5928849501F407222121CF8BAA20B0/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
 
 [h2]How it works[/h2]
 
@@ -52,7 +40,7 @@ The trick to reading a rule set: a vassal who [i]cannot[/i] be given a directive
 
 [h2]Presets[/h2]
 
-[img]SCREENSHOT_2_URL[/img]
+[img]https://images.steamusercontent.com/ugc/9498999181177030571/CBC674F35CDCE1EA51EF7216AE432AC1E00211DF/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
 
 Pick one and its plan appears in the panel, so you can read what it actually does rather than take the name on trust.
 
@@ -71,7 +59,7 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 
 [h2]Custom rules[/h2]
 
-[img]SCREENSHOT_3_URL[/img]
+[img]https://images.steamusercontent.com/ugc/15609072347850871885/F8F0204CC820BF525D9500EE2ACB52371ACB6B04/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
 
 Up to six priorities, judged on any of these conditions:
 
@@ -85,7 +73,7 @@ Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds C
 [*]Tick [b]Automatically Reassign Vassal Directives[/b] to run the rules every month and again whenever you change anything. Or leave it off and use [b]Apply Now[/b] when you feel like it.
 [/olist]
 
-[img]SCREENSHOT_4_URL[/img]
+[img]https://images.steamusercontent.com/ugc/13041903148664098989/B70AFA01BFDD7498BCC70370D1A5479A1E804E2B/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false[/img]
 
 [b]Want to handle someone yourself?[/b] Right-click their portrait and choose [b]Exempt from Directive Automation[/b]. They are passed over entirely, and their directive icon shows dimmed so you can see at a glance who you are managing by hand. Or just re-assign a vassal's directive by hand after the mod has set one, and it exempts them for you and steps back.
 
@@ -108,6 +96,6 @@ Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds C
 
 [h2]Bugs and contributions[/h2]
 
-I am one person with a real job, so please be patient if a patch breaks something. Bug reports are welcome. An [i]error.log[/i] excerpt and what you expected goes a long way. Contributions are very welcome too, including fixes to the machine-made translations.
+I am just one person and this mod is a hobby project, so please be patient if a patch breaks something. Bug reports are welcome. An [i]error.log[/i] excerpt and what you expected goes a long way. Contributions to the mod through its [url=https://github.com/leojalfred/mass-vassal-directives]public GitHub repository[/url] are very welcome too, including fixes to the machine-made translations.
 
 [b]Requires:[/b] Crusader Kings III 1.19.x and the A Game of Thrones mod. No DLC is needed.
