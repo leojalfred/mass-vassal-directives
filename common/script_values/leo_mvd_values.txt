@@ -12,6 +12,14 @@ leo_mvd_threshold_mult_county = 0.4
 leo_mvd_threshold_mult_kingdom = 3
 leo_mvd_threshold_mult_empire = 8
 
+# The duchy-tier baseline the built-in presets steer their military-strength
+# split on. Kept as one constant here, rather than a literal in each preset, so
+# the AGOT build can raise it in one place: A Game of Thrones roughly doubles
+# field armies (levies x2), so its build overrides this to 2000 in
+# zz_leo_mvd_agot_values.txt. The condition's own default and option ladder are
+# set target-aware in tools/gen_panel.sh to match.
+leo_mvd_mil_baseline = 1000
+
 # Current scope: vassal. Requires scope:leo_mvd_thresh, the baseline staged from
 # the rule node being evaluated (leo_mvd_stage_cond_effect). It is read from a
 # staged scope rather than a variable so that the military-strength condition

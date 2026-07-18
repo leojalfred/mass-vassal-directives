@@ -526,14 +526,14 @@ leo_mvd_preset_1_effect = {
 	if = {
 		limit = { has_dlc_feature = roads_to_power }
 		set_variable = { name = leo_mvd_rule_count value = 4 }
-		leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = 1000 }
+		leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = leo_mvd_mil_baseline }
 		leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 3 }
 		leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 8 }
 		leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
 	}
 	else = {
 		set_variable = { name = leo_mvd_rule_count value = 3 }
-		leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = 1000 }
+		leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = leo_mvd_mil_baseline }
 		leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 9 }
 		leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 8 }
 	}
@@ -589,15 +589,15 @@ leo_mvd_preset_3_effect = {
 	if = {
 		limit = { has_dlc_feature = roads_to_power }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 6 THRESH = 0 }
-		leo_mvd_set_node_cond_effect = { NODE = r1_n2 COND = 9 THRESH = 1000 }
-		leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 9 THRESH = 1000 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n2 COND = 9 THRESH = leo_mvd_mil_baseline }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 9 THRESH = leo_mvd_mil_baseline }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n4 DIR = 5 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n5 DIR = 8 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 7 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n7 DIR = 8 }
 	}
 	else = {
-		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 9 THRESH = 1000 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 9 THRESH = leo_mvd_mil_baseline }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 7 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n3 DIR = 8 }
 	}

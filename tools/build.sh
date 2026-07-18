@@ -42,9 +42,9 @@ THUMB_AGOT="assets/images/outputs/thumbnail_agot.png"
 MARKER_FILES="common/scripted_effects/leo_mvd_rules.txt common/scripted_triggers/leo_mvd_triggers.txt common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt"
 # AGOT overlay files written by hand (so without a BOM); every other shipped file
 # already has one (base files, and gen_panel writes its output with a BOM).
-AGOT_BOMLESS="common/scripted_triggers/leo_mvd_agot_triggers.txt gui/leo_mvd_agot_texticons.gui localization/english/leo_mvd_agot_l_english.yml"
+AGOT_BOMLESS="common/scripted_triggers/leo_mvd_agot_triggers.txt gui/leo_mvd_agot_texticons.gui localization/english/leo_mvd_agot_l_english.yml common/scripted_effects/leo_mvd_agot_presets.txt common/scripted_guis/leo_mvd_agot_sguis.txt common/script_values/zz_leo_mvd_agot_values.txt"
 # Files the AGOT build changes or adds that have braces worth re-checking.
-AGOT_CHECK="$MARKER_FILES common/scripted_triggers/leo_mvd_agot_triggers.txt gui/leo_mvd_agot_texticons.gui"
+AGOT_CHECK="$MARKER_FILES common/scripted_triggers/leo_mvd_agot_triggers.txt gui/leo_mvd_agot_texticons.gui common/scripted_effects/leo_mvd_agot_presets.txt common/scripted_guis/leo_mvd_agot_sguis.txt"
 
 copy_base() {   # <destdir>
 	local out=$1 d

@@ -1,0 +1,14 @@
+# Leo VI's Mass Vassal Directives - A Game of Thrones value overrides
+#
+# Built only into the AGOT mod. The zz_ prefix makes this load after the base
+# leo_mvd_values.txt so its definition of leo_mvd_mil_baseline wins.
+#
+# A Game of Thrones roughly doubles field-army scale versus vanilla: every levy
+# constant is x2 (men-at-arms per-regiment power and regiment counts are
+# unchanged, and the powerful-vassal define is untouched), so a vassal's
+# max_military_strength runs about 2x. Doubling the duchy baseline the presets
+# steer on keeps their strength split calibrated. The tier multipliers stay as
+# they are - the inflation is a uniform x2 across tiers, so the relative shape
+# holds. The condition's own default (2000) and option ladder are set to match
+# in tools/gen_panel.sh's AGOT target.
+leo_mvd_mil_baseline = 2000

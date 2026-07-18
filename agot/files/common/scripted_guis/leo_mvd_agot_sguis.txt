@@ -1,0 +1,22 @@
+# Leo VI's Mass Vassal Directives - A Game of Thrones preset selectors
+#
+# Built only into the AGOT mod. The panel's preset dropdown (AGOT build) runs one
+# of these when its row is clicked; they route through the same generic
+# leo_mvd_select_preset_effect as the base presets. No is_shown: the dropdown's
+# selected state is read straight from the leo_mvd_preset variable.
+
+leo_mvd_preset_6 = {
+	scope = character
+	effect = {
+		leo_mvd_init_defaults_effect = yes
+		leo_mvd_select_preset_effect = { N = 6 }
+	}
+}
+
+leo_mvd_preset_7 = {
+	scope = character
+	effect = {
+		leo_mvd_init_defaults_effect = yes
+		leo_mvd_select_preset_effect = { N = 7 }
+	}
+}

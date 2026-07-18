@@ -103,6 +103,12 @@ CONDS="1 2 3 4 5 6 7 8 9 10 11 12 13 14"
 # Westeros conditions (15-19: Ironborn, three faith blocs, Seven Kingdoms) are
 # boolean and AGOT-only; the AGOT build injects their evaluation branches.
 if [ "$TARGET" = agot ]; then CONDS="$CONDS 15 16 17 18 19"; fi
+
+# Preset dropdown order: None, the four built-ins, then (AGOT build) two Westeros
+# presets, then Custom. Custom stays index 5 - the engine keys on it - so the
+# AGOT presets take 6 and 7 and slot in ahead of it.
+PRESET_RANGE="0 1 2 3 4 5"
+if [ "$TARGET" = agot ]; then PRESET_RANGE="0 1 2 3 4 6 7 5"; fi
 # 6 (Administrative Government) is left out for nomads: no nomad is
 # administrative, so it could only ever answer no.
 NOMAD_CONDS="1 2 3 4 5 7 8 9 10 11 12 13 14"
@@ -137,7 +143,7 @@ NUMERIC_CONDS="9 10 11 12 13 14"
 # above the numeric ones but are boolean.
 is_numeric() { case " $NUMERIC_CONDS " in *" $1 "*) return 0 ;; *) return 1 ;; esac; }
 cond_thresh() { case $1 in
-	9)  echo "500 1000 2000 5000" ;;
+	9)  if [ "$TARGET" = agot ]; then echo "1000 2000 4000 10000"; else echo "500 1000 2000 5000"; fi ;;
 	10) echo "2 3 4 5" ;;
 	11) echo "10 20 40 60 80" ;;
 	12) echo "0 25 50 75" ;;
@@ -148,7 +154,7 @@ esac; }
 # Picking a condition also sets this, so a threshold is never left at 0 - which
 # would name a label key that does not exist.
 cond_default_thresh() { case $1 in
-	9) echo 1000 ;; 10) echo 3 ;; 11) echo 40 ;; 12) echo 50 ;; 13) echo 3 ;; 14) echo 50 ;;
+	9) if [ "$TARGET" = agot ]; then echo 2000; else echo 1000; fi ;; 10) echo 3 ;; 11) echo 40 ;; 12) echo 50 ;; 13) echo 3 ;; 14) echo 50 ;;
 	*) echo 0 ;;
 esac; }
 
@@ -837,7 +843,7 @@ HEAD
 
 	# The preset comes first: it decides what the monthly run would even do.
 	emit_dd_start 7 preset "$(vkey 'leo_mvd_ui_preset_' leo_mvd_preset)"
-	for n in 0 1 2 3 4 5; do
+	for n in $PRESET_RANGE; do
 		ind "$DD_ROW_DEPTH"
 		p "leo_mvd_button_dropdown = {"
 		ind $((DD_ROW_DEPTH+1))
