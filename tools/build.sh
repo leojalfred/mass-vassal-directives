@@ -19,85 +19,81 @@
 #     wilderness texticons, and the exempt loc keys)
 #   - the AGOT descriptor replaces the base one
 #
-# Usage: bash tools/build.sh
+# The two mods build in parallel. Usage:
+#   bash tools/build.sh          quiet
+#   bash tools/build.sh -v       narrate every phase
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$PWD"
 DIST="$ROOT/dist"
 
-# The paths that ship. Everything else in the repo (tools, docs, agot, dot-dirs)
-# stays out of the built mods.
+VERBOSE=""
+for a in "$@"; do case $a in -v|--verbose) VERBOSE=1 ;; esac; done
+export VERBOSE   # gen_panel honors the same flag
+vlog() { [ -n "$VERBOSE" ] && echo ">> build: $*" >&2 || true; }
+
+# What ships. Everything else in the repo (tools, docs, agot, dot-dirs) stays out.
 GAME_DIRS="common gui events localization"
 GAME_FILES="thumbnail.png"
+# The three base files carrying # @AGOT:...@ markers.
+MARKER_FILES="common/scripted_effects/leo_mvd_rules.txt common/scripted_triggers/leo_mvd_triggers.txt common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt"
+# AGOT overlay files written by hand (so without a BOM); every other shipped file
+# already has one (base files, and gen_panel writes its output with a BOM).
+AGOT_BOMLESS="common/scripted_triggers/leo_mvd_agot_triggers.txt gui/leo_mvd_agot_texticons.gui localization/english/leo_mvd_agot_l_english.yml"
+# Files the AGOT build changes or adds that have braces worth re-checking.
+AGOT_CHECK="$MARKER_FILES common/scripted_triggers/leo_mvd_agot_triggers.txt gui/leo_mvd_agot_texticons.gui"
 
 copy_base() {   # <destdir>
-	local out=$1
+	local out=$1 d f
 	rm -rf "$out"; mkdir -p "$out"
-	local d f
 	for d in $GAME_DIRS; do cp -r "$ROOT/$d" "$out/"; done
 	for f in $GAME_FILES; do cp "$ROOT/$f" "$out/"; done
 }
 
-# Replace the one line containing <marker> in <file> with the contents of
-# <fragment>. sed's r queues the fragment after the marker line; d then drops the
-# marker line, leaving the fragment in its place. Byte-safe, so the file's BOM
-# and the rest of its content are untouched.
+# Replace the one line containing <marker> in <file> with <fragment>'s contents.
+# Byte-safe, so the file's BOM and everything else is untouched.
 inject() {   # <file> <marker> <fragment>
-	local file=$1 marker=$2 frag=$3
-	sed -e "/$marker/r $frag" -e "/$marker/d" "$file" > "$file.tmp"
-	mv "$file.tmp" "$file"
+	sed -e "/$2/r $3" -e "/$2/d" "$1" > "$1.tmp"; mv "$1.tmp" "$1"
 }
 
-# Drop any leftover injection markers. The AGOT build's injects already consumed
-# them; the vanilla build never injects, so its shared files still carry them.
-strip_markers() {   # <destdir>
-	find "$1" -type f -name '*.txt' -exec sed -i '/# @AGOT:/d' {} +
+has_bom()   { [ "$(head -c3 "$1" | od -An -tx1 | tr -d ' ')" = efbbbf ]; }
+add_bom()   { has_bom "$1" || { printf '\xEF\xBB\xBF' | cat - "$1" > "$1.b"; mv "$1.b" "$1"; }; }
+strip_bom() { has_bom "$1" && { tail -c +4 "$1" > "$1.n"; mv "$1.n" "$1"; } || true; }
+check_brace() {   # <file>
+	local o c; o=$(tr -cd '{' < "$1" | wc -c); c=$(tr -cd '}' < "$1" | wc -c)
+	[ "$o" = "$c" ] || { echo "UNBALANCED: $1 ({=$o }=$c)" >&2; return 1; }
 }
 
-# The game wants a UTF-8 BOM on every .txt/.gui/.yml and none on descriptor.mod.
-# The base files and generated files already comply; this normalizes anything the
-# build copied in (the agot/files/ overlay) and the AGOT descriptor.
-ensure_bom() {   # <destdir>
-	local f
-	find "$1" -type f \( -name '*.txt' -o -name '*.gui' -o -name '*.yml' \) | while read -r f; do
-		if [ "$(head -c3 "$f" | od -An -tx1 | tr -d ' ')" != efbbbf ]; then
-			printf '\xEF\xBB\xBF' | cat - "$f" > "$f.bom"; mv "$f.bom" "$f"
-		fi
-	done
-	local desc="$1/descriptor.mod"
-	if [ -f "$desc" ] && [ "$(head -c3 "$desc" | od -An -tx1 | tr -d ' ')" = efbbbf ]; then
-		tail -c +4 "$desc" > "$desc.nb"; mv "$desc.nb" "$desc"
-	fi
+build_vanilla() {
+	local out="$DIST/vanilla" f
+	vlog "vanilla: copy base"; copy_base "$out"
+	cp "$ROOT/descriptor.mod" "$out/descriptor.mod"; strip_bom "$out/descriptor.mod"
+	vlog "vanilla: generate panel"; TARGET=vanilla OUTDIR="$out" bash "$ROOT/tools/gen_panel.sh" >/dev/null
+	vlog "vanilla: strip markers"; for f in $MARKER_FILES; do sed -i '/# @AGOT:/d' "$out/$f"; done
+	vlog "vanilla: done"
 }
 
-check_braces() {   # <destdir>
-	local f o c bad=0
-	while read -r f; do
-		o=$(tr -cd '{' < "$f" | wc -c); c=$(tr -cd '}' < "$f" | wc -c)
-		if [ "$o" != "$c" ]; then echo "  UNBALANCED: $f ({=$o }=$c)"; bad=1; fi
-	done < <(find "$1" -type f \( -name '*.txt' -o -name '*.gui' \))
-	[ "$bad" = 0 ] && echo "  braces balanced"
+build_agot() {
+	local out="$DIST/agot" f
+	vlog "agot: copy base"; copy_base "$out"
+	vlog "agot: generate panel"; TARGET=agot OUTDIR="$out" bash "$ROOT/tools/gen_panel.sh" >/dev/null
+	vlog "agot: inject fragments"
+	inject "$out/common/scripted_effects/leo_mvd_rules.txt"                         "@AGOT:dispatch@"     "$ROOT/agot/fragments/dispatch.txt"
+	inject "$out/common/scripted_triggers/leo_mvd_triggers.txt"                     "@AGOT:match@"        "$ROOT/agot/fragments/match.txt"
+	inject "$out/common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt" "@AGOT:custloc_icon@" "$ROOT/agot/fragments/custloc_icon.txt"
+	inject "$out/common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt" "@AGOT:custloc_text@" "$ROOT/agot/fragments/custloc_text.txt"
+	vlog "agot: copy overlay + descriptor"
+	cp -r "$ROOT/agot/files/." "$out/"
+	cp "$ROOT/agot/descriptor.mod" "$out/descriptor.mod"; strip_bom "$out/descriptor.mod"
+	vlog "agot: BOM + brace-check touched files"
+	for f in $AGOT_BOMLESS; do add_bom "$out/$f"; done
+	for f in $AGOT_CHECK;   do check_brace "$out/$f"; done
+	vlog "agot: done"
 }
 
-echo "== vanilla =="
-copy_base "$DIST/vanilla"
-cp "$ROOT/descriptor.mod" "$DIST/vanilla/descriptor.mod"
-TARGET=vanilla OUTDIR="$DIST/vanilla" bash "$ROOT/tools/gen_panel.sh" >/dev/null
-strip_markers "$DIST/vanilla"
-ensure_bom "$DIST/vanilla"
-check_braces "$DIST/vanilla"
-
-echo "== agot =="
-copy_base "$DIST/agot"
-TARGET=agot OUTDIR="$DIST/agot" bash "$ROOT/tools/gen_panel.sh" >/dev/null
-inject "$DIST/agot/common/scripted_effects/leo_mvd_rules.txt"                        "@AGOT:dispatch@"     "$ROOT/agot/fragments/dispatch.txt"
-inject "$DIST/agot/common/scripted_triggers/leo_mvd_triggers.txt"                    "@AGOT:match@"        "$ROOT/agot/fragments/match.txt"
-inject "$DIST/agot/common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt" "@AGOT:custloc_icon@" "$ROOT/agot/fragments/custloc_icon.txt"
-inject "$DIST/agot/common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt" "@AGOT:custloc_text@" "$ROOT/agot/fragments/custloc_text.txt"
-cp -r "$ROOT/agot/files/." "$DIST/agot/"
-cp "$ROOT/agot/descriptor.mod" "$DIST/agot/descriptor.mod"
-strip_markers "$DIST/agot"
-ensure_bom "$DIST/agot"
-check_braces "$DIST/agot"
-
+echo "building dist/vanilla and dist/agot (parallel)..."
+build_vanilla & vpid=$!
+build_agot    & apid=$!
+wait "$vpid"
+wait "$apid"
 echo "done: dist/vanilla and dist/agot"

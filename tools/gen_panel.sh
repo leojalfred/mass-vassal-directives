@@ -43,6 +43,10 @@ QPRIORITIES=3         # nomad rule priorities to emit (max 3)
 # the vanilla files in place.
 TARGET="${TARGET:-vanilla}"
 OUTDIR="${OUTDIR:-.}"
+# -v / --verbose (or VERBOSE=1) narrates each phase to stderr.
+VERBOSE="${VERBOSE:-}"
+for _a in "$@"; do case $_a in -v|--verbose) VERBOSE=1 ;; esac; done
+vlog() { [ -n "$VERBOSE" ] && echo ">> gen_panel[$TARGET]: $*" >&2 || true; }
 
 ### Look.
 DD_INSET=3            # px an open dropdown list is narrower than its button,
@@ -337,8 +341,11 @@ emit_dd_row() { local depth=$1 node=$2 id=$3 setter=$4 label=$5 vis=${6:-} tt=${
 	p "size = { -1 30 }"
 	[ -n "$vis" ] && p "visible = \"[$vis]\""
 	[ -n "$tt" ] && p "tooltip = \"$tt\""
-	p "onclick = \"$(sgui "leo_mvd_focus_${node}")\""
-	p "onclick = \"$(sgui "$setter")\""
+	# sgui() inlined here on purpose: this is the hot path - one row per directive,
+	# condition and threshold option, several thousand in all - and a command
+	# substitution per call forks a subshell, which dominates run time on git-bash.
+	p "onclick = \"[GetScriptedGui('leo_mvd_focus_${node}').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]\""
+	p "onclick = \"[GetScriptedGui('$setter').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]\""
 	p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]\""
 	p "text = \"$label\""
 	ind "$depth"; p "}"
@@ -388,7 +395,10 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "spacing = 2"
 	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")"
 	for d in $CUR_DIRS; do
-		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d" "$(dir_dlc_vis "$d")"
+		# dir_dlc_vis() inlined (hot loop): the administrative directives need Roads
+		# to Power.
+		local dv=; case $d in 3|4|5) dv="HasDlcFeature( 'roads_to_power' )" ;; esac
+		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d" "$dv"
 	done
 	emit_dd_end $((depth+1)) "${node}_dir"
 	ind "$depth"; p "}"
@@ -405,7 +415,21 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "spacing = 2"
 	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
 	for c in $CUR_CONDS; do
-		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$(vis_and "$(cond_row_visible "$c" "$parent_cond")" "$(cond_dlc_vis "$c")")" "$(cond_tt "$c")"
+		# cond_row_visible + cond_dlc_vis + vis_and + cond_tt inlined (hot loop). A
+		# boolean condition the parent already settled is hidden; the measured ones
+		# (>= 9) are kept, so a band can be carved out. Condition 6 needs Roads to
+		# Power. Condition 9 carries the Military Strength tooltip.
+		local crv=
+		if [ -n "$parent_cond" ] && [ "$c" -lt 9 ]; then
+			crv="Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('$parent_cond').GetValue, '(CFixedPoint)$c' ) )"
+		fi
+		local cdv=; [ "$c" = 6 ] && cdv="HasDlcFeature( 'roads_to_power' )"
+		local cv
+		if [ -n "$crv" ] && [ -n "$cdv" ]; then cv="And( $crv, $cdv )"
+		elif [ -n "$crv" ]; then cv=$crv
+		else cv=$cdv; fi
+		local ctt=; [ "$c" = 9 ] && ctt="leo_mvd_ui_cond_9_tt"
+		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$cv" "$ctt"
 	done
 	emit_dd_end $((depth+1)) "${node}_cond"
 
@@ -423,7 +447,8 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	emit_dd_start $((depth+2)) "${node}_t" "$(thresh_label_dyn "leo_mvd_${node}_cond" "leo_mvd_${node}_thresh")"
 	for c in $NUMERIC_CONDS; do
 		for t in $(cond_thresh "$c"); do
-			emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_t" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}" "$(veq "leo_mvd_${node}_cond" "$c")"
+			# veq() inlined (hot loop): show a value only under its own condition.
+			emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_t" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}" "EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_${node}_cond').GetValue, '(CFixedPoint)$c' )"
 		done
 	done
 	emit_dd_end $((depth+2)) "${node}_t"
@@ -1100,8 +1125,11 @@ emit_to() {
 	mv "$tmp" "$dest"
 }
 
+vlog "panel -> $OUTDIR/gui/leo_mvd_panel.gui"
 emit_to emit_panel "$OUTDIR/gui/leo_mvd_panel.gui"
+vlog "scripted GUIs -> $OUTDIR/common/scripted_guis/leo_mvd_edit.txt"
 emit_to emit_sguis "$OUTDIR/common/scripted_guis/leo_mvd_edit.txt"
+vlog "localization -> $OUTDIR/localization/english/leo_mvd_ui_l_english.yml"
 emit_to emit_loc   "$OUTDIR/localization/english/leo_mvd_ui_l_english.yml"
 
 echo "Generated $PRIORITIES priority editor(s) [target=$TARGET]:"
