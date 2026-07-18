@@ -87,7 +87,7 @@ bash tools/build.sh            # build + BOM- and brace-check both mods
 # content only exists in dist/agot, so check there for it.
 ```
 
-Have the user test **both** where a change can affect both: load `dist/vanilla` on plain CK3 and `dist/agot` on a playset with A Game of Thrones (loaded in either order — the mod overrides no AGOT file, so load order no longer matters), each with `-debug_mode`, and watch `logs/error.log` for `leo_mvd`. A clean vanilla `error.log` is a hard gate: nothing AGOT-only may leak into `dist/vanilla`. `reload gui` refreshes the panel live; structural changes may need a restart.
+Have the user test **both** where a change can affect both: load `dist/vanilla` on plain CK3 and `dist/agot` on a playset with A Game of Thrones, **loaded after AGOT** (the mod overrides no AGOT *file*, but its by-name `vassal_directive_icon`/`vassal_directive_text` override for the exempt dimming has to win over AGOT's own definitions of those two, so it must load last; loaded before AGOT everything works except the dimming), each with `-debug_mode`, and watch `logs/error.log` for `leo_mvd`. A clean vanilla `error.log` is a hard gate: nothing AGOT-only may leak into `dist/vanilla`. `reload gui` refreshes the panel live; structural changes may need a restart.
 
 **Things static checks cannot catch, so ask for them to be tested:** anything reached only by a macro-built name; a loc key built at runtime; whether a directive thrashes month to month (assign, advance, confirm it stays).
 

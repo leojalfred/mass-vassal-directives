@@ -24,7 +24,7 @@ Placeholders to fill in:
 
 Stop clicking through every vassal one by one. Write the rules once, and let the mod hand out the directives. This is the [b]A Game of Thrones[/b] build: same automation, adapted for Westeros.
 
-[b]This is the version to use with A Game of Thrones.[/b] For plain Crusader Kings III, use the base-game version instead. Load the two in either order; this mod overrides none of AGOT's files.
+[b]This is the version to use with A Game of Thrones.[/b] For plain Crusader Kings III, use the base-game version instead. Load this mod after A Game of Thrones in your playset (see the fine print on why).
 
 [img]SCREENSHOT_1_URL[/img]
 
@@ -95,7 +95,7 @@ Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds C
 
 [list]
 [*][b]Nothing about eligibility changes.[/b] The mod calls the game's own rules and mirrors the Give Vassal Directive interaction exactly. It only ever does what you could do by hand.
-[*][b]Load order does not matter.[/b] This mod overrides none of AGOT's files, so it works with A Game of Thrones loaded before or after it.
+[*][b]Load this mod after A Game of Thrones[/b] (below it in your playset), so an exempt vassal's directive icon still shows dimmed. That icon is drawn by a text function A Game of Thrones also defines, so whichever mod loads last wins. Loaded before AGOT, everything else still works; only the dimming is lost.
 [*][b]DLC[/b]: none required. The Free City directives come from Roads to Power, which A Game of Thrones uses for its administrative realms; without it the panel quietly hides them.
 [*][b]Achievements still work.[/b] Since 1.9, mods do not disable them.
 [*][b]Safe to add to an existing save[/b], and safe to remove from one.
