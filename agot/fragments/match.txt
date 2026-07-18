@@ -1,0 +1,4 @@
+		AND = {
+			var:leo_mvd_managed = 14
+			has_character_flag = vassal_directive_settle_wilderness
+		}

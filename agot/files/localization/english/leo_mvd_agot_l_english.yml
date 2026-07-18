@@ -1,0 +1,5 @@
+l_english:
+ # Exempt (grayed) display keys for AGOT's settle_wilderness directive; the
+ # colored display uses AGOT's own settle_wilderness_icon / settlement_focus_text.
+ leo_mvd_x_settle_wilderness_icon: "@leo_mvd_gray_settle_wilderness!"
+ leo_mvd_x_settle_wilderness_text: "[directive|E]: Settle wilderness counties$leo_mvd_exempt_suffix$"

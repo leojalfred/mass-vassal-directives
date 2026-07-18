@@ -108,17 +108,6 @@ leo_mvd_gate_building_focus_trigger = {
 	NOT = { government_has_flag = government_is_nomadic }
 }
 
-# Current scope: vassal. settle_wilderness - an addition from A Game of Thrones,
-# available under every government (its send_option gate is empty). It only means
-# anything with AGOT loaded, so the mod offers it there and nowhere else: without
-# AGOT the flag could be set but nothing would read it, and the panel never
-# presents the directive. Base eligibility - a landed AI vassal of at least
-# county tier, not a herder - is already required before any directive is tried,
-# so nothing more is needed here.
-leo_mvd_gate_settle_wilderness_trigger = {
-	has_global_variable = AGOT_is_loaded
-}
-
 ### Nomad directives.
 #
 # The four directives only nomads can be given. Every directive above requires
@@ -344,9 +333,6 @@ leo_mvd_managed_matches_trigger = {
 			var:leo_mvd_managed = 13
 			has_character_flag = vassal_directive_raid_herd_intent
 		}
-		AND = {
-			var:leo_mvd_managed = 14
-			has_character_flag = vassal_directive_settle_wilderness
-		}
+		# @AGOT:match@
 	}
 }

@@ -1,0 +1,16 @@
+	# Settle Wilderness (AGOT), matched ahead of the no-directive fallback. The
+	# colored entry uses AGOT's own settlement_focus_text; the exempt twin uses the
+	# mod's matching text.
+	text = {
+		localization_key = leo_mvd_x_settle_wilderness_text
+		trigger = {
+			has_variable = leo_mvd_exempt
+			has_character_flag = vassal_directive_settle_wilderness
+		}
+	}
+	text = {
+		localization_key = settlement_focus_text
+		trigger = {
+			has_character_flag = vassal_directive_settle_wilderness
+		}
+	}

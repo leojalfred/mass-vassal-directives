@@ -1,0 +1,26 @@
+### Leo VI's Mass Vassal Directives - A Game of Thrones directive icons
+###
+### Built only into the AGOT mod, so these reference AGOT's own wilderness
+### texture directly (gfx/interface/icons/icon_holding_wilderness.dds).
+
+# Inline (20x20) for the panel dropdown.
+texticon = {
+	icon = leo_mvd_dir_icon_settle_wilderness
+	iconsize = {
+		texture = "gfx/interface/icons/icon_holding_wilderness.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+# Grayed (35x35) for an exempt vassal's dimmed directive marker in the Subjects tab.
+texticon = {
+	icon = leo_mvd_gray_settle_wilderness
+	iconsize = {
+		texture = "gfx/interface/icons/icon_holding_wilderness.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}

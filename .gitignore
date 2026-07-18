@@ -1,0 +1,3 @@
+# Built mods (produced by tools/build.sh). The launcher and Workshop uploads
+# point at these; they are regenerated, never hand-edited.
+/dist/

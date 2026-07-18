@@ -1,0 +1,12 @@
+# Leo VI's Mass Vassal Directives - A Game of Thrones additions
+#
+# Built only into the AGOT mod (tools/build.sh), which depends on and runs with
+# A Game of Thrones, so triggers here may reference AGOT content freely.
+
+# Current scope: vassal. settle_wilderness is AGOT's own directive; its
+# send_option gate is empty (available under every government), and base
+# eligibility - a landed AI vassal of at least county tier, not a herder - is
+# already checked before any directive is tried. Nothing more to ask.
+leo_mvd_gate_settle_wilderness_trigger = {
+	always = yes
+}

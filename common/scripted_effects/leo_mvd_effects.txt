@@ -162,20 +162,4 @@ leo_mvd_init_defaults_effect = {
 		set_variable = { name = leo_mvd_stage_field value = 0 }
 		set_variable = { name = leo_mvd_stage_value value = 0 }
 	}
-
-	# Detect A Game of Thrones, so the panel can offer its one extra directive
-	# (settle_wilderness), read the administrative condition as "Free City", and
-	# hide the nomad section AGOT never populates. AGOT sets this global variable
-	# expressly for other mods to hook (its agot_on_game_start effect); without
-	# AGOT, has_global_variable reads false and refers to nothing AGOT defines, so
-	# a vanilla game stays clean. Mirrored onto the player because the panel reads
-	# player variables, not globals, and set every call so it tracks AGOT's
-	# presence rather than latching once.
-	if = {
-		limit = { has_global_variable = AGOT_is_loaded }
-		set_variable = { name = leo_mvd_agot value = 1 }
-	}
-	else = {
-		set_variable = { name = leo_mvd_agot value = 0 }
-	}
 }

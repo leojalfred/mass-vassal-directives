@@ -474,15 +474,6 @@ window = {
 													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 													text = "leo_mvd_ui_dir_9"
 												}
-												leo_mvd_button_dropdown = {
-													layoutpolicy_horizontal = expanding
-													size = { -1 30 }
-													visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-													onclick = "[GetScriptedGui('leo_mvd_focus_r1_n1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-													text = "leo_mvd_ui_dir_14"
-												}
 										}
 									}
 									
@@ -1081,15 +1072,6 @@ window = {
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
 													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r1_n2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
-													}
 											}
 										}
 										
@@ -1686,15 +1668,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r1_n4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -1853,15 +1826,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r1_n5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -2031,15 +1995,6 @@ window = {
 														onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
-													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r1_n3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
 													}
 											}
 										}
@@ -2637,15 +2592,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r1_n6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -2804,15 +2750,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r1_n7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -3032,15 +2969,6 @@ window = {
 													onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 													text = "leo_mvd_ui_dir_9"
-												}
-												leo_mvd_button_dropdown = {
-													layoutpolicy_horizontal = expanding
-													size = { -1 30 }
-													visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-													onclick = "[GetScriptedGui('leo_mvd_focus_r2_n1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-													text = "leo_mvd_ui_dir_14"
 												}
 										}
 									}
@@ -3640,15 +3568,6 @@ window = {
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
 													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r2_n2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
-													}
 											}
 										}
 										
@@ -4245,15 +4164,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r2_n4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -4412,15 +4322,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r2_n5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -4590,15 +4491,6 @@ window = {
 														onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
-													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r2_n3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
 													}
 											}
 										}
@@ -5196,15 +5088,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r2_n6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -5363,15 +5246,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r2_n7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -5591,15 +5465,6 @@ window = {
 													onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 													text = "leo_mvd_ui_dir_9"
-												}
-												leo_mvd_button_dropdown = {
-													layoutpolicy_horizontal = expanding
-													size = { -1 30 }
-													visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-													onclick = "[GetScriptedGui('leo_mvd_focus_r3_n1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-													text = "leo_mvd_ui_dir_14"
 												}
 										}
 									}
@@ -6199,15 +6064,6 @@ window = {
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
 													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r3_n2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
-													}
 											}
 										}
 										
@@ -6804,15 +6660,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r3_n4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -6971,15 +6818,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r3_n5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -7149,15 +6987,6 @@ window = {
 														onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
-													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r3_n3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
 													}
 											}
 										}
@@ -7755,15 +7584,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r3_n6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -7922,15 +7742,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r3_n7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -8150,15 +7961,6 @@ window = {
 													onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 													text = "leo_mvd_ui_dir_9"
-												}
-												leo_mvd_button_dropdown = {
-													layoutpolicy_horizontal = expanding
-													size = { -1 30 }
-													visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-													onclick = "[GetScriptedGui('leo_mvd_focus_r4_n1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-													text = "leo_mvd_ui_dir_14"
 												}
 										}
 									}
@@ -8758,15 +8560,6 @@ window = {
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
 													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r4_n2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
-													}
 											}
 										}
 										
@@ -9363,15 +9156,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r4_n4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -9530,15 +9314,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r4_n5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -9708,15 +9483,6 @@ window = {
 														onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
-													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r4_n3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
 													}
 											}
 										}
@@ -10314,15 +10080,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r4_n6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -10481,15 +10238,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r4_n7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -10709,15 +10457,6 @@ window = {
 													onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 													text = "leo_mvd_ui_dir_9"
-												}
-												leo_mvd_button_dropdown = {
-													layoutpolicy_horizontal = expanding
-													size = { -1 30 }
-													visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-													onclick = "[GetScriptedGui('leo_mvd_focus_r5_n1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-													text = "leo_mvd_ui_dir_14"
 												}
 										}
 									}
@@ -11317,15 +11056,6 @@ window = {
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
 													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r5_n2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
-													}
 											}
 										}
 										
@@ -11922,15 +11652,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r5_n4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -12089,15 +11810,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r5_n5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -12267,15 +11979,6 @@ window = {
 														onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
-													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r5_n3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
 													}
 											}
 										}
@@ -12873,15 +12576,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r5_n6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -13040,15 +12734,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r5_n7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -13268,15 +12953,6 @@ window = {
 													onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 													text = "leo_mvd_ui_dir_9"
-												}
-												leo_mvd_button_dropdown = {
-													layoutpolicy_horizontal = expanding
-													size = { -1 30 }
-													visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-													onclick = "[GetScriptedGui('leo_mvd_focus_r6_n1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-													onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-													text = "leo_mvd_ui_dir_14"
 												}
 										}
 									}
@@ -13876,15 +13552,6 @@ window = {
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
 													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r6_n2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
-													}
 											}
 										}
 										
@@ -14481,15 +14148,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r6_n4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -14648,15 +14306,6 @@ window = {
 															onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
-														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r6_n5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
 														}
 												}
 											}
@@ -14826,15 +14475,6 @@ window = {
 														onclick = "[GetScriptedGui('leo_mvd_set_dir_9').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 														text = "leo_mvd_ui_dir_9"
-													}
-													leo_mvd_button_dropdown = {
-														layoutpolicy_horizontal = expanding
-														size = { -1 30 }
-														visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-														onclick = "[GetScriptedGui('leo_mvd_focus_r6_n3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-														onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-														text = "leo_mvd_ui_dir_14"
 													}
 											}
 										}
@@ -15432,15 +15072,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r6_n6').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -15600,15 +15231,6 @@ window = {
 															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 															text = "leo_mvd_ui_dir_9"
 														}
-														leo_mvd_button_dropdown = {
-															layoutpolicy_horizontal = expanding
-															size = { -1 30 }
-															visible = "[EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' )]"
-															onclick = "[GetScriptedGui('leo_mvd_focus_r6_n7').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetScriptedGui('leo_mvd_set_dir_14').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-															onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-															text = "leo_mvd_ui_dir_14"
-														}
 												}
 											}
 											
@@ -15643,7 +15265,7 @@ window = {
 					
 					### The nomad waterfall.
 					text_label_left = {
-						visible = "[And( And( HasDlcFeature( 'khans_of_the_steppe' ), Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' ) ) ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)1' ) )]"
+						visible = "[And( HasDlcFeature( 'khans_of_the_steppe' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)1' ) )]"
 						layoutpolicy_horizontal = expanding
 						text = "leo_mvd_ui_heading_nomads"
 					}
@@ -15652,7 +15274,7 @@ window = {
 					### place reaches this far - for a built-in preset too, so its plan can
 					### be read rather than taken on trust.
 					vbox = {
-						visible = "[And( And( HasDlcFeature( 'khans_of_the_steppe' ), Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' ) ) ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_qrule_count').GetValue, '(CFixedPoint)1' ) )]"
+						visible = "[And( HasDlcFeature( 'khans_of_the_steppe' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_qrule_count').GetValue, '(CFixedPoint)1' ) )]"
 						layoutpolicy_horizontal = expanding
 						oncreate = "[BindFoldOutContext]"
 						oncreate = "[PdxGuiFoldOut.Unfold]"
@@ -17819,7 +17441,7 @@ window = {
 					### place reaches this far - for a built-in preset too, so its plan can
 					### be read rather than taken on trust.
 					vbox = {
-						visible = "[And( And( HasDlcFeature( 'khans_of_the_steppe' ), Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' ) ) ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_qrule_count').GetValue, '(CFixedPoint)2' ) )]"
+						visible = "[And( HasDlcFeature( 'khans_of_the_steppe' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_qrule_count').GetValue, '(CFixedPoint)2' ) )]"
 						layoutpolicy_horizontal = expanding
 						oncreate = "[BindFoldOutContext]"
 						oncreate = "[PdxGuiFoldOut.Unfold]"
@@ -19986,7 +19608,7 @@ window = {
 					### place reaches this far - for a built-in preset too, so its plan can
 					### be read rather than taken on trust.
 					vbox = {
-						visible = "[And( And( HasDlcFeature( 'khans_of_the_steppe' ), Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' ) ) ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_qrule_count').GetValue, '(CFixedPoint)3' ) )]"
+						visible = "[And( HasDlcFeature( 'khans_of_the_steppe' ), GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_qrule_count').GetValue, '(CFixedPoint)3' ) )]"
 						layoutpolicy_horizontal = expanding
 						oncreate = "[BindFoldOutContext]"
 						oncreate = "[PdxGuiFoldOut.Unfold]"
@@ -22139,7 +21761,7 @@ window = {
 					
 					### Start a nomad waterfall, when there is not one yet.
 					hbox = {
-						visible = "[And( And( HasDlcFeature( 'khans_of_the_steppe' ), Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_agot').GetValue, '(CFixedPoint)1' ) ) ), And( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)1' ), Not( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_qrule_count').GetValue, '(CFixedPoint)1' ) ) ) )]"
+						visible = "[And( HasDlcFeature( 'khans_of_the_steppe' ), And( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_rule_count').GetValue, '(CFixedPoint)1' ), Not( GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_qrule_count').GetValue, '(CFixedPoint)1' ) ) ) )]"
 						layoutpolicy_horizontal = expanding
 						margin = { 6 4 }
 						

@@ -572,10 +572,6 @@ leo_mvd_set_dir_9 = {
 	scope = character
 	effect = { leo_mvd_edit_effect = { FIELD = 4 VALUE = 9 } }
 }
-leo_mvd_set_dir_14 = {
-	scope = character
-	effect = { leo_mvd_edit_effect = { FIELD = 4 VALUE = 14 } }
-}
 leo_mvd_set_dir_10 = {
 	scope = character
 	effect = { leo_mvd_edit_effect = { FIELD = 4 VALUE = 10 } }

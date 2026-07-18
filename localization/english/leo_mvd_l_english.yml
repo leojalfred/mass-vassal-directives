@@ -84,7 +84,6 @@
  leo_mvd_x_explore_cultures_icon: "@leo_mvd_gray_explore_cultures_icon!"
  leo_mvd_x_raid_innovation_intent_icon: "@leo_mvd_gray_culture_icon!"
  leo_mvd_x_raid_herd_intent_icon: "@leo_mvd_gray_herd_icon!"
- leo_mvd_x_settle_wilderness_icon: "@leo_mvd_gray_settle_wilderness!"
  # text variants
  leo_mvd_x_no_directive_text: "$no_directive_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_refusing_directive_text: "$refusing_directive_text$$leo_mvd_exempt_suffix$"
@@ -101,7 +100,6 @@
  leo_mvd_x_explore_cultures_text: "$explore_cultures_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_culture_text: "$culture_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_herd_text: "$herd_text$$leo_mvd_exempt_suffix$"
- leo_mvd_x_settle_wilderness_text: "[directive|E]: Settle wilderness counties$leo_mvd_exempt_suffix$"
  # No text-and-icon override: an exempt vassal's text-and-icon display is left
  # as vanilla (the gray icon comes from the icon variant, and the exempt note
  # from the text variant), so the override file keeps vanilla's text_and_icon
