@@ -32,7 +32,7 @@
  leo_mvd_ui_preset_2: "왕국 통합"
  leo_mvd_ui_preset_2_tt: "왕국을 하나의 민족으로 만듭니다.\n\n#weak 1.#! 당신의 [faith|E]을(를) 따르면서 다른 신앙의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_1$을(를) 지시합니다.\n#weak 2.#! 당신의 [culture|E]을(를) 따르면서 다른 문화의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_2$을(를) 지시합니다.\n#weak 3.#! 여전히 이민족 [culture|E]의 백작령을 보유한 자는 $leo_mvd_ui_dir_6$에 힘씁니다.\n#weak 4.#! 남은 모든 봉신은 $leo_mvd_ui_dir_9$.\n\n#weak 성장을 희생하는 대신 개종과 발전보다 더 강하게 개종시킵니다.#!"
  leo_mvd_ui_preset_3: "전쟁 준비"
- leo_mvd_ui_preset_3_tt: "각 [vassal|E]의 무력에 맞춰 왕국을 무장시킵니다.\n\n강한 봉신은 자신의 정부가 가장 잘하는 것으로 기여합니다. 행정형은 $leo_mvd_ui_dir_5$, 나머지는 $leo_mvd_ui_dir_7$.\n어디서든 약한 봉신에게는 $leo_mvd_ui_dir_8$을(를) 지시합니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
+ leo_mvd_ui_preset_3_tt: "각 [vassal|E]의 무력에 맞춰 왕국을 무장시킵니다.\n\n강한 봉신은 자신의 정부가 가장 잘하는 것으로 기여합니다. [administrative|E]는 $leo_mvd_ui_dir_5$, 나머지는 $leo_mvd_ui_dir_7$.\n어디서든 약한 봉신에게는 $leo_mvd_ui_dir_8$을(를) 지시합니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
  leo_mvd_ui_preset_4: "경제 성장"
  leo_mvd_ui_preset_4_tt: "무엇보다 먼저 부를 쌓습니다.\n\n미개발 봉신에게는 $leo_mvd_ui_dir_3$을(를) 지시합니다.\n자리를 잡은 봉신은 $leo_mvd_ui_dir_9$(으)로 돌아섭니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
  leo_mvd_ui_preset_5: "커스텀"

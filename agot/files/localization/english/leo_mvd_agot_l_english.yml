@@ -5,9 +5,10 @@ l_english:
  leo_mvd_x_settle_wilderness_text: "[directive|E]: Settle wilderness counties$leo_mvd_exempt_suffix$"
 
  # AGOT-only presets (6, 7). Style follows the base presets: directive names are
- # $leo_mvd_ui_dir_N$ refs (so they track any rename and carry the inline icon),
- # and the _tt_nodlc variant swaps Improve Development for Construct Economic
- # Buildings where Roads to Power is absent.
+ # $leo_mvd_ui_dir_N$ refs (so they track any rename and carry the inline icon).
+ # Unlike the base presets these use no administrative directives (the Seven
+ # Kingdoms are feudal), so nothing changes with Roads to Power and the _tt and
+ # _tt_nodlc variants are identical.
  leo_mvd_ui_preset_6: "Master of the Seven Kingdoms"
  leo_mvd_ui_preset_6_tt: "Rule a mixed realm, each [vassal|E] to their place.\n\n[vassals|E] who share your [faith|E] $leo_mvd_ui_dir_1$; off-[faith|E] ones are left alone.\nThe Ironborn $leo_mvd_ui_dir_8$.\nInside the Seven Kingdoms [vassals|E] $leo_mvd_ui_dir_9$; on the frontier they $leo_mvd_ui_dir_7$."
  leo_mvd_ui_preset_6_tt_nodlc: "Rule a mixed realm, each [vassal|E] to their place.\n\n[vassals|E] who share your [faith|E] $leo_mvd_ui_dir_1$; off-[faith|E] ones are left alone.\nThe Ironborn $leo_mvd_ui_dir_8$.\nInside the Seven Kingdoms [vassals|E] $leo_mvd_ui_dir_9$; on the frontier they $leo_mvd_ui_dir_7$."

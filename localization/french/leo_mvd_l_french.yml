@@ -32,7 +32,7 @@
  leo_mvd_ui_preset_2: "Unifier le royaume"
  leo_mvd_ui_preset_2_tt: "Faites du royaume un seul peuple.\n\n#weak 1.#! Les vassaux de votre [faith|E] tenant des comtés d'une autre reçoivent l'ordre de $leo_mvd_ui_dir_1$.\n#weak 2.#! Les vassaux de votre [culture|E] tenant des comtés d'une autre reçoivent l'ordre de $leo_mvd_ui_dir_2$.\n#weak 3.#! Ceux qui tiennent encore des comtés de [culture|E] étrangère travaillent à $leo_mvd_ui_dir_6$.\n#weak 4.#! Tous les vassaux restants $leo_mvd_ui_dir_9$.\n\n#weak Convertit plus durement que Convertir et développer, au prix de la croissance.#!"
  leo_mvd_ui_preset_3: "Préparer la guerre"
- leo_mvd_ui_preset_3_tt: "Armez le royaume, chaque [vassal|E] selon sa force.\n\nLes vassaux forts apportent ce que leur gouvernement fait de mieux : les administratifs $leo_mvd_ui_dir_5$, les autres $leo_mvd_ui_dir_7$.\nLes vassaux faibles partout reçoivent l'ordre de $leo_mvd_ui_dir_8$.\n\n#weak Ignore entièrement la [faith|E] et la [culture|E].#!"
+ leo_mvd_ui_preset_3_tt: "Armez le royaume, chaque [vassal|E] selon sa force.\n\nLes vassaux forts apportent ce que leur gouvernement fait de mieux : les [administrative|E] $leo_mvd_ui_dir_5$, les autres $leo_mvd_ui_dir_7$.\nLes vassaux faibles partout reçoivent l'ordre de $leo_mvd_ui_dir_8$.\n\n#weak Ignore entièrement la [faith|E] et la [culture|E].#!"
  leo_mvd_ui_preset_4: "Développer l'économie"
  leo_mvd_ui_preset_4_tt: "Bâtir la richesse avant toute chose.\n\nLes vassaux peu développés reçoivent l'ordre de $leo_mvd_ui_dir_3$.\nLes vassaux établis se tournent vers $leo_mvd_ui_dir_9$.\n\n#weak Ignore entièrement la [faith|E] et la [culture|E].#!"
  leo_mvd_ui_preset_5: "Personnalisé"

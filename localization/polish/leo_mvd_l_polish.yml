@@ -32,7 +32,7 @@
  leo_mvd_ui_preset_2: "Zjednocz królestwo"
  leo_mvd_ui_preset_2_tt: "Uczyń z królestwa jeden lud.\n\n#weak 1.#! Wasale twojej [faith|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_1$.\n#weak 2.#! Wasale twojej [culture|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_2$.\n#weak 3.#! Ci, którzy wciąż dzierżą hrabstwa obcej [culture|E], pracują nad $leo_mvd_ui_dir_6$.\n#weak 4.#! Wszyscy pozostali wasale $leo_mvd_ui_dir_9$.\n\n#weak Nawraca zawzięciej niż Nawróć i rozwijaj, kosztem wzrostu.#!"
  leo_mvd_ui_preset_3: "Przygotuj się do wojny"
- leo_mvd_ui_preset_3_tt: "Uzbrój królestwo, każdego [vassal|E] wedle jego siły.\n\nSilni wasale wnoszą to, w czym ich rząd jest najlepszy: administracyjni $leo_mvd_ui_dir_5$, pozostali $leo_mvd_ui_dir_7$.\nSłabi wasale wszędzie otrzymują rozkaz: $leo_mvd_ui_dir_8$.\n\n#weak Całkowicie pomija [faith|E] i [culture|E].#!"
+ leo_mvd_ui_preset_3_tt: "Uzbrój królestwo, każdego [vassal|E] wedle jego siły.\n\nSilni wasale wnoszą to, w czym ich rząd jest najlepszy: [administrative|E] $leo_mvd_ui_dir_5$, pozostali $leo_mvd_ui_dir_7$.\nSłabi wasale wszędzie otrzymują rozkaz: $leo_mvd_ui_dir_8$.\n\n#weak Całkowicie pomija [faith|E] i [culture|E].#!"
  leo_mvd_ui_preset_4: "Rozwijaj gospodarkę"
  leo_mvd_ui_preset_4_tt: "Buduj bogactwo przed wszystkim innym.\n\nNierozwinięci wasale otrzymują rozkaz: $leo_mvd_ui_dir_3$.\nUstabilizowani wasale przechodzą do $leo_mvd_ui_dir_9$.\n\n#weak Całkowicie pomija [faith|E] i [culture|E].#!"
  leo_mvd_ui_preset_5: "Własny"

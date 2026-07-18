@@ -32,7 +32,7 @@
  leo_mvd_ui_preset_2: "Unificar el reino"
  leo_mvd_ui_preset_2_tt: "Haz del reino un solo pueblo.\n\n#weak 1.#! A los vasallos de tu [faith|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_1$.\n#weak 2.#! A los vasallos de tu [culture|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_2$.\n#weak 3.#! Los que aún posean condados de [culture|E] ajena trabajan en $leo_mvd_ui_dir_6$.\n#weak 4.#! Todos los vasallos restantes $leo_mvd_ui_dir_9$.\n\n#weak Convierte con más ahínco que Convertir y desarrollar, a costa del crecimiento.#!"
  leo_mvd_ui_preset_3: "Prepararse para la guerra"
- leo_mvd_ui_preset_3_tt: "Arma el reino, cada [vassal|E] según su fuerza.\n\nLos vasallos fuertes aportan lo que su gobierno hace mejor: los administrativos $leo_mvd_ui_dir_5$, el resto $leo_mvd_ui_dir_7$.\nA los vasallos débiles de todas partes se les ordena $leo_mvd_ui_dir_8$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
+ leo_mvd_ui_preset_3_tt: "Arma el reino, cada [vassal|E] según su fuerza.\n\nLos vasallos fuertes aportan lo que su gobierno hace mejor: los [administrative|E] $leo_mvd_ui_dir_5$, el resto $leo_mvd_ui_dir_7$.\nA los vasallos débiles de todas partes se les ordena $leo_mvd_ui_dir_8$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
  leo_mvd_ui_preset_4: "Hacer crecer la economía"
  leo_mvd_ui_preset_4_tt: "Amasa riqueza antes que nada.\n\nA los vasallos poco desarrollados se les ordena $leo_mvd_ui_dir_3$.\nLos vasallos establecidos se dedican a $leo_mvd_ui_dir_9$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
  leo_mvd_ui_preset_5: "Personalizado"

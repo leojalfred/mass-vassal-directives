@@ -4,7 +4,7 @@ A CK3 **1.19.x** mod that assigns vassal directives from a rule set the player w
 
 ## Hard rules
 
-- **Never touch anything outside this directory.** The game folder (`C:\Games\Steam\steamapps\common\Crusader Kings III`) is read-only reference. Never modify it.
+- **Never touch anything outside this directory.** The game folder (`C:\Games\Steam\steamapps\common\Crusader Kings III`) and the A Game of Thrones mod (`C:\Games\Steam\steamapps\workshop\content\1158310\2962333032`) are read-only reference. Never modify either.
 - **Directive eligibility must stay exactly vanilla.** The mod automates what a player could already do by hand — never more. If a change would let a rule reach a state vanilla forbids, it's wrong. There is exactly one deliberate deviation, documented at `leo_mvd_gate_raid_innovation_intent_trigger`.
 - **`README.md` must never mention AI or Claude.** Neither must anything else user-facing.
 - **Never reference implementation phases, sessions, or process in comments.** Comments are for someone who has only ever seen the code.
@@ -15,18 +15,36 @@ A CK3 **1.19.x** mod that assigns vassal directives from a rule set the player w
 `gui/leo_mvd_panel.gui` (~25k lines), `common/scripted_guis/leo_mvd_edit.txt` and `localization/english/leo_mvd_ui_l_english.yml` are **output**. Edit `tools/gen_panel.sh` and re-run it:
 
 ```
-bash tools/gen_panel.sh        # ~35s
+bash tools/gen_panel.sh        # ~20s, refreshes the repo-root (vanilla) files
 ```
 
-That includes layout tweaks — margins and the window skeleton live in the generator too. It builds to a temp dir, brace-checks, and only then moves files into place, so a failed run leaves the real ones alone.
+That includes layout tweaks — margins and the window skeleton live in the generator too. It builds to a temp dir, brace-checks, and only then moves files into place, so a failed run leaves the real ones alone. The generator is target-aware (`TARGET=vanilla|agot`, `OUTDIR=<dir>`); run bare like this it writes the vanilla files at the repo root, and `tools/build.sh` invokes it once per target (see below). After a generator change, run it bare to keep the committed repo-root files current, then run `build.sh` to produce and check both mods.
 
 Why generated: the editor is the same widgets repeated per node, differing only in the variable they bind to, and GUI cannot factor that out — `blockoverride` cannot parameterize a variable name inside a binding.
+
+## Two mods from one source
+
+The repo builds **two shippable mods** from shared source: `dist/vanilla/` (the base mod) and `dist/agot/` (the same, adapted for the A Game of Thrones total conversion). `dist/` is gitignored and holds **game files only** — no tools, docs, or dev files — so each subfolder is ready to point the launcher at and upload to the Workshop. The repo root is itself a directly-loadable vanilla dev copy.
+
+```
+bash tools/build.sh            # builds both mods in parallel; -v narrates
+```
+
+There is **no runtime AGOT detection**. Everything that differs is applied at build time:
+
+- **The panel** is regenerated in AGOT mode — the generator adds the `settle_wilderness` directive and the five Westeros conditions, drops the nomad section, and doubles the Military Strength ladder (all keyed on `TARGET=agot`).
+- **Small fragments** are injected at `# @AGOT:...@` markers in three base files (`leo_mvd_rules.txt`, `leo_mvd_triggers.txt`, `zz_leo_mvd_vassal_directive_loc.txt`): the directive's dispatch, its ownership match, the five condition branches, and two cust-loc entries. The vanilla build simply strips the markers.
+- **AGOT-only files** under `agot/files/` are copied in verbatim (its gate trigger, wilderness texticons, extra presets/sguis, the `leo_mvd_mil_baseline` override, and the translated overlay loc). `agot/descriptor.mod` replaces the base one.
+
+So AGOT changes live in exactly three places: the generator's `TARGET=agot` branches, `agot/fragments/*.txt` (injected), and `agot/files/**` (copied). Base files carry only the inert markers. **Adding AGOT content means editing one of those three, never adding a runtime `if AGOT` to a base file.** Eligibility stays exactly vanilla in both builds; the AGOT deltas only surface content AGOT itself allows (e.g. `settle_wilderness`, a feudal-safe directive).
 
 ## Localization
 
 The mod ships every language CK3 officially supports (english, french, german, spanish, russian, korean, simp_chinese, japanese, polish). English is the source of truth: `localization/english/leo_mvd_l_english.yml` is hand-written, `leo_mvd_ui_l_english.yml` is generated. The others live in `localization/<lang>/leo_mvd_l_<lang>.yml` and `leo_mvd_ui_l_<lang>.yml` and are **machine-generated, then hand-maintained** — the generator only ever writes the English UI file, so translations are never regenerated for you.
 
 **Whenever you change an English localization value, update every translated file to match** — same keys in the same order, the changed value re-translated. This applies to the static file *and* the generated UI file (its translations are hand-maintained too). Keep the CK3 markup identical across languages: concept links `[x|E]`, `$refs$`, `@icon!` tokens, `[recipient.GetX]` calls, `#weak`/`#V` … `#!` codes, and `\n` are never translated — only the prose between them. In user-facing text the translations are described as **machine-generated**, never "AI" (see Hard rules).
+
+AGOT-only loc lives in overlay files, `agot/files/localization/<lang>/leo_mvd_agot_l_<lang>.yml`, one per language, shipped only to `dist/agot`. English is split: the AGOT condition/directive/threshold labels come out of the generator (into the AGOT `leo_mvd_ui_l_english.yml`), while the exempt marker and the extra presets are hand-written in the English overlay. The **translated** overlays carry *both* sets — the generator only ever writes English, so every AGOT-specific key a non-English game needs must be hand-translated into its overlay (which is why the translated overlays hold more keys than the English one; repeating the generator's English keys there would just duplicate them). The build adds the BOM to every overlay loc file for you.
 
 ## Four limits that explain the whole design
 
@@ -54,26 +72,29 @@ Every odd-looking decision here follows from one of these. All confirmed, none g
 - **DLC-gated content** — if a condition or directive only exists with a DLC (administrative → `roads_to_power`, nomad → `khans_of_the_steppe`), add it to `cond_dlc_vis`/`dir_dlc_vis` so the panel hides it without that DLC, and branch any preset that uses it on `has_dlc_feature` so the preset loads an alternative (see `leo_mvd_preset_1/3/4_effect`). Use `roads_to_power`, **not** `admin_gov` — the latter does not track DLC ownership. The nomad section is gated as a block in `emit_waterfall`, so nomad directives need no per-row entry. Nothing here changes eligibility: the gated content already evaluates false without its DLC, so this is only to keep the panel and presets tidy.
 - **A preset** — a `leo_mvd_preset_N_effect` (rule data, not logic), an sgui, loc for its name and `_tt`, and the dropdown's range in `emit_panel`.
 - **More priorities** — raise `PRIORITIES` in the generator *and* extend `leo_mvd_write_field_effect`, the clear/backup/copy effects, and `leo_mvd_evaluate_vassal_effect`.
+- **AGOT-only content** (see "Two mods from one source") goes in exactly one of three places, never a runtime `if AGOT` in a base file: a `TARGET=agot` branch in the generator (something only the AGOT panel shows, e.g. a Westeros condition, `settle_wilderness`, the doubled Military Strength ladder), an injected `agot/fragments/*.txt` at a base file's `# @AGOT:...@` marker (script a base file needs a hook for, e.g. a directive's dispatch or a condition branch), or a self-contained `agot/files/**` file copied in (a gate trigger, texticon, preset, value override, or overlay loc). New markers must be added to `MARKER_FILES` in `build.sh`; new bracey or BOM-needing overlay files to `AGOT_CHECK`/`AGOT_BOMLESS`.
 
 ## Verifying
 
 There are no automated tests; the game is the test. Before handing back:
 
 ```
-bash tools/gen_panel.sh
-# BOM + braces on every file; then check that every scripted GUI, loc key,
+bash tools/gen_panel.sh        # refresh the repo-root (vanilla) files
+bash tools/build.sh            # build + BOM- and brace-check both mods
+# Then, in the relevant dist(s), check that every scripted GUI, loc key,
 # effect and trigger the panel names actually exists - including the keys
-# built at runtime by Concatenate, which nothing else will catch.
+# built at runtime by Concatenate, which nothing else will catch. AGOT-only
+# content only exists in dist/agot, so check there for it.
 ```
 
-Then have the user run it with `-debug_mode` and watch `logs/error.log` for `leo_mvd`. `reload gui` refreshes the panel live; structural changes may need a restart.
+Have the user test **both** where a change can affect both: load `dist/vanilla` on plain CK3 and `dist/agot` on a playset with A Game of Thrones (loaded in either order — the mod overrides no AGOT file, so load order no longer matters), each with `-debug_mode`, and watch `logs/error.log` for `leo_mvd`. A clean vanilla `error.log` is a hard gate: nothing AGOT-only may leak into `dist/vanilla`. `reload gui` refreshes the panel live; structural changes may need a restart.
 
 **Things static checks cannot catch, so ask for them to be tested:** anything reached only by a macro-built name; a loc key built at runtime; whether a directive thrashes month to month (assign, advance, confirm it stays).
 
 ## Conventions
 
 - Prefix everything `leo_mvd_`.
-- Directive codes 1-9 settled, 10-13 nomad, 0 = none. They appear in `leo_mvd_managed`, node `dir` variables, and loc key suffixes. Keep them aligned.
+- Directive codes 1-9 settled, 10-13 nomad, 14 AGOT `settle_wilderness`, 0 = none. They appear in `leo_mvd_managed`, node `dir` variables, and loc key suffixes. Keep them aligned. Condition codes 15-19 are the AGOT Westeros conditions (added only in the `TARGET=agot` generator branch).
 - Scripted GUIs: `is_shown` = checked/selected state, `is_valid` = enabled, `effect` = onclick. Controls that read their own state from a variable need no entry at all.
 - Comments say **why**, not what. The what is readable; the why is usually "the script language wouldn't let me do the obvious thing".
 - **Text style.** Anything user-facing (game loc, `README.md`, the Workshop description) uses American spelling (recognize, gray, behavior, color, not recognise/grey/behaviour/colour) and no em-dash or spaced-hyphen separators between clauses. End the sentence and start a new one, or use a colon, parentheses, or a comma where that reads better. Genuine compound hyphens stay (quality-of-life, off-faith, duchy-tier). Hold comments and identifiers to the same spelling so the codebase stays consistent (`leo_mvd_gray_*`, not `grey`).

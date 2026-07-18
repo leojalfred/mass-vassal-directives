@@ -32,7 +32,7 @@
  leo_mvd_ui_preset_2: "王国の統一"
  leo_mvd_ui_preset_2_tt: "王国を一つの民にします。\n\n#weak 1.#! あなたの[faith|E]で他の信仰の県を持つ臣下には $leo_mvd_ui_dir_1$ を命じます。\n#weak 2.#! あなたの[culture|E]で他の文化の県を持つ臣下には $leo_mvd_ui_dir_2$ を命じます。\n#weak 3.#! なお他文化の[culture|E]の県を持つ者は $leo_mvd_ui_dir_6$ に取り組みます。\n#weak 4.#! 残ったすべての臣下は $leo_mvd_ui_dir_9$。\n\n#weak 改宗と発展より強く改宗させますが、発展を犠牲にします。#!"
  leo_mvd_ui_preset_3: "戦への備え"
- leo_mvd_ui_preset_3_tt: "王国を武装させ、各[vassal|E]をその強さに応じて働かせます。\n\n強い臣下は自らの政体が最も得意とすることに貢献します。統治型の者は $leo_mvd_ui_dir_5$、その他は $leo_mvd_ui_dir_7$。\nどこであれ弱い臣下には $leo_mvd_ui_dir_8$ を命じます。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
+ leo_mvd_ui_preset_3_tt: "王国を武装させ、各[vassal|E]をその強さに応じて働かせます。\n\n強い臣下は自らの政体が最も得意とすることに貢献します。[administrative|E]の者は $leo_mvd_ui_dir_5$、その他は $leo_mvd_ui_dir_7$。\nどこであれ弱い臣下には $leo_mvd_ui_dir_8$ を命じます。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
  leo_mvd_ui_preset_4: "経済の成長"
  leo_mvd_ui_preset_4_tt: "何よりもまず富を築きます。\n\n未発展の臣下には $leo_mvd_ui_dir_3$ を命じます。\n発展した臣下は $leo_mvd_ui_dir_9$ に転じます。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
  leo_mvd_ui_preset_5: "カスタム"

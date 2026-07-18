@@ -32,7 +32,7 @@
  leo_mvd_ui_preset_2: "统一王国"
  leo_mvd_ui_preset_2_tt: "让王国成为一个民族。\n\n#weak 1.#! 与你同[faith|E]、却持有他信仰领地的封臣，被要求$leo_mvd_ui_dir_1$。\n#weak 2.#! 与你同[culture|E]、却持有他文化领地的封臣，被要求$leo_mvd_ui_dir_2$。\n#weak 3.#! 仍持有外[culture|E]领地者，致力于$leo_mvd_ui_dir_6$。\n#weak 4.#! 所有剩下的封臣$leo_mvd_ui_dir_9$。\n\n#weak 比皈依与发展的转化力度更强，代价是牺牲发展。#!"
  leo_mvd_ui_preset_3: "备战"
- leo_mvd_ui_preset_3_tt: "武装王国，各[vassal|E]依其所长。\n\n强大的封臣贡献其政体最擅长之事：行政政体者$leo_mvd_ui_dir_5$，其余$leo_mvd_ui_dir_7$。\n各地的弱小封臣被要求$leo_mvd_ui_dir_8$。\n\n#weak 完全不考虑[faith|E]与[culture|E]。#!"
+ leo_mvd_ui_preset_3_tt: "武装王国，各[vassal|E]依其所长。\n\n强大的封臣贡献其政体最擅长之事：[administrative|E]者$leo_mvd_ui_dir_5$，其余$leo_mvd_ui_dir_7$。\n各地的弱小封臣被要求$leo_mvd_ui_dir_8$。\n\n#weak 完全不考虑[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_4: "发展经济"
  leo_mvd_ui_preset_4_tt: "凡事以积累财富为先。\n\n欠发达的封臣被要求$leo_mvd_ui_dir_3$。\n已发达的封臣转向$leo_mvd_ui_dir_9$。\n\n#weak 完全不考虑[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_5: "自定义"

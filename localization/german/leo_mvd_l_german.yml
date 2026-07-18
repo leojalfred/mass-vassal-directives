@@ -32,7 +32,7 @@
  leo_mvd_ui_preset_2: "Das Reich einen"
  leo_mvd_ui_preset_2_tt: "Mache das Reich zu einem Volk.\n\n#weak 1.#! Vasallen deines [faith|E], die Grafschaften eines anderen halten, sollen $leo_mvd_ui_dir_1$.\n#weak 2.#! Vasallen deiner [culture|E], die Grafschaften einer anderen halten, sollen $leo_mvd_ui_dir_2$.\n#weak 3.#! Wer noch Grafschaften fremder [culture|E] hält, soll $leo_mvd_ui_dir_6$.\n#weak 4.#! Alle verbleibenden Vasallen sollen $leo_mvd_ui_dir_9$.\n\n#weak Bekehrt stärker als Bekehren und entwickeln, auf Kosten des Wachstums.#!"
  leo_mvd_ui_preset_3: "Für den Krieg rüsten"
- leo_mvd_ui_preset_3_tt: "Rüste das Reich, jeden [vassal|E] nach seiner Stärke.\n\nStarke Vasallen tragen bei, was ihre Regierungsform am besten kann: administrative sollen $leo_mvd_ui_dir_5$, die Übrigen $leo_mvd_ui_dir_7$.\nSchwache Vasallen überall sollen $leo_mvd_ui_dir_8$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
+ leo_mvd_ui_preset_3_tt: "Rüste das Reich, jeden [vassal|E] nach seiner Stärke.\n\nStarke Vasallen tragen bei, was ihre Regierungsform am besten kann: [administrative|E] sollen $leo_mvd_ui_dir_5$, die Übrigen $leo_mvd_ui_dir_7$.\nSchwache Vasallen überall sollen $leo_mvd_ui_dir_8$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
  leo_mvd_ui_preset_4: "Die Wirtschaft ausbauen"
  leo_mvd_ui_preset_4_tt: "Schaffe Wohlstand vor allem anderen.\n\nUnentwickelte Vasallen sollen $leo_mvd_ui_dir_3$.\nEtablierte Vasallen sollen $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
  leo_mvd_ui_preset_5: "Benutzerdefiniert"
