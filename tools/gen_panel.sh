@@ -49,7 +49,7 @@ DD_INSET=3            # px an open dropdown list is narrower than its button,
 # the next one, and it overflows a 30px dropdown row. So these name the
 # directive themselves and reach for the inline-sized icons in
 # gui/leo_mvd_texticons.gui instead. Wording follows vanilla's.
-DIRS="1 2 3 4 5 6 7 8 9"
+DIRS="1 2 3 4 5 6 7 8 9 14"
 # Only nomads can be given these four, and they can be given nothing else.
 NOMAD_DIRS="10 11 12 13"
 # Every directive there is. A setter and a label are needed for each, whichever
@@ -61,6 +61,7 @@ dir_icon() { case $1 in
 	5) echo build_maa ;;                    6) echo improve_cultural_acceptance ;;
 	7) echo building_focus_fortification ;; 8) echo building_focus_military ;;
 	9) echo building_focus_economy ;;
+	14) echo settle_wilderness ;;
 	10) echo manage_fertility ;;             11) echo explore_cultures ;;
 	12) echo raid_innovation_intent ;;      13) echo raid_herd_intent ;;
 esac; }
@@ -74,6 +75,7 @@ dir_name() { case $1 in
 	7) echo "Construct [fortification_buildings|E]" ;;
 	8) echo "Construct [military_buildings|E]" ;;
 	9) echo "Construct [economic_buildings|E]" ;;
+	14) echo "Settle Wilderness" ;;
 	10) echo "Increase [county_fertility|E]" ;;
 	11) echo "Explore [cultures|E]" ;;
 	12) echo "Set [raid_intent|E] to [innovations|E]" ;;
@@ -182,6 +184,16 @@ vis_and() { local out=; for e in "$@"; do [ -z "$e" ] && continue
 # whole section is gated as a block, so they need nothing here.
 dir_dlc_vis()  { case $1 in 3|4|5) vdlc roads_to_power ;; esac; }
 cond_dlc_vis() { case $1 in 6)     vdlc roads_to_power ;; esac; }
+
+# A GUI bool: is A Game of Thrones loaded? leo_mvd_init_defaults_effect mirrors
+# AGOT's AGOT_is_loaded global (which AGOT sets for other mods to hook) onto the
+# player as leo_mvd_agot. Nothing here references anything AGOT defines, so a
+# vanilla game stays clean. Gates the one AGOT-only directive and, negated, hides
+# the nomad section AGOT never populates.
+agot_vis() { veq leo_mvd_agot 1; }
+# The AGOT gate a directive needs, if any. settle_wilderness (14) is AGOT's own
+# addition, available under every government there and meaningless without it.
+dir_agot_vis() { case $1 in 14) agot_vis ;; esac; }
 
 # Explanatory tooltip for a condition option, if it needs one. Only Military
 # Strength does: its threshold is a duchy-tier baseline scaled by the vassal's
@@ -374,7 +386,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "spacing = 2"
 	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")"
 	for d in $CUR_DIRS; do
-		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d" "$(dir_dlc_vis "$d")"
+		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d" "$(vis_and "$(dir_dlc_vis "$d")" "$(dir_agot_vis "$d")")"
 	done
 	emit_dd_end $((depth+1)) "${node}_dir"
 	ind "$depth"; p "}"
@@ -461,7 +473,10 @@ emit_waterfall() {
 	# Hides the whole nomad section without Khans of the Steppe: no vassal is a
 	# nomad without it, so these rules could never fire. Empty for the main
 	# waterfall, so vis_and leaves its shared bindings untouched.
-	local dlc=; [ "$which" = nomad ] && dlc=$(vdlc khans_of_the_steppe)
+	# The nomad section needs Khans of the Steppe, and is hidden under A Game of
+	# Thrones, which defines nomad governments but never places them on its map -
+	# so a nomad rule there could only ever sit unused.
+	local dlc=; [ "$which" = nomad ] && dlc=$(vis_and "$(vdlc khans_of_the_steppe)" "Not( $(agot_vis) )")
 	# Both waterfalls label their rows "Priority N", so they share one set of loc
 	# keys (emit_loc covers the larger count). The nomad heading is what sets the
 	# section apart, not the row labels.
@@ -1055,7 +1070,18 @@ emit_loc() {
 	echo
 	echo " leo_mvd_ui_cond_0: \"#weak Choose a Condition#!\""
 	for c in $CONDS; do
-		echo " leo_mvd_ui_cond_${c}: \"$(cond_name "$c")\""
+		if [ "$c" = 6 ]; then
+			# Administrative government is the Free Cities under A Game of Thrones, and
+			# reads wrong there under its base-game name. Switch the label on the AGOT
+			# flag the init effect mirrors onto the player, so both the option row and
+			# the dropdown's own runtime-built label follow suit. Only AGOT swaps in
+			# plain "Free City"; everywhere else keeps the concept-linked base text.
+			echo " leo_mvd_ui_cond_6: \"[SelectLocalization( $(veq leo_mvd_agot 1), 'leo_mvd_ui_cond_6_agot', 'leo_mvd_ui_cond_6_base' )]\""
+			echo " leo_mvd_ui_cond_6_base: \"$(cond_name 6)\""
+			echo " leo_mvd_ui_cond_6_agot: \"Free City\""
+		else
+			echo " leo_mvd_ui_cond_${c}: \"$(cond_name "$c")\""
+		fi
 	done
 	echo
 	for c in $NUMERIC_CONDS; do

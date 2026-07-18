@@ -125,6 +125,18 @@ texticon = {
 		color = "color_gray"
 	}
 }
+# Grayed Settle Wilderness (AGOT), for an exempt vassal holding that directive.
+# A base-game settlement icon, so a vanilla game loads clean.
+texticon = {
+	icon = leo_mvd_gray_settle_wilderness
+	iconsize = {
+		texture = "gfx/interface/icons/icon_holding_city.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
 
 # Nomad / herder intent icons (25x25).
 texticon = {
@@ -257,6 +269,18 @@ texticon = {
 	icon = leo_mvd_dir_icon_building_focus_economy
 	iconsize = {
 		texture = "gfx/interface/icons/vassal_directives/construct_economic_buildings.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+# Settle Wilderness is an A Game of Thrones directive with no vanilla icon; a
+# settlement icon stands in. The texture is a base-game one, so a vanilla game
+# loads clean - the directive is only ever offered with AGOT present anyway.
+texticon = {
+	icon = leo_mvd_dir_icon_settle_wilderness
+	iconsize = {
+		texture = "gfx/interface/icons/icon_holding_city.dds"
 		size = { 20 20 }
 		offset = { 0 4 }
 		fontsize = 16

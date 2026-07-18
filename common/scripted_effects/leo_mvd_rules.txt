@@ -151,6 +151,13 @@ leo_mvd_try_assign_effect = {
 			}
 			leo_mvd_assign_effect = { DIRECTIVE = raid_herd_intent CODE = 13 }
 		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 14
+				leo_mvd_gate_settle_wilderness_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = settle_wilderness CODE = 14 }
+		}
 	}
 }
 

@@ -17,6 +17,24 @@
 vassal_directive_icon = {
 	type = character
 
+	# Settle Wilderness (an A Game of Thrones directive) is matched here, ahead of
+	# the no-directive fallback below, so that fallback's NOR need not name it.
+	# Under vanilla no vassal holds the flag, so these never fire. The colored key
+	# is AGOT's own; the grayed exempt key is the mod's, on a base-game texture.
+	text = {
+		localization_key = leo_mvd_x_settle_wilderness_icon
+		trigger = {
+			has_variable = leo_mvd_exempt
+			has_character_flag = vassal_directive_settle_wilderness
+		}
+	}
+	text = {
+		localization_key = settle_wilderness_icon
+		trigger = {
+			has_character_flag = vassal_directive_settle_wilderness
+		}
+	}
+
 	text = {
 		localization_key = leo_mvd_x_no_directive_icon
 		trigger = {
@@ -307,6 +325,23 @@ vassal_directive_icon = {
 
 vassal_directive_text = {
 	type = character
+
+	# Settle Wilderness (AGOT), matched ahead of the no-directive fallback below.
+	# The colored key is AGOT's own; the grayed exempt key is the mod's, written
+	# to avoid referencing an AGOT-only string so a vanilla game loads clean.
+	text = {
+		localization_key = leo_mvd_x_settle_wilderness_text
+		trigger = {
+			has_variable = leo_mvd_exempt
+			has_character_flag = vassal_directive_settle_wilderness
+		}
+	}
+	text = {
+		localization_key = settlement_focus_text
+		trigger = {
+			has_character_flag = vassal_directive_settle_wilderness
+		}
+	}
 
 	text = {
 		localization_key = leo_mvd_x_no_directive_text
