@@ -22,11 +22,3 @@
 		limit = { scope:leo_mvd_cond_id = 18 }
 		has_religion = religion:the_rhllor_religion
 	}
-	# 19 - Holds Land in the Seven Kingdoms (a Greenlander, vs Essosi/beyond the
-	# Wall). ?= guards the unlanded, who have no capital_county.
-	trigger_else_if = {
-		limit = { scope:leo_mvd_cond_id = 19 }
-		capital_county.title_province ?= {
-			geographical_region = world_westeros_seven_kingdoms
-		}
-	}

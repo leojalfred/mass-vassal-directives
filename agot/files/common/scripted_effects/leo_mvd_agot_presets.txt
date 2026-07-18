@@ -1,22 +1,20 @@
 # Leo VI's Mass Vassal Directives - A Game of Thrones presets
 #
 # Built only into the AGOT mod. Two Westeros-flavored built-ins that lean on the
-# AGOT-only conditions (Ironborn, Holds Land in the Seven Kingdoms) and, for the
-# frontier one, the settle_wilderness directive. They are rule data like the base
-# presets, loaded through the same leo_mvd_select_preset_effect path.
+# AGOT-only Ironborn condition and, for the second, the settle_wilderness
+# directive. They are rule data like the base presets, loaded through the same
+# leo_mvd_select_preset_effect path.
 #
 # Note on directives: the Seven Kingdoms are feudal, and Improve Development /
 # Train Commanders / Build Men-at-Arms are administrative-government only (the
-# Free Cities). So the "grow the core" step here is Construct Economic Buildings,
-# which feudal vassals can do - not Improve Development, which they would fail
-# and fall through. That also means these presets do not branch on Roads to
-# Power: none of the directives they use are administrative.
+# Free Cities). So these presets use only directives feudal vassals can act on,
+# and none of them are administrative, so they do not branch on Roads to Power.
 #
 # Node shape per priority: n1 root, n2 its TRUE branch, n3 its FALSE branch.
 
-# Current scope: the player. A mixed Westerosi realm, each vassal to their place:
-# convert your own faith, arm the ironborn, grow the settled kingdoms and fortify
-# the frontier.
+# Current scope: the player. Rule a mixed Westerosi realm, each vassal to their
+# place: convert your own faith, arm the ironborn, and set the rest to building
+# by their strength.
 leo_mvd_preset_6_effect = {
 	leo_mvd_clear_rules_effect = yes
 	set_variable = { name = leo_mvd_rule_count value = 3 }
@@ -29,31 +27,34 @@ leo_mvd_preset_6_effect = {
 	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 15 THRESH = 0 }
 	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 8 }
 
-	# 3: the settled Seven Kingdoms build up their holdings (economy, since they
-	# are feudal); the frontier fortifies.
-	leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 19 THRESH = 0 }
+	# 3: the rest build by their strength - the strong grow their economy, the
+	# weak fortify. Economy, not Improve Development, since feudal vassals can
+	# do it; the baseline is the AGOT-scaled leo_mvd_mil_baseline (2000).
+	leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = leo_mvd_mil_baseline }
 	leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 9 }
 	leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 7 }
 
 	set_variable = { name = leo_mvd_preset value = 6 }
 }
 
-# Current scope: the player. Grow the settled realm and push the borders outward:
-# convert your own faith, build up the Seven Kingdoms, and set frontier vassals
-# to settling the wilderness they hold.
+# Current scope: the player. Grow the realm and push its borders outward: convert
+# your own faith, arm the ironborn, and set everyone else to settling the
+# wilderness they hold.
 leo_mvd_preset_7_effect = {
 	leo_mvd_clear_rules_effect = yes
-	set_variable = { name = leo_mvd_rule_count value = 2 }
+	set_variable = { name = leo_mvd_rule_count value = 3 }
 
 	# 1: same-faith vassals spread the realm's faith.
 	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 1 THRESH = 0 }
 	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 1 }
 
-	# 2: the settled Seven Kingdoms build up their holdings (economy, feudal);
-	# frontier holdings settle the wilderness they hold - open to every government.
-	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 19 THRESH = 0 }
-	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 9 }
-	leo_mvd_set_node_dir_effect = { NODE = r2_n3 DIR = 14 }
+	# 2: the ironborn reave rather than settle - military buildings.
+	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 15 THRESH = 0 }
+	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 8 }
+
+	# 3: everyone else settles the wilderness they hold. Open to every
+	# government; those with no wilderness to settle simply take no action.
+	leo_mvd_set_node_dir_effect = { NODE = r3_n1 DIR = 14 }
 
 	set_variable = { name = leo_mvd_preset value = 7 }
 }

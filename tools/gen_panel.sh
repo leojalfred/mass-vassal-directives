@@ -100,9 +100,9 @@ esac; }
 
 # Condition codes. Must match leo_mvd_cond_holds_trigger.
 CONDS="1 2 3 4 5 6 7 8 9 10 11 12 13 14"
-# Westeros conditions (15-19: Ironborn, three faith blocs, Seven Kingdoms) are
-# boolean and AGOT-only; the AGOT build injects their evaluation branches.
-if [ "$TARGET" = agot ]; then CONDS="$CONDS 15 16 17 18 19"; fi
+# Westeros conditions (15-18: Ironborn and three faith blocs) are boolean and
+# AGOT-only; the AGOT build injects their evaluation branches.
+if [ "$TARGET" = agot ]; then CONDS="$CONDS 15 16 17 18"; fi
 
 # Preset dropdown order: None, the four built-ins, then (AGOT build) two Westeros
 # presets, then Custom. Custom stays index 5 - the engine keys on it - so the
@@ -131,7 +131,6 @@ cond_name() { case $1 in
 	16) echo "Follows the Faith of the Seven" ;;
 	17) echo "Follows the Old Gods" ;;
 	18) echo "Follows R'hllor" ;;
-	19) echo "Holds Land in the Seven Kingdoms" ;;
 esac; }
 
 # Thresholds, per numeric condition. All non-negative: a label key is built by
@@ -139,7 +138,7 @@ esac; }
 # worth the risk.
 NUMERIC_CONDS="9 10 11 12 13 14"
 # Whether a condition takes a threshold (is measured) rather than being a plain
-# yes/no. Not the same as "code >= 9": the AGOT conditions (15-19) are numbered
+# yes/no. Not the same as "code >= 9": the AGOT conditions (15-18) are numbered
 # above the numeric ones but are boolean.
 is_numeric() { case " $NUMERIC_CONDS " in *" $1 "*) return 0 ;; *) return 1 ;; esac; }
 cond_thresh() { case $1 in

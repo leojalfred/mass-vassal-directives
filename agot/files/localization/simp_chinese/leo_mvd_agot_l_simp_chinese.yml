@@ -10,16 +10,15 @@ l_simp_chinese:
  # Kingdoms are feudal), so nothing changes with Roads to Power and the _tt and
  # _tt_nodlc variants are identical.
  leo_mvd_ui_preset_6: "七大王国之主"
- leo_mvd_ui_preset_6_tt: "治理一个多元的王国，让各[vassal|E]各安其位。\n\n与你同[faith|E]的[vassals|E]$leo_mvd_ui_dir_1$；他[faith|E]者则不予干预。\n铁民$leo_mvd_ui_dir_8$。\n七大王国境内的[vassals|E]$leo_mvd_ui_dir_9$；边疆上的则$leo_mvd_ui_dir_7$。"
+ leo_mvd_ui_preset_6_tt: "治理一个多元的王国，让各[vassal|E]各安其位。\n\n与你同[faith|E]的[vassals|E]$leo_mvd_ui_dir_1$；他[faith|E]者则不予干预。\n铁民$leo_mvd_ui_dir_8$。\n强大的[vassals|E]$leo_mvd_ui_dir_9$；弱小的则$leo_mvd_ui_dir_7$。"
  leo_mvd_ui_preset_6_tt_nodlc: "$leo_mvd_ui_preset_6_tt$"
  leo_mvd_ui_preset_7: "开拓边疆"
- leo_mvd_ui_preset_7_tt: "壮大已定居的王国，并将疆界向外拓展。\n\n与你同[faith|E]的[vassals|E]$leo_mvd_ui_dir_1$。\n七大王国境内的[vassals|E]$leo_mvd_ui_dir_9$；边疆上的则$leo_mvd_ui_dir_14$。"
+ leo_mvd_ui_preset_7_tt: "壮大王国，并将疆界向外拓展。\n\n与你同[faith|E]的[vassals|E]$leo_mvd_ui_dir_1$。\n铁民$leo_mvd_ui_dir_8$。\n其他所有人$leo_mvd_ui_dir_14$。"
  leo_mvd_ui_preset_7_tt_nodlc: "$leo_mvd_ui_preset_7_tt$"
  leo_mvd_ui_cond_15: "是铁民"
  leo_mvd_ui_cond_16: "信奉七神信仰"
  leo_mvd_ui_cond_17: "信奉旧神"
  leo_mvd_ui_cond_18: "信奉拉赫洛"
- leo_mvd_ui_cond_19: "在七大王国持有领地"
  leo_mvd_ui_dir_14: "@leo_mvd_dir_icon_settle_wilderness! 定居[wilderness|E]"
  leo_mvd_ui_thresh_c9_4000: "4000"
  leo_mvd_ui_thresh_c9_10000: "10000"

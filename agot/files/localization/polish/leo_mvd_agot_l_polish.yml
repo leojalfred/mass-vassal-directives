@@ -10,16 +10,15 @@ l_polish:
  # Kingdoms are feudal), so nothing changes with Roads to Power and the _tt and
  # _tt_nodlc variants are identical.
  leo_mvd_ui_preset_6: "Władca Siedmiu Królestw"
- leo_mvd_ui_preset_6_tt: "Rządź mieszanym królestwem, każdy [vassal|E] na swoim miejscu.\n\n[vassals|E] twojej [faith|E] $leo_mvd_ui_dir_1$; ci innej [faith|E] są pozostawieni w spokoju.\nŻelaźni ludzie $leo_mvd_ui_dir_8$.\nW obrębie Siedmiu Królestw [vassals|E] $leo_mvd_ui_dir_9$; na rubieżach $leo_mvd_ui_dir_7$."
+ leo_mvd_ui_preset_6_tt: "Rządź mieszanym królestwem, każdy [vassal|E] na swoim miejscu.\n\n[vassals|E] twojej [faith|E] $leo_mvd_ui_dir_1$; ci innej [faith|E] są pozostawieni w spokoju.\nŻelaźni ludzie $leo_mvd_ui_dir_8$.\nSilni [vassals|E] $leo_mvd_ui_dir_9$; słabi $leo_mvd_ui_dir_7$."
  leo_mvd_ui_preset_6_tt_nodlc: "$leo_mvd_ui_preset_6_tt$"
  leo_mvd_ui_preset_7: "Zasiedl rubieże"
- leo_mvd_ui_preset_7_tt: "Rozwijaj zasiedlone królestwo i przesuwaj jego granice coraz dalej.\n\n[vassals|E] twojej [faith|E] $leo_mvd_ui_dir_1$.\nW obrębie Siedmiu Królestw [vassals|E] $leo_mvd_ui_dir_9$; na rubieżach $leo_mvd_ui_dir_14$."
+ leo_mvd_ui_preset_7_tt: "Rozwijaj królestwo i przesuwaj jego granice coraz dalej.\n\n[vassals|E] twojej [faith|E] $leo_mvd_ui_dir_1$.\nŻelaźni ludzie $leo_mvd_ui_dir_8$.\nWszyscy pozostali $leo_mvd_ui_dir_14$."
  leo_mvd_ui_preset_7_tt_nodlc: "$leo_mvd_ui_preset_7_tt$"
  leo_mvd_ui_cond_15: "Jest Żelaznym człowiekiem"
  leo_mvd_ui_cond_16: "Wyznaje Wiarę w Siedmiu"
  leo_mvd_ui_cond_17: "Wyznaje Dawnych Bogów"
  leo_mvd_ui_cond_18: "Wyznaje R'hllora"
- leo_mvd_ui_cond_19: "Dzierży ziemię w Siedmiu Królestwach"
  leo_mvd_ui_dir_14: "@leo_mvd_dir_icon_settle_wilderness! Zasiedlaj [wilderness|E]"
  leo_mvd_ui_thresh_c9_4000: "4000"
  leo_mvd_ui_thresh_c9_10000: "10000"

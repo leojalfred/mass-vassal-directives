@@ -39,13 +39,13 @@ A priority is one of three things:
 [*][b]Continue to Next Priority[/b]: do nothing here, and let the next one decide.
 [/list]
 
-The trick to reading a rule set: a vassal who [i]cannot[/i] be given a directive falls through to the next priority. That is the game's own doing (it never offers a directive it would not allow). It is why a rule can point the Seven Kingdoms at building their holdings without you worrying about the feudal lords who could never improve development, for instance: they simply fall through.
+The trick to reading a rule set: a vassal who [i]cannot[/i] be given a directive falls through to the next priority. That is the game's own doing (it never offers a directive it would not allow). It is why a rule can tell the whole realm to improve development without you worrying about the feudal lords who cannot, for instance: they simply fall through.
 
 [h2]Made for Westeros[/h2]
 
 [list]
 [*][b]Settle the Wilderness[/b]: AGOT's colonization directive is a first-class option, for pushing your frontier lords to settle the empty land they hold.
-[*][b]Westeros conditions[/b]: sort your vassals by whether they are Ironborn, follow the Faith of the Seven, the Old Gods, or R'hllor, or hold land within the Seven Kingdoms.
+[*][b]Westeros conditions[/b]: sort your vassals by whether they are Ironborn, or follow the Faith of the Seven, the Old Gods, or R'hllor.
 [*][b]The Free Cities[/b] keep their administrative directives (Improve Development, Train Commanders, Build Men-at-Arms) and the Free City condition, so a Braavosi or Pentoshi ruler has real use for them.
 [*][b]Tuned for AGOT's armies[/b]: the Military Strength thresholds are set for A Game of Thrones' larger levies, so "a strong vassal" still means one.
 [/list]
@@ -62,8 +62,8 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 [*][b]Unify the Realm[/b]: converts harder, at the cost of growth.
 [*][b]Prepare for War[/b]: arms the realm, each vassal to their strength.
 [*][b]Grow the Economy[/b]: wealth first. The undeveloped develop, the established build.
-[*][b]Master of the Seven Kingdoms[/b]: a mixed realm, each to their place. Your faith converts, the Ironborn arm, the settled kingdoms build, the frontier fortifies.
-[*][b]Settle the Frontier[/b]: grow the settled realm and push the borders outward. Your faith converts, the Seven Kingdoms build, and frontier lords settle the wilderness they hold.
+[*][b]Master of the Seven Kingdoms[/b]: a mixed realm, each to their place. Your faith converts, the Ironborn arm, and the rest build by their strength: the strong grow their economy, the weak fortify.
+[*][b]Settle the Frontier[/b]: grow the realm and push its borders outward. Your faith converts, the Ironborn arm, and everyone else settles the wilderness they hold.
 [*][b]Custom[/b]: your own rules.
 [/list]
 
@@ -75,7 +75,7 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 
 Up to six priorities, judged on any of these conditions:
 
-Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Free City · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You · Is Ironborn · Follows the Faith of the Seven · Follows the Old Gods · Follows R'hllor · Holds Land in the Seven Kingdoms
+Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Free City · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You · Is Ironborn · Follows the Faith of the Seven · Follows the Old Gods · Follows R'hllor
 
 [h2]Using it[/h2]
 
