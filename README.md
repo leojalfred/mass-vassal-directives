@@ -75,7 +75,24 @@ A few files mirror or copy vanilla content and should be re-diffed against the g
 - `gui/leo_mvd_panel.gui`: latches onto the vanilla Subjects-tab directives button and its `mass_directives_window` GUI variable (`game/gui/window_my_realm.gui`); confirm that button and variable still exist. Also carries copies of vanilla's `button_drop` and `button_dropdown` (`game/gui/shared/buttons.gui`).
 - `gui/leo_mvd_texticons.gui`: gray and inline-sized twins of the vanilla directive texticons (`game/gui/texticons.gui`); confirm the source textures still exist.
 
+## Building
+
+The repository is **shared source, not a mod you load.** One build step produces two finished mods under `dist/`, and those are what the launcher points at and what goes to the Workshop:
+
+- `dist/vanilla/`: the base mod, for plain Crusader Kings III.
+- `dist/agot/`: the same mod adapted for the _A Game of Thrones_ total conversion.
+
+Build both with:
+
+```
+bash tools/build.sh        # add -v to narrate each phase
+```
+
+Both mods share one set of source files. The AGOT build layers its differences on at build time, so there is no runtime "am I running under AGOT" check anywhere. `dist/` is regenerated on every build, never hand-edited, and gitignored, so load and test from `dist/vanilla` or `dist/agot`, not from the repo root. (The generated files committed at the repo root are the vanilla output, kept current so generator changes show up as reviewable diffs.)
+
 ## File layout
+
+Both mods build from one shared set of game files:
 
 ```
 common/character_interactions/leo_mvd_interactions.txt   exempt / include toggle interactions
@@ -93,8 +110,24 @@ gui/leo_mvd_texticons.gui                                gray and inline directi
 gui/scripted_widgets/leo_mvd_widgets.txt                 registers the panel as a standalone widget
 localization/english/leo_mvd_l_english.yml               static panel text
 localization/english/leo_mvd_ui_l_english.yml            GENERATED: the editor's labels
-tools/gen_panel.sh                                       generates the three files above
 ```
+
+The three files marked GENERATED come out of `tools/gen_panel.sh`, so **edit that generator, not its output.** The generator is target-aware, so the AGOT panel (Settle Wilderness in, nomads out) is the same script run in AGOT mode.
+
+The AGOT build adds its differences from a small overlay plus the build script:
+
+```
+agot/descriptor.mod                                      the AGOT build's descriptor (declares the AGOT dependency)
+agot/files/                                              AGOT-only whole files, copied into dist/agot as-is: the
+                                                         Settle Wilderness gate, the wilderness icons, the two
+                                                         Westeros presets, the military-threshold override, and the
+                                                         per-language AGOT text
+agot/fragments/                                          small snippets the build injects into the shared files
+tools/gen_panel.sh                                       generates the three files above, per target
+tools/build.sh                                           builds dist/vanilla and dist/agot from all of the above
+```
+
+The AGOT build differs from the base in exactly three places: `TARGET=agot` branches in the generator, the fragments injected at the `# @AGOT:...@` markers the shared files carry (the vanilla build just strips those markers), and the whole files under `agot/files/`. None of it changes directive eligibility: it only surfaces content AGOT itself allows.
 
 ### Implementation notes
 
