@@ -91,7 +91,7 @@ dir_name() { case $1 in
 	7) echo "Construct [fortification_buildings|E]" ;;
 	8) echo "Construct [military_buildings|E]" ;;
 	9) echo "Construct [economic_buildings|E]" ;;
-	14) echo "Settle Wilderness" ;;
+	14) echo "Settle [wilderness|E]" ;;
 	10) echo "Increase [county_fertility|E]" ;;
 	11) echo "Explore [cultures|E]" ;;
 	12) echo "Set [raid_intent|E] to [innovations|E]" ;;
@@ -100,6 +100,9 @@ esac; }
 
 # Condition codes. Must match leo_mvd_cond_holds_trigger.
 CONDS="1 2 3 4 5 6 7 8 9 10 11 12 13 14"
+# Westeros conditions (15-19: Ironborn, three faith blocs, Seven Kingdoms) are
+# boolean and AGOT-only; the AGOT build injects their evaluation branches.
+if [ "$TARGET" = agot ]; then CONDS="$CONDS 15 16 17 18 19"; fi
 # 6 (Administrative Government) is left out for nomads: no nomad is
 # administrative, so it could only ever answer no.
 NOMAD_CONDS="1 2 3 4 5 7 8 9 10 11 12 13 14"
@@ -118,12 +121,21 @@ cond_name() { case $1 in
 	12) echo "[opinion|E] of You is at Least" ;;
 	13) echo "[counties|E] Held is at Least" ;;
 	14) echo "[cultural_acceptance|E] with You is at Least" ;;
+	15) echo "Is Ironborn" ;;
+	16) echo "Follows the Faith of the Seven" ;;
+	17) echo "Follows the Old Gods" ;;
+	18) echo "Follows R'hllor" ;;
+	19) echo "Holds Land in the Seven Kingdoms" ;;
 esac; }
 
 # Thresholds, per numeric condition. All non-negative: a label key is built by
 # pasting the value onto a prefix at runtime, and a minus sign in a key is not
 # worth the risk.
 NUMERIC_CONDS="9 10 11 12 13 14"
+# Whether a condition takes a threshold (is measured) rather than being a plain
+# yes/no. Not the same as "code >= 9": the AGOT conditions (15-19) are numbered
+# above the numeric ones but are boolean.
+is_numeric() { case " $NUMERIC_CONDS " in *" $1 "*) return 0 ;; *) return 1 ;; esac; }
 cond_thresh() { case $1 in
 	9)  echo "500 1000 2000 5000" ;;
 	10) echo "2 3 4 5" ;;
@@ -416,11 +428,11 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
 	for c in $CUR_CONDS; do
 		# cond_row_visible + cond_dlc_vis + vis_and + cond_tt inlined (hot loop). A
-		# boolean condition the parent already settled is hidden; the measured ones
-		# (>= 9) are kept, so a band can be carved out. Condition 6 needs Roads to
-		# Power. Condition 9 carries the Military Strength tooltip.
+		# boolean condition the parent already settled is hidden; the measured
+		# (numeric) ones are kept, so a band can be carved out. Condition 6 needs
+		# Roads to Power. Condition 9 carries the Military Strength tooltip.
 		local crv=
-		if [ -n "$parent_cond" ] && [ "$c" -lt 9 ]; then
+		if [ -n "$parent_cond" ] && ! is_numeric "$c"; then
 			crv="Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('$parent_cond').GetValue, '(CFixedPoint)$c' ) )"
 		fi
 		local cdv=; [ "$c" = 6 ] && cdv="HasDlcFeature( 'roads_to_power' )"

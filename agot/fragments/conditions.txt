@@ -1,0 +1,32 @@
+	# 15 - Is Ironborn. heritage_ironman groups every ironborn culture (ironborn,
+	# greenborn, ...), so this is broader and steadier than any single culture key.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 15 }
+		culture = { has_cultural_pillar = heritage_ironman }
+	}
+	# 16 - Follows the Faith of the Seven. Religion-level, so it catches every
+	# Seven faith variant. Keys per AGOT's own agot_*_crown_trigger.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 16 }
+		has_religion = religion:the_seven_religion
+	}
+	# 17 - Follows the Old Gods. the_pact_religion is the Old Gods religion (its
+	# display name is "The Pact of the Isle of Faces"); confirmed by AGOT's
+	# agot_old_gods_crown_trigger.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 17 }
+		has_religion = religion:the_pact_religion
+	}
+	# 18 - Follows R'hllor (the Lord of Light).
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 18 }
+		has_religion = religion:the_rhllor_religion
+	}
+	# 19 - Holds Land in the Seven Kingdoms (a Greenlander, vs Essosi/beyond the
+	# Wall). ?= guards the unlanded, who have no capital_county.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 19 }
+		capital_county.title_province ?= {
+			geographical_region = world_westeros_seven_kingdoms
+		}
+	}

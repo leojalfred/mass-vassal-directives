@@ -271,6 +271,7 @@ leo_mvd_cond_holds_trigger = {
 			}
 		}
 	}
+	# @AGOT:conditions@
 	# No condition picked yet: the branch is inert rather than silently true.
 	trigger_else = {
 		always = no

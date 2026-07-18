@@ -84,6 +84,7 @@ build_agot() {
 	vlog "agot: inject fragments"
 	inject "$out/common/scripted_effects/leo_mvd_rules.txt"                         "@AGOT:dispatch@"     "$ROOT/agot/fragments/dispatch.txt"
 	inject "$out/common/scripted_triggers/leo_mvd_triggers.txt"                     "@AGOT:match@"        "$ROOT/agot/fragments/match.txt"
+	inject "$out/common/scripted_triggers/leo_mvd_triggers.txt"                     "@AGOT:conditions@"   "$ROOT/agot/fragments/conditions.txt"
 	inject "$out/common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt" "@AGOT:custloc_icon@" "$ROOT/agot/fragments/custloc_icon.txt"
 	inject "$out/common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt" "@AGOT:custloc_text@" "$ROOT/agot/fragments/custloc_text.txt"
 	vlog "agot: copy overlay + descriptor"
