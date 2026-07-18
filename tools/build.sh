@@ -32,9 +32,12 @@ for a in "$@"; do case $a in -v|--verbose) VERBOSE=1 ;; esac; done
 export VERBOSE   # gen_panel honors the same flag
 vlog() { [ -n "$VERBOSE" ] && echo ">> build: $*" >&2 || true; }
 
-# What ships. Everything else in the repo (tools, docs, agot, dot-dirs) stays out.
+# What ships. Everything else in the repo (tools, docs, agot, assets, dot-dirs)
+# stays out. The thumbnail is per-target - each mod gets its own from assets/ -
+# so there is no shared root thumbnail.
 GAME_DIRS="common gui events localization"
-GAME_FILES="thumbnail.png"
+THUMB_VANILLA="assets/images/outputs/thumbnail_vanilla.png"
+THUMB_AGOT="assets/images/outputs/thumbnail_agot.png"
 # The three base files carrying # @AGOT:...@ markers.
 MARKER_FILES="common/scripted_effects/leo_mvd_rules.txt common/scripted_triggers/leo_mvd_triggers.txt common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt"
 # AGOT overlay files written by hand (so without a BOM); every other shipped file
@@ -44,10 +47,9 @@ AGOT_BOMLESS="common/scripted_triggers/leo_mvd_agot_triggers.txt gui/leo_mvd_ago
 AGOT_CHECK="$MARKER_FILES common/scripted_triggers/leo_mvd_agot_triggers.txt gui/leo_mvd_agot_texticons.gui"
 
 copy_base() {   # <destdir>
-	local out=$1 d f
+	local out=$1 d
 	rm -rf "$out"; mkdir -p "$out"
 	for d in $GAME_DIRS; do cp -r "$ROOT/$d" "$out/"; done
-	for f in $GAME_FILES; do cp "$ROOT/$f" "$out/"; done
 }
 
 # Replace the one line containing <marker> in <file> with <fragment>'s contents.
@@ -68,6 +70,7 @@ build_vanilla() {
 	local out="$DIST/vanilla" f
 	vlog "vanilla: copy base"; copy_base "$out"
 	cp "$ROOT/descriptor.mod" "$out/descriptor.mod"; strip_bom "$out/descriptor.mod"
+	cp "$ROOT/$THUMB_VANILLA" "$out/thumbnail.png"
 	vlog "vanilla: generate panel"; TARGET=vanilla OUTDIR="$out" bash "$ROOT/tools/gen_panel.sh" >/dev/null
 	vlog "vanilla: strip markers"; for f in $MARKER_FILES; do sed -i '/# @AGOT:/d' "$out/$f"; done
 	vlog "vanilla: done"
@@ -76,6 +79,7 @@ build_vanilla() {
 build_agot() {
 	local out="$DIST/agot" f
 	vlog "agot: copy base"; copy_base "$out"
+	cp "$ROOT/$THUMB_AGOT" "$out/thumbnail.png"
 	vlog "agot: generate panel"; TARGET=agot OUTDIR="$out" bash "$ROOT/tools/gen_panel.sh" >/dev/null
 	vlog "agot: inject fragments"
 	inject "$out/common/scripted_effects/leo_mvd_rules.txt"                         "@AGOT:dispatch@"     "$ROOT/agot/fragments/dispatch.txt"
