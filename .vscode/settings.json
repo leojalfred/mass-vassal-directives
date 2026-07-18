@@ -1,17 +1,24 @@
 {
   "cSpell.words": [
+    "agot",
     "alwaystransparent",
+    "apid",
     "autoresize",
     "blockoverride",
+    "BOMLESS",
     "clicksound",
     "CONDS",
     "Corneredtiled",
     "cqrule",
     "crule",
+    "cust",
+    "custloc",
     "datafunction",
     "datamodel",
+    "destdir",
     "disableframe",
     "downframe",
+    "efbbbf",
     "effectname",
     "fontsize",
     "framedbuttongfx",
@@ -54,6 +61,8 @@
     "vdlc",
     "viewportwidget",
     "vint",
-    "vkey"
+    "vkey",
+    "vpid",
+    "Westeros"
   ]
 }
