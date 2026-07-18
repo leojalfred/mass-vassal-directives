@@ -24,7 +24,7 @@ Why generated: the editor is the same widgets repeated per node, differing only 
 
 ## Two mods from one source
 
-The repo builds **two shippable mods** from shared source: `dist/vanilla/` (the base mod) and `dist/agot/` (the same, adapted for the A Game of Thrones total conversion). `dist/` is gitignored and holds **game files only** — no tools, docs, or dev files — so each subfolder is ready to point the launcher at and upload to the Workshop. The repo root is itself a directly-loadable vanilla dev copy.
+The repo builds **two shippable mods** from shared source: `dist/vanilla/` (the base mod) and `dist/agot/` (the same, adapted for the A Game of Thrones total conversion). `dist/` is gitignored and holds **game files only** — no tools, docs, or dev files — so each subfolder is ready to point the launcher at and upload to the Workshop. **Load and test from `dist/vanilla` and `dist/agot`, never the repo root.** The root's committed generated files (panel, editor sgui, English UI loc) are the version-controlled copy of the *vanilla* output: `dist/` is gitignored, so keeping the root current (via `gen_panel.sh` run bare) is what makes generator changes show up as reviewable git diffs. The root is not a mod you load — its descriptor's `thumbnail.png` only exists once the build copies it into each dist.
 
 ```
 bash tools/build.sh            # builds both mods in parallel; -v narrates
