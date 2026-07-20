@@ -102,7 +102,40 @@ window = {
 	layer = top
 	movable = yes
 
-	visible = "[GetVariableSystem.Exists('mass_directives_window')]"
+	### Shown by the vanilla button, or for one moment at startup to pre-warm.
+	###
+	### The tree is created at startup (gui/scripted_widgets/), but it is only
+	### measured, laid out and its text shaped the first time the window becomes
+	### visible - which is the whole of the hitch on first open, and why it does
+	### not scale with how much of the panel a rule set actually shows. So show
+	### it once at creation and that pass happens during the loading screen.
+	###
+	### Its own variable, not vanilla's mass_directives_window: that one also
+	### drives the Subjects tab's compact list (window_my_realm.gui:3688), so
+	### borrowing it would disturb vanilla's own UI.
+	visible = "[Or( GetVariableSystem.Exists('mass_directives_window'), GetVariableSystem.Exists('leo_mvd_prewarm') )]"
+
+	### Transparent while pre-warming, so laying out is all it does. Bound to the
+	### same variable that ends the pre-warm rather than animated, so the panel
+	### cannot get stuck invisible: the moment that clears, this reads 1 again.
+	alpha = "[Select_float( GetVariableSystem.Exists('leo_mvd_prewarm'), '(float)0', '(float)1' )]"
+
+	### And untouchable while it is transparent, so an invisible panel cannot
+	### swallow a click in the moment after the map appears. Affects input only,
+	### so the layout pass this is all for still happens.
+	alwaystransparent = "[GetVariableSystem.Exists('leo_mvd_prewarm')]"
+
+	oncreate = "[GetVariableSystem.Set( 'leo_mvd_prewarm', '1' )]"
+
+	### Ends the pre-warm a moment after creation. Copies vanilla's self-firing
+	### timed state (achievements/popup.gui:58).
+	state = {
+		name = leo_mvd_prewarm_done
+		trigger_on_create = yes
+		duration = 0
+		delay = 0.3
+		on_finish = "[GetVariableSystem.Clear( 'leo_mvd_prewarm' )]"
+	}
 
 	state = {
 		name = _show
