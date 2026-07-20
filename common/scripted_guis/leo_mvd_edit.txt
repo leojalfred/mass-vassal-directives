@@ -342,6 +342,14 @@ leo_mvd_remove_qpriority_3 = {
 	effect = { leo_mvd_remove_qpriority_3_effect = yes }
 }
 
+### Opening a dropdown. Its rows come out of a variable list, which a
+### save made before those lists existed will not have - and the panel is
+### reached through a vanilla button, so nothing else need have run.
+leo_mvd_ensure_options = {
+	scope = character
+	effect = { leo_mvd_ensure_options_effect = yes }
+}
+
 ### Node kind.
 leo_mvd_set_kind_0 = {
 	scope = character

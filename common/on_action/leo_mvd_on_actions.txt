@@ -13,6 +13,11 @@ on_game_start_after_lobby = {
 leo_mvd_on_game_start = {
 	effect = {
 		every_player = {
+			# The panel's dropdowns read their options out of these lists, so
+			# they have to exist before it is first opened. Rebuilt every start
+			# rather than trusted from the save, so installing or removing a DLC
+			# between sessions changes what the panel offers.
+			leo_mvd_build_options_effect = yes
 			leo_mvd_init_defaults_effect = yes
 			# Set the heartbeat immediately so the yearly watchdog cannot
 			# start a second pulse chain before the first tick fires.
@@ -79,6 +84,8 @@ leo_mvd_yearly_watchdog = {
 				is_ai = no
 				NOT = { has_character_flag = leo_mvd_pulse_alive }
 			}
+			# Also covers a save made before the option lists existed.
+			leo_mvd_build_options_effect = yes
 			leo_mvd_init_defaults_effect = yes
 			add_character_flag = {
 				flag = leo_mvd_pulse_alive

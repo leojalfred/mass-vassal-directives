@@ -225,6 +225,16 @@ sgui() { echo "[GetScriptedGui('$1').Execute( GuiScope.SetRoot( GetPlayer.MakeSc
 # Whether scripted GUI <1> is currently allowed, for an `enabled` binding.
 sgui_valid() { echo "[GetScriptedGui('$1').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"; }
 
+# The list a dropdown's rows come from: <2> while dropdown <1> is open, and
+# leo_mvd_x while it is shut.
+#
+# leo_mvd_x is never created. A datamodel over a list that does not exist has no
+# items, so a closed dropdown holds no row widgets rather than hidden ones -
+# which is the difference between a panel that costs its whole option count on
+# first open and one that does not. <2> is an expression, not a name, so a
+# threshold picker can name its list from the condition beside it.
+dd_list() { echo "Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', '$1' ), $2, 'leo_mvd_x' )"; }
+
 # A GUI bool: is DLC feature <1> active? Vanilla gates its own admin/nomad UI
 # this way (frontend_bookmarks.gui, shared/mapmodes.gui). References to the
 # gated governments stay safe without the DLC - they simply never occur - so
@@ -266,7 +276,10 @@ cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; 20) echo "leo_mvd_ui_co
 # Its label is built at runtime from the node's chosen condition and value,
 # leo_mvd_ui_thresh_c<cond>_<thresh>, and it is shown only while a numeric
 # condition is selected. <1> = the node's cond variable, <2> = its thresh var.
-thresh_label_dyn() { echo "Localize(Concatenate(Concatenate('leo_mvd_ui_thresh_c', Concatenate($(vint "$1"), '_')), $(vint "$2")))"; }
+# The picker's own label, showing what is currently chosen. Same key shape the
+# rows build - leo_mvd_ui_c<cond>_thresh_<value> - reached from the two variables
+# rather than from an item's flag.
+thresh_label_dyn() { echo "Localize(Concatenate(Concatenate('leo_mvd_ui_c', Concatenate($(vint "$1"), '_thresh_')), $(vint "$2")))"; }
 # A GUI bool: is a condition that takes a threshold selected in variable <1>?
 numeric_cond_sel() { local var=$1 expr=; for c in $NUMERIC_CONDS; do local t; t="$(veq "$var" "$c")"
 	if [ -z "$expr" ]; then expr=$t; else expr="Or( $expr, $t )"; fi; done; echo "$expr"; }
@@ -293,12 +306,17 @@ kind0_tt_key() { echo "SelectLocalization( $(vge "$COUNT_VAR" $(($1 + 1))), 'leo
 #
 # Draw order is tree order and there is no z-index for a non-window widget, so a
 # list living inside its row is painted over by every row after it. Floating
-# would mean hoisting the open list into a later sibling, which needs either a
-# datamodel to mirror for alignment (script variable lists hold scopes, so rule
-# nodes cannot be items) or the button's screen position (no datafunction
-# returns one). Vanilla hits the same wall: game_rules.gui is this same panel -
-# a scrollbox of rows each needing a selector - and puts its dropdowns in the
-# header outside the scrollbox, while the rows inside use an arrow cycler.
+# would mean hoisting the open list into a later sibling and aligning it to a
+# button whose screen position no datafunction returns. Vanilla hits the same
+# wall: game_rules.gui is this same panel - a scrollbox of rows each needing a
+# selector - and puts its dropdowns in the header outside the scrollbox, while
+# the rows inside use an arrow cycler.
+#
+# The old note here also said rule nodes could not be datamodel items because
+# script variable lists hold scopes. That part was wrong: flags are legal
+# entries and carry a readable name, which is what the option lists now rely on.
+# It does not rescue floating, though, because the blocker there is alignment,
+# not identity.
 # Escaping the scrollarea's scissor (preload/defaults.gui:252) is possible via
 # viewportwidget, but un-clips the whole viewport, so scrolled-out rows would
 # bleed over the panel's own frame.
@@ -327,6 +345,11 @@ emit_dd_start() { local depth=$1 id=$2 label=$3
 	p "leo_mvd_button_drop = {"
 	ind $((depth+2))
 	p "layoutpolicy_horizontal = expanding"
+	# Opening a data-driven dropdown makes sure its list exists first. The panel
+	# is opened by a vanilla button, so a session can reach this point with no
+	# script of ours having run - and then the list would be empty. Runs before
+	# the variable that opens the list, and the two onclicks run in order.
+	[ -n "${4:-}" ] && p "onclick = \"$(sgui leo_mvd_ensure_options)\""
 	p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' ), 'none', '$id' ) )]\""
 	p "text = \"[$label]\""
 	ind $((depth+1)); p "}"
@@ -356,10 +379,41 @@ emit_dd_start() { local depth=$1 id=$2 label=$3
 	# as vanilla's do. Their text is already inset by leo_mvd_button_dropdown.
 	p "using = Background_DropDown"
 	p "spacing = 0"
+	# <4>, when given, names the script list this dropdown's rows come from.
+	# Every such expression resolves to leo_mvd_x while the dropdown is shut - a
+	# list nothing ever creates - so a closed dropdown holds no row widgets at
+	# all. That is the whole point: rows that merely hid still had to be built
+	# and laid out, and 86% of this file used to be rows that were never shown.
+	[ -n "${4:-}" ] && p "datamodel = \"[$4]\""
 
 	# Where the caller's rows go. Returned this way so that changing the shape
 	# above does not mean re-counting indents at every call site.
 	DD_ROW_DEPTH=$((depth+4))
+}
+
+# The one row template a datamodel dropdown needs, in place of a literal widget
+# per option. The item's flag is both halves of its identity: cond_5 names the
+# label key leo_mvd_ui_cond_5 and the scripted GUI leo_mvd_set_cond_5, so the
+# existing per-option scripted GUIs are reused untouched.
+#
+# <1> depth <2> node <3> label expr <4> tooltip expr, if any <5> visible expr,
+# if any
+emit_dd_item() { local depth=$1 node=$2 label=$3 tt=${4:-} vis=${5:-}
+	ind "$depth"
+	p "item = {"
+	ind $((depth+1))
+	p "leo_mvd_button_dropdown = {"
+	ind $((depth+2))
+	p "layoutpolicy_horizontal = expanding"
+	p "size = { -1 30 }"
+	[ -n "$vis" ] && p "visible = \"[$vis]\""
+	[ -n "$tt" ] && p "tooltip = \"[$tt]\""
+	p "onclick = \"[GetScriptedGui('leo_mvd_focus_${node}').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]\""
+	p "onclick = \"[GetScriptedGui( Concatenate( 'leo_mvd_set_', Scope.GetFlagName ) ).Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]\""
+	p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]\""
+	p "text = \"[$label]\""
+	ind $((depth+1)); p "}"
+	ind "$depth"; p "}"
 }
 
 # Closes a dropdown: the list, a gap, then the group.
@@ -435,13 +489,12 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
-	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")"
-	for d in $CUR_DIRS; do
-		# dir_dlc_vis() inlined (hot loop): the administrative directives need Roads
-		# to Power.
-		local dv=; case $d in 3|4|5) dv="HasDlcFeature( 'roads_to_power' )" ;; esac
-		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_dir" "leo_mvd_set_dir_$d" "leo_mvd_ui_dir_$d" "$dv"
-	done
+	# The directive list. Which directives a player may pick is decided in script
+	# (leo_mvd_build_options_effect), so the DLC gate that used to sit on every
+	# administrative row is gone: an option they cannot use is simply absent.
+	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")" \
+		"GetPlayer.MakeScope.GetList( $(dd_list "${node}_dir" "$CUR_DIR_LIST") )"
+	emit_dd_item "$DD_ROW_DEPTH" "$node" "Localize( Concatenate( 'leo_mvd_ui_', Scope.GetFlagName ) )"
 	emit_dd_end $((depth+1)) "${node}_dir"
 	ind "$depth"; p "}"
 
@@ -455,26 +508,25 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
-	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
-	for c in $CUR_CONDS; do
-		# cond_dlc_vis + vis_and + cond_tt inlined (hot loop). Keep these cases in
-		# step with the functions above - the functions are what the rest of the
-		# generator reads, these are what the panel actually gets. A boolean
-		# condition the parent already settled is hidden; the measured (numeric)
-		# ones are kept, so a band can be carved out. Conditions 6 and 20 need
-		# Roads to Power. Conditions 9 and 20 carry tooltips.
-		local crv=
-		if [ -n "$parent_cond" ] && ! is_numeric "$c"; then
-			crv="Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('$parent_cond').GetValue, '(CFixedPoint)$c' ) )"
-		fi
-		local cdv=; case $c in 6|20) cdv="HasDlcFeature( 'roads_to_power' )" ;; esac
-		local cv
-		if [ -n "$crv" ] && [ -n "$cdv" ]; then cv="And( $crv, $cdv )"
-		elif [ -n "$crv" ]; then cv=$crv
-		else cv=$cdv; fi
-		local ctt=; case $c in 9) ctt="leo_mvd_ui_cond_9_tt" ;; 20) ctt="leo_mvd_ui_cond_20_tt" ;; esac
-		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$cv" "$ctt"
-	done
+	# The condition list. DLC gating lives in script, as it does for directives.
+	#
+	# The redundancy gate stays, but it can no longer be written per row: an
+	# item's identity is a string and the parent's answer is a number, and GUI
+	# has no way to compare the two. So each condition's code is kept in a
+	# variable named after its flag, and the row compares that against the
+	# parent - measured conditions carry -1 there and so stay selectable under
+	# themselves, which is how a middle band is carved out.
+	#
+	# Every condition gets a tooltip key. Most resolve to an empty string, which
+	# renders no tooltip at all, so only the two that need explaining have one.
+	local citem_vis=
+	[ -n "$parent_cond" ] && citem_vis="NotEqualTo_CFixedPoint( GetPlayer.MakeScope.Var( Concatenate( 'leo_mvd_x_', Scope.GetFlagName ) ).GetValue, GetPlayer.MakeScope.Var('$parent_cond').GetValue )"
+	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")" \
+		"GetPlayer.MakeScope.GetList( $(dd_list "${node}_cond" "$CUR_COND_LIST") )"
+	emit_dd_item "$DD_ROW_DEPTH" "$node" \
+		"Localize( Concatenate( 'leo_mvd_ui_', Scope.GetFlagName ) )" \
+		"Localize( Concatenate( Concatenate( 'leo_mvd_ui_', Scope.GetFlagName ), '_tt' ) )" \
+		"$citem_vis"
 	emit_dd_end $((depth+1)) "${node}_cond"
 
 	# Its threshold, if it takes one. One picker per node rather than one per
@@ -488,17 +540,16 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "visible = \"[$(numeric_cond_sel "leo_mvd_${node}_cond")]\""
 	p "layoutpolicy_horizontal = expanding"
 	p "spacing = 2"
-	emit_dd_start $((depth+2)) "${node}_t" "$(thresh_label_dyn "leo_mvd_${node}_cond" "leo_mvd_${node}_thresh")"
-	# Only the conditions this waterfall actually offers: a value whose condition
-	# cannot be picked here could never be shown, and the nomad section leaves
-	# out Governor Theme.
-	for c in $CUR_CONDS; do
-		is_numeric "$c" || continue
-		for t in $(cond_thresh "$c"); do
-			# veq() inlined (hot loop): show a value only under its own condition.
-			emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_t" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}" "EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_${node}_cond').GetValue, '(CFixedPoint)$c' )"
-		done
-	done
+	# The threshold picker names its list from the node's own condition, so it
+	# shows one ladder instead of carrying every condition's values at once,
+	# each gated. A condition that takes no threshold has no such list, which
+	# leaves the picker empty - and it is hidden then anyway.
+	emit_dd_start $((depth+2)) "${node}_t" "$(thresh_label_dyn "leo_mvd_${node}_cond" "leo_mvd_${node}_thresh")" \
+		"GetPlayer.MakeScope.GetList( $(dd_list "${node}_t" "Concatenate( 'leo_mvd_t_', $(vint "leo_mvd_${node}_cond") )") )"
+	# The label needs both halves - which condition is asking, and which value -
+	# so the key is leo_mvd_ui_c<cond>_<flag>, e.g. leo_mvd_ui_c9_thresh_1000.
+	emit_dd_item "$DD_ROW_DEPTH" "$node" \
+		"Localize( Concatenate( Concatenate( 'leo_mvd_ui_c', $(vint "leo_mvd_${node}_cond") ), Concatenate( '_', Scope.GetFlagName ) ) )"
 	emit_dd_end $((depth+2)) "${node}_t"
 	ind $((depth+1)); p "}"
 	ind "$depth"; p "}"
@@ -538,8 +589,8 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 # several levels down.
 NODE_PREFIX=r
 COUNT_VAR=leo_mvd_rule_count
-CUR_DIRS="$DIRS"
-CUR_CONDS="$CONDS"
+CUR_DIRS="$DIRS"; CUR_DIR_LIST="'leo_mvd_dirs'"
+CUR_CONDS="$CONDS"; CUR_COND_LIST="'leo_mvd_conds'"
 
 # <1> main | nomad
 emit_waterfall() {
@@ -555,7 +606,7 @@ emit_waterfall() {
 	prio_loc=leo_mvd_ui_priority
 	if [ "$which" = nomad ]; then
 		NODE_PREFIX=q; COUNT_VAR=leo_mvd_qrule_count
-		CUR_DIRS="$NOMAD_DIRS"; CUR_CONDS="$NOMAD_CONDS"
+		CUR_DIRS="$NOMAD_DIRS"; CUR_CONDS="$NOMAD_CONDS"; CUR_DIR_LIST="'leo_mvd_qdirs'"; CUR_COND_LIST="'leo_mvd_qconds'"
 		max=$QPRIORITIES; heading=leo_mvd_ui_heading_nomads
 		add_sgui=leo_mvd_add_qpriority; remove_prefix=leo_mvd_remove_qpriority
 		# This waterfall may empty; the main one may not. Same button, different
@@ -563,7 +614,7 @@ emit_waterfall() {
 		remove_tt=leo_mvd_ui_remove_qpriority_tt
 	else
 		NODE_PREFIX=r; COUNT_VAR=leo_mvd_rule_count
-		CUR_DIRS="$DIRS"; CUR_CONDS="$CONDS"
+		CUR_DIRS="$DIRS"; CUR_CONDS="$CONDS"; CUR_DIR_LIST="'leo_mvd_dirs'"; CUR_COND_LIST="'leo_mvd_conds'"
 		max=$PRIORITIES; heading=leo_mvd_ui_heading_priorities
 		add_sgui=leo_mvd_add_priority; remove_prefix=leo_mvd_remove_priority
 		remove_tt=leo_mvd_ui_remove_priority_tt
@@ -1061,6 +1112,15 @@ HEAD
 	done
 
 	echo
+	echo "### Opening a dropdown. Its rows come out of a variable list, which a"
+	echo "### save made before those lists existed will not have - and the panel is"
+	echo "### reached through a vanilla button, so nothing else need have run."
+	echo "leo_mvd_ensure_options = {"
+	echo -e "\tscope = character"
+	echo -e "\teffect = { leo_mvd_ensure_options_effect = yes }"
+	echo "}"
+
+	echo
 	echo "### Node kind."
 	for k in 0 1 2; do
 		echo "leo_mvd_set_kind_${k} = {"
@@ -1099,6 +1159,179 @@ HEAD
 		echo -e "\teffect = { leo_mvd_edit_effect = { FIELD = 4 VALUE = $d } }"
 		echo "}"
 	done
+}
+
+### The option lists the dropdowns iterate.
+#
+# A dropdown's rows are not widgets in the panel any more. Script keeps a list
+# of flags per dropdown family, the panel walks it with a datamodel, and one row
+# template serves every option: a flag named cond_5 yields both the label key
+# (leo_mvd_ui_cond_5) and the scripted GUI that writes it (leo_mvd_set_cond_5).
+#
+# Two things follow, and both are why this file exists rather than more GUI:
+#
+# DLC gating lives here now. An option a player cannot use is simply not in the
+# list, instead of every row carrying a HasDlcFeature binding.
+#
+# Thresholds get one list per measured condition, named leo_mvd_t_<cond>, so the
+# picker can name its list from the node's own condition and show only that
+# ladder - where before every node carried every condition's values at once.
+#
+# Generated because the option sets differ per build target: the AGOT panel has
+# conditions vanilla does not, and a different Military Strength ladder.
+
+emit_options() {
+cat << 'HEAD'
+# Leo VI's Mass Vassal Directives - the panel's option lists
+#
+# GENERATED by tools/gen_panel.sh - edits here will be overwritten.
+#
+# Rebuilt at every game start rather than trusted from the save, so that
+# installing or removing a DLC between sessions is picked up.
+HEAD
+	echo
+	echo "leo_mvd_build_options_effect = {"
+
+	echo -e "\t# Conditions offered by the settled waterfall."
+	echo -e "\tclear_variable_list = leo_mvd_conds"
+	for c in $CONDS; do
+		[ -n "$(cond_dlc_vis "$c")" ] && continue
+		echo -e "\tadd_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c }"
+	done
+	echo -e "\tif = {"
+	echo -e "\t\tlimit = { has_dlc_feature = roads_to_power }"
+	for c in $CONDS; do
+		[ -n "$(cond_dlc_vis "$c")" ] || continue
+		echo -e "\t\tadd_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c }"
+	done
+	echo -e "\t}"
+
+	echo
+	echo -e "\t# Conditions offered by the nomad waterfall."
+	echo -e "\tclear_variable_list = leo_mvd_qconds"
+	for c in $NOMAD_CONDS; do
+		echo -e "\tadd_to_variable_list = { name = leo_mvd_qconds target = flag:cond_$c }"
+	done
+
+	echo
+	echo -e "\t# Directives, settled then nomad."
+	echo -e "\tclear_variable_list = leo_mvd_dirs"
+	for d in $DIRS; do
+		[ -n "$(dir_dlc_vis "$d")" ] && continue
+		echo -e "\tadd_to_variable_list = { name = leo_mvd_dirs target = flag:dir_$d }"
+	done
+	echo -e "\tif = {"
+	echo -e "\t\tlimit = { has_dlc_feature = roads_to_power }"
+	for d in $DIRS; do
+		[ -n "$(dir_dlc_vis "$d")" ] || continue
+		echo -e "\t\tadd_to_variable_list = { name = leo_mvd_dirs target = flag:dir_$d }"
+	done
+	echo -e "\t}"
+	echo -e "\tclear_variable_list = leo_mvd_qdirs"
+	for d in $NOMAD_DIRS; do
+		echo -e "\tadd_to_variable_list = { name = leo_mvd_qdirs target = flag:dir_$d }"
+	done
+
+	echo
+	echo -e "\t# One threshold ladder per measured condition."
+	for c in $NUMERIC_CONDS; do
+		echo -e "\tclear_variable_list = leo_mvd_t_$c"
+		for t in $(cond_thresh "$c"); do
+			echo -e "\tadd_to_variable_list = { name = leo_mvd_t_$c target = flag:thresh_$t }"
+		done
+	done
+
+	echo
+	echo -e "\t# The code each condition occupies, for the redundancy gate: a child"
+	echo -e "\t# node hides the yes/no question its parent already settled, since"
+	echo -e "\t# re-asking it could only give the same answer. Measured conditions"
+	echo -e "\t# carry -1 and so never match, which keeps them selectable under"
+	echo -e "\t# themselves - that is how a middle band gets carved out."
+	for c in $CONDS; do
+		if is_numeric "$c"; then
+			echo -e "\tset_variable = { name = leo_mvd_x_cond_$c value = -1 }"
+		else
+			echo -e "\tset_variable = { name = leo_mvd_x_cond_$c value = $c }"
+		fi
+	done
+
+	echo
+	echo -e "\t# Stamps what these lists were built from, so a save carrying an"
+	echo -e "\t# older option set is spotted and rebuilt rather than trusted."
+	echo -e "\tset_variable = { name = leo_mvd_opts_version value = $(options_version) }"
+
+	echo
+	echo -e "\t# Everything above is read only by the panel's datamodels, and the"
+	echo -e "\t# script validator does not count GUI use - left unnamed in script it"
+	echo -e "\t# reports every flag and variable as \"set but never used\". Naming"
+	echo -e "\t# them once here is what keeps error.log clean. The branch never runs."
+	echo -e "\tif = {"
+	echo -e "\t\tlimit = { leo_mvd_options_ack_trigger = yes }"
+	echo -e "\t}"
+	echo "}"
+
+	echo
+	echo "# Current scope: the player. Build the lists if they are missing or stale."
+	echo "#"
+	echo "# Cheap enough to sit on the common path: one comparison unless the option"
+	echo "# set has actually changed. Game start rebuilds unconditionally instead, so"
+	echo "# that installing or removing a DLC is picked up even when the version is"
+	echo "# unchanged."
+	echo "leo_mvd_ensure_options_effect = {"
+	echo -e "\tif = {"
+	echo -e "\t\tlimit = {"
+	echo -e "\t\t\tOR = {"
+	echo -e "\t\t\t\t# Reading the variable is guarded: a save from before the"
+	echo -e "\t\t\t\t# lists existed has no such variable to compare."
+	echo -e "\t\t\t\tNOT = { has_variable = leo_mvd_opts_version }"
+	echo -e "\t\t\t\tNOT = { var:leo_mvd_opts_version = $(options_version) }"
+	echo -e "\t\t\t}"
+	echo -e "\t\t}"
+	echo -e "\t\tleo_mvd_build_options_effect = yes"
+	echo -e "\t}"
+	echo "}"
+}
+
+# A number that changes whenever the option set does, so a save built against an
+# older one rebuilds instead of showing a stale list. The count of every option
+# the panel can offer, which no realistic edit leaves untouched.
+options_version() {
+	local n=0 c
+	for c in $CONDS; do n=$((n+1)); done
+	for c in $NOMAD_CONDS; do n=$((n+1)); done
+	for c in $DIRS $NOMAD_DIRS; do n=$((n+1)); done
+	for c in $NUMERIC_CONDS; do
+		local t; for t in $(cond_thresh "$c"); do n=$((n+1)); done
+	done
+	echo $n
+}
+
+# The counterpart to the note above. Fails on its first line, so nothing after
+# it is ever evaluated at run time - it exists to be read, not run.
+emit_options_ack() {
+cat << 'HEAD'
+# Leo VI's Mass Vassal Directives - option list acknowledgement
+#
+# GENERATED by tools/gen_panel.sh - edits here will be overwritten.
+#
+# Names every flag and variable that only the panel reads, so the script
+# validator stops reporting them as set-but-never-used. always = no is the first
+# line, so this costs nothing at run time.
+HEAD
+	echo
+	echo "leo_mvd_options_ack_trigger = {"
+	echo -e "\talways = no"
+	for c in $CONDS; do
+		echo -e "\tis_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_$c }"
+		echo -e "\tvar:leo_mvd_x_cond_$c = $c"
+	done
+	for d in $ALL_DIRS; do
+		echo -e "\tis_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_$d }"
+	done
+	for t in $(all_thresh_values); do
+		echo -e "\tis_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_$t }"
+	done
+	echo "}"
 }
 
 ### The editor's labels.
@@ -1148,9 +1381,20 @@ emit_loc() {
 		echo " leo_mvd_ui_cond_${c}: \"$(cond_name "$c")\""
 	done
 	echo
+	# Every condition needs a tooltip key, because one row template serves them
+	# all and builds the key from the option's own name. An empty value renders
+	# no tooltip at all, so the ones with nothing to explain simply say nothing.
+	# The two that do explain themselves are hand-written in leo_mvd_l_english.yml.
+	for c in $CONDS; do
+		[ -n "$(cond_tt "$c")" ] && continue
+		echo " leo_mvd_ui_cond_${c}_tt: \"\""
+	done
+	echo
+	# Keyed by the asking condition and the option's flag, since the row template
+	# knows both: leo_mvd_ui_c<cond>_<flag>.
 	for c in $NUMERIC_CONDS; do
 		for t in $(cond_thresh "$c"); do
-			echo " leo_mvd_ui_thresh_c${c}_${t}: \"$(thresh_label "$c" "$t")\""
+			echo " leo_mvd_ui_c${c}_thresh_${t}: \"$(thresh_label "$c" "$t")\""
 		done
 	done
 }
@@ -1181,6 +1425,13 @@ vlog "scripted GUIs -> $OUTDIR/common/scripted_guis/leo_mvd_edit.txt"
 emit_to emit_sguis "$OUTDIR/common/scripted_guis/leo_mvd_edit.txt"
 vlog "localization -> $OUTDIR/localization/english/leo_mvd_ui_l_english.yml"
 emit_to emit_loc   "$OUTDIR/localization/english/leo_mvd_ui_l_english.yml"
+vlog "option lists -> $OUTDIR/common/scripted_effects/leo_mvd_options.txt"
+emit_to emit_options "$OUTDIR/common/scripted_effects/leo_mvd_options.txt"
+vlog "option ack -> $OUTDIR/common/scripted_triggers/leo_mvd_options_ack.txt"
+emit_to emit_options_ack "$OUTDIR/common/scripted_triggers/leo_mvd_options_ack.txt"
 
 echo "Generated $PRIORITIES priority editor(s) [target=$TARGET]:"
-wc -l "$OUTDIR/gui/leo_mvd_panel.gui" "$OUTDIR/common/scripted_guis/leo_mvd_edit.txt" "$OUTDIR/localization/english/leo_mvd_ui_l_english.yml"
+wc -l "$OUTDIR/gui/leo_mvd_panel.gui" "$OUTDIR/common/scripted_guis/leo_mvd_edit.txt" \
+	"$OUTDIR/localization/english/leo_mvd_ui_l_english.yml" \
+	"$OUTDIR/common/scripted_effects/leo_mvd_options.txt" \
+	"$OUTDIR/common/scripted_triggers/leo_mvd_options_ack.txt"

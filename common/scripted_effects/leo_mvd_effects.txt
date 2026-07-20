@@ -151,6 +151,13 @@ leo_mvd_remove_all_effect = {
 # what guarantees they all exist - which the panel depends on, since it reads
 # them directly from GUI rather than through a scripted GUI.
 leo_mvd_init_defaults_effect = {
+	# The panel's dropdowns read their options out of variable lists, and it is
+	# opened by a vanilla button - so it can be looked at in a session where no
+	# script of ours has run yet. The lists survive in the save once built, so
+	# this only has to catch the first time: a save made before they existed, or
+	# a mod update that changed what the options are.
+	leo_mvd_ensure_options_effect = yes
+
 	if = {
 		limit = { NOT = { has_variable = leo_mvd_preset } }
 		leo_mvd_preset_0_effect = yes
