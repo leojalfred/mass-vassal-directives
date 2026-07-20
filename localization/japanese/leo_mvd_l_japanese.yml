@@ -35,6 +35,8 @@
  leo_mvd_ui_preset_3_tt: "王国を武装させ、各[vassal|E]をその強さに応じて働かせます。\n\n強い臣下は自らの政体が最も得意とすることに貢献します。[administrative|E]の者は $leo_mvd_ui_dir_5$、その他は $leo_mvd_ui_dir_7$。\nどこであれ弱い臣下には $leo_mvd_ui_dir_8$ を命じます。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
  leo_mvd_ui_preset_4: "経済の成長"
  leo_mvd_ui_preset_4_tt: "何よりもまず富を築きます。\n\n未発展の臣下には $leo_mvd_ui_dir_3$ を命じます。\n発展した臣下は $leo_mvd_ui_dir_9$ に転じます。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
+ leo_mvd_ui_preset_8: "テーマ別統治"
+ leo_mvd_ui_preset_8_tt: "各総督に、そのテーマが元より適した務めを与える。\n\n#weak 1.#! $admin_theme_military$の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! $admin_theme_civilian$の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 3.#! $admin_theme_frontier$の総督は$leo_mvd_ui_dir_7$を命じられる。\n#weak 4.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
  leo_mvd_ui_preset_5: "カスタム"
  leo_mvd_ui_preset_5_tt: "以下に書く、あなた自身のルール。\n\n#weak ここでカスタムを選ぶと何もない状態から始まります。代わりにプリセットから始めるには、そのルールの一つを変更するだけです。プリセットは元のまま、あなたの変更を加えてあなたのものになります。#!"
 
@@ -42,17 +44,24 @@
  # built-ins that used them run a different flow (see the presets in
  # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
  # the presets whose flow does not change alias back to their base description.
+ # Govern by Theme is hidden outright without that DLC rather than falling back,
+ # but still needs a key here, because the Description box builds one for
+ # whichever preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "[vassals|E]を仲間に引き入れ、それから育てます。\n\n#weak 1.#! あなたの[faith|E]で他の信仰の県を持つ臣下には $leo_mvd_ui_dir_1$ を命じます。\n#weak 2.#! あなたの[culture|E]で他の文化の県を持つ臣下には $leo_mvd_ui_dir_2$ を命じます。\n#weak 3.#! 残りのうち、軍事的に強い者は $leo_mvd_ui_dir_9$、弱い者は $leo_mvd_ui_dir_8$。"
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
  leo_mvd_ui_preset_3_tt_nodlc: "王国を武装させ、各[vassal|E]をその強さに応じて働かせます。\n\n強い臣下は $leo_mvd_ui_dir_7$、弱い者には $leo_mvd_ui_dir_8$ を命じます。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
  leo_mvd_ui_preset_4_tt_nodlc: "何よりもまず富を築きます。\n\nすべての臣下には $leo_mvd_ui_dir_9$ を命じます。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
+ leo_mvd_ui_preset_8_tt_nodlc: "$leo_mvd_ui_preset_8_tt$"
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label; Military Strength is
- # not, because its number is a duchy-tier yardstick scaled by the vassal's rank
- # (see leo_mvd_values.txt). This tooltip is attached to that option only.
+ # Most conditions are self-explanatory from their label. Two are not, and carry
+ # a tooltip on their option only: Military Strength, because its number is a
+ # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Governor Theme, because it is the one picker that matches a value outright
+ # instead of reading as "is at least".
+ leo_mvd_ui_cond_20_tt: "下限ではなく、ひとつのテーマと正確に一致する。$admin_theme_military$を求める規則は、他のすべてのテーマに対していいえと答える。\n\n総督でない[vassal|E]にもいいえと答える。\n\n#weak テーマは総督の契約に設定されるため、これは[administrative|E]な[vassals|E]しか分類しない。#!"
  leo_mvd_ui_cond_9_tt: "この数値は[duchy|E]級の基準で、各[vassal|E]の位に応じて調整されるため、一つの設定が王国全体で意味を保ちます。大きな王国はより大きな軍を興します。\n\nこの数値に対し、[county|E]級の臣下は0.4倍、[duchy|E]級は1倍、[kingdom|E]級は3倍、[empire|E]級は8倍を求められます。\n\n#weak つまり1000という選択は、伯には400、公には1000、王には3000、皇帝には8000の兵となります。#!"
 
  ### Interactions

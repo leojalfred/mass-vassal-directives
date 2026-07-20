@@ -35,6 +35,8 @@
  leo_mvd_ui_preset_3_tt: "Arma el reino, cada [vassal|E] según su fuerza.\n\nLos vasallos fuertes aportan lo que su gobierno hace mejor: los [administrative|E] $leo_mvd_ui_dir_5$, el resto $leo_mvd_ui_dir_7$.\nA los vasallos débiles de todas partes se les ordena $leo_mvd_ui_dir_8$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
  leo_mvd_ui_preset_4: "Hacer crecer la economía"
  leo_mvd_ui_preset_4_tt: "Amasa riqueza antes que nada.\n\nA los vasallos poco desarrollados se les ordena $leo_mvd_ui_dir_3$.\nLos vasallos establecidos se dedican a $leo_mvd_ui_dir_9$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
+ leo_mvd_ui_preset_8: "Gobernar por tema"
+ leo_mvd_ui_preset_8_tt: "Asignar a cada gobernador aquello para lo que su tema ya lo hace apto.\n\n#weak 1.#! Los gobernadores $admin_theme_military$ reciben la orden de $leo_mvd_ui_dir_5$.\n#weak 2.#! Los gobernadores $admin_theme_civilian$ reciben la orden de $leo_mvd_ui_dir_3$.\n#weak 3.#! Los gobernadores $admin_theme_frontier$ reciben la orden de $leo_mvd_ui_dir_7$.\n#weak 4.#! Todo otro [vassal|E], sea gobernador o no, recibe la orden de $leo_mvd_ui_dir_9$.\n\n#weak Ignora por completo la [faith|E] y la [culture|E].#!"
  leo_mvd_ui_preset_5: "Personalizado"
  leo_mvd_ui_preset_5_tt: "Tus propias reglas, escritas abajo.\n\n#weak Elegir Personalizado aquí empieza desde cero. Para partir de un predefinido en su lugar, basta con cambiar una de sus reglas. El predefinido pasa a ser tuyo, tal como era, con tu cambio.#!"
 
@@ -42,17 +44,24 @@
  # built-ins that used them run a different flow (see the presets in
  # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
  # the presets whose flow does not change alias back to their base description.
+ # Govern by Theme is hidden outright without that DLC rather than falling back,
+ # but still needs a key here, because the Description box builds one for
+ # whichever preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "Trae a tus [vassals|E] al redil, y luego hazlos crecer.\n\n#weak 1.#! A los vasallos de tu [faith|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_1$.\n#weak 2.#! A los vasallos de tu [culture|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_2$.\n#weak 3.#! Del resto, los militarmente fuertes $leo_mvd_ui_dir_9$ y los débiles $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
  leo_mvd_ui_preset_3_tt_nodlc: "Arma el reino, cada [vassal|E] según su fuerza.\n\nLos vasallos fuertes $leo_mvd_ui_dir_7$, mientras que a los débiles se les ordena $leo_mvd_ui_dir_8$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
  leo_mvd_ui_preset_4_tt_nodlc: "Amasa riqueza antes que nada.\n\nA todos los vasallos se les ordena $leo_mvd_ui_dir_9$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
+ leo_mvd_ui_preset_8_tt_nodlc: "$leo_mvd_ui_preset_8_tt$"
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label; Military Strength is
- # not, because its number is a duchy-tier yardstick scaled by the vassal's rank
- # (see leo_mvd_values.txt). This tooltip is attached to that option only.
+ # Most conditions are self-explanatory from their label. Two are not, and carry
+ # a tooltip on their option only: Military Strength, because its number is a
+ # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Governor Theme, because it is the one picker that matches a value outright
+ # instead of reading as "is at least".
+ leo_mvd_ui_cond_20_tt: "Coincide exactamente con un tema, no con un mínimo: una regla que pide $admin_theme_military$ recibe un no de todos los demás temas.\n\nUn [vassal|E] que no es gobernador también recibe un no.\n\n#weak Los temas se fijan en el contrato de un gobernador, así que esto solo ordena a los [vassals|E] [administrative|E].#!"
  leo_mvd_ui_cond_9_tt: "La cifra es un baremo de rango [duchy|E], escalado al rango de cada [vassal|E] para que un único ajuste siga teniendo sentido en todo el reino. Los reinos mayores levantan ejércitos mayores.\n\nFrente a la cifra, a un vasallo de rango [county|E] se le pide 0.4x, a uno de rango [duchy|E] 1x, a uno de rango [kingdom|E] 3x, a uno de rango [empire|E] 8x.\n\n#weak Así, una elección de 1000 resulta en 400 tropas para un conde, 1000 para un duque, 3000 para un rey y 8000 para un emperador.#!"
 
  ### Interactions

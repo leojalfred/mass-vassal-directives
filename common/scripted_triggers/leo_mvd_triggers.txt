@@ -271,6 +271,47 @@ leo_mvd_cond_holds_trigger = {
 			}
 		}
 	}
+	# 19 - Same House as You. Narrower than condition 5: this is the one house,
+	# not the dynasty and its cadet branches. Both sides are guarded because a
+	# lowborn has no house and an unguarded scope comparison writes to the log.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 19 }
+		exists = house
+		exists = scope:leo_mvd_liege.house
+		house = scope:leo_mvd_liege.house
+	}
+	# 20 - Governor Theme is. The only condition whose picked value selects a
+	# value rather than setting a floor: themes are unordered, so this reads as
+	# equality where every other measured condition reads "is at least".
+	# vassal_contract_has_flag is a flag query on the contract, not a scope
+	# change, so it simply answers no for a vassal who is not a governor.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 20 }
+		is_governor = yes
+		trigger_if = {
+			limit = { scope:leo_mvd_thresh = 1 }
+			vassal_contract_has_flag = admin_theme_balanced
+		}
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 2 }
+			vassal_contract_has_flag = admin_theme_civilian
+		}
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 3 }
+			vassal_contract_has_flag = admin_theme_military
+		}
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 4 }
+			vassal_contract_has_flag = admin_theme_frontier
+		}
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 5 }
+			vassal_contract_has_flag = admin_theme_imperial
+		}
+		trigger_else = {
+			vassal_contract_has_flag = admin_theme_naval
+		}
+	}
 	# @AGOT:conditions@
 	# No condition picked yet: the branch is inert rather than silently true.
 	trigger_else = {

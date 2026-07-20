@@ -393,11 +393,25 @@ leo_mvd_set_cond_5 = {
 		leo_mvd_edit_effect = { FIELD = 3 VALUE = 0 }
 	}
 }
+leo_mvd_set_cond_19 = {
+	scope = character
+	effect = {
+		leo_mvd_edit_effect = { FIELD = 2 VALUE = 19 }
+		leo_mvd_edit_effect = { FIELD = 3 VALUE = 0 }
+	}
+}
 leo_mvd_set_cond_6 = {
 	scope = character
 	effect = {
 		leo_mvd_edit_effect = { FIELD = 2 VALUE = 6 }
 		leo_mvd_edit_effect = { FIELD = 3 VALUE = 0 }
+	}
+}
+leo_mvd_set_cond_20 = {
+	scope = character
+	effect = {
+		leo_mvd_edit_effect = { FIELD = 2 VALUE = 20 }
+		leo_mvd_edit_effect = { FIELD = 3 VALUE = 3 }
 	}
 }
 leo_mvd_set_cond_7 = {
@@ -481,6 +495,10 @@ leo_mvd_set_thresh_4 = {
 leo_mvd_set_thresh_5 = {
 	scope = character
 	effect = { leo_mvd_edit_effect = { FIELD = 3 VALUE = 5 } }
+}
+leo_mvd_set_thresh_6 = {
+	scope = character
+	effect = { leo_mvd_edit_effect = { FIELD = 3 VALUE = 6 } }
 }
 leo_mvd_set_thresh_10 = {
 	scope = character

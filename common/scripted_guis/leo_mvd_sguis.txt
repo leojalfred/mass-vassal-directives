@@ -88,6 +88,14 @@ leo_mvd_preset_4 = {
 	}
 }
 
+leo_mvd_preset_8 = {
+	scope = character
+	effect = {
+		leo_mvd_init_defaults_effect = yes
+		leo_mvd_select_preset_effect = { N = 8 }
+	}
+}
+
 # The player's own rules. Picking Custom from a preset starts blank; starting
 # from a preset is a different gesture - change one of its rules and
 # leo_mvd_edit_effect makes the whole thing yours.

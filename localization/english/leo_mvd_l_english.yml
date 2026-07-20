@@ -35,6 +35,8 @@
  leo_mvd_ui_preset_3_tt: "Arm the realm, each [vassal|E] to their strength.\n\nStrong vassals contribute what their government does best: [administrative|E] ones $leo_mvd_ui_dir_5$, the rest $leo_mvd_ui_dir_7$.\nWeak vassals everywhere are told to $leo_mvd_ui_dir_8$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_4: "Grow the Economy"
  leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\nUndeveloped vassals are told to $leo_mvd_ui_dir_3$.\nEstablished vassals turn to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_8: "Govern by Theme"
+ leo_mvd_ui_preset_8_tt: "Set each governor to what their theme already suits them for.\n\n#weak 1.#! $admin_theme_military$ governors are told to $leo_mvd_ui_dir_5$.\n#weak 2.#! $admin_theme_civilian$ governors are told to $leo_mvd_ui_dir_3$.\n#weak 3.#! $admin_theme_frontier$ governors are told to $leo_mvd_ui_dir_7$.\n#weak 4.#! Every other [vassal|E], governor or not, is told to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_5: "Custom"
  leo_mvd_ui_preset_5_tt: "Your own rules, written below.\n\n#weak Choosing Custom here starts from nothing. To start from a preset instead, simply change one of its rules. The preset becomes yours, as it was, with your change.#!"
 
@@ -42,17 +44,24 @@
  # built-ins that used them run a different flow (see the presets in
  # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
  # the presets whose flow does not change alias back to their base description.
+ # Govern by Theme is hidden outright without that DLC rather than falling back,
+ # but still needs a key here, because the Description box builds one for
+ # whichever preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "Bring your [vassals|E] into the fold, then grow them.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $leo_mvd_ui_dir_1$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $leo_mvd_ui_dir_2$.\n#weak 3.#! Of the rest, the militarily strong $leo_mvd_ui_dir_9$ and the weak $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
  leo_mvd_ui_preset_3_tt_nodlc: "Arm the realm, each [vassal|E] to their strength.\n\nStrong vassals $leo_mvd_ui_dir_7$, while the weak are told to $leo_mvd_ui_dir_8$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_4_tt_nodlc: "Build wealth before anything else.\n\nAll vassals are told to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_8_tt_nodlc: "$leo_mvd_ui_preset_8_tt$"
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label; Military Strength is
- # not, because its number is a duchy-tier yardstick scaled by the vassal's rank
- # (see leo_mvd_values.txt). This tooltip is attached to that option only.
+ # Most conditions are self-explanatory from their label. Two are not, and carry
+ # a tooltip on their option only: Military Strength, because its number is a
+ # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Governor Theme, because it is the one picker that matches a value outright
+ # instead of reading as "is at least".
+ leo_mvd_ui_cond_20_tt: "Matches one theme exactly, rather than a floor: a rule asking for $admin_theme_military$ is answered no by every other theme.\n\nA [vassal|E] who is not a governor is answered no as well.\n\n#weak Themes are set on a governor's contract, so this only ever sorts [administrative|E] [vassals|E].#!"
  leo_mvd_ui_cond_9_tt: "The figure is a [duchy|E]-tier yardstick, scaled to each [vassal|E]'s rank so a single setting stays meaningful across the realm. Larger realms raise larger armies.\n\nAgainst the figure a [county|E]-tier vassal is asked 0.4x, a [duchy|E]-tier one 1x, a [kingdom|E]-tier one 3x, an [empire|E]-tier one 8x.\n\n#weak So a choice of 1000 comes out to 400 troops for a count, 1000 for a duke, 3000 for a king, and 8000 for an emperor.#!"
 
  ### Interactions

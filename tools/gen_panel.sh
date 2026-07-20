@@ -99,19 +99,25 @@ dir_name() { case $1 in
 esac; }
 
 # Condition codes. Must match leo_mvd_cond_holds_trigger.
-CONDS="1 2 3 4 5 6 7 8 9 10 11 12 13 14"
+#
+# This list is also the order the panel offers them in, which is why 19 and 20
+# sit beside the questions they refine rather than at the end: Same House reads
+# next to Same Dynasty, Governor Theme next to Administrative Government. The
+# codes themselves are append-only - they are stored in player variables that
+# persist in saves, so renumbering would silently rewrite existing rule sets.
+CONDS="1 2 3 4 5 19 6 20 7 8 9 10 11 12 13 14"
 # Westeros conditions (15-18: Ironborn and three faith blocs) are boolean and
 # AGOT-only; the AGOT build injects their evaluation branches.
 if [ "$TARGET" = agot ]; then CONDS="$CONDS 15 16 17 18"; fi
 
-# Preset dropdown order: None, the four built-ins, then (AGOT build) two Westeros
-# presets, then Custom. Custom stays index 5 - the engine keys on it - so the
-# AGOT presets take 6 and 7 and slot in ahead of it.
-PRESET_RANGE="0 1 2 3 4 5"
-if [ "$TARGET" = agot ]; then PRESET_RANGE="0 1 2 3 4 6 7 5"; fi
-# 6 (Administrative Government) is left out for nomads: no nomad is
-# administrative, so it could only ever answer no.
-NOMAD_CONDS="1 2 3 4 5 7 8 9 10 11 12 13 14"
+# Preset dropdown order: None, the four built-ins, Govern by Theme, then (AGOT
+# build) two Westeros presets, then Custom. Custom stays index 5 - the engine
+# keys on it - so everything added since takes 6 and up and slots in ahead of it.
+PRESET_RANGE="0 1 2 3 4 8 5"
+if [ "$TARGET" = agot ]; then PRESET_RANGE="0 1 2 3 4 8 6 7 5"; fi
+# 6 (Administrative Government) and 20 (Governor Theme) are left out for nomads:
+# no nomad is administrative, so both could only ever answer no.
+NOMAD_CONDS="1 2 3 4 5 19 7 8 9 10 11 12 13 14"
 cond_name() { case $1 in
 	1) echo "[faith|E] is Yours" ;;
 	2) echo "[culture|E] is Yours" ;;
@@ -127,6 +133,8 @@ cond_name() { case $1 in
 	12) echo "[opinion|E] of You is at Least" ;;
 	13) echo "[counties|E] Held is at Least" ;;
 	14) echo "[cultural_acceptance|E] with You is at Least" ;;
+	19) echo "Same [house|E] as You" ;;
+	20) echo "Governor Theme is" ;;
 	15) echo "Is Ironborn" ;;
 	16) echo "Follows the Faith of the Seven" ;;
 	17) echo "Follows the Old Gods" ;;
@@ -136,10 +144,16 @@ esac; }
 # Thresholds, per numeric condition. All non-negative: a label key is built by
 # pasting the value onto a prefix at runtime, and a minus sign in a key is not
 # worth the risk.
-NUMERIC_CONDS="9 10 11 12 13 14"
+NUMERIC_CONDS="9 10 11 12 13 14 20"
 # Whether a condition takes a threshold (is measured) rather than being a plain
 # yes/no. Not the same as "code >= 9": the AGOT conditions (15-18) are numbered
 # above the numeric ones but are boolean.
+#
+# 20 (Governor Theme) rides the threshold machinery without being measured: it
+# needed one picker out of a fixed set, which is what a threshold already is.
+# Its trigger reads the value as equality rather than a floor. Being "numeric"
+# also keeps it selectable underneath itself, which is what lets one priority
+# ask about two themes in turn.
 is_numeric() { case " $NUMERIC_CONDS " in *" $1 "*) return 0 ;; *) return 1 ;; esac; }
 cond_thresh() { case $1 in
 	9)  if [ "$TARGET" = agot ]; then echo "1000 2000 4000 10000"; else echo "500 1000 2000 5000"; fi ;;
@@ -148,12 +162,13 @@ cond_thresh() { case $1 in
 	12) echo "0 25 50 75" ;;
 	13) echo "1 2 3 5 10" ;;
 	14) echo "10 25 50 75 90" ;;
+	20) echo "1 2 3 4 5 6" ;;
 esac; }
 
 # Picking a condition also sets this, so a threshold is never left at 0 - which
 # would name a label key that does not exist.
 cond_default_thresh() { case $1 in
-	9) if [ "$TARGET" = agot ]; then echo 2000; else echo 1000; fi ;; 10) echo 3 ;; 11) echo 40 ;; 12) echo 50 ;; 13) echo 3 ;; 14) echo 50 ;;
+	9) if [ "$TARGET" = agot ]; then echo 2000; else echo 1000; fi ;; 10) echo 3 ;; 11) echo 40 ;; 12) echo 50 ;; 13) echo 3 ;; 14) echo 50 ;; 20) echo 3 ;;
 	*) echo 0 ;;
 esac; }
 
@@ -163,6 +178,18 @@ thresh_label() { local c=$1 t=$2
 	10) case $t in 2) echo "[county|E]" ;; 3) echo "[duchy|E]" ;; 4) echo "[kingdom|E]" ;; 5) echo "[empire|E]" ;; esac ;;
 	14) echo "$t%" ;;
 	13) case $t in 1) echo "1 [county|E]" ;; *) echo "$t [counties|E]" ;; esac ;;
+	# The themes have no game concept, but they do have the game's own names,
+	# icon and all. Referencing those keys keeps the labels identical to the
+	# contract screen and translates them everywhere for free. Their order is
+	# the order the contract itself lists them in.
+	20) case $t in
+		1) echo "\$admin_theme_balanced\$" ;;
+		2) echo "\$admin_theme_civilian\$" ;;
+		3) echo "\$admin_theme_military\$" ;;
+		4) echo "\$admin_theme_frontier\$" ;;
+		5) echo "\$admin_theme_imperial\$" ;;
+		6) echo "\$admin_theme_naval\$" ;;
+	esac ;;
 	*)  echo "$t" ;;
 	esac
 }
@@ -215,13 +242,24 @@ vis_and() { local out=; for e in "$@"; do [ -z "$e" ] && continue
 # trigger gates administrative on - not the finer 'admin_gov', which does not
 # track DLC ownership. The nomad directives need Khans of the Steppe, but their
 # whole section is gated as a block, so they need nothing here.
+# Governor Theme (20) needs it too: themes are an administrative contract
+# option, so without the expansion the condition could only ever answer no.
 dir_dlc_vis()  { case $1 in 3|4|5) vdlc roads_to_power ;; esac; }
-cond_dlc_vis() { case $1 in 6)     vdlc roads_to_power ;; esac; }
+cond_dlc_vis() { case $1 in 6|20)  vdlc roads_to_power ;; esac; }
+# A preset is hidden outright when the DLC it is built around is missing, rather
+# than falling back the way 1/3/4 do. Govern by Theme sorts governors by their
+# theme, and without Roads to Power there are neither, so every rule it could
+# write would collapse to "everyone builds economy" - which is exactly what Grow
+# the Economy already offers. Two presets that do the same thing is worse than
+# one that is absent.
+preset_dlc_vis() { case $1 in 8) vdlc roads_to_power ;; esac; }
 
-# Explanatory tooltip for a condition option, if it needs one. Only Military
-# Strength does: its threshold is a duchy-tier baseline scaled by the vassal's
-# rank (leo_mvd_effective_threshold), which the plain label cannot convey.
-cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; esac; }
+# Explanatory tooltip for a condition option, if it needs one. Two do. Military
+# Strength's threshold is a duchy-tier baseline scaled by the vassal's rank
+# (leo_mvd_effective_threshold), which the plain label cannot convey. Governor
+# Theme picks a value rather than a floor, the one place the panel departs from
+# "is at least", so it says so.
+cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; 20) echo "leo_mvd_ui_cond_20_tt" ;; esac; }
 
 # One shared threshold picker per node serves every numeric condition, instead
 # of one hidden picker per condition (which multiplied the panel's widget count).
@@ -368,19 +406,6 @@ emit_dd_row() { local depth=$1 node=$2 id=$3 setter=$4 label=$5 vis=${6:-} tt=${
 	ind "$depth"; p "}"
 }
 
-# Whether condition <1> should be offered on a node whose parent condition lives
-# in variable <2>.
-#
-# Re-asking a yes/no question its parent already settled can only ever give the
-# same answer, so those are hidden. The measured conditions are left alone: a
-# branch of "Military Strength is at Least 1000" asking "is it at least 500?"
-# is how you carve out a middle band, and is worth keeping.
-cond_row_visible() { local c=$1 parent_var=$2
-	[ -z "$parent_var" ] && return
-	[ "$c" -ge 9 ] && return
-	echo "Not( $(veq "$parent_var" "$c") )"
-}
-
 ### One node's editor.
 
 # <1> depth <2> priority <3> node number <4> level <5> parent's cond var, if any
@@ -432,20 +457,22 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "spacing = 2"
 	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")"
 	for c in $CUR_CONDS; do
-		# cond_row_visible + cond_dlc_vis + vis_and + cond_tt inlined (hot loop). A
-		# boolean condition the parent already settled is hidden; the measured
-		# (numeric) ones are kept, so a band can be carved out. Condition 6 needs
-		# Roads to Power. Condition 9 carries the Military Strength tooltip.
+		# cond_dlc_vis + vis_and + cond_tt inlined (hot loop). Keep these cases in
+		# step with the functions above - the functions are what the rest of the
+		# generator reads, these are what the panel actually gets. A boolean
+		# condition the parent already settled is hidden; the measured (numeric)
+		# ones are kept, so a band can be carved out. Conditions 6 and 20 need
+		# Roads to Power. Conditions 9 and 20 carry tooltips.
 		local crv=
 		if [ -n "$parent_cond" ] && ! is_numeric "$c"; then
 			crv="Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('$parent_cond').GetValue, '(CFixedPoint)$c' ) )"
 		fi
-		local cdv=; [ "$c" = 6 ] && cdv="HasDlcFeature( 'roads_to_power' )"
+		local cdv=; case $c in 6|20) cdv="HasDlcFeature( 'roads_to_power' )" ;; esac
 		local cv
 		if [ -n "$crv" ] && [ -n "$cdv" ]; then cv="And( $crv, $cdv )"
 		elif [ -n "$crv" ]; then cv=$crv
 		else cv=$cdv; fi
-		local ctt=; [ "$c" = 9 ] && ctt="leo_mvd_ui_cond_9_tt"
+		local ctt=; case $c in 9) ctt="leo_mvd_ui_cond_9_tt" ;; 20) ctt="leo_mvd_ui_cond_20_tt" ;; esac
 		emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_cond" "leo_mvd_set_cond_$c" "leo_mvd_ui_cond_$c" "$cv" "$ctt"
 	done
 	emit_dd_end $((depth+1)) "${node}_cond"
@@ -462,7 +489,11 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "spacing = 2"
 	emit_dd_start $((depth+2)) "${node}_t" "$(thresh_label_dyn "leo_mvd_${node}_cond" "leo_mvd_${node}_thresh")"
-	for c in $NUMERIC_CONDS; do
+	# Only the conditions this waterfall actually offers: a value whose condition
+	# cannot be picked here could never be shown, and the nomad section leaves
+	# out Governor Theme.
+	for c in $CUR_CONDS; do
+		is_numeric "$c" || continue
 		for t in $(cond_thresh "$c"); do
 			# veq() inlined (hot loop): show a value only under its own condition.
 			emit_dd_row "$DD_ROW_DEPTH" "$node" "${node}_t" "leo_mvd_set_thresh_$t" "leo_mvd_ui_thresh_c${c}_${t}" "EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_${node}_cond').GetValue, '(CFixedPoint)$c' )"
@@ -850,6 +881,8 @@ HEAD
 		p "size = { -1 30 }"
 		p "onclick = \"$(sgui "leo_mvd_preset_${n}")\""
 		p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]\""
+		local pdv; pdv=$(preset_dlc_vis "$n")
+		[ -n "$pdv" ] && p "visible = \"[$pdv]\""
 		# Built-ins 1/3/4 describe a different flow without Roads to Power, since
 		# their administrative directives drop out (see leo_mvd_rules.txt). The
 		# _nodlc key holds that flow; presets with no such change alias it back to

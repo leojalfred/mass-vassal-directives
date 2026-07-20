@@ -35,6 +35,8 @@
  leo_mvd_ui_preset_3_tt: "武装王国，各[vassal|E]依其所长。\n\n强大的封臣贡献其政体最擅长之事：[administrative|E]者$leo_mvd_ui_dir_5$，其余$leo_mvd_ui_dir_7$。\n各地的弱小封臣被要求$leo_mvd_ui_dir_8$。\n\n#weak 完全不考虑[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_4: "发展经济"
  leo_mvd_ui_preset_4_tt: "凡事以积累财富为先。\n\n欠发达的封臣被要求$leo_mvd_ui_dir_3$。\n已发达的封臣转向$leo_mvd_ui_dir_9$。\n\n#weak 完全不考虑[faith|E]与[culture|E]。#!"
+ leo_mvd_ui_preset_8: "按主题治理"
+ leo_mvd_ui_preset_8_tt: "让每位总督去做其主题本就擅长的事。\n\n#weak 1.#! $admin_theme_military$总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! $admin_theme_civilian$总督受命$leo_mvd_ui_dir_3$。\n#weak 3.#! $admin_theme_frontier$总督受命$leo_mvd_ui_dir_7$。\n#weak 4.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_5: "自定义"
  leo_mvd_ui_preset_5_tt: "你自己的规则，写在下方。\n\n#weak 在此选择自定义将从零开始。若想改从某个预设起步，只需更改其中一条规则即可。该预设便会成为你的，保持原样，并带上你的更改。#!"
 
@@ -42,17 +44,24 @@
  # built-ins that used them run a different flow (see the presets in
  # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
  # the presets whose flow does not change alias back to their base description.
+ # Govern by Theme is hidden outright without that DLC rather than falling back,
+ # but still needs a key here, because the Description box builds one for
+ # whichever preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "先将你的[vassals|E]纳入麾下，再让他们壮大。\n\n#weak 1.#! 与你同[faith|E]、却持有他信仰领地的封臣，被要求$leo_mvd_ui_dir_1$。\n#weak 2.#! 与你同[culture|E]、却持有他文化领地的封臣，被要求$leo_mvd_ui_dir_2$。\n#weak 3.#! 其余封臣中，军事强大者$leo_mvd_ui_dir_9$，弱小者$leo_mvd_ui_dir_8$。"
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
  leo_mvd_ui_preset_3_tt_nodlc: "武装王国，各[vassal|E]依其所长。\n\n强大的封臣$leo_mvd_ui_dir_7$，而弱小者被要求$leo_mvd_ui_dir_8$。\n\n#weak 完全不考虑[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_4_tt_nodlc: "凡事以积累财富为先。\n\n所有封臣被要求$leo_mvd_ui_dir_9$。\n\n#weak 完全不考虑[faith|E]与[culture|E]。#!"
+ leo_mvd_ui_preset_8_tt_nodlc: "$leo_mvd_ui_preset_8_tt$"
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label; Military Strength is
- # not, because its number is a duchy-tier yardstick scaled by the vassal's rank
- # (see leo_mvd_values.txt). This tooltip is attached to that option only.
+ # Most conditions are self-explanatory from their label. Two are not, and carry
+ # a tooltip on their option only: Military Strength, because its number is a
+ # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Governor Theme, because it is the one picker that matches a value outright
+ # instead of reading as "is at least".
+ leo_mvd_ui_cond_20_tt: "精确匹配某一主题，而非设定下限：要求$admin_theme_military$的规则对其他所有主题均答否。\n\n并非总督的[vassal|E]同样答否。\n\n#weak 主题设定于总督的契约之上，故此项仅能区分[administrative|E][vassals|E]。#!"
  leo_mvd_ui_cond_9_tt: "该数值是一个[duchy|E]级的基准，按每个[vassal|E]的头衔等级缩放，使单一设置在整个王国内始终有意义。更大的王国能募集更庞大的军队。\n\n以该数值为基准，一个[county|E]级封臣被要求0.4倍，[duchy|E]级为1倍，[kingdom|E]级为3倍，[empire|E]级为8倍。\n\n#weak 因此选择1000，对伯爵而言为400兵力，对公爵为1000，对国王为3000，对皇帝为8000。#!"
 
  ### Interactions

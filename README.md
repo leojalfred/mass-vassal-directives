@@ -31,15 +31,16 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 | **Unify the Realm**     | Converts harder, at the cost of growth. Cultural acceptance grinds down what conversion cannot.     |
 | **Prepare for War**     | Arms the realm, each vassal to their strength. Ignores faith and culture.                           |
 | **Grow the Economy**    | Wealth first: the undeveloped develop, the established build. Ignores faith and culture.            |
+| **Govern by Theme**     | Each governor does what their theme suits them for; everyone else builds economy.                   |
 | **Custom**              | Your own rules, up to six priorities plus three for nomads.                                         |
 
 **A preset is a starting point, not a take-it-or-leave-it.** Change any of its rules and the whole thing becomes yours, exactly as it was, plus your change. Suiting one to your realm costs a click rather than a rebuild. Picking Custom outright starts you from nothing instead. Your own rules are kept aside while a preset is loaded, so trying one never costs you your waterfall.
 
 ### Conditions
 
-Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Administrative Government · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You
+Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Same House as You · Administrative Government · Governor Theme · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You
 
-Every measured condition reads the same way (**"is at least"**), so the true branch is always the high side. Military Strength is the exception worth knowing: the number you pick is the **duchy baseline**, and it scales by title tier so it stays meaningful at every realm size (counts ×0.4, dukes ×1, kings ×3, emperors ×8; tunable in `common/script_values/leo_mvd_values.txt`). Administrative Government appears only with _Roads to Power_.
+Every measured condition reads the same way (**"is at least"**), so the true branch is always the high side. Two are worth knowing about. Military Strength's number is the **duchy baseline**, and it scales by title tier so it stays meaningful at every realm size (counts ×0.4, dukes ×1, kings ×3, emperors ×8; tunable in `common/script_values/leo_mvd_values.txt`). Governor Theme is the one exception to "is at least": it matches a single theme outright, so a rule asking for Military Administration is answered no by every other theme, and by every vassal who is not a governor. Administrative Government and Governor Theme appear only with _Roads to Power_.
 
 ## Using the mod
 

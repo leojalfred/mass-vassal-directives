@@ -35,6 +35,8 @@
  leo_mvd_ui_preset_3_tt: "Uzbrój królestwo, każdego [vassal|E] wedle jego siły.\n\nSilni wasale wnoszą to, w czym ich rząd jest najlepszy: [administrative|E] $leo_mvd_ui_dir_5$, pozostali $leo_mvd_ui_dir_7$.\nSłabi wasale wszędzie otrzymują rozkaz: $leo_mvd_ui_dir_8$.\n\n#weak Całkowicie pomija [faith|E] i [culture|E].#!"
  leo_mvd_ui_preset_4: "Rozwijaj gospodarkę"
  leo_mvd_ui_preset_4_tt: "Buduj bogactwo przed wszystkim innym.\n\nNierozwinięci wasale otrzymują rozkaz: $leo_mvd_ui_dir_3$.\nUstabilizowani wasale przechodzą do $leo_mvd_ui_dir_9$.\n\n#weak Całkowicie pomija [faith|E] i [culture|E].#!"
+ leo_mvd_ui_preset_8: "Rządy według motywu"
+ leo_mvd_ui_preset_8_tt: "Przydziel każdemu namiestnikowi to, do czego jego motyw i tak go predysponuje.\n\n#weak 1.#! Namiestnicy $admin_theme_military$ otrzymują polecenie $leo_mvd_ui_dir_5$.\n#weak 2.#! Namiestnicy $admin_theme_civilian$ otrzymują polecenie $leo_mvd_ui_dir_3$.\n#weak 3.#! Namiestnicy $admin_theme_frontier$ otrzymują polecenie $leo_mvd_ui_dir_7$.\n#weak 4.#! Każdy inny [vassal|E], namiestnik czy nie, otrzymuje polecenie $leo_mvd_ui_dir_9$.\n\n#weak Całkowicie ignoruje [faith|E] i [culture|E].#!"
  leo_mvd_ui_preset_5: "Własny"
  leo_mvd_ui_preset_5_tt: "Twoje własne zasady, spisane poniżej.\n\n#weak Wybranie tutaj opcji Własny zaczyna od zera. Aby zacząć od szablonu, po prostu zmień jedną z jego zasad. Szablon staje się twój, taki jak był, wraz z twoją zmianą.#!"
 
@@ -42,17 +44,24 @@
  # built-ins that used them run a different flow (see the presets in
  # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
  # the presets whose flow does not change alias back to their base description.
+ # Govern by Theme is hidden outright without that DLC rather than falling back,
+ # but still needs a key here, because the Description box builds one for
+ # whichever preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "Sprowadź [vassals|E] na łono, a potem rozwijaj ich.\n\n#weak 1.#! Wasale twojej [faith|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_1$.\n#weak 2.#! Wasale twojej [culture|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_2$.\n#weak 3.#! Spośród pozostałych, silni militarnie $leo_mvd_ui_dir_9$, a słabi $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
  leo_mvd_ui_preset_3_tt_nodlc: "Uzbrój królestwo, każdego [vassal|E] wedle jego siły.\n\nSilni wasale $leo_mvd_ui_dir_7$, podczas gdy słabi otrzymują rozkaz: $leo_mvd_ui_dir_8$.\n\n#weak Całkowicie pomija [faith|E] i [culture|E].#!"
  leo_mvd_ui_preset_4_tt_nodlc: "Buduj bogactwo przed wszystkim innym.\n\nWszyscy wasale otrzymują rozkaz: $leo_mvd_ui_dir_9$.\n\n#weak Całkowicie pomija [faith|E] i [culture|E].#!"
+ leo_mvd_ui_preset_8_tt_nodlc: "$leo_mvd_ui_preset_8_tt$"
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label; Military Strength is
- # not, because its number is a duchy-tier yardstick scaled by the vassal's rank
- # (see leo_mvd_values.txt). This tooltip is attached to that option only.
+ # Most conditions are self-explanatory from their label. Two are not, and carry
+ # a tooltip on their option only: Military Strength, because its number is a
+ # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Governor Theme, because it is the one picker that matches a value outright
+ # instead of reading as "is at least".
+ leo_mvd_ui_cond_20_tt: "Dopasowuje dokładnie jeden motyw, a nie próg: reguła pytająca o $admin_theme_military$ otrzymuje nie od każdego innego motywu.\n\n[vassal|E], który nie jest namiestnikiem, również otrzymuje nie.\n\n#weak Motywy ustala się w kontrakcie namiestnika, więc porządkuje to wyłącznie [administrative|E] [vassals|E].#!"
  leo_mvd_ui_cond_9_tt: "Ta liczba to miernik na poziomie [duchy|E], skalowany do rangi każdego [vassal|E], aby jedno ustawienie zachowało sens w całym królestwie. Większe królestwa wystawiają większe armie.\n\nWzględem tej liczby [county|E]-rangi wasal proszony jest o 0.4x, [duchy|E]-rangi o 1x, [kingdom|E]-rangi o 3x, a [empire|E]-rangi o 8x.\n\n#weak Zatem wybór 1000 daje 400 żołnierzy dla hrabiego, 1000 dla księcia, 3000 dla króla i 8000 dla cesarza.#!"
 
  ### Interactions

@@ -35,6 +35,8 @@
  leo_mvd_ui_preset_3_tt: "각 [vassal|E]의 무력에 맞춰 왕국을 무장시킵니다.\n\n강한 봉신은 자신의 정부가 가장 잘하는 것으로 기여합니다. [administrative|E]는 $leo_mvd_ui_dir_5$, 나머지는 $leo_mvd_ui_dir_7$.\n어디서든 약한 봉신에게는 $leo_mvd_ui_dir_8$을(를) 지시합니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
  leo_mvd_ui_preset_4: "경제 성장"
  leo_mvd_ui_preset_4_tt: "무엇보다 먼저 부를 쌓습니다.\n\n미개발 봉신에게는 $leo_mvd_ui_dir_3$을(를) 지시합니다.\n자리를 잡은 봉신은 $leo_mvd_ui_dir_9$(으)로 돌아섭니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
+ leo_mvd_ui_preset_8: "테마별 통치"
+ leo_mvd_ui_preset_8_tt: "각 총독에게 해당 테마가 이미 어울리는 임무를 맡깁니다.\n\n#weak 1.#! $admin_theme_military$ 총독은 $leo_mvd_ui_dir_5$ 지시를 받습니다.\n#weak 2.#! $admin_theme_civilian$ 총독은 $leo_mvd_ui_dir_3$ 지시를 받습니다.\n#weak 3.#! $admin_theme_frontier$ 총독은 $leo_mvd_ui_dir_7$ 지시를 받습니다.\n#weak 4.#! 그 외 모든 [vassal|E]은 총독 여부와 관계없이 $leo_mvd_ui_dir_9$ 지시를 받습니다.\n\n#weak [faith|E]와 [culture|E]는 전혀 고려하지 않습니다.#!"
  leo_mvd_ui_preset_5: "커스텀"
  leo_mvd_ui_preset_5_tt: "아래에 작성한 당신만의 규칙입니다.\n\n#weak 여기서 커스텀을 선택하면 아무것도 없는 상태에서 시작합니다. 대신 프리셋에서 시작하려면 그 규칙 중 하나를 바꾸기만 하면 됩니다. 그러면 프리셋은 원래 모습 그대로, 당신의 변경 사항이 더해진 당신의 것이 됩니다.#!"
 
@@ -42,17 +44,24 @@
  # built-ins that used them run a different flow (see the presets in
  # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
  # the presets whose flow does not change alias back to their base description.
+ # Govern by Theme is hidden outright without that DLC rather than falling back,
+ # but still needs a key here, because the Description box builds one for
+ # whichever preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "[vassals|E]을(를) 품 안에 들인 뒤 성장시킵니다.\n\n#weak 1.#! 당신의 [faith|E]을(를) 따르면서 다른 신앙의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_1$을(를) 지시합니다.\n#weak 2.#! 당신의 [culture|E]을(를) 따르면서 다른 문화의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_2$을(를) 지시합니다.\n#weak 3.#! 나머지 중 군사적으로 강한 자는 $leo_mvd_ui_dir_9$, 약한 자는 $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
  leo_mvd_ui_preset_3_tt_nodlc: "각 [vassal|E]의 무력에 맞춰 왕국을 무장시킵니다.\n\n강한 봉신은 $leo_mvd_ui_dir_7$, 약한 자에게는 $leo_mvd_ui_dir_8$을(를) 지시합니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
  leo_mvd_ui_preset_4_tt_nodlc: "무엇보다 먼저 부를 쌓습니다.\n\n모든 봉신에게 $leo_mvd_ui_dir_9$을(를) 지시합니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
+ leo_mvd_ui_preset_8_tt_nodlc: "$leo_mvd_ui_preset_8_tt$"
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label; Military Strength is
- # not, because its number is a duchy-tier yardstick scaled by the vassal's rank
- # (see leo_mvd_values.txt). This tooltip is attached to that option only.
+ # Most conditions are self-explanatory from their label. Two are not, and carry
+ # a tooltip on their option only: Military Strength, because its number is a
+ # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Governor Theme, because it is the one picker that matches a value outright
+ # instead of reading as "is at least".
+ leo_mvd_ui_cond_20_tt: "최소값이 아니라 하나의 테마와 정확히 일치합니다. $admin_theme_military$를 요구하는 규칙은 다른 모든 테마에 아니오로 답합니다.\n\n총독이 아닌 [vassal|E]에게도 아니오로 답합니다.\n\n#weak 테마는 총독의 계약에 설정되므로, 이 조건은 [administrative|E] [vassals|E]만 분류합니다.#!"
  leo_mvd_ui_cond_9_tt: "이 수치는 [duchy|E] 등급을 기준으로 한 척도로, 각 [vassal|E]의 등급에 맞춰 조정되어 하나의 설정이 왕국 전역에서 의미를 유지하도록 합니다. 큰 왕국일수록 더 큰 군대를 일으킵니다.\n\n이 수치에 대해 [county|E] 등급 봉신에게는 0.4배, [duchy|E] 등급에게는 1배, [kingdom|E] 등급에게는 3배, [empire|E] 등급에게는 8배를 요구합니다.\n\n#weak 따라서 1000을 선택하면 백작에게는 400명, 공작에게는 1000명, 왕에게는 3000명, 황제에게는 8000명의 병력이 됩니다.#!"
 
  ### Interactions

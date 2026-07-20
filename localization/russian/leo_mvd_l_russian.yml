@@ -35,6 +35,8 @@
  leo_mvd_ui_preset_3_tt: "Вооружите державу, каждого [vassal|E] по его силе.\n\nСильные вассалы дают то, что их правительство умеет лучше всего: [administrative|E] $leo_mvd_ui_dir_5$, остальные $leo_mvd_ui_dir_7$.\nСлабым вассалам повсюду велено $leo_mvd_ui_dir_8$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
  leo_mvd_ui_preset_4: "Развивать экономику"
  leo_mvd_ui_preset_4_tt: "Наживайте богатство прежде всего прочего.\n\nНеразвитым вассалам велено $leo_mvd_ui_dir_3$.\nСостоявшиеся вассалы обращаются к $leo_mvd_ui_dir_9$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
+ leo_mvd_ui_preset_8: "Управление по темам"
+ leo_mvd_ui_preset_8_tt: "Поручить каждому губернатору то, к чему его тема и без того располагает.\n\n#weak 1.#! Губернаторы с темой $admin_theme_military$ получают приказ $leo_mvd_ui_dir_5$.\n#weak 2.#! Губернаторы с темой $admin_theme_civilian$ получают приказ $leo_mvd_ui_dir_3$.\n#weak 3.#! Губернаторы с темой $admin_theme_frontier$ получают приказ $leo_mvd_ui_dir_7$.\n#weak 4.#! Любой другой [vassal|E], губернатор или нет, получает приказ $leo_mvd_ui_dir_9$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
  leo_mvd_ui_preset_5: "Свой"
  leo_mvd_ui_preset_5_tt: "Ваши собственные правила, заданные ниже.\n\n#weak Выбор «Свой» здесь начинает с чистого листа. Чтобы начать с шаблона, просто измените одно из его правил. Шаблон станет вашим, каким был, но с вашим изменением.#!"
 
@@ -42,17 +44,24 @@
  # built-ins that used them run a different flow (see the presets in
  # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
  # the presets whose flow does not change alias back to their base description.
+ # Govern by Theme is hidden outright without that DLC rather than falling back,
+ # but still needs a key here, because the Description box builds one for
+ # whichever preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "Приведите своих [vassals|E] в лоно, затем развивайте их.\n\n#weak 1.#! Вассалам вашей [faith|E], владеющим графствами иной, велено $leo_mvd_ui_dir_1$.\n#weak 2.#! Вассалам вашей [culture|E], владеющим графствами иной, велено $leo_mvd_ui_dir_2$.\n#weak 3.#! Из остальных военно сильные $leo_mvd_ui_dir_9$, а слабые $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
  leo_mvd_ui_preset_3_tt_nodlc: "Вооружите державу, каждого [vassal|E] по его силе.\n\nСильные вассалы $leo_mvd_ui_dir_7$, а слабым велено $leo_mvd_ui_dir_8$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
  leo_mvd_ui_preset_4_tt_nodlc: "Наживайте богатство прежде всего прочего.\n\nВсем вассалам велено $leo_mvd_ui_dir_9$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
+ leo_mvd_ui_preset_8_tt_nodlc: "$leo_mvd_ui_preset_8_tt$"
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label; Military Strength is
- # not, because its number is a duchy-tier yardstick scaled by the vassal's rank
- # (see leo_mvd_values.txt). This tooltip is attached to that option only.
+ # Most conditions are self-explanatory from their label. Two are not, and carry
+ # a tooltip on their option only: Military Strength, because its number is a
+ # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Governor Theme, because it is the one picker that matches a value outright
+ # instead of reading as "is at least".
+ leo_mvd_ui_cond_20_tt: "Совпадает ровно с одной темой, а не задаёт нижнюю границу: правило, требующее $admin_theme_military$, получает отказ от всех прочих тем.\n\n[vassal|E], не являющийся губернатором, также получает отказ.\n\n#weak Темы задаются в договоре губернатора, поэтому так сортируются только [administrative|E] [vassals|E].#!"
  leo_mvd_ui_cond_9_tt: "Число — это мерило уровня [duchy|E], масштабируемое под ранг каждого [vassal|E], чтобы одна настройка оставалась осмысленной по всей державе. Крупные державы поднимают крупные армии.\n\nОт этого числа с вассала уровня [county|E] спрашивается 0.4x, с уровня [duchy|E] — 1x, с уровня [kingdom|E] — 3x, с уровня [empire|E] — 8x.\n\n#weak Так, выбор 1000 даёт 400 воинов для графа, 1000 для герцога, 3000 для короля и 8000 для императора.#!"
 
  ### Interactions
