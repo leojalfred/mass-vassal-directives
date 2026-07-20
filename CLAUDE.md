@@ -20,7 +20,9 @@ bash tools/gen_panel.sh        # ~20s, refreshes the repo-root (vanilla) files
 
 That includes layout tweaks — margins and the window skeleton live in the generator too. It builds to a temp dir, brace-checks, and only then moves files into place, so a failed run leaves the real ones alone. The generator is target-aware (`TARGET=vanilla|agot`, `OUTDIR=<dir>`); run bare like this it writes the vanilla files at the repo root, and `tools/build.sh` invokes it once per target (see below). After a generator change, run it bare to keep the committed repo-root files current, then run `build.sh` to produce and check both mods.
 
-Why generated: the editor is the same widgets repeated per node, differing only in the variable they bind to, and GUI cannot factor that out — `blockoverride` cannot parameterize a variable name inside a binding.
+Why generated: the editor is the same widgets repeated per node, differing only in the variable they bind to, and `blockoverride` cannot parameterize a variable name inside a binding.
+
+**That rationale is only half true, and the half that is false matters.** `blockoverride` cannot do it, but a `datamodel` can: a GUI binding may build a variable name at runtime, so one `item` template can serve every node and every option (see "The limits that explain the design"). What genuinely cannot be factored out is the *script* side — `leo_mvd_write_field_effect`'s 63-way dispatch — because a script variable name really is parse-time. So the generator's remaining job is smaller than it looks, and repetition in the `.gui` is a cost, not a necessity: the panel is created at startup and its first-open hitch scales with widget count.
 
 ## Two mods from one source
 
@@ -46,23 +48,41 @@ The mod ships every language CK3 officially supports (english, french, german, s
 
 AGOT-only loc lives in overlay files, `agot/files/localization/<lang>/leo_mvd_agot_l_<lang>.yml`, one per language, shipped only to `dist/agot`. English is split: the AGOT condition/directive/threshold labels come out of the generator (into the AGOT `leo_mvd_ui_l_english.yml`), while the exempt marker and the extra presets are hand-written in the English overlay. The **translated** overlays carry *both* sets — the generator only ever writes English, so every AGOT-specific key a non-English game needs must be hand-translated into its overlay (which is why the translated overlays hold more keys than the English one; repeating the generator's English keys there would just duplicate them). The build adds the BOM to every overlay loc file for you.
 
-## Four limits that explain the whole design
+## The limits that explain the design
 
-Every odd-looking decision here follows from one of these. All confirmed, none guessable from the code:
+Every odd-looking decision here follows from one of these.
+
+### Real, and they are script-side
 
 1. **Scripted effects cannot recurse.** So the rule tree is capped at two levels of conditions and the walk is unrolled by hand, one effect per level (`leo_mvd_eval_root_effect` → `_mid_` → `_leaf_`).
-2. **A variable name cannot be built at runtime.** `$X$` is a parse-time text macro. So rules live in fixed node slots reached by macro expansion with literal names — hence the hand-written 63-way dispatch in `leo_mvd_write_field_effect`.
+2. **A *script* variable name cannot be built at runtime.** `$X$` is a parse-time text macro. So rules live in fixed node slots reached by macro expansion with literal names — hence the hand-written 63-way dispatch in `leo_mvd_write_field_effect`. This one is genuinely immovable, and it is why that dispatch has to exist at all. It is also the only reason left that anything is generated.
 3. **A condition cannot be chosen at runtime.** So the condition and directive chains are written **once** and driven by a value staged into a temporary scope (`scope:leo_mvd_cond_id`, `scope:leo_mvd_thresh`, `scope:leo_mvd_dir_id`), rather than duplicated into all 63 nodes.
-4. **GUI cannot pass a number to script.** Only `GuiScope.SetRoot` and `AddScope` exist, both scope-only. So choosing an option runs **two scripted GUIs in order**: a focus that points `leo_mvd_edit_node` at the node, then a set that writes to whatever it points at.
+4. **GUI has no string comparison.** Only `Select_CString` (a selector) exists — there is no `IsEqual_CString` or equivalent anywhere in vanilla. So a datamodel item's identity, which is a string, can never be compared against a number held in a variable. Work around it by having script pre-build one list per case and letting GUI pick the list by name, rather than filtering rows in the GUI.
+
+### Two former "limits" that are false, and were load-bearing for the generator
+
+Both were verified wrong in game, with working probes. They are recorded here because the whole panel is generated on the strength of them, and anyone reading the old note would rebuild the same thing.
+
+- **A variable name in a *GUI binding* CAN be built at runtime.** `Var()` and `GetList()` both accept a computed `CString`, not just a literal. Vanilla does it: `Story.MakeScope.Var( StoryCycleVariableVisualization.GetVariableName )` (`window_situation_list.gui:741`) and `GetList( ... GetVariableName )` (`:1071`). Combined with `Concatenate`, one widget can bind a different variable per datamodel item. The old note said `blockoverride` cannot parameterize a variable name inside a binding — that is true of `blockoverride` and irrelevant, because the answer is a datamodel, not `blockoverride`.
+- **GUI CAN pass a number to script.** `MakeScopeValue`, `MakeScopeFlag` and `MakeScopeBool` exist alongside `AddScope`, and arrive script-side as `scope:name`. Verified working, despite having zero vanilla call sites. `GetScriptedGui()` also accepts a **computed** name, so an option row can dispatch to `leo_mvd_set_cond_5` without that string appearing anywhere in the file.
+
+### What follows from that
+
+A dropdown's options do not need to be literal widgets. Script keeps a `variable_list` of flags named after the loc-key suffix they carry, GUI iterates it with a `datamodel`, and one `item` template serves every option: the label is `Localize(Concatenate('leo_mvd_ui_', Scope.GetFlagName))` and the click is `GetScriptedGui(Concatenate('leo_mvd_set_', Scope.GetFlagName))`. Point the `datamodel` at a list name that was never created and the rows do not just hide, they **cease to exist** — which is how an unopened dropdown can cost nothing. DLC gating moves out of per-row `HasDlcFeature` bindings and into which entries script puts in the list.
 
 ## GUI facts worth not rediscovering
 
 - **Reading script state needs no scripted GUI.** `.Var('x').GetValue` is a **CFixedPoint**: `EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('x').GetValue, '(CFixedPoint)5' )`. Literals must be cast-and-quoted. Drives `visible`, and `frame` via `BoolTo1And2`.
 - **A label can be built from a value**: `Localize(Concatenate('prefix_', IntToString(FixedPointToInt(Var('x').GetValue))))`. This is what makes the dropdowns affordable. **Every value a variable can hold needs a key** — including `0`, which is what an unset node reads.
 - **Multiple `onclick` lines work and run in order.** `"[A][B]"` chaining does not exist.
-- **No floating popups.** Draw order is tree order, there's no z-index for non-window widgets, and no datafunction returns a widget's position. Dropdowns open in flow. Don't retry this; see the generator's comment.
+- **No floating popups.** Draw order is tree order, there's no z-index for non-window widgets, and no datafunction returns a widget's position. Dropdowns open in flow. Don't retry this; see the generator's comment. (Vanilla's native `dropDown` widget, `gui/shared/lists.gui:755`, does position its own list — but its items come from a `datamodel`, so it only helps where the options are data.)
 - **`margin` is padding inside a widget**, and an expanding widget is still stretched to its parent's width — to make a box narrower, put the inset on a parent. A hidden widget takes no space.
+- **A widget that overflows its window still draws, but stops being clickable.** The window's input area ends at its own edge, so an over-long list looks fine and silently does nothing. Inside the panel the scrollbox clips instead, which is why this only bites on new windows.
+- **An empty loc value renders no tooltip at all**, not an empty box. So a runtime-built tooltip key can exist for every option and simply be blank where there is nothing worth saying.
+- **`visible = no` does not prevent instantiation, only rendering and layout.** The engine property `visible_at_creation` exists precisely because widgets are created while hidden. Hiding a subtree therefore saves nothing at load; only deleting it does.
+- **The panel is created at game start, not on first open.** `gui/scripted_widgets/` means "create this widget on startup" (`_scripted_widgets.info`). So the first-open hitch is the first *layout and text-shaping* pass over the whole tree, which is why widget **count** is the thing that matters.
 - **All `.txt`/`.gui`/`.yml` need a UTF-8 BOM. `descriptor.mod` must NOT have one.**
+- **Script variables and flags that only GUI ever reads trip the validator.** `-debug_mode` logs "set but is never used", because it scans script only and does not count GUI or localization. Keep `error.log` clean by referencing them from a scripted trigger that something actually calls.
 
 ## Adding things
 
