@@ -120,7 +120,7 @@ Have the user test **both** where a change can affect both: load `dist/vanilla` 
 
 **Things static checks cannot catch, so ask for them to be tested:** anything reached only by a macro-built name; a loc key built at runtime; whether a directive thrashes month to month (assign, advance, confirm it stays).
 
-**After a CK3 or AGOT patch, run the compatibility harness** rather than checking from memory. `bash tools/compat_check.sh` asserts every vanilla and AGOT name the mod leans on against the installed game files (override `GAME_DIR`/`AGOT_DIR` if the install moved); a FAIL means a patch renamed or removed something the mod mirrors. `tools/compat_ingame.sh` injects a one-dropdown runtime check into a built dist for the GUI tricks a file scan cannot see (a datamodel over a script list, names built from a flag). When a change adds a new vanilla dependency (a trigger, a flag, a concept, an overridden function), add a line for it to `compat_check.sh` so the next patch is checked, not remembered.
+**After a CK3 or AGOT patch, run the compatibility harness** rather than checking from memory. `bash tools/check_compat_static.sh` asserts every vanilla and AGOT name the mod leans on against the installed game files (override `GAME_DIR`/`AGOT_DIR` if the install moved); a FAIL means a patch renamed or removed something the mod mirrors. `tools/check_compat_ingame.sh` injects a one-dropdown runtime check into a built dist for the GUI tricks a file scan cannot see (a datamodel over a script list, names built from a flag). When a change adds a new vanilla dependency (a trigger, a flag, a concept, an overridden function), add a line for it to `check_compat_static.sh` so the next patch is checked, not remembered.
 
 ## Conventions
 

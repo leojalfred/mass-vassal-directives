@@ -6,15 +6,15 @@
 # or removed something the mod mirrors, a line here turns FAIL and points at what
 # broke, instead of finding out from a player.
 #
-#   bash tools/compat_check.sh
-#   GAME_DIR=/path/to/game AGOT_DIR=/path/to/agot bash tools/compat_check.sh
+#   bash tools/check_compat_static.sh
+#   GAME_DIR=/path/to/game AGOT_DIR=/path/to/agot bash tools/check_compat_static.sh
 #
 # Two kinds of check. A "def" is strong: a specific definition must exist in a
 # specific corner of the game files, and a miss is a FAIL. A "use" is a proxy for
 # an engine built-in that has no definition file (a trigger like
 # max_military_strength, a datafunction like GetScriptedGui): the best a file
 # scan can do is confirm vanilla still references it, so a miss is a WARN worth a
-# look, not a certain break. The in-game check (tools/compat_ingame.sh) is what
+# look, not a certain break. The in-game check (tools/check_compat_ingame.sh) is what
 # actually exercises the built-ins at runtime.
 #
 # Exit status is non-zero if any def FAILs. WARNs do not fail the run.

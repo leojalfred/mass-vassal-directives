@@ -2,9 +2,9 @@
 # The in-game half of the compatibility harness: inject the runtime check into a
 # built mod, or remove it.
 #
-# tools/compat_check.sh is the primary tool and runs against files in seconds.
+# tools/check_compat_static.sh is the primary tool and runs against files in seconds.
 # This one covers what a file scan cannot: that the panel's GUI mechanisms still
-# work when composed at runtime. Reach for it after compat_check.sh passes but
+# work when composed at runtime. Reach for it after check_compat_static.sh passes but
 # something still misbehaves in game, or on a major patch where you want to see
 # the tricks run rather than trust that the names are enough.
 #
@@ -13,9 +13,9 @@
 # accident. This script puts it into a dist so the game loads it, and takes it
 # back out. Re-running build.sh also wipes it.
 #
-#   bash tools/compat_ingame.sh            inject into dist/vanilla
-#   bash tools/compat_ingame.sh dist/agot  inject into another build
-#   bash tools/compat_ingame.sh --remove   take it back out
+#   bash tools/check_compat_ingame.sh            inject into dist/vanilla
+#   bash tools/check_compat_ingame.sh dist/agot  inject into another build
+#   bash tools/check_compat_ingame.sh --remove   take it back out
 set -euo pipefail
 
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
@@ -61,4 +61,4 @@ echo "runtime check injected into $TARGET"
 echo "load that build with -debug_mode. A window appears top-left: press Build,"
 echo "open the dropdown, click a row. Rows should read real condition names and"
 echo "the picked code should match what you click. Watch error.log for"
-echo "leo_mvd_compat, then run tools/compat_ingame.sh --remove (or tools/build.sh)."
+echo "leo_mvd_compat, then run tools/check_compat_ingame.sh --remove (or tools/build.sh)."
