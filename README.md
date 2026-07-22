@@ -69,12 +69,36 @@ Settings are stored per playthrough and carry over to your heir on succession.
 
 ## Updating after game patches
 
-A few files mirror or copy vanilla content and should be re-diffed against the game files after each CK3 patch (each is commented with what to compare):
+Three steps after each CK3 (or A Game of Thrones) patch, in order. The first is automatic; the other two catch what a name check cannot.
+
+### 1. Check the names
+
+```
+bash tools/check_compat_static.sh
+```
+
+This asserts every vanilla and AGOT name the mod relies on still exists in the installed game files (set `GAME_DIR` / `AGOT_DIR` if your install is elsewhere). A FAIL is something the patch renamed or removed; fix it before shipping. It checks names only: a name that still exists but changed meaning passes here, which is what steps 2 and 3 are for.
+
+### 2. Re-diff the vanilla mirrors
+
+A few files copy or mirror vanilla content that can change meaning without changing its name. Re-diff each against the game files (every one is commented with what to compare):
 
 - `common/scripted_triggers/leo_mvd_triggers.txt`: mirrors `give_vassal_directive_interaction`'s eligibility and its per-directive gates (`game/common/character_interactions/00_vassal_interactions.txt:3420+`). `leo_mvd_directive_shown_trigger` is the one copy of vanilla's is_shown, used by both the rules and the exempt interaction.
 - `common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt`: a by-name override of vanilla's `vassal_directive_icon` and `vassal_directive_text` (from `game/common/customizable_localization/00_vassal_custom_loc.txt`), each vanilla entry paired with an exempt twin. Re-diff those two functions after a patch; a new directive means new twins.
 - `gui/leo_mvd_panel.gui`: latches onto the vanilla Subjects-tab directives button and its `mass_directives_window` GUI variable (`game/gui/window_my_realm.gui`); confirm that button and variable still exist. Also carries copies of vanilla's `button_drop` and `button_dropdown` (`game/gui/shared/buttons.gui`).
 - `gui/leo_mvd_texticons.gui`: gray and inline-sized twins of the vanilla directive texticons (`game/gui/texticons.gui`); confirm the source textures still exist.
+
+### 3. Smoke-test the built mod
+
+The smallest set of in-game steps that catches everything the static check and re-diff cannot. Load `dist/vanilla` with `-debug_mode`, ideally an administrative realm with _Roads to Power_ so the DLC-gated content is exercised, and in one session:
+
+- Open **Realm → Subjects** and click the directives button. The panel appears and sits fully on screen. (Catches a reworked HUD or Realm window hiding or occluding it.)
+- Open a **condition dropdown**. Real condition names fill it; pick one and it applies. (This single action exercises the whole panel mechanism: the data-driven option lists, the runtime-built labels, and the click that writes the value.)
+- Choose a **preset**, then **Apply Now**. Directives assign to eligible vassals. Advance about three months: they **stay**, and none flip on and off. (A directive that assigns then vanishes the next month means the per-directive gates in `leo_mvd_triggers.txt` no longer match vanilla's `send_option`s, which step 2 is where you fix.)
+- **Exempt** a vassal (right-click their portrait). Its directive icon dims.
+- `logs/error.log` has no `leo_mvd` lines.
+
+Without _Roads to Power_, confirm instead that the administrative conditions and directives are absent. For AGOT, load `dist/agot` after the A Game of Thrones mod and repeat: the Westeros conditions appear, Settle the Wilderness assigns, and the dimmed exempt icon works (it depends on loading last).
 
 ## Building
 
