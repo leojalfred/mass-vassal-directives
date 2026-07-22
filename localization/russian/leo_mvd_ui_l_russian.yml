@@ -51,7 +51,7 @@
  leo_mvd_ui_cond_5: "Одной [dynasty|E] с вами"
  leo_mvd_ui_cond_19: "Одного [house|E] с вами"
  leo_mvd_ui_cond_6: "[administrative|E] [government|E]"
- leo_mvd_ui_cond_20: "Тема губернатора:"
+ leo_mvd_ui_cond_20: "Тема [governor|E]:"
  leo_mvd_ui_cond_7: "Является [powerful_vassal|E]"
  leo_mvd_ui_cond_8: "Состоит в вашем [council|E]"
  leo_mvd_ui_cond_9: "Военная сила не менее"

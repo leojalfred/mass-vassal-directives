@@ -51,7 +51,7 @@
  leo_mvd_ui_cond_5: "Misma [dynasty|E] que tú"
  leo_mvd_ui_cond_19: "Misma [house|E] que tú"
  leo_mvd_ui_cond_6: "[government|E] [administrative|E]"
- leo_mvd_ui_cond_20: "El tema del gobernador es"
+ leo_mvd_ui_cond_20: "El tema del [governor|E] es"
  leo_mvd_ui_cond_7: "Es un [powerful_vassal|E]"
  leo_mvd_ui_cond_8: "Está en tu [council|E]"
  leo_mvd_ui_cond_9: "Fuerza militar de al menos"

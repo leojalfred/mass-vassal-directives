@@ -51,7 +51,7 @@
  leo_mvd_ui_cond_5: "당신과 같은 [dynasty|E]"
  leo_mvd_ui_cond_19: "당신과 같은 [house|E]"
  leo_mvd_ui_cond_6: "[administrative|E] [government|E]"
- leo_mvd_ui_cond_20: "총독 테마가 다음과 같음"
+ leo_mvd_ui_cond_20: "[governor|E] 테마가 다음과 같음"
  leo_mvd_ui_cond_7: "[powerful_vassal|E]임"
  leo_mvd_ui_cond_8: "당신의 [council|E]에 있음"
  leo_mvd_ui_cond_9: "군사력이 최소 이상"

@@ -41,36 +41,69 @@ leo_mvd_options_ack_trigger = {
 	is_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_14 }
 	var:leo_mvd_x_cond_14 = 14
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_1 }
+	var:leo_mvd_x_dir_1 = 1
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_2 }
+	var:leo_mvd_x_dir_2 = 2
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_3 }
+	var:leo_mvd_x_dir_3 = 3
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_4 }
+	var:leo_mvd_x_dir_4 = 4
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_5 }
+	var:leo_mvd_x_dir_5 = 5
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_6 }
+	var:leo_mvd_x_dir_6 = 6
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_7 }
+	var:leo_mvd_x_dir_7 = 7
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_8 }
+	var:leo_mvd_x_dir_8 = 8
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_9 }
+	var:leo_mvd_x_dir_9 = 9
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_10 }
+	var:leo_mvd_x_dir_10 = 10
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_11 }
+	var:leo_mvd_x_dir_11 = 11
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_12 }
+	var:leo_mvd_x_dir_12 = 12
 	is_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_13 }
+	var:leo_mvd_x_dir_13 = 13
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_0 }
+	var:leo_mvd_x_thresh_0 = 0
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_1 }
+	var:leo_mvd_x_thresh_1 = 1
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_2 }
+	var:leo_mvd_x_thresh_2 = 2
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_3 }
+	var:leo_mvd_x_thresh_3 = 3
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_4 }
+	var:leo_mvd_x_thresh_4 = 4
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_5 }
+	var:leo_mvd_x_thresh_5 = 5
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_6 }
+	var:leo_mvd_x_thresh_6 = 6
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_10 }
+	var:leo_mvd_x_thresh_10 = 10
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_20 }
+	var:leo_mvd_x_thresh_20 = 20
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_25 }
+	var:leo_mvd_x_thresh_25 = 25
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_40 }
+	var:leo_mvd_x_thresh_40 = 40
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_50 }
+	var:leo_mvd_x_thresh_50 = 50
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_60 }
+	var:leo_mvd_x_thresh_60 = 60
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_75 }
+	var:leo_mvd_x_thresh_75 = 75
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_80 }
+	var:leo_mvd_x_thresh_80 = 80
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_90 }
+	var:leo_mvd_x_thresh_90 = 90
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_500 }
+	var:leo_mvd_x_thresh_500 = 500
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_1000 }
+	var:leo_mvd_x_thresh_1000 = 1000
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_2000 }
+	var:leo_mvd_x_thresh_2000 = 2000
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_5000 }
+	var:leo_mvd_x_thresh_5000 = 5000
 }

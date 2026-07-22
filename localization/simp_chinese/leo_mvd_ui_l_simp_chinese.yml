@@ -51,7 +51,7 @@
  leo_mvd_ui_cond_5: "与你同[dynasty|E]"
  leo_mvd_ui_cond_19: "与你同[house|E]"
  leo_mvd_ui_cond_6: "[administrative|E][government|E]"
- leo_mvd_ui_cond_20: "总督主题为"
+ leo_mvd_ui_cond_20: "[governor|E]主题为"
  leo_mvd_ui_cond_7: "是[powerful_vassal|E]"
  leo_mvd_ui_cond_8: "在你的[council|E]中"
  leo_mvd_ui_cond_9: "军事实力不低于"

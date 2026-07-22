@@ -101,11 +101,17 @@ leo_mvd_build_options_effect = {
 	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_5 }
 	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_6 }
 
-	# The code each condition occupies, for the redundancy gate: a child
-	# node hides the yes/no question its parent already settled, since
-	# re-asking it could only give the same answer. Measured conditions
-	# carry -1 and so never match, which keeps them selectable under
-	# themselves - that is how a middle band gets carved out.
+	# The code each option carries, keyed by its own flag, so a datamodel
+	# row can read its identity as a number and compare it against a node
+	# variable - which is a number too. GUI cannot compare the row's flag
+	# string against a number directly, so this table stands in.
+	#
+	# Two gates use it. A child hides the yes/no question its parent already
+	# settled (measured conditions carry -1 and never match, staying
+	# selectable under themselves to carve a band). And each branch of a
+	# condition hides whatever its sibling already picked, so the two can
+	# never be made identical: same directive, same yes/no condition, or
+	# same measured condition at the same threshold.
 	set_variable = { name = leo_mvd_x_cond_1 value = 1 }
 	set_variable = { name = leo_mvd_x_cond_2 value = 2 }
 	set_variable = { name = leo_mvd_x_cond_3 value = 3 }
@@ -122,6 +128,39 @@ leo_mvd_build_options_effect = {
 	set_variable = { name = leo_mvd_x_cond_12 value = -1 }
 	set_variable = { name = leo_mvd_x_cond_13 value = -1 }
 	set_variable = { name = leo_mvd_x_cond_14 value = -1 }
+	set_variable = { name = leo_mvd_x_dir_1 value = 1 }
+	set_variable = { name = leo_mvd_x_dir_2 value = 2 }
+	set_variable = { name = leo_mvd_x_dir_3 value = 3 }
+	set_variable = { name = leo_mvd_x_dir_4 value = 4 }
+	set_variable = { name = leo_mvd_x_dir_5 value = 5 }
+	set_variable = { name = leo_mvd_x_dir_6 value = 6 }
+	set_variable = { name = leo_mvd_x_dir_7 value = 7 }
+	set_variable = { name = leo_mvd_x_dir_8 value = 8 }
+	set_variable = { name = leo_mvd_x_dir_9 value = 9 }
+	set_variable = { name = leo_mvd_x_dir_10 value = 10 }
+	set_variable = { name = leo_mvd_x_dir_11 value = 11 }
+	set_variable = { name = leo_mvd_x_dir_12 value = 12 }
+	set_variable = { name = leo_mvd_x_dir_13 value = 13 }
+	set_variable = { name = leo_mvd_x_thresh_0 value = 0 }
+	set_variable = { name = leo_mvd_x_thresh_1 value = 1 }
+	set_variable = { name = leo_mvd_x_thresh_2 value = 2 }
+	set_variable = { name = leo_mvd_x_thresh_3 value = 3 }
+	set_variable = { name = leo_mvd_x_thresh_4 value = 4 }
+	set_variable = { name = leo_mvd_x_thresh_5 value = 5 }
+	set_variable = { name = leo_mvd_x_thresh_6 value = 6 }
+	set_variable = { name = leo_mvd_x_thresh_10 value = 10 }
+	set_variable = { name = leo_mvd_x_thresh_20 value = 20 }
+	set_variable = { name = leo_mvd_x_thresh_25 value = 25 }
+	set_variable = { name = leo_mvd_x_thresh_40 value = 40 }
+	set_variable = { name = leo_mvd_x_thresh_50 value = 50 }
+	set_variable = { name = leo_mvd_x_thresh_60 value = 60 }
+	set_variable = { name = leo_mvd_x_thresh_75 value = 75 }
+	set_variable = { name = leo_mvd_x_thresh_80 value = 80 }
+	set_variable = { name = leo_mvd_x_thresh_90 value = 90 }
+	set_variable = { name = leo_mvd_x_thresh_500 value = 500 }
+	set_variable = { name = leo_mvd_x_thresh_1000 value = 1000 }
+	set_variable = { name = leo_mvd_x_thresh_2000 value = 2000 }
+	set_variable = { name = leo_mvd_x_thresh_5000 value = 5000 }
 
 	# Stamps what these lists were built from, so a save carrying an
 	# older option set is spotted and rebuilt rather than trusted.

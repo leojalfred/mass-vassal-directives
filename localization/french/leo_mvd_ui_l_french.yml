@@ -51,7 +51,7 @@
  leo_mvd_ui_cond_5: "Même [dynasty|E] que vous"
  leo_mvd_ui_cond_19: "Même [house|E] que vous"
  leo_mvd_ui_cond_6: "[government|E] [administrative|E]"
- leo_mvd_ui_cond_20: "Le thème du gouverneur est"
+ leo_mvd_ui_cond_20: "Le thème du [governor|E] est"
  leo_mvd_ui_cond_7: "Est un [powerful_vassal|E]"
  leo_mvd_ui_cond_8: "Est à votre [council|E]"
  leo_mvd_ui_cond_9: "Force militaire d'au moins"

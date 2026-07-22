@@ -134,7 +134,7 @@ cond_name() { case $1 in
 	13) echo "[counties|E] Held is at Least" ;;
 	14) echo "[cultural_acceptance|E] with You is at Least" ;;
 	19) echo "Same [house|E] as You" ;;
-	20) echo "Governor Theme is" ;;
+	20) echo "[governor|E] Theme is" ;;
 	15) echo "Is Ironborn" ;;
 	16) echo "Follows the Faith of the Seven" ;;
 	17) echo "Follows the Old Gods" ;;
@@ -212,6 +212,12 @@ p() { echo "${I}$1"; }
 
 # A GUI bool: does variable <1> equal <2>?
 veq() { echo "EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('$1').GetValue, '(CFixedPoint)$2' )"; }
+# A GUI bool: does variable <1> equal variable <2>? (both read as values)
+vveq() { echo "EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('$1').GetValue, GetPlayer.MakeScope.Var('$2').GetValue )"; }
+# A GUI bool: does the datamodel row's own code (looked up by its flag in the
+# leo_mvd_x_ table) equal node variable <1>? Both are numbers - the row's flag is
+# a string that could not be compared against a number any other way.
+xeq() { echo "EqualTo_CFixedPoint( GetPlayer.MakeScope.Var( Concatenate( 'leo_mvd_x_', Scope.GetFlagName ) ).GetValue, GetPlayer.MakeScope.Var('$1').GetValue )"; }
 # A GUI bool: is variable <1> at least <2>?
 vge() { echo "GreaterThanOrEqualTo_CFixedPoint( GetPlayer.MakeScope.Var('$1').GetValue, '(CFixedPoint)$2' )"; }
 # Variable <1> as an int, for pasting into a string.
@@ -467,9 +473,28 @@ emit_dd_row() { local depth=$1 node=$2 id=$3 setter=$4 label=$5 vis=${6:-} tt=${
 ### One node's editor.
 
 # <1> depth <2> priority <3> node number <4> level <5> parent's cond var, if any
-emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
+emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-} sibling=${6:-}
 	local node="${NODE_PREFIX}${prio}_n${n}"
 	local kinds="1 2 0"; [ "$level" -ge 2 ] && kinds="1 0"
+
+	# Sibling gates: a branch may not be made identical to the other branch of the
+	# same condition. Each is purely a visibility rule on dropdown rows - it reads
+	# node variables, never writes them, so an existing rule set that already has
+	# identical branches keeps its values and runs unchanged; the dropdown simply
+	# stops offering the row that would re-create the match.
+	#
+	# The root node (no sibling) gets none of these. Directive gate: hide the
+	# directive the sibling assigns, when the sibling is also assigning. Condition
+	# gate: hide the yes/no condition the sibling checks (measured conditions carry
+	# -1 in the x table and never match, so a shared measured condition is allowed
+	# and its threshold is gated instead). Threshold gate: hide the sibling's value
+	# only when both branches check the same measured condition.
+	local dir_sib= cond_sib= thresh_sib=
+	if [ -n "$sibling" ]; then
+		dir_sib="Not( And( $(veq "leo_mvd_${sibling}_kind" 1), $(xeq "leo_mvd_${sibling}_dir") ) )"
+		cond_sib="Not( And( $(veq "leo_mvd_${sibling}_kind" 2), $(xeq "leo_mvd_${sibling}_cond") ) )"
+		thresh_sib="Not( And( And( $(veq "leo_mvd_${sibling}_kind" 2), $(vveq "leo_mvd_${node}_cond" "leo_mvd_${sibling}_cond") ), $(xeq "leo_mvd_${sibling}_thresh") ) )"
+	fi
 
 	# What this node does. Kind 0's label depends on whether a next priority
 	# exists, so the button has to ask before falling back to the generic key.
@@ -498,7 +523,7 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	# administrative row is gone: an option they cannot use is simply absent.
 	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")" \
 		"GetPlayer.MakeScope.GetList( $(dd_list "${node}_dir" "$CUR_DIR_LIST") )"
-	emit_dd_item "$DD_ROW_DEPTH" "$node" "Localize( Concatenate( 'leo_mvd_ui_', Scope.GetFlagName ) )"
+	emit_dd_item "$DD_ROW_DEPTH" "$node" "Localize( Concatenate( 'leo_mvd_ui_', Scope.GetFlagName ) )" "" "$dir_sib"
 	emit_dd_end $((depth+1)) "${node}_dir"
 	ind "$depth"; p "}"
 
@@ -523,8 +548,12 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	#
 	# Every condition gets a tooltip key. Most resolve to an empty string, which
 	# renders no tooltip at all, so only the two that need explaining have one.
+	# The parent-redundancy gate and the sibling gate combine: a condition row is
+	# offered only if it is neither the parent's already-settled question nor the
+	# yes/no condition the sibling is already checking.
 	local citem_vis=
 	[ -n "$parent_cond" ] && citem_vis="NotEqualTo_CFixedPoint( GetPlayer.MakeScope.Var( Concatenate( 'leo_mvd_x_', Scope.GetFlagName ) ).GetValue, GetPlayer.MakeScope.Var('$parent_cond').GetValue )"
+	citem_vis=$(vis_and "$citem_vis" "$cond_sib")
 	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")" \
 		"GetPlayer.MakeScope.GetList( $(dd_list "${node}_cond" "$CUR_COND_LIST") )"
 	emit_dd_item "$DD_ROW_DEPTH" "$node" \
@@ -553,7 +582,8 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	# The label needs both halves - which condition is asking, and which value -
 	# so the key is leo_mvd_ui_c<cond>_<flag>, e.g. leo_mvd_ui_c9_thresh_1000.
 	emit_dd_item "$DD_ROW_DEPTH" "$node" \
-		"Localize( Concatenate( Concatenate( 'leo_mvd_ui_c', $(vint "leo_mvd_${node}_cond") ), Concatenate( '_', Scope.GetFlagName ) ) )"
+		"Localize( Concatenate( Concatenate( 'leo_mvd_ui_c', $(vint "leo_mvd_${node}_cond") ), Concatenate( '_', Scope.GetFlagName ) ) )" \
+		"" "$thresh_sib"
 	emit_dd_end $((depth+2)) "${node}_t"
 	ind $((depth+1)); p "}"
 	ind "$depth"; p "}"
@@ -569,14 +599,18 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-}
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
-	for b in "true:$kt" "false:$kf"; do
-		local which=${b%%:*} kid=${b##*:}
+	for b in "true:$kt:$kf" "false:$kf:$kt"; do
+		local which=${b%%:*} kid rest=${b#*:}
+		kid=${rest%%:*}
+		local sib_n=${rest##*:}
 		ind $((depth+1)); p ""
 		p "text_label_left = {"
 		ind $((depth+2)); p "layoutpolicy_horizontal = expanding"
 		p "text = \"leo_mvd_ui_branch_$which\""
 		ind $((depth+1)); p "}"
-		emit_node $((depth+1)) "$prio" "$kid" $((level+1)) "leo_mvd_${node}_cond"
+		# The other branch of this condition is the sibling, so identical picks
+		# can be gated out.
+		emit_node $((depth+1)) "$prio" "$kid" $((level+1)) "leo_mvd_${node}_cond" "${NODE_PREFIX}${prio}_n${sib_n}"
 	done
 	ind "$depth"; p "}"
 }
@@ -855,7 +889,11 @@ window = {
 	position = { -645 70 }
 
 	using = Window_Background_Subwindow
-	layer = top
+	# The layer the Realm window itself uses (window_my_realm.gui), so the panel
+	# sits at the same depth as the Subjects tab it belongs to and beneath the
+	# Character Finder (which is on the layer above), rather than floating over
+	# everything as it did on 'top'.
+	layer = windows_layer
 	movable = yes
 
 	### Shown by the vanilla button, or for one moment at startup to pre-warm.
@@ -1283,17 +1321,29 @@ HEAD
 	done
 
 	echo
-	echo -e "\t# The code each condition occupies, for the redundancy gate: a child"
-	echo -e "\t# node hides the yes/no question its parent already settled, since"
-	echo -e "\t# re-asking it could only give the same answer. Measured conditions"
-	echo -e "\t# carry -1 and so never match, which keeps them selectable under"
-	echo -e "\t# themselves - that is how a middle band gets carved out."
+	echo -e "\t# The code each option carries, keyed by its own flag, so a datamodel"
+	echo -e "\t# row can read its identity as a number and compare it against a node"
+	echo -e "\t# variable - which is a number too. GUI cannot compare the row's flag"
+	echo -e "\t# string against a number directly, so this table stands in."
+	echo -e "\t#"
+	echo -e "\t# Two gates use it. A child hides the yes/no question its parent already"
+	echo -e "\t# settled (measured conditions carry -1 and never match, staying"
+	echo -e "\t# selectable under themselves to carve a band). And each branch of a"
+	echo -e "\t# condition hides whatever its sibling already picked, so the two can"
+	echo -e "\t# never be made identical: same directive, same yes/no condition, or"
+	echo -e "\t# same measured condition at the same threshold."
 	for c in $CONDS; do
 		if is_numeric "$c"; then
 			echo -e "\tset_variable = { name = leo_mvd_x_cond_$c value = -1 }"
 		else
 			echo -e "\tset_variable = { name = leo_mvd_x_cond_$c value = $c }"
 		fi
+	done
+	for d in $ALL_DIRS; do
+		echo -e "\tset_variable = { name = leo_mvd_x_dir_$d value = $d }"
+	done
+	for t in $(all_thresh_values); do
+		echo -e "\tset_variable = { name = leo_mvd_x_thresh_$t value = $t }"
 	done
 
 	echo
@@ -1368,9 +1418,11 @@ HEAD
 	done
 	for d in $ALL_DIRS; do
 		echo -e "\tis_target_in_variable_list = { name = leo_mvd_dirs target = flag:dir_$d }"
+		echo -e "\tvar:leo_mvd_x_dir_$d = $d"
 	done
 	for t in $(all_thresh_values); do
 		echo -e "\tis_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_$t }"
+		echo -e "\tvar:leo_mvd_x_thresh_$t = $t"
 	done
 	echo "}"
 }

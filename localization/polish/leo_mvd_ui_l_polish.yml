@@ -51,7 +51,7 @@
  leo_mvd_ui_cond_5: "Ta sama [dynasty|E] co ty"
  leo_mvd_ui_cond_19: "Ten sam [house|E] co ty"
  leo_mvd_ui_cond_6: "[administrative|E] [government|E]"
- leo_mvd_ui_cond_20: "Motyw namiestnika to"
+ leo_mvd_ui_cond_20: "Motyw [governor|E] to"
  leo_mvd_ui_cond_7: "Jest [powerful_vassal|E]"
  leo_mvd_ui_cond_8: "Jest w twojej [council|E]"
  leo_mvd_ui_cond_9: "Siła militarna wynosi co najmniej"
