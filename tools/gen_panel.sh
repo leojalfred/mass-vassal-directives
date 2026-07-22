@@ -245,22 +245,19 @@ vdlc() { echo "HasDlcFeature( '$1' )"; }
 # the original binding untouched.
 vis_and() { local out=; for e in "$@"; do [ -z "$e" ] && continue
 	if [ -z "$out" ]; then out=$e; else out="And( $out, $e )"; fi; done; echo "$out"; }
-# The DLC gate a directive/condition needs, if any. The three administrative
-# directives (improve development, train commanders, build men-at-arms) and the
-# Administrative Government condition need Roads to Power. The feature is
-# 'roads_to_power' - the expansion flag vanilla's own vassal_follows_directive
-# trigger gates administrative on - not the finer 'admin_gov', which does not
-# track DLC ownership. The nomad directives need Khans of the Steppe, but their
-# whole section is gated as a block, so they need nothing here.
-# Governor Theme (20) needs it too: themes are an administrative contract
-# option, so without the expansion the condition could only ever answer no.
-dir_dlc_vis()  { case $1 in 3|4|5) vdlc roads_to_power ;; esac; }
-cond_dlc_vis() { case $1 in 6|20)  vdlc roads_to_power ;; esac; }
-# The same gate, as a script has_dlc_feature name rather than a GUI expression,
-# for building the option lists. Empty when the option needs no DLC. The option
-# list keeps every entry in its declared order and wraps just the gated ones in
-# their own has_dlc_feature check, so a DLC's options sit where they belong in
-# the list rather than being appended after everything else.
+# The DLC gate a directive/condition needs, if any, as a has_dlc_feature name.
+# The three administrative directives (improve development, train commanders,
+# build men-at-arms) and the Administrative Government and Governor Theme
+# conditions need Roads to Power - 'roads_to_power', the expansion flag vanilla's
+# own vassal_follows_directive trigger gates administrative on, not the finer
+# 'admin_gov', which does not track DLC ownership. The nomad directives need
+# Khans of the Steppe, but their whole section is gated as a block, so they need
+# nothing here.
+#
+# Empty when the option needs no DLC. The option list keeps every entry in its
+# declared order and wraps just the gated ones in their own has_dlc_feature
+# check, so a DLC's options sit where they belong rather than being appended
+# after everything else.
 dir_dlc_feature()  { case $1 in 3|4|5) echo roads_to_power ;; esac; }
 cond_dlc_feature() { case $1 in 6|20)  echo roads_to_power ;; esac; }
 # A preset is hidden outright when the DLC it is built around is missing, rather
