@@ -1,0 +1,45 @@
+# The in-game half of the compatibility harness. THROWAWAY - never shipped.
+#
+# The flags in leo_mvd_compat_conds are named after the real condition loc-key
+# suffix they carry (cond_1, cond_5, ...), so one item template builds both the
+# label (leo_mvd_ui_cond_1) and the setter name (leo_mvd_compat_set_cond_1) from
+# the same string - exactly how the real panel works. cond_6 and cond_20 are
+# Roads to Power conditions, added only with the DLC, so the list also exercises
+# the in-place DLC gate.
+
+leo_mvd_compat_build = {
+	scope = character
+	effect = {
+		set_variable = { name = leo_mvd_compat_pick value = 0 }
+
+		clear_variable_list = leo_mvd_compat_conds
+		add_to_variable_list = { name = leo_mvd_compat_conds target = flag:cond_1 }
+		add_to_variable_list = { name = leo_mvd_compat_conds target = flag:cond_2 }
+		add_to_variable_list = { name = leo_mvd_compat_conds target = flag:cond_5 }
+		add_to_variable_list = { name = leo_mvd_compat_conds target = flag:cond_9 }
+		if = {
+			limit = { has_dlc_feature = roads_to_power }
+			add_to_variable_list = { name = leo_mvd_compat_conds target = flag:cond_6 }
+			add_to_variable_list = { name = leo_mvd_compat_conds target = flag:cond_20 }
+		}
+
+		# One variable per flag, named the way the redundancy gate names its own,
+		# so the per-row read has something real to fetch. Value = the code, so a
+		# correct read shows the condition's own number beside its label.
+		set_variable = { name = leo_mvd_compat_x_cond_1 value = 1 }
+		set_variable = { name = leo_mvd_compat_x_cond_2 value = 2 }
+		set_variable = { name = leo_mvd_compat_x_cond_5 value = 5 }
+		set_variable = { name = leo_mvd_compat_x_cond_9 value = 9 }
+		set_variable = { name = leo_mvd_compat_x_cond_6 value = 6 }
+		set_variable = { name = leo_mvd_compat_x_cond_20 value = 20 }
+	}
+}
+
+# The write-back targets, reached by a name built from the clicked row's flag.
+# They only touch a probe variable, so nothing here can disturb a real rule set.
+leo_mvd_compat_set_cond_1  = { scope = character  effect = { set_variable = { name = leo_mvd_compat_pick value = 1 } } }
+leo_mvd_compat_set_cond_2  = { scope = character  effect = { set_variable = { name = leo_mvd_compat_pick value = 2 } } }
+leo_mvd_compat_set_cond_5  = { scope = character  effect = { set_variable = { name = leo_mvd_compat_pick value = 5 } } }
+leo_mvd_compat_set_cond_6  = { scope = character  effect = { set_variable = { name = leo_mvd_compat_pick value = 6 } } }
+leo_mvd_compat_set_cond_9  = { scope = character  effect = { set_variable = { name = leo_mvd_compat_pick value = 9 } } }
+leo_mvd_compat_set_cond_20 = { scope = character  effect = { set_variable = { name = leo_mvd_compat_pick value = 20 } } }
