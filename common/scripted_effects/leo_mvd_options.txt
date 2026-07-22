@@ -6,7 +6,7 @@
 # installing or removing a DLC between sessions is picked up.
 
 leo_mvd_build_options_effect = {
-	# Conditions offered by the settled waterfall.
+	# Conditions offered by the settled waterfall, in panel order.
 	clear_variable_list = leo_mvd_conds
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_1 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_2 }
@@ -14,6 +14,8 @@ leo_mvd_build_options_effect = {
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_4 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_5 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_19 }
+	if = { limit = { has_dlc_feature = roads_to_power } add_to_variable_list = { name = leo_mvd_conds target = flag:cond_6 } }
+	if = { limit = { has_dlc_feature = roads_to_power } add_to_variable_list = { name = leo_mvd_conds target = flag:cond_20 } }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_7 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_8 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_9 }
@@ -22,11 +24,6 @@ leo_mvd_build_options_effect = {
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_12 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_13 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_14 }
-	if = {
-		limit = { has_dlc_feature = roads_to_power }
-		add_to_variable_list = { name = leo_mvd_conds target = flag:cond_6 }
-		add_to_variable_list = { name = leo_mvd_conds target = flag:cond_20 }
-	}
 
 	# Conditions offered by the nomad waterfall.
 	clear_variable_list = leo_mvd_qconds
@@ -45,20 +42,17 @@ leo_mvd_build_options_effect = {
 	add_to_variable_list = { name = leo_mvd_qconds target = flag:cond_13 }
 	add_to_variable_list = { name = leo_mvd_qconds target = flag:cond_14 }
 
-	# Directives, settled then nomad.
+	# Directives, in panel order, gated in place like the conditions.
 	clear_variable_list = leo_mvd_dirs
 	add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_1 }
 	add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_2 }
+	if = { limit = { has_dlc_feature = roads_to_power } add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_3 } }
+	if = { limit = { has_dlc_feature = roads_to_power } add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_4 } }
+	if = { limit = { has_dlc_feature = roads_to_power } add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_5 } }
 	add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_6 }
 	add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_7 }
 	add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_8 }
 	add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_9 }
-	if = {
-		limit = { has_dlc_feature = roads_to_power }
-		add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_3 }
-		add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_4 }
-		add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_5 }
-	}
 	clear_variable_list = leo_mvd_qdirs
 	add_to_variable_list = { name = leo_mvd_qdirs target = flag:dir_10 }
 	add_to_variable_list = { name = leo_mvd_qdirs target = flag:dir_11 }

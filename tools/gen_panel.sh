@@ -256,6 +256,13 @@ vis_and() { local out=; for e in "$@"; do [ -z "$e" ] && continue
 # option, so without the expansion the condition could only ever answer no.
 dir_dlc_vis()  { case $1 in 3|4|5) vdlc roads_to_power ;; esac; }
 cond_dlc_vis() { case $1 in 6|20)  vdlc roads_to_power ;; esac; }
+# The same gate, as a script has_dlc_feature name rather than a GUI expression,
+# for building the option lists. Empty when the option needs no DLC. The option
+# list keeps every entry in its declared order and wraps just the gated ones in
+# their own has_dlc_feature check, so a DLC's options sit where they belong in
+# the list rather than being appended after everything else.
+dir_dlc_feature()  { case $1 in 3|4|5) echo roads_to_power ;; esac; }
+cond_dlc_feature() { case $1 in 6|20)  echo roads_to_power ;; esac; }
 # A preset is hidden outright when the DLC it is built around is missing, rather
 # than falling back the way 1/3/4 do. Govern by Theme sorts governors by their
 # theme, and without Roads to Power there are neither, so every rule it could
@@ -1231,19 +1238,20 @@ HEAD
 	echo
 	echo "leo_mvd_build_options_effect = {"
 
-	echo -e "\t# Conditions offered by the settled waterfall."
+	# CONDS is the display order, so the list is built in that order and a gated
+	# condition is wrapped in its own DLC check in place rather than pushed to the
+	# end. That is what keeps Administrative Government and Governor Theme sitting
+	# next to the questions they belong beside instead of after everything else.
+	echo -e "\t# Conditions offered by the settled waterfall, in panel order."
 	echo -e "\tclear_variable_list = leo_mvd_conds"
 	for c in $CONDS; do
-		[ -n "$(cond_dlc_vis "$c")" ] && continue
-		echo -e "\tadd_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c }"
+		local feat; feat=$(cond_dlc_feature "$c")
+		if [ -n "$feat" ]; then
+			echo -e "\tif = { limit = { has_dlc_feature = $feat } add_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c } }"
+		else
+			echo -e "\tadd_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c }"
+		fi
 	done
-	echo -e "\tif = {"
-	echo -e "\t\tlimit = { has_dlc_feature = roads_to_power }"
-	for c in $CONDS; do
-		[ -n "$(cond_dlc_vis "$c")" ] || continue
-		echo -e "\t\tadd_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c }"
-	done
-	echo -e "\t}"
 
 	echo
 	echo -e "\t# Conditions offered by the nomad waterfall."
@@ -1253,19 +1261,16 @@ HEAD
 	done
 
 	echo
-	echo -e "\t# Directives, settled then nomad."
+	echo -e "\t# Directives, in panel order, gated in place like the conditions."
 	echo -e "\tclear_variable_list = leo_mvd_dirs"
 	for d in $DIRS; do
-		[ -n "$(dir_dlc_vis "$d")" ] && continue
-		echo -e "\tadd_to_variable_list = { name = leo_mvd_dirs target = flag:dir_$d }"
+		local feat; feat=$(dir_dlc_feature "$d")
+		if [ -n "$feat" ]; then
+			echo -e "\tif = { limit = { has_dlc_feature = $feat } add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_$d } }"
+		else
+			echo -e "\tadd_to_variable_list = { name = leo_mvd_dirs target = flag:dir_$d }"
+		fi
 	done
-	echo -e "\tif = {"
-	echo -e "\t\tlimit = { has_dlc_feature = roads_to_power }"
-	for d in $DIRS; do
-		[ -n "$(dir_dlc_vis "$d")" ] || continue
-		echo -e "\t\tadd_to_variable_list = { name = leo_mvd_dirs target = flag:dir_$d }"
-	done
-	echo -e "\t}"
 	echo -e "\tclear_variable_list = leo_mvd_qdirs"
 	for d in $NOMAD_DIRS; do
 		echo -e "\tadd_to_variable_list = { name = leo_mvd_qdirs target = flag:dir_$d }"
