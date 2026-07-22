@@ -120,7 +120,23 @@ Have the user test **both** where a change can affect both: load `dist/vanilla` 
 
 **Things static checks cannot catch, so ask for them to be tested:** anything reached only by a macro-built name; a loc key built at runtime; whether a directive thrashes month to month (assign, advance, confirm it stays).
 
-**After a CK3 or AGOT patch, run the compatibility harness** rather than checking from memory. `bash tools/check_compat_static.sh` asserts every vanilla and AGOT name the mod leans on against the installed game files (override `GAME_DIR`/`AGOT_DIR` if the install moved); a FAIL means a patch renamed or removed something the mod mirrors. `tools/check_compat_ingame.sh` injects a one-dropdown runtime check into a built dist for the GUI tricks a file scan cannot see (a datamodel over a script list, names built from a flag). When a change adds a new vanilla dependency (a trigger, a flag, a concept, an overridden function), add a line for it to `check_compat_static.sh` so the next patch is checked, not remembered.
+### After a CK3 or AGOT patch
+
+Two steps, in order. The first is names, the second is everything names cannot tell you.
+
+**1. `bash tools/check_compat_static.sh`.** Asserts every vanilla and AGOT name the mod leans on against the installed game files (override `GAME_DIR`/`AGOT_DIR` if the install moved). A FAIL means a patch renamed or removed something the mod mirrors; fix it before shipping. When a change adds a new vanilla dependency (a trigger, a flag, a concept, an overridden function), add a line for it here so the next patch is checked, not remembered. This checks names only: a name that still exists but changed *meaning* passes here.
+
+**2. The real-mod smoke test.** The most limited set of steps that catches everything the static check cannot. Load `dist/vanilla` with `-debug_mode`, ideally an administrative realm with Roads to Power so the gated content is exercised, and in one session:
+
+- Open **Realm → Subjects → the directives button.** The panel appears and is fully on-screen. (Catches a HUD/realm-window rework hiding or occluding it, as happened under AGOT.)
+- Open a **condition dropdown.** Real condition names fill it; pick one and it applies. (This one action exercises the whole GUI mechanism: the datamodel over a script list, the runtime-built labels, the computed-name dispatch.)
+- Pick a **preset**, then **Apply Now.** Directives assign to eligible vassals. Advance about three months: the assignments **stay** and none thrash. (A directive that assigns then vanishes next tick is the signature of the per-directive gates in `leo_mvd_triggers.txt` no longer matching vanilla's `send_option`s. If that happens, re-diff the `leo_mvd_gate_*` triggers against `give_vassal_directive_interaction`, whose lines they cite.)
+- **Exempt** a vassal (right-click portrait). Its directive icon dims. (The by-name `vassal_directive_icon`/`vassal_directive_text` override still works.)
+- `logs/error.log` has no `leo_mvd` lines.
+
+Without Roads to Power, confirm instead that the gated conditions and directives are absent. For AGOT, load `dist/agot` after AGOT and repeat: the Westeros conditions appear, Settle the Wilderness assigns, and the exempt dimming works (it depends on load order).
+
+There is no committed in-game check tool: opening the real dropdown above tests the same GUI mechanism a synthetic one would, on the real panel rather than a proxy. If a mechanism ever does break and needs isolating to debug, a throwaway probe like the one in this repo's history can be rebuilt for the occasion.
 
 ## Conventions
 

@@ -14,8 +14,12 @@
 # an engine built-in that has no definition file (a trigger like
 # max_military_strength, a datafunction like GetScriptedGui): the best a file
 # scan can do is confirm vanilla still references it, so a miss is a WARN worth a
-# look, not a certain break. The in-game check (tools/check_compat_ingame.sh) is what
-# actually exercises the built-ins at runtime.
+# look, not a certain break.
+#
+# This checks names, not behavior. A name that still exists but changed meaning
+# (a directive's eligibility, a rebalanced value, a reworked HUD that hides the
+# panel) passes here and is caught only by the real-mod smoke test in CLAUDE.md's
+# "Verifying" section. Run both after a patch.
 #
 # Exit status is non-zero if any def FAILs. WARNs do not fail the run.
 set -uo pipefail
