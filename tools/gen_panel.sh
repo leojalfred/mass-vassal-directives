@@ -870,12 +870,18 @@ window = {
 	### Transparent while pre-warming, so laying out is all it does. Bound to the
 	### same variable that ends the pre-warm rather than animated, so the panel
 	### cannot get stuck invisible: the moment that clears, this reads 1 again.
+	### alpha (rather than an off-screen position) because it is the same on every
+	### resolution and UI scale, and its worst case is only that the warm does not
+	### fully take and the old hitch returns - never a visible panel on load, which
+	### is what a movable window clamped back on-screen could otherwise give.
+	###
+	### No input guard is needed alongside it. The pre-warm lives only between the
+	### widget's creation and the load-to-session transition, and the engine wipes
+	### GUI variables at that transition - which is what clears leo_mvd_prewarm,
+	### and it is also before the player has mouse control. So there is no frame in
+	### which this invisible panel could take a click. (alwaystransparent would not
+	### help anyway: it is a per-widget pass-through, not a subtree blocker.)
 	alpha = "[Select_float( GetVariableSystem.Exists('leo_mvd_prewarm'), '(float)0', '(float)1' )]"
-
-	### And untouchable while it is transparent, so an invisible panel cannot
-	### swallow a click in the moment after the map appears. Affects input only,
-	### so the layout pass this is all for still happens.
-	alwaystransparent = "[GetVariableSystem.Exists('leo_mvd_prewarm')]"
 
 	oncreate = "[GetVariableSystem.Set( 'leo_mvd_prewarm', '1' )]"
 
