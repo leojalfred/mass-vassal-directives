@@ -312,6 +312,21 @@ leo_mvd_cond_holds_trigger = {
 			vassal_contract_has_flag = admin_theme_naval
 		}
 	}
+	# 21 - Average Development is at least. Averaged over the counties the
+	# vassal holds personally: directives are not passed down to sub-vassals,
+	# so those are the counties a directive could actually improve. The average
+	# is staged as a scope first because a computed value cannot stand on the
+	# left of a comparison by itself. A vassal holding no county (a baron) is
+	# answered no outright, which also keeps the average's divisor above zero.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 21 }
+		any_held_county = { always = yes }
+		save_temporary_scope_value_as = {
+			name = leo_mvd_avg_dev
+			value = leo_mvd_avg_held_development
+		}
+		scope:leo_mvd_avg_dev >= scope:leo_mvd_thresh
+	}
 	# @AGOT:conditions@
 	# No condition picked yet: the branch is inert rather than silently true.
 	trigger_else = {

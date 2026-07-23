@@ -56,13 +56,15 @@
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label. Two are not, and carry
- # a tooltip on their option only: Military Strength, because its number is a
- # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Most conditions are self-explanatory from their label. Three are not, and
+ # carry a tooltip on their option only: Military Strength, because its number is
+ # a duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt),
  # Governor Theme, because it is the one picker that matches a value outright
- # instead of reading as "is at least".
- leo_mvd_ui_cond_20_tt: "精确匹配某一主题，而非设定下限：要求$admin_theme_military$的规则对其他所有主题均答否。\n\n并非总督的[vassal|E]同样答否。\n\n#weak 主题设定于总督的契约之上，故此项仅能区分[administrative|E][vassals|E]。#!"
+ # instead of reading as "is at least", and Average Development, because the
+ # label cannot say which counties are averaged.
+ leo_mvd_ui_cond_20_tt: "精确匹配某一主题。并非[governor|E]的[vassal|E]永远不满足此条件。\n\n#weak 主题设定于总督的契约之上，故此项仅能区分[administrative|E][vassals|E]。#!"
  leo_mvd_ui_cond_9_tt: "该数值是一个[duchy|E]级的基准，按每个[vassal|E]的头衔等级缩放，使单一设置在整个王国内始终有意义。更大的王国能募集更庞大的军队。\n\n以该数值为基准，一个[county|E]级封臣被要求0.4倍，[duchy|E]级为1倍，[kingdom|E]级为3倍，[empire|E]级为8倍。\n\n#weak 因此选择1000，对伯爵而言为400兵力，对公爵为1000，对国王为3000，对皇帝为8000。#!"
+ leo_mvd_ui_cond_21_tt: "[vassal|E]亲自持有的[counties|E]的平均[development|E]。由于指令不会下达给封臣的封臣，[directive|E]能够实际改善的正是这些伯爵领。\n\n#weak 未持有伯爵领的封臣，例如[baron|E]，永远不满足此条件。#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "豁免于指令自动化"

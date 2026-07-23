@@ -100,12 +100,13 @@ esac; }
 
 # Condition codes. Must match leo_mvd_cond_holds_trigger.
 #
-# This list is also the order the panel offers them in, which is why 19 and 20
-# sit beside the questions they refine rather than at the end: Same House reads
-# next to Same Dynasty, Governor Theme next to Administrative Government. The
-# codes themselves are append-only - they are stored in player variables that
-# persist in saves, so renumbering would silently rewrite existing rule sets.
-CONDS="1 2 3 4 5 19 6 20 7 8 9 10 11 12 13 14"
+# This list is also the order the panel offers them in, which is why 19, 20 and
+# 21 sit beside the questions they refine rather than at the end: Same House
+# reads next to Same Dynasty, Governor Theme next to Administrative Government,
+# Average Development next to Capital Development. The codes themselves are
+# append-only - they are stored in player variables that persist in saves, so
+# renumbering would silently rewrite existing rule sets.
+CONDS="1 2 3 4 5 19 6 20 7 8 9 10 21 11 12 13 14"
 # Westeros conditions (15-18: Ironborn and three faith blocs) are boolean and
 # AGOT-only; the AGOT build injects their evaluation branches.
 if [ "$TARGET" = agot ]; then CONDS="$CONDS 15 16 17 18"; fi
@@ -117,7 +118,7 @@ PRESET_RANGE="0 1 2 3 4 8 5"
 if [ "$TARGET" = agot ]; then PRESET_RANGE="0 1 2 3 4 8 6 7 5"; fi
 # 6 (Administrative Government) and 20 (Governor Theme) are left out for nomads:
 # no nomad is administrative, so both could only ever answer no.
-NOMAD_CONDS="1 2 3 4 5 19 7 8 9 10 11 12 13 14"
+NOMAD_CONDS="1 2 3 4 5 19 7 8 9 10 21 11 12 13 14"
 cond_name() { case $1 in
 	1) echo "[faith|E] is Yours" ;;
 	2) echo "[culture|E] is Yours" ;;
@@ -135,6 +136,7 @@ cond_name() { case $1 in
 	14) echo "[cultural_acceptance|E] with You is at Least" ;;
 	19) echo "Same [house|E] as You" ;;
 	20) echo "[governor|E] Theme is" ;;
+	21) echo "Average [development|E] is at Least" ;;
 	15) echo "Is Ironborn" ;;
 	16) echo "Follows the Faith of the Seven" ;;
 	17) echo "Follows the Old Gods" ;;
@@ -144,7 +146,7 @@ esac; }
 # Thresholds, per numeric condition. All non-negative: a label key is built by
 # pasting the value onto a prefix at runtime, and a minus sign in a key is not
 # worth the risk.
-NUMERIC_CONDS="9 10 11 12 13 14 20"
+NUMERIC_CONDS="9 10 11 12 13 14 20 21"
 # Whether a condition takes a threshold (is measured) rather than being a plain
 # yes/no. Not the same as "code >= 9": the AGOT conditions (15-18) are numbered
 # above the numeric ones but are boolean.
@@ -163,12 +165,15 @@ cond_thresh() { case $1 in
 	13) echo "1 2 3 5 10" ;;
 	14) echo "10 25 50 75 90" ;;
 	20) echo "1 2 3 4 5 6" ;;
+	# Lower than Capital Development's ladder: the capital is usually the best
+	# county a vassal holds, so an average over the whole domain runs behind it.
+	21) echo "5 10 20 40 60" ;;
 esac; }
 
 # Picking a condition also sets this, so a threshold is never left at 0 - which
 # would name a label key that does not exist.
 cond_default_thresh() { case $1 in
-	9) if [ "$TARGET" = agot ]; then echo 2000; else echo 1000; fi ;; 10) echo 3 ;; 11) echo 40 ;; 12) echo 50 ;; 13) echo 3 ;; 14) echo 50 ;; 20) echo 3 ;;
+	9) if [ "$TARGET" = agot ]; then echo 2000; else echo 1000; fi ;; 10) echo 3 ;; 11) echo 40 ;; 12) echo 50 ;; 13) echo 3 ;; 14) echo 50 ;; 20) echo 3 ;; 21) echo 20 ;;
 	*) echo 0 ;;
 esac; }
 
@@ -274,12 +279,13 @@ cond_dlc_feature() { case $1 in 6|20)  echo roads_to_power ;; esac; }
 # one that is absent.
 preset_dlc_vis() { case $1 in 8) vdlc roads_to_power ;; esac; }
 
-# Explanatory tooltip for a condition option, if it needs one. Two do. Military
-# Strength's threshold is a duchy-tier baseline scaled by the vassal's rank
-# (leo_mvd_effective_threshold), which the plain label cannot convey. Governor
-# Theme picks a value rather than a floor, the one place the panel departs from
-# "is at least", so it says so.
-cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; 20) echo "leo_mvd_ui_cond_20_tt" ;; esac; }
+# Explanatory tooltip for a condition option, if it needs one. Three do.
+# Military Strength's threshold is a duchy-tier baseline scaled by the vassal's
+# rank (leo_mvd_effective_threshold), which the plain label cannot convey.
+# Governor Theme picks a value rather than a floor, the one place the panel
+# departs from "is at least", so it says so. Average Development's label cannot
+# say which counties are averaged (the personally held ones).
+cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; 20) echo "leo_mvd_ui_cond_20_tt" ;; 21) echo "leo_mvd_ui_cond_21_tt" ;; esac; }
 
 # One shared threshold picker per node serves every numeric condition, instead
 # of one hidden picker per condition (which multiplied the panel's widget count).

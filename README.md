@@ -38,7 +38,7 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 
 ### Conditions
 
-Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Same House as You · Administrative Government · Governor Theme · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You
+Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Same House as You · Administrative Government · Governor Theme · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Average Development · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You
 
 Every measured condition reads the same way (**"is at least"**), so the true branch is always the high side. Two are worth knowing about. Military Strength's number is the **duchy baseline**, and it scales by title tier so it stays meaningful at every realm size (counts ×0.4, dukes ×1, kings ×3, emperors ×8; tunable in `common/script_values/leo_mvd_values.txt`). Governor Theme is the one exception to "is at least": it matches a single theme outright, so a rule asking for Military Administration is answered no by every other theme, and by every vassal who is not a governor. Administrative Government and Governor Theme appear only with _Roads to Power_.
 

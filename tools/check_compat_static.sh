@@ -136,7 +136,8 @@ echo "== Vanilla: engine built-in triggers (proxy: still used by vanilla) =="
 for t in is_powerful_vassal_of is_councillor_of max_military_strength \
          vassal_contract_has_flag highest_held_title_tier development_level \
          cultural_acceptance has_dynasty government_allows government_has_flag \
-         any_sub_realm_county any_held_county capital_county opinion; do
+         any_sub_realm_county any_held_county any_held_title every_held_title \
+         capital_county opinion save_temporary_scope_value_as; do
 	use "trigger: $t" "\b$t\b"
 done
 for c in tier_county tier_duchy tier_kingdom tier_empire; do
@@ -160,6 +161,7 @@ echo "== Vanilla: display bits (cosmetic; a miss degrades looks, not function) =
 # Game concepts the panel links with [x|E]. Matched as a concept key or as an
 # alias member, so common words in prose do not give a false pass.
 for c in faith culture cultures dynasty house administrative government \
+         governor baron \
          powerful_vassal council title development opinion county counties \
          cultural_acceptance men_at_arms fortification_buildings \
          military_buildings economic_buildings vassal vassals directive \

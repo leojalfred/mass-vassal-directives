@@ -56,13 +56,15 @@
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label. Two are not, and carry
- # a tooltip on their option only: Military Strength, because its number is a
- # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Most conditions are self-explanatory from their label. Three are not, and
+ # carry a tooltip on their option only: Military Strength, because its number is
+ # a duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt),
  # Governor Theme, because it is the one picker that matches a value outright
- # instead of reading as "is at least".
- leo_mvd_ui_cond_20_tt: "Correspond exactement à un thème, et non à un seuil : une règle demandant $admin_theme_military$ reçoit non de tous les autres thèmes.\n\nUn [vassal|E] qui n'est pas gouverneur reçoit également non.\n\n#weak Les thèmes sont fixés sur le contrat d'un gouverneur, cela ne trie donc que les [vassals|E] [administrative|E].#!"
+ # instead of reading as "is at least", and Average Development, because the
+ # label cannot say which counties are averaged.
+ leo_mvd_ui_cond_20_tt: "Correspond exactement à un thème. Un [vassal|E] qui n'est pas [governor|E] ne remplit jamais cette condition.\n\n#weak Les thèmes sont fixés sur le contrat d'un gouverneur, cela ne trie donc que les [vassals|E] [administrative|E].#!"
  leo_mvd_ui_cond_9_tt: "Le chiffre est un étalon de rang [duchy|E], ajusté au rang de chaque [vassal|E] afin qu'un seul réglage reste pertinent dans tout le royaume. Les royaumes plus grands lèvent de plus grandes armées.\n\nPar rapport au chiffre, on demande à un vassal de rang [county|E] 0.4x, à un de rang [duchy|E] 1x, à un de rang [kingdom|E] 3x, à un de rang [empire|E] 8x.\n\n#weak Ainsi un choix de 1000 revient à 400 soldats pour un comte, 1000 pour un duc, 3000 pour un roi et 8000 pour un empereur.#!"
+ leo_mvd_ui_cond_21_tt: "Le [development|E] moyen des [counties|E] que le [vassal|E] tient personnellement. Ce sont les comtés qu'une [directive|E] peut réellement améliorer, puisque les directives ne sont pas transmises aux vassaux des vassaux.\n\n#weak Un vassal qui ne tient aucun comté, comme un [baron|E], ne remplit jamais cette condition.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Exempter de l'automatisation des directives"

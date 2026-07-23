@@ -141,7 +141,7 @@ There is no committed in-game check tool: opening the real dropdown above tests 
 ## Conventions
 
 - Prefix everything `leo_mvd_`.
-- Directive codes 1-9 settled, 10-13 nomad, 14 AGOT `settle_wilderness`, 0 = none. They appear in `leo_mvd_managed`, node `dir` variables, and loc key suffixes. Keep them aligned. Condition codes 1-14 are the base set, 15-18 the AGOT Westeros conditions (added only in the `TARGET=agot` generator branch), 19-20 base conditions added later.
+- Directive codes 1-9 settled, 10-13 nomad, 14 AGOT `settle_wilderness`, 0 = none. They appear in `leo_mvd_managed`, node `dir` variables, and loc key suffixes. Keep them aligned. Condition codes 1-14 are the base set, 15-18 the AGOT Westeros conditions (added only in the `TARGET=agot` generator branch), 19-21 base conditions added later.
 - **Condition and directive codes are append-only.** They are stored in player variables that persist in saves, so renumbering silently rewrites the rule sets of everyone already playing. A new condition takes the next free code no matter where it belongs in the list; `CONDS` is what orders the panel, and it is deliberately not in numeric order.
 - Scripted GUIs: `is_shown` = checked/selected state, `is_valid` = enabled, `effect` = onclick. Controls that read their own state from a variable need no entry at all.
 - Comments say **why**, not what. The what is readable; the why is usually "the script language wouldn't let me do the obvious thing".

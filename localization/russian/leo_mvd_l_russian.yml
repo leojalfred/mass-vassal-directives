@@ -56,13 +56,15 @@
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label. Two are not, and carry
- # a tooltip on their option only: Military Strength, because its number is a
- # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Most conditions are self-explanatory from their label. Three are not, and
+ # carry a tooltip on their option only: Military Strength, because its number is
+ # a duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt),
  # Governor Theme, because it is the one picker that matches a value outright
- # instead of reading as "is at least".
- leo_mvd_ui_cond_20_tt: "Совпадает ровно с одной темой, а не задаёт нижнюю границу: правило, требующее $admin_theme_military$, получает отказ от всех прочих тем.\n\n[vassal|E], не являющийся губернатором, также получает отказ.\n\n#weak Темы задаются в договоре губернатора, поэтому так сортируются только [administrative|E] [vassals|E].#!"
+ # instead of reading as "is at least", and Average Development, because the
+ # label cannot say which counties are averaged.
+ leo_mvd_ui_cond_20_tt: "Совпадает ровно с одной темой. [vassal|E], который не [governor|E], никогда не выполняет это условие.\n\n#weak Темы задаются в договоре губернатора, поэтому так сортируются только [administrative|E] [vassals|E].#!"
  leo_mvd_ui_cond_9_tt: "Число — это мерило уровня [duchy|E], масштабируемое под ранг каждого [vassal|E], чтобы одна настройка оставалась осмысленной по всей державе. Крупные державы поднимают крупные армии.\n\nОт этого числа с вассала уровня [county|E] спрашивается 0.4x, с уровня [duchy|E] — 1x, с уровня [kingdom|E] — 3x, с уровня [empire|E] — 8x.\n\n#weak Так, выбор 1000 даёт 400 воинов для графа, 1000 для герцога, 3000 для короля и 8000 для императора.#!"
+ leo_mvd_ui_cond_21_tt: "Среднее [development|E] [counties|E], которыми [vassal|E] владеет лично. Именно эти графства [directive|E] может действительно улучшить, поскольку директивы не передаются вассалам вассалов.\n\n#weak Вассал без собственного графства, например [baron|E], никогда не выполняет это условие.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Исключить из автоматики директив"

@@ -20,6 +20,7 @@ leo_mvd_build_options_effect = {
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_8 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_9 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_10 }
+	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_21 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_11 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_12 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_13 }
@@ -37,6 +38,7 @@ leo_mvd_build_options_effect = {
 	add_to_variable_list = { name = leo_mvd_qconds target = flag:cond_8 }
 	add_to_variable_list = { name = leo_mvd_qconds target = flag:cond_9 }
 	add_to_variable_list = { name = leo_mvd_qconds target = flag:cond_10 }
+	add_to_variable_list = { name = leo_mvd_qconds target = flag:cond_21 }
 	add_to_variable_list = { name = leo_mvd_qconds target = flag:cond_11 }
 	add_to_variable_list = { name = leo_mvd_qconds target = flag:cond_12 }
 	add_to_variable_list = { name = leo_mvd_qconds target = flag:cond_13 }
@@ -100,6 +102,12 @@ leo_mvd_build_options_effect = {
 	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_4 }
 	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_5 }
 	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_6 }
+	clear_variable_list = leo_mvd_t_21
+	add_to_variable_list = { name = leo_mvd_t_21 target = flag:thresh_5 }
+	add_to_variable_list = { name = leo_mvd_t_21 target = flag:thresh_10 }
+	add_to_variable_list = { name = leo_mvd_t_21 target = flag:thresh_20 }
+	add_to_variable_list = { name = leo_mvd_t_21 target = flag:thresh_40 }
+	add_to_variable_list = { name = leo_mvd_t_21 target = flag:thresh_60 }
 
 	# The code each option carries, keyed by its own flag, so a datamodel
 	# row can read its identity as a number and compare it against a node
@@ -124,6 +132,7 @@ leo_mvd_build_options_effect = {
 	set_variable = { name = leo_mvd_x_cond_8 value = 8 }
 	set_variable = { name = leo_mvd_x_cond_9 value = -1 }
 	set_variable = { name = leo_mvd_x_cond_10 value = -1 }
+	set_variable = { name = leo_mvd_x_cond_21 value = -1 }
 	set_variable = { name = leo_mvd_x_cond_11 value = -1 }
 	set_variable = { name = leo_mvd_x_cond_12 value = -1 }
 	set_variable = { name = leo_mvd_x_cond_13 value = -1 }
@@ -164,7 +173,7 @@ leo_mvd_build_options_effect = {
 
 	# Stamps what these lists were built from, so a save carrying an
 	# older option set is spotted and rebuilt rather than trusted.
-	set_variable = { name = leo_mvd_opts_version value = 76 }
+	set_variable = { name = leo_mvd_opts_version value = 83 }
 
 	# Everything above is read only by the panel's datamodels, and the
 	# script validator does not count GUI use - left unnamed in script it
@@ -188,7 +197,7 @@ leo_mvd_ensure_options_effect = {
 				# Reading the variable is guarded: a save from before the
 				# lists existed has no such variable to compare.
 				NOT = { has_variable = leo_mvd_opts_version }
-				NOT = { var:leo_mvd_opts_version = 76 }
+				NOT = { var:leo_mvd_opts_version = 83 }
 			}
 		}
 		leo_mvd_build_options_effect = yes

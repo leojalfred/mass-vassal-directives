@@ -56,13 +56,15 @@
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label. Two are not, and carry
- # a tooltip on their option only: Military Strength, because its number is a
- # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Most conditions are self-explanatory from their label. Three are not, and
+ # carry a tooltip on their option only: Military Strength, because its number is
+ # a duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt),
  # Governor Theme, because it is the one picker that matches a value outright
- # instead of reading as "is at least".
- leo_mvd_ui_cond_20_tt: "Coincide exactamente con un tema, no con un mínimo: una regla que pide $admin_theme_military$ recibe un no de todos los demás temas.\n\nUn [vassal|E] que no es gobernador también recibe un no.\n\n#weak Los temas se fijan en el contrato de un gobernador, así que esto solo ordena a los [vassals|E] [administrative|E].#!"
+ # instead of reading as "is at least", and Average Development, because the
+ # label cannot say which counties are averaged.
+ leo_mvd_ui_cond_20_tt: "Coincide exactamente con un tema. Un [vassal|E] que no es [governor|E] nunca cumple esta condición.\n\n#weak Los temas se fijan en el contrato de un gobernador, así que esto solo ordena a los [vassals|E] [administrative|E].#!"
  leo_mvd_ui_cond_9_tt: "La cifra es un baremo de rango [duchy|E], escalado al rango de cada [vassal|E] para que un único ajuste siga teniendo sentido en todo el reino. Los reinos mayores levantan ejércitos mayores.\n\nFrente a la cifra, a un vasallo de rango [county|E] se le pide 0.4x, a uno de rango [duchy|E] 1x, a uno de rango [kingdom|E] 3x, a uno de rango [empire|E] 8x.\n\n#weak Así, una elección de 1000 resulta en 400 tropas para un conde, 1000 para un duque, 3000 para un rey y 8000 para un emperador.#!"
+ leo_mvd_ui_cond_21_tt: "El [development|E] medio de los [counties|E] que el [vassal|E] posee personalmente. Esos son los condados que una [directive|E] puede mejorar realmente, ya que las directivas no se transmiten a los vasallos de los vasallos.\n\n#weak Un vasallo que no posee ningún condado, como un [baron|E], nunca cumple esta condición.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Eximir de la automatización de directivas"

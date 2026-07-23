@@ -56,13 +56,15 @@
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label. Two are not, and carry
- # a tooltip on their option only: Military Strength, because its number is a
- # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Most conditions are self-explanatory from their label. Three are not, and
+ # carry a tooltip on their option only: Military Strength, because its number is
+ # a duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt),
  # Governor Theme, because it is the one picker that matches a value outright
- # instead of reading as "is at least".
- leo_mvd_ui_cond_20_tt: "Matches one theme exactly, rather than a floor: a rule asking for $admin_theme_military$ is answered no by every other theme.\n\nA [vassal|E] who is not a governor is answered no as well.\n\n#weak Themes are set on a governor's contract, so this only ever sorts [administrative|E] [vassals|E].#!"
+ # instead of reading as "is at least", and Average Development, because the
+ # label cannot say which counties are averaged.
+ leo_mvd_ui_cond_20_tt: "Matches one theme exactly. A [vassal|E] who is not a [governor|E] never meets this condition.\n\n#weak Themes are set on a governor's contract, so this only ever sorts [administrative|E] [vassals|E].#!"
  leo_mvd_ui_cond_9_tt: "The figure is a [duchy|E]-tier yardstick, scaled to each [vassal|E]'s rank so a single setting stays meaningful across the realm. Larger realms raise larger armies.\n\nAgainst the figure a [county|E]-tier vassal is asked 0.4x, a [duchy|E]-tier one 1x, a [kingdom|E]-tier one 3x, an [empire|E]-tier one 8x.\n\n#weak So a choice of 1000 comes out to 400 troops for a count, 1000 for a duke, 3000 for a king, and 8000 for an emperor.#!"
+ leo_mvd_ui_cond_21_tt: "The average [development|E] of the [counties|E] the [vassal|E] holds personally. Those are the counties a [directive|E] can actually improve, since directives are not passed down to the vassals of vassals.\n\n#weak A vassal who holds no county, such as a [baron|E], never meets this condition.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Exempt from Directive Automation"

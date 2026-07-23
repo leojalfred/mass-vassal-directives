@@ -56,13 +56,15 @@
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label. Two are not, and carry
- # a tooltip on their option only: Military Strength, because its number is a
- # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Most conditions are self-explanatory from their label. Three are not, and
+ # carry a tooltip on their option only: Military Strength, because its number is
+ # a duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt),
  # Governor Theme, because it is the one picker that matches a value outright
- # instead of reading as "is at least".
- leo_mvd_ui_cond_20_tt: "Dopasowuje dokładnie jeden motyw, a nie próg: reguła pytająca o $admin_theme_military$ otrzymuje nie od każdego innego motywu.\n\n[vassal|E], który nie jest namiestnikiem, również otrzymuje nie.\n\n#weak Motywy ustala się w kontrakcie namiestnika, więc porządkuje to wyłącznie [administrative|E] [vassals|E].#!"
+ # instead of reading as "is at least", and Average Development, because the
+ # label cannot say which counties are averaged.
+ leo_mvd_ui_cond_20_tt: "Dopasowuje dokładnie jeden motyw. Jeśli [vassal|E] to nie [governor|E], nigdy nie spełnia tego warunku.\n\n#weak Motywy ustala się w kontrakcie namiestnika, więc porządkuje to wyłącznie [administrative|E] [vassals|E].#!"
  leo_mvd_ui_cond_9_tt: "Ta liczba to miernik na poziomie [duchy|E], skalowany do rangi każdego [vassal|E], aby jedno ustawienie zachowało sens w całym królestwie. Większe królestwa wystawiają większe armie.\n\nWzględem tej liczby [county|E]-rangi wasal proszony jest o 0.4x, [duchy|E]-rangi o 1x, [kingdom|E]-rangi o 3x, a [empire|E]-rangi o 8x.\n\n#weak Zatem wybór 1000 daje 400 żołnierzy dla hrabiego, 1000 dla księcia, 3000 dla króla i 8000 dla cesarza.#!"
+ leo_mvd_ui_cond_21_tt: "Średni [development|E] [counties|E], które [vassal|E] posiada osobiście. To hrabstwa, które [directive|E] może faktycznie ulepszyć, ponieważ dyrektywy nie są przekazywane wasalom wasali.\n\n#weak Wasal, który nie posiada żadnego hrabstwa, na przykład [baron|E], nigdy nie spełnia tego warunku.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Zwolnij z automatyzacji dyrektyw"

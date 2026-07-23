@@ -56,13 +56,15 @@
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label. Two are not, and carry
- # a tooltip on their option only: Military Strength, because its number is a
- # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Most conditions are self-explanatory from their label. Three are not, and
+ # carry a tooltip on their option only: Military Strength, because its number is
+ # a duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt),
  # Governor Theme, because it is the one picker that matches a value outright
- # instead of reading as "is at least".
- leo_mvd_ui_cond_20_tt: "최소값이 아니라 하나의 테마와 정확히 일치합니다. $admin_theme_military$를 요구하는 규칙은 다른 모든 테마에 아니오로 답합니다.\n\n총독이 아닌 [vassal|E]에게도 아니오로 답합니다.\n\n#weak 테마는 총독의 계약에 설정되므로, 이 조건은 [administrative|E] [vassals|E]만 분류합니다.#!"
+ # instead of reading as "is at least", and Average Development, because the
+ # label cannot say which counties are averaged.
+ leo_mvd_ui_cond_20_tt: "하나의 테마와 정확히 일치합니다. [governor|E]이(가) 아닌 [vassal|E]은(는) 이 조건을 결코 충족하지 못합니다.\n\n#weak 테마는 총독의 계약에 설정되므로, 이 조건은 [administrative|E] [vassals|E]만 분류합니다.#!"
  leo_mvd_ui_cond_9_tt: "이 수치는 [duchy|E] 등급을 기준으로 한 척도로, 각 [vassal|E]의 등급에 맞춰 조정되어 하나의 설정이 왕국 전역에서 의미를 유지하도록 합니다. 큰 왕국일수록 더 큰 군대를 일으킵니다.\n\n이 수치에 대해 [county|E] 등급 봉신에게는 0.4배, [duchy|E] 등급에게는 1배, [kingdom|E] 등급에게는 3배, [empire|E] 등급에게는 8배를 요구합니다.\n\n#weak 따라서 1000을 선택하면 백작에게는 400명, 공작에게는 1000명, 왕에게는 3000명, 황제에게는 8000명의 병력이 됩니다.#!"
+ leo_mvd_ui_cond_21_tt: "[vassal|E]이(가) 직접 보유한 [counties|E]의 평균 [development|E]입니다. 지침은 봉신의 봉신에게 전달되지 않으므로, [directive|E]이(가) 실제로 개선할 수 있는 백작령은 바로 이들입니다.\n\n#weak 백작령을 보유하지 않은 봉신, 예를 들어 [baron|E]은(는) 이 조건을 결코 충족하지 못합니다.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "지침 자동화에서 제외"

@@ -56,13 +56,15 @@
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label. Two are not, and carry
- # a tooltip on their option only: Military Strength, because its number is a
- # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Most conditions are self-explanatory from their label. Three are not, and
+ # carry a tooltip on their option only: Military Strength, because its number is
+ # a duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt),
  # Governor Theme, because it is the one picker that matches a value outright
- # instead of reading as "is at least".
- leo_mvd_ui_cond_20_tt: "下限ではなく、ひとつのテーマと正確に一致する。$admin_theme_military$を求める規則は、他のすべてのテーマに対していいえと答える。\n\n総督でない[vassal|E]にもいいえと答える。\n\n#weak テーマは総督の契約に設定されるため、これは[administrative|E]な[vassals|E]しか分類しない。#!"
+ # instead of reading as "is at least", and Average Development, because the
+ # label cannot say which counties are averaged.
+ leo_mvd_ui_cond_20_tt: "ひとつのテーマと正確に一致する。[governor|E]でない[vassal|E]はこの条件を決して満たさない。\n\n#weak テーマは総督の契約に設定されるため、これは[administrative|E]な[vassals|E]しか分類しない。#!"
  leo_mvd_ui_cond_9_tt: "この数値は[duchy|E]級の基準で、各[vassal|E]の位に応じて調整されるため、一つの設定が王国全体で意味を保ちます。大きな王国はより大きな軍を興します。\n\nこの数値に対し、[county|E]級の臣下は0.4倍、[duchy|E]級は1倍、[kingdom|E]級は3倍、[empire|E]級は8倍を求められます。\n\n#weak つまり1000という選択は、伯には400、公には1000、王には3000、皇帝には8000の兵となります。#!"
+ leo_mvd_ui_cond_21_tt: "[vassal|E]が直接保有する[counties|E]の平均[development|E]。指令は臣下の臣下には引き継がれないため、これらが[directive|E]の実際に改善できる伯爵領である。\n\n#weak 伯爵領を保有しない臣下、たとえば[baron|E]はこの条件を決して満たさない。#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "指令の自動割り当てから除外する"

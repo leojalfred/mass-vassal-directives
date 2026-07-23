@@ -520,7 +520,7 @@ window = {
 								}
 								
 								vbox = {
-									visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)20' ) )]"
+									visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n1_cond').GetValue, '(CFixedPoint)21' ) )]"
 									layoutpolicy_horizontal = expanding
 									spacing = 2
 									vbox = {
@@ -725,7 +725,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n2_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -1126,7 +1126,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r1_n3_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -1575,7 +1575,7 @@ window = {
 								}
 								
 								vbox = {
-									visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)20' ) )]"
+									visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n1_cond').GetValue, '(CFixedPoint)21' ) )]"
 									layoutpolicy_horizontal = expanding
 									spacing = 2
 									vbox = {
@@ -1780,7 +1780,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n2_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -2181,7 +2181,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r2_n3_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -2630,7 +2630,7 @@ window = {
 								}
 								
 								vbox = {
-									visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)20' ) )]"
+									visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n1_cond').GetValue, '(CFixedPoint)21' ) )]"
 									layoutpolicy_horizontal = expanding
 									spacing = 2
 									vbox = {
@@ -2835,7 +2835,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n2_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -3236,7 +3236,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r3_n3_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -3685,7 +3685,7 @@ window = {
 								}
 								
 								vbox = {
-									visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)20' ) )]"
+									visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n1_cond').GetValue, '(CFixedPoint)21' ) )]"
 									layoutpolicy_horizontal = expanding
 									spacing = 2
 									vbox = {
@@ -3890,7 +3890,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n2_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -4291,7 +4291,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r4_n3_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -4740,7 +4740,7 @@ window = {
 								}
 								
 								vbox = {
-									visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)20' ) )]"
+									visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n1_cond').GetValue, '(CFixedPoint)21' ) )]"
 									layoutpolicy_horizontal = expanding
 									spacing = 2
 									vbox = {
@@ -4945,7 +4945,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n2_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -5346,7 +5346,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r5_n3_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -5795,7 +5795,7 @@ window = {
 								}
 								
 								vbox = {
-									visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)20' ) )]"
+									visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n1_cond').GetValue, '(CFixedPoint)21' ) )]"
 									layoutpolicy_horizontal = expanding
 									spacing = 2
 									vbox = {
@@ -6000,7 +6000,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n2_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -6401,7 +6401,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_r6_n3_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -6845,7 +6845,7 @@ window = {
 								}
 								
 								vbox = {
-									visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)20' ) )]"
+									visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n1_cond').GetValue, '(CFixedPoint)21' ) )]"
 									layoutpolicy_horizontal = expanding
 									spacing = 2
 									vbox = {
@@ -7050,7 +7050,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n2_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -7451,7 +7451,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q1_n3_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -7899,7 +7899,7 @@ window = {
 								}
 								
 								vbox = {
-									visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)20' ) )]"
+									visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n1_cond').GetValue, '(CFixedPoint)21' ) )]"
 									layoutpolicy_horizontal = expanding
 									spacing = 2
 									vbox = {
@@ -8104,7 +8104,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n2_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -8505,7 +8505,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q2_n3_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -8953,7 +8953,7 @@ window = {
 								}
 								
 								vbox = {
-									visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)20' ) )]"
+									visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n1_cond').GetValue, '(CFixedPoint)21' ) )]"
 									layoutpolicy_horizontal = expanding
 									spacing = 2
 									vbox = {
@@ -9158,7 +9158,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n2_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {
@@ -9559,7 +9559,7 @@ window = {
 									}
 									
 									vbox = {
-										visible = "[Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)20' ) )]"
+										visible = "[Or( Or( Or( Or( Or( Or( Or( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)9' ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)10' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)11' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)12' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)13' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)14' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)20' ) ), EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_q3_n3_cond').GetValue, '(CFixedPoint)21' ) )]"
 										layoutpolicy_horizontal = expanding
 										spacing = 2
 										vbox = {

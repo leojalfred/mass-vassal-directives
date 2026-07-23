@@ -56,13 +56,15 @@
  leo_mvd_ui_preset_5_tt_nodlc: "$leo_mvd_ui_preset_5_tt$"
 
  ### Conditions
- # Most conditions are self-explanatory from their label. Two are not, and carry
- # a tooltip on their option only: Military Strength, because its number is a
- # duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt), and
+ # Most conditions are self-explanatory from their label. Three are not, and
+ # carry a tooltip on their option only: Military Strength, because its number is
+ # a duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt),
  # Governor Theme, because it is the one picker that matches a value outright
- # instead of reading as "is at least".
- leo_mvd_ui_cond_20_tt: "Trifft genau ein Thema, keinen Mindestwert: Eine Regel, die nach $admin_theme_military$ fragt, wird von jedem anderen Thema mit Nein beantwortet.\n\nEin [vassal|E], der kein Gouverneur ist, wird ebenfalls mit Nein beantwortet.\n\n#weak Themen stehen im Vertrag eines Gouverneurs, dies sortiert also nur [administrative|E] [vassals|E].#!"
+ # instead of reading as "is at least", and Average Development, because the
+ # label cannot say which counties are averaged.
+ leo_mvd_ui_cond_20_tt: "Trifft genau ein Thema. Ein [vassal|E], der kein [governor|E] ist, erfüllt diese Bedingung nie.\n\n#weak Themen stehen im Vertrag eines Gouverneurs, dies sortiert also nur [administrative|E] [vassals|E].#!"
  leo_mvd_ui_cond_9_tt: "Die Zahl ist ein Maßstab auf [duchy|E]-Ebene, skaliert nach dem Rang jedes [vassal|E], damit eine einzige Einstellung im ganzen Reich sinnvoll bleibt. Größere Reiche stellen größere Heere auf.\n\nAnhand der Zahl wird von einem Vasallen auf [county|E]-Ebene 0.4x verlangt, auf [duchy|E]-Ebene 1x, auf [kingdom|E]-Ebene 3x, auf [empire|E]-Ebene 8x.\n\n#weak So ergibt eine Wahl von 1000 etwa 400 Soldaten für einen Grafen, 1000 für einen Herzog, 3000 für einen König und 8000 für einen Kaiser.#!"
+ leo_mvd_ui_cond_21_tt: "Die durchschnittliche [development|E] der [counties|E], die der [vassal|E] persönlich hält. Das sind die Grafschaften, die eine [directive|E] tatsächlich verbessern kann, da Direktiven nicht an die Vasallen der Vasallen weitergegeben werden.\n\n#weak Ein Vasall ohne eigene Grafschaft, etwa ein [baron|E], erfüllt diese Bedingung nie.#!"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Von der Anweisungs-Automatik ausnehmen"

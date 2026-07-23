@@ -42,3 +42,29 @@ leo_mvd_effective_threshold = {
 		multiply = leo_mvd_threshold_mult_empire
 	}
 }
+
+# Current scope: vassal. Average development of the counties the vassal holds
+# personally, the ones a directive could actually improve: directives are not
+# passed down to sub-vassals. Iterated as county-tier held titles because the
+# script value parser accepts every_held_title but not every_held_county, which
+# exists only for effects and triggers. The count is its own value because the
+# divisor cannot iterate inline, and the divide is guarded so a vassal with no
+# held county (a baron) reads 0 instead of dividing by zero.
+leo_mvd_held_county_count = {
+	value = 0
+	every_held_title = {
+		limit = { tier = tier_county }
+		add = 1
+	}
+}
+leo_mvd_avg_held_development = {
+	value = 0
+	every_held_title = {
+		limit = { tier = tier_county }
+		add = development_level
+	}
+	if = {
+		limit = { any_held_title = { tier = tier_county } }
+		divide = leo_mvd_held_county_count
+	}
+}

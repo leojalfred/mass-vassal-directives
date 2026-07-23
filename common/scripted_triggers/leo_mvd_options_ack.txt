@@ -32,6 +32,8 @@ leo_mvd_options_ack_trigger = {
 	var:leo_mvd_x_cond_9 = 9
 	is_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_10 }
 	var:leo_mvd_x_cond_10 = 10
+	is_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_21 }
+	var:leo_mvd_x_cond_21 = 21
 	is_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_11 }
 	var:leo_mvd_x_cond_11 = 11
 	is_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_12 }
