@@ -171,10 +171,6 @@ leo_mvd_build_options_effect = {
 	set_variable = { name = leo_mvd_x_thresh_2000 value = 2000 }
 	set_variable = { name = leo_mvd_x_thresh_5000 value = 5000 }
 
-	# Stamps what these lists were built from, so a save carrying an
-	# older option set is spotted and rebuilt rather than trusted.
-	set_variable = { name = leo_mvd_opts_version value = 83 }
-
 	# Everything above is read only by the panel's datamodels, and the
 	# script validator does not count GUI use - left unnamed in script it
 	# reports every flag and variable as "set but never used". Naming
@@ -184,22 +180,18 @@ leo_mvd_build_options_effect = {
 	}
 }
 
-# Current scope: the player. Build the lists if they are missing or stale.
+# Current scope: the player. Rebuild the option lists, always.
 #
-# Cheap enough to sit on the common path: one comparison unless the option
-# set has actually changed. Game start rebuilds unconditionally instead, so
-# that installing or removing a DLC is picked up even when the version is
-# unchanged.
+# The lists live in the save, and only a new campaign rebuilds them on its
+# own - on_game_start_after_lobby does not fire when a save is loaded. So a
+# save carries whatever its lists held the day it was made, and every way
+# they can go stale (a mod update that regates an option, a DLC installed
+# between sessions) can leave the option count untouched. There is nothing
+# cheap and reliable to compare against, so this does not try: it rebuilds.
+#
+# Affordable because nothing on a tick calls it. Every caller is a panel
+# interaction - opening a dropdown, picking a preset, Apply Now - so the
+# cost is a few dozen variable writes on a click.
 leo_mvd_ensure_options_effect = {
-	if = {
-		limit = {
-			OR = {
-				# Reading the variable is guarded: a save from before the
-				# lists existed has no such variable to compare.
-				NOT = { has_variable = leo_mvd_opts_version }
-				NOT = { var:leo_mvd_opts_version = 83 }
-			}
-		}
-		leo_mvd_build_options_effect = yes
-	}
+	leo_mvd_build_options_effect = yes
 }
