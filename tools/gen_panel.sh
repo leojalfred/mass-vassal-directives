@@ -1385,11 +1385,6 @@ HEAD
 	done
 
 	echo
-	echo -e "\t# Stamps what these lists were built from, so a save carrying an"
-	echo -e "\t# older option set is spotted and rebuilt rather than trusted."
-	echo -e "\tset_variable = { name = leo_mvd_opts_version value = $(options_version) }"
-
-	echo
 	echo -e "\t# Everything above is read only by the panel's datamodels, and the"
 	echo -e "\t# script validator does not count GUI use - left unnamed in script it"
 	echo -e "\t# reports every flag and variable as \"set but never used\". Naming"
@@ -1400,39 +1395,21 @@ HEAD
 	echo "}"
 
 	echo
-	echo "# Current scope: the player. Build the lists if they are missing or stale."
+	echo "# Current scope: the player. Rebuild the option lists, always."
 	echo "#"
-	echo "# Cheap enough to sit on the common path: one comparison unless the option"
-	echo "# set has actually changed. Game start rebuilds unconditionally instead, so"
-	echo "# that installing or removing a DLC is picked up even when the version is"
-	echo "# unchanged."
+	echo "# The lists live in the save, and only a new campaign rebuilds them on its"
+	echo "# own - on_game_start_after_lobby does not fire when a save is loaded. So a"
+	echo "# save carries whatever its lists held the day it was made, and every way"
+	echo "# they can go stale (a mod update that regates an option, a DLC installed"
+	echo "# between sessions) can leave the option count untouched. There is nothing"
+	echo "# cheap and reliable to compare against, so this does not try: it rebuilds."
+	echo "#"
+	echo "# Affordable because nothing on a tick calls it. Every caller is a panel"
+	echo "# interaction - opening a dropdown, picking a preset, Apply Now - so the"
+	echo "# cost is a few dozen variable writes on a click."
 	echo "leo_mvd_ensure_options_effect = {"
-	echo -e "\tif = {"
-	echo -e "\t\tlimit = {"
-	echo -e "\t\t\tOR = {"
-	echo -e "\t\t\t\t# Reading the variable is guarded: a save from before the"
-	echo -e "\t\t\t\t# lists existed has no such variable to compare."
-	echo -e "\t\t\t\tNOT = { has_variable = leo_mvd_opts_version }"
-	echo -e "\t\t\t\tNOT = { var:leo_mvd_opts_version = $(options_version) }"
-	echo -e "\t\t\t}"
-	echo -e "\t\t}"
-	echo -e "\t\tleo_mvd_build_options_effect = yes"
-	echo -e "\t}"
+	echo -e "\tleo_mvd_build_options_effect = yes"
 	echo "}"
-}
-
-# A number that changes whenever the option set does, so a save built against an
-# older one rebuilds instead of showing a stale list. The count of every option
-# the panel can offer, which no realistic edit leaves untouched.
-options_version() {
-	local n=0 c
-	for c in $CONDS; do n=$((n+1)); done
-	for c in $NOMAD_CONDS; do n=$((n+1)); done
-	for c in $DIRS $NOMAD_DIRS; do n=$((n+1)); done
-	for c in $NUMERIC_CONDS; do
-		local t; for t in $(cond_thresh "$c"); do n=$((n+1)); done
-	done
-	echo $n
 }
 
 # The counterpart to the note above. Fails on its first line, so nothing after
