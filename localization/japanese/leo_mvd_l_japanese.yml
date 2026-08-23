@@ -28,11 +28,11 @@
  # both say what None does and point a new player somewhere useful.
  leo_mvd_ui_preset_0_tt: "何も割り当てられず、自動割り当ては配った[directives|E]をすべて手放します。あなた自身が[vassal|E]に与えた[directives|E]はそのまま残されます。\n\nプリセットとは優先順位です。各[vassal|E]には、その中で適した最初の[directive|E]が与えられます。上から一つ選ぶと、その計画がここに表示されます。\n\nあるいは #V カスタム#! を選んで、優先順位を一つずつ自分で書くこともできます。すべての[vassal|E]に同じ[directive|E]を与えるも、[faith|E]や[culture|E]から強さ、[development|E]、立場に至るまで選んだ基準で判断し、それぞれに合った[directive|E]を与えるもよし。\n\n#weak 選ぶまで何も起こりません。#!"
  leo_mvd_ui_preset_1: "改宗と発展"
- leo_mvd_ui_preset_1_tt: "[vassals|E]を仲間に引き入れ、それから育てます。\n\n#weak 1.#! あなたの[faith|E]で他の信仰の県を持つ臣下には $leo_mvd_ui_dir_1$ を命じます。\n#weak 2.#! あなたの[culture|E]で他の文化の県を持つ臣下には $leo_mvd_ui_dir_2$ を命じます。\n#weak 3.#! 残りのうち、軍事的に強い者は $leo_mvd_ui_dir_3$、弱い者は $leo_mvd_ui_dir_8$。\n#weak 4.#! 残ったすべての臣下は $leo_mvd_ui_dir_9$。"
+ leo_mvd_ui_preset_1_tt: "[vassals|E]を仲間に引き入れ、それから育てます。\n\n#weak 1.#! あなたの[faith|E]で他の信仰の県を持つ臣下には $leo_mvd_ui_dir_1$ を命じます。\n#weak 2.#! あなたの[culture|E]で他の文化の県を持つ臣下には $leo_mvd_ui_dir_2$ を命じます。\n#weak 3.#! 残りのうち、軍事的に強い者は $leo_mvd_ui_dir_3$、弱い者は $leo_mvd_ui_dir_5$。\n#weak 4.#! 残ったすべての臣下は $leo_mvd_ui_dir_9$。"
  leo_mvd_ui_preset_2: "王国の統一"
  leo_mvd_ui_preset_2_tt: "王国を一つの民にします。\n\n#weak 1.#! あなたの[faith|E]で他の信仰の県を持つ臣下には $leo_mvd_ui_dir_1$ を命じます。\n#weak 2.#! あなたの[culture|E]で他の文化の県を持つ臣下には $leo_mvd_ui_dir_2$ を命じます。\n#weak 3.#! なお他文化の[culture|E]の県を持つ者は $leo_mvd_ui_dir_6$ に取り組みます。\n#weak 4.#! 残ったすべての臣下は $leo_mvd_ui_dir_9$。\n\n#weak 改宗と発展より強く改宗させますが、発展を犠牲にします。#!"
  leo_mvd_ui_preset_3: "戦への備え"
- leo_mvd_ui_preset_3_tt: "王国を武装させ、各[vassal|E]をその強さに応じて働かせます。\n\n強い臣下は自らの政体が最も得意とすることに貢献します。[administrative|E]の者は $leo_mvd_ui_dir_5$、その他は $leo_mvd_ui_dir_7$。\nどこであれ弱い臣下には $leo_mvd_ui_dir_8$ を命じます。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
+ leo_mvd_ui_preset_3_tt: "王国を武装させ、各[vassal|E]をその強さに応じて働かせます。\n\n[administrative|E]の臣下は自らの軍を活かします。強い者は $leo_mvd_ui_dir_4$、弱い者は $leo_mvd_ui_dir_5$。\nそれ以外は、強い者が $leo_mvd_ui_dir_7$、弱い者が $leo_mvd_ui_dir_8$。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
  leo_mvd_ui_preset_4: "経済の成長"
  leo_mvd_ui_preset_4_tt: "何よりもまず富を築きます。\n\n未発展の臣下には $leo_mvd_ui_dir_3$ を命じます。\n発展した臣下は $leo_mvd_ui_dir_9$ に転じます。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
  leo_mvd_ui_preset_8: "テーマ別統治"
@@ -40,13 +40,14 @@
  leo_mvd_ui_preset_5: "カスタム"
  leo_mvd_ui_preset_5_tt: "以下に書く、あなた自身のルール。\n\n#weak ここでカスタムを選ぶと何もない状態から始まります。代わりにプリセットから始めるには、そのルールの一つを変更するだけです。プリセットは元のまま、あなたの変更を加えてあなたのものになります。#!"
 
- # Without Roads to Power the administrative directives drop out, so the three
- # built-ins that used them run a different flow (see the presets in
- # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
- # the presets whose flow does not change alias back to their base description.
- # Govern by Theme is hidden outright without that DLC rather than falling back,
- # but still needs a key here, because the Description box builds one for
- # whichever preset is selected.
+ # Without Roads to Power or All Under Heaven there are no administrative
+ # vassals, so the administrative directives drop out and the three built-ins
+ # that used them run a different flow (see the presets in leo_mvd_rules.txt).
+ # The panel shows these instead when neither expansion is present; the presets
+ # whose flow does not change alias back to their base description. Govern by
+ # Theme is hidden outright without Roads to Power rather than falling back, but
+ # still needs a key here, because the Description box builds one for whichever
+ # preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "[vassals|E]を仲間に引き入れ、それから育てます。\n\n#weak 1.#! あなたの[faith|E]で他の信仰の県を持つ臣下には $leo_mvd_ui_dir_1$ を命じます。\n#weak 2.#! あなたの[culture|E]で他の文化の県を持つ臣下には $leo_mvd_ui_dir_2$ を命じます。\n#weak 3.#! 残りのうち、軍事的に強い者は $leo_mvd_ui_dir_9$、弱い者は $leo_mvd_ui_dir_8$。"
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"

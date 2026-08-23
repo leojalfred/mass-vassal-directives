@@ -505,7 +505,8 @@ leo_mvd_preset_0_effect = {
 
 # Current scope: the player.
 # Steer vassals onto your faith, then your culture, then grow them: strong
-# vassals develop their land, weaker ones build up their military.
+# vassals develop their land, weaker ones raise men-at-arms where they can and
+# build up their economy where they cannot.
 leo_mvd_preset_1_effect = {
 	leo_mvd_clear_rules_effect = yes
 
@@ -519,16 +520,19 @@ leo_mvd_preset_1_effect = {
 	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 2 THRESH = 0 }
 	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 2 }
 
-	# 3+: grow the realm. With Roads to Power the strong develop their land, and
-	# a fourth priority catches those who fail Improve Development's duchy gate.
-	# Without it there is no Improve Development directive, so the strong build
-	# economy instead and the catch-all is not needed.
+	# 3+: grow the realm. Where administrative vassals exist the strong develop
+	# their land and the weak raise men-at-arms, with a fourth priority behind
+	# both: it catches the strong who fail Improve Development's duchy gate and
+	# the weak who are not administrative and so cannot recruit at all. Where
+	# such vassals do not exist there is no Improve Development directive, so the
+	# strong build economy instead and the catch-all is not needed. Either
+	# expansion supplies an administrative government, so both are asked about.
 	if = {
-		limit = { has_dlc_feature = roads_to_power }
+		limit = { OR = { has_dlc_feature = roads_to_power has_dlc_feature = all_under_heaven } }
 		set_variable = { name = leo_mvd_rule_count value = 4 }
 		leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = leo_mvd_mil_baseline }
 		leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 3 }
-		leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 8 }
+		leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 5 }
 		leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
 	}
 	else = {
@@ -574,25 +578,27 @@ leo_mvd_preset_2_effect = {
 }
 
 # Current scope: the player.
-# Arm the realm, each vassal to their strength. Administrative vassals raise
-# men-at-arms, the rest fortify, and the weak build up their military. A single
-# priority places every vassal, so it is the only one either way.
+# Arm the realm, each vassal to their strength. Administrative vassals put their
+# men-at-arms to work, the rest build fortifications or military buildings. A
+# single priority places every vassal, so it is the only one either way.
 leo_mvd_preset_3_effect = {
 	leo_mvd_clear_rules_effect = yes
 	set_variable = { name = leo_mvd_rule_count value = 1 }
 
-	# With Roads to Power the priority splits first on government (administrative
-	# vassals raise men-at-arms, the rest fortify), then on strength. Without it
-	# there are no administrative vassals and no men-at-arms directive, so it
+	# Where administrative vassals exist the priority splits first on government,
+	# then on strength. Administrative vassals field troops of their own: the
+	# strong sharpen the ones they have, the weak raise more. The rest build,
+	# fortifications for the strong and military buildings for the weak. Where
+	# such vassals do not exist there is no men-at-arms directive either, so it
 	# splits on strength alone: the strong fortify, the weak build military. Both
 	# trees place every vassal, so neither needs a catch-all priority behind it.
 	if = {
-		limit = { has_dlc_feature = roads_to_power }
+		limit = { OR = { has_dlc_feature = roads_to_power has_dlc_feature = all_under_heaven } }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 6 THRESH = 0 }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n2 COND = 9 THRESH = leo_mvd_mil_baseline }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 9 THRESH = leo_mvd_mil_baseline }
-		leo_mvd_set_node_dir_effect = { NODE = r1_n4 DIR = 5 }
-		leo_mvd_set_node_dir_effect = { NODE = r1_n5 DIR = 8 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n4 DIR = 4 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n5 DIR = 5 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 7 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n7 DIR = 8 }
 	}
@@ -616,12 +622,13 @@ leo_mvd_preset_3_effect = {
 leo_mvd_preset_4_effect = {
 	leo_mvd_clear_rules_effect = yes
 
-	# With Roads to Power, underdeveloped vassals raise their development first
-	# and turn to economic buildings once established, with a second priority to
-	# catch those who fail Improve Development's gate. Without it there is no
-	# development directive, so growth is economic buildings for everyone.
+	# Where administrative vassals exist, underdeveloped ones raise their
+	# development first and turn to economic buildings once established, with a
+	# second priority to catch those who fail Improve Development's gate. Where
+	# they do not there is no development directive, so growth is economic
+	# buildings for everyone.
 	if = {
-		limit = { has_dlc_feature = roads_to_power }
+		limit = { OR = { has_dlc_feature = roads_to_power has_dlc_feature = all_under_heaven } }
 		set_variable = { name = leo_mvd_rule_count value = 2 }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 11 THRESH = 40 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 9 }
@@ -646,11 +653,12 @@ leo_mvd_preset_4_effect = {
 leo_mvd_preset_8_effect = {
 	leo_mvd_clear_rules_effect = yes
 
-	# No Roads to Power branch, unlike presets 1/3/4: without it there are no
-	# governors and no themes, so every rule here would collapse to "everyone
-	# builds economy", which Grow the Economy already is. The panel hides this
-	# preset outright instead (preset_dlc_vis in the generator), so this only
-	# ever runs where themes exist.
+	# No fallback branch, unlike presets 1/3/4: themes are Roads to Power alone
+	# (All Under Heaven's administrative governments carry province flags of
+	# their own, not admin_theme_*), and without them every rule here would
+	# collapse to "everyone builds economy", which Grow the Economy already is.
+	# The panel hides this preset outright instead (preset_dlc_vis in the
+	# generator), so this only ever runs where themes exist.
 	set_variable = { name = leo_mvd_rule_count value = 4 }
 	# Each theme gets the directive its own bonuses point at: military governors
 	# raise troops, civilian ones grow their land, frontier ones fortify.

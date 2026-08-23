@@ -28,11 +28,11 @@
  # both say what None does and point a new player somewhere useful.
  leo_mvd_ui_preset_0_tt: "Nic nie zostaje przydzielone, a automatyzacja porzuca wszystkie [directives|E], które rozdała. [directives|E], które sam nadałeś [vassal|E], pozostają nietknięte.\n\nSzablon to kolejność działania: każdy [vassal|E] otrzymuje pierwszą [directive|E], która mu odpowiada. Wybierz jeden powyżej, a jego plan pojawi się tutaj.\n\nAlbo wybierz #V Własny#!, aby ułożyć kolejność samemu, priorytet po priorytecie. Nadaj każdemu [vassal|E] tę samą [directive|E] lub oceniaj ich wedle własnego wyboru, od [faith|E] i [culture|E] po siłę, [development|E] i pozycję, i daj każdemu [directive|E], która pasuje.\n\n#weak Nic się nie stanie, dopóki nie wybierzesz.#!"
  leo_mvd_ui_preset_1: "Nawróć i rozwijaj"
- leo_mvd_ui_preset_1_tt: "Sprowadź [vassals|E] na łono, a potem rozwijaj ich.\n\n#weak 1.#! Wasale twojej [faith|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_1$.\n#weak 2.#! Wasale twojej [culture|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_2$.\n#weak 3.#! Spośród pozostałych, silni militarnie $leo_mvd_ui_dir_3$, a słabi $leo_mvd_ui_dir_8$.\n#weak 4.#! Wszyscy pozostali wasale $leo_mvd_ui_dir_9$."
+ leo_mvd_ui_preset_1_tt: "Sprowadź [vassals|E] na łono, a potem rozwijaj ich.\n\n#weak 1.#! Wasale twojej [faith|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_1$.\n#weak 2.#! Wasale twojej [culture|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_2$.\n#weak 3.#! Spośród pozostałych, silni militarnie $leo_mvd_ui_dir_3$, a słabi $leo_mvd_ui_dir_5$.\n#weak 4.#! Wszyscy pozostali wasale $leo_mvd_ui_dir_9$."
  leo_mvd_ui_preset_2: "Zjednocz królestwo"
  leo_mvd_ui_preset_2_tt: "Uczyń z królestwa jeden lud.\n\n#weak 1.#! Wasale twojej [faith|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_1$.\n#weak 2.#! Wasale twojej [culture|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_2$.\n#weak 3.#! Ci, którzy wciąż dzierżą hrabstwa obcej [culture|E], pracują nad $leo_mvd_ui_dir_6$.\n#weak 4.#! Wszyscy pozostali wasale $leo_mvd_ui_dir_9$.\n\n#weak Nawraca zawzięciej niż Nawróć i rozwijaj, kosztem wzrostu.#!"
  leo_mvd_ui_preset_3: "Przygotuj się do wojny"
- leo_mvd_ui_preset_3_tt: "Uzbrój królestwo, każdego [vassal|E] wedle jego siły.\n\nSilni wasale wnoszą to, w czym ich rząd jest najlepszy: [administrative|E] $leo_mvd_ui_dir_5$, pozostali $leo_mvd_ui_dir_7$.\nSłabi wasale wszędzie otrzymują rozkaz: $leo_mvd_ui_dir_8$.\n\n#weak Całkowicie pomija [faith|E] i [culture|E].#!"
+ leo_mvd_ui_preset_3_tt: "Uzbrój królestwo, każdego [vassal|E] wedle jego siły.\n\nWasale [administrative|E] wykorzystują własne wojska: silni $leo_mvd_ui_dir_4$, słabi $leo_mvd_ui_dir_5$.\nWszędzie indziej silni $leo_mvd_ui_dir_7$, a słabi $leo_mvd_ui_dir_8$.\n\n#weak Całkowicie pomija [faith|E] i [culture|E].#!"
  leo_mvd_ui_preset_4: "Rozwijaj gospodarkę"
  leo_mvd_ui_preset_4_tt: "Buduj bogactwo przed wszystkim innym.\n\nNierozwinięci wasale otrzymują rozkaz: $leo_mvd_ui_dir_3$.\nUstabilizowani wasale przechodzą do $leo_mvd_ui_dir_9$.\n\n#weak Całkowicie pomija [faith|E] i [culture|E].#!"
  leo_mvd_ui_preset_8: "Rządy według motywu"
@@ -40,13 +40,14 @@
  leo_mvd_ui_preset_5: "Własny"
  leo_mvd_ui_preset_5_tt: "Twoje własne zasady, spisane poniżej.\n\n#weak Wybranie tutaj opcji Własny zaczyna od zera. Aby zacząć od szablonu, po prostu zmień jedną z jego zasad. Szablon staje się twój, taki jak był, wraz z twoją zmianą.#!"
 
- # Without Roads to Power the administrative directives drop out, so the three
- # built-ins that used them run a different flow (see the presets in
- # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
- # the presets whose flow does not change alias back to their base description.
- # Govern by Theme is hidden outright without that DLC rather than falling back,
- # but still needs a key here, because the Description box builds one for
- # whichever preset is selected.
+ # Without Roads to Power or All Under Heaven there are no administrative
+ # vassals, so the administrative directives drop out and the three built-ins
+ # that used them run a different flow (see the presets in leo_mvd_rules.txt).
+ # The panel shows these instead when neither expansion is present; the presets
+ # whose flow does not change alias back to their base description. Govern by
+ # Theme is hidden outright without Roads to Power rather than falling back, but
+ # still needs a key here, because the Description box builds one for whichever
+ # preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "Sprowadź [vassals|E] na łono, a potem rozwijaj ich.\n\n#weak 1.#! Wasale twojej [faith|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_1$.\n#weak 2.#! Wasale twojej [culture|E] dzierżący hrabstwa innej otrzymują rozkaz: $leo_mvd_ui_dir_2$.\n#weak 3.#! Spośród pozostałych, silni militarnie $leo_mvd_ui_dir_9$, a słabi $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"

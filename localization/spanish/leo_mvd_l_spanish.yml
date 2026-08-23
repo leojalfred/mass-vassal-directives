@@ -28,11 +28,11 @@
  # both say what None does and point a new player somewhere useful.
  leo_mvd_ui_preset_0_tt: "No se asigna nada, y la automatización renuncia a cualquier [directives|E] que hubiera repartido. Las [directives|E] que diste tú mismo a un [vassal|E] quedan intactas.\n\nUn predefinido es un orden de prioridad: a cada [vassal|E] se le da la primera [directive|E] de él que le convenga. Elige uno arriba y su plan aparecerá aquí.\n\nO elige #V Personalizado#! para escribir el orden tú mismo, prioridad por prioridad. Da a cada [vassal|E] la misma [directive|E], o júzgalos según lo que elijas, desde [faith|E] y [culture|E] hasta fuerza, [development|E] y prestigio, y da a cada uno la [directive|E] que le encaje.\n\n#weak No ocurre nada hasta que elijas.#!"
  leo_mvd_ui_preset_1: "Convertir y desarrollar"
- leo_mvd_ui_preset_1_tt: "Trae a tus [vassals|E] al redil, y luego hazlos crecer.\n\n#weak 1.#! A los vasallos de tu [faith|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_1$.\n#weak 2.#! A los vasallos de tu [culture|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_2$.\n#weak 3.#! Del resto, los militarmente fuertes $leo_mvd_ui_dir_3$ y los débiles $leo_mvd_ui_dir_8$.\n#weak 4.#! Todos los vasallos restantes $leo_mvd_ui_dir_9$."
+ leo_mvd_ui_preset_1_tt: "Trae a tus [vassals|E] al redil, y luego hazlos crecer.\n\n#weak 1.#! A los vasallos de tu [faith|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_1$.\n#weak 2.#! A los vasallos de tu [culture|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_2$.\n#weak 3.#! Del resto, los militarmente fuertes $leo_mvd_ui_dir_3$ y los débiles $leo_mvd_ui_dir_5$.\n#weak 4.#! Todos los vasallos restantes $leo_mvd_ui_dir_9$."
  leo_mvd_ui_preset_2: "Unificar el reino"
  leo_mvd_ui_preset_2_tt: "Haz del reino un solo pueblo.\n\n#weak 1.#! A los vasallos de tu [faith|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_1$.\n#weak 2.#! A los vasallos de tu [culture|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_2$.\n#weak 3.#! Los que aún posean condados de [culture|E] ajena trabajan en $leo_mvd_ui_dir_6$.\n#weak 4.#! Todos los vasallos restantes $leo_mvd_ui_dir_9$.\n\n#weak Convierte con más ahínco que Convertir y desarrollar, a costa del crecimiento.#!"
  leo_mvd_ui_preset_3: "Prepararse para la guerra"
- leo_mvd_ui_preset_3_tt: "Arma el reino, cada [vassal|E] según su fuerza.\n\nLos vasallos fuertes aportan lo que su gobierno hace mejor: los [administrative|E] $leo_mvd_ui_dir_5$, el resto $leo_mvd_ui_dir_7$.\nA los vasallos débiles de todas partes se les ordena $leo_mvd_ui_dir_8$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
+ leo_mvd_ui_preset_3_tt: "Arma el reino, cada [vassal|E] según su fuerza.\n\nLos vasallos [administrative|E] ponen a trabajar a sus propias tropas: los fuertes $leo_mvd_ui_dir_4$, los débiles $leo_mvd_ui_dir_5$.\nEn los demás casos, los fuertes $leo_mvd_ui_dir_7$ y los débiles $leo_mvd_ui_dir_8$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
  leo_mvd_ui_preset_4: "Hacer crecer la economía"
  leo_mvd_ui_preset_4_tt: "Amasa riqueza antes que nada.\n\nA los vasallos poco desarrollados se les ordena $leo_mvd_ui_dir_3$.\nLos vasallos establecidos se dedican a $leo_mvd_ui_dir_9$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
  leo_mvd_ui_preset_8: "Gobernar por tema"
@@ -40,13 +40,14 @@
  leo_mvd_ui_preset_5: "Personalizado"
  leo_mvd_ui_preset_5_tt: "Tus propias reglas, escritas abajo.\n\n#weak Elegir Personalizado aquí empieza desde cero. Para partir de un predefinido en su lugar, basta con cambiar una de sus reglas. El predefinido pasa a ser tuyo, tal como era, con tu cambio.#!"
 
- # Without Roads to Power the administrative directives drop out, so the three
- # built-ins that used them run a different flow (see the presets in
- # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
- # the presets whose flow does not change alias back to their base description.
- # Govern by Theme is hidden outright without that DLC rather than falling back,
- # but still needs a key here, because the Description box builds one for
- # whichever preset is selected.
+ # Without Roads to Power or All Under Heaven there are no administrative
+ # vassals, so the administrative directives drop out and the three built-ins
+ # that used them run a different flow (see the presets in leo_mvd_rules.txt).
+ # The panel shows these instead when neither expansion is present; the presets
+ # whose flow does not change alias back to their base description. Govern by
+ # Theme is hidden outright without Roads to Power rather than falling back, but
+ # still needs a key here, because the Description box builds one for whichever
+ # preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "Trae a tus [vassals|E] al redil, y luego hazlos crecer.\n\n#weak 1.#! A los vasallos de tu [faith|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_1$.\n#weak 2.#! A los vasallos de tu [culture|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_2$.\n#weak 3.#! Del resto, los militarmente fuertes $leo_mvd_ui_dir_9$ y los débiles $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"

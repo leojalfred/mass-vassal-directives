@@ -7,7 +7,7 @@ l_polish:
  # AGOT-only presets (6, 7). Style follows the base presets: directive names are
  # $leo_mvd_ui_dir_N$ refs (so they track any rename and carry the inline icon).
  # Unlike the base presets these use no administrative directives (the Seven
- # Kingdoms are feudal), so nothing changes with Roads to Power and the _tt and
+ # Kingdoms are feudal), so no administrative expansion changes them and the _tt
  # _tt_nodlc variants are identical.
  leo_mvd_ui_preset_6: "Władca Siedmiu Królestw"
  leo_mvd_ui_preset_6_tt: "Rządź mieszanym królestwem, każdy [vassal|E] na swoim miejscu.\n\n[vassals|E] twojej [faith|E] $leo_mvd_ui_dir_1$; ci innej [faith|E] są pozostawieni w spokoju.\nŻelaźni ludzie $leo_mvd_ui_dir_8$.\nSilni [vassals|E] $leo_mvd_ui_dir_9$; słabi $leo_mvd_ui_dir_7$."

@@ -125,10 +125,12 @@ defd "on_action: on_game_start_after_lobby" common/on_action on_game_start_after
 defd "on_action: on_death"                  common/on_action on_death
 defd "on_action: yearly_playable_pulse"     common/on_action yearly_playable_pulse
 def "panel toggle variable: mass_directives_window" gui "Toggle\( *'mass_directives_window' *\)"
+def "gui datafunction: GetPlayer.IsValid"          gui "GetPlayer\.IsValid"
 
 echo
 echo "== Vanilla: DLC feature names (no definition file; matched against use) =="
 def "dlc feature: roads_to_power"      common/scripted_triggers "has_dlc_feature = roads_to_power"
+def "dlc feature: all_under_heaven"    common/scripted_triggers "has_dlc_feature = all_under_heaven"
 def "dlc feature: khans_of_the_steppe" common/scripted_triggers "has_dlc_feature = khans_of_the_steppe"
 
 echo

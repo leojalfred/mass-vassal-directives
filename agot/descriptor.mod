@@ -1,7 +1,8 @@
-version="1.2.0"
+version="1.3.0"
 tags={
 	"Utilities"
 	"Gameplay"
+	"1.19 'Scribe'"
 }
 name="Leo VI's Mass Vassal Directives (A Game of Thrones)"
 picture="thumbnail.png"

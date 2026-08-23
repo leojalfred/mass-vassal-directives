@@ -28,11 +28,11 @@
  # both say what None does and point a new player somewhere useful.
  leo_mvd_ui_preset_0_tt: "Ничего не назначается, и автоматика отказывается от любых выданных ею [directives|E]. [directives|E], которые вы дали [vassal|E] сами, остаются нетронутыми.\n\nШаблон — это порядок предпочтений: каждому [vassal|E] выдаётся первая подходящая ему [directive|E]. Выберите шаблон выше, и его план появится здесь.\n\nИли выберите #V Свой#! , чтобы задать порядок самостоятельно, приоритет за приоритетом. Дайте каждому [vassal|E] одну и ту же [directive|E] или судите их по тому, что выберете сами — от [faith|E] и [culture|E] до силы, [development|E] и положения — и дайте каждому подходящую [directive|E].\n\n#weak Ничего не произойдёт, пока вы не выберете.#!"
  leo_mvd_ui_preset_1: "Обращать и развивать"
- leo_mvd_ui_preset_1_tt: "Приведите своих [vassals|E] в лоно, затем развивайте их.\n\n#weak 1.#! Вассалам вашей [faith|E], владеющим графствами иной, велено $leo_mvd_ui_dir_1$.\n#weak 2.#! Вассалам вашей [culture|E], владеющим графствами иной, велено $leo_mvd_ui_dir_2$.\n#weak 3.#! Из остальных военно сильные $leo_mvd_ui_dir_3$, а слабые $leo_mvd_ui_dir_8$.\n#weak 4.#! Все оставшиеся вассалы $leo_mvd_ui_dir_9$."
+ leo_mvd_ui_preset_1_tt: "Приведите своих [vassals|E] в лоно, затем развивайте их.\n\n#weak 1.#! Вассалам вашей [faith|E], владеющим графствами иной, велено $leo_mvd_ui_dir_1$.\n#weak 2.#! Вассалам вашей [culture|E], владеющим графствами иной, велено $leo_mvd_ui_dir_2$.\n#weak 3.#! Из остальных военно сильные $leo_mvd_ui_dir_3$, а слабые $leo_mvd_ui_dir_5$.\n#weak 4.#! Все оставшиеся вассалы $leo_mvd_ui_dir_9$."
  leo_mvd_ui_preset_2: "Объединить державу"
  leo_mvd_ui_preset_2_tt: "Сделайте державу единым народом.\n\n#weak 1.#! Вассалам вашей [faith|E], владеющим графствами иной, велено $leo_mvd_ui_dir_1$.\n#weak 2.#! Вассалам вашей [culture|E], владеющим графствами иной, велено $leo_mvd_ui_dir_2$.\n#weak 3.#! Те, кто всё ещё держит графства чужой [culture|E], работают над $leo_mvd_ui_dir_6$.\n#weak 4.#! Все оставшиеся вассалы $leo_mvd_ui_dir_9$.\n\n#weak Обращает сильнее, чем «Обращать и развивать», ценой роста.#!"
  leo_mvd_ui_preset_3: "Готовиться к войне"
- leo_mvd_ui_preset_3_tt: "Вооружите державу, каждого [vassal|E] по его силе.\n\nСильные вассалы дают то, что их правительство умеет лучше всего: [administrative|E] $leo_mvd_ui_dir_5$, остальные $leo_mvd_ui_dir_7$.\nСлабым вассалам повсюду велено $leo_mvd_ui_dir_8$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
+ leo_mvd_ui_preset_3_tt: "Вооружите державу, каждого [vassal|E] по его силе.\n\n[administrative|E] вассалы используют собственные войска: сильные $leo_mvd_ui_dir_4$, слабые $leo_mvd_ui_dir_5$.\nУ прочих сильные $leo_mvd_ui_dir_7$, а слабые $leo_mvd_ui_dir_8$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
  leo_mvd_ui_preset_4: "Развивать экономику"
  leo_mvd_ui_preset_4_tt: "Наживайте богатство прежде всего прочего.\n\nНеразвитым вассалам велено $leo_mvd_ui_dir_3$.\nСостоявшиеся вассалы обращаются к $leo_mvd_ui_dir_9$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
  leo_mvd_ui_preset_8: "Управление по темам"
@@ -40,13 +40,14 @@
  leo_mvd_ui_preset_5: "Свой"
  leo_mvd_ui_preset_5_tt: "Ваши собственные правила, заданные ниже.\n\n#weak Выбор «Свой» здесь начинает с чистого листа. Чтобы начать с шаблона, просто измените одно из его правил. Шаблон станет вашим, каким был, но с вашим изменением.#!"
 
- # Without Roads to Power the administrative directives drop out, so the three
- # built-ins that used them run a different flow (see the presets in
- # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
- # the presets whose flow does not change alias back to their base description.
- # Govern by Theme is hidden outright without that DLC rather than falling back,
- # but still needs a key here, because the Description box builds one for
- # whichever preset is selected.
+ # Without Roads to Power or All Under Heaven there are no administrative
+ # vassals, so the administrative directives drop out and the three built-ins
+ # that used them run a different flow (see the presets in leo_mvd_rules.txt).
+ # The panel shows these instead when neither expansion is present; the presets
+ # whose flow does not change alias back to their base description. Govern by
+ # Theme is hidden outright without Roads to Power rather than falling back, but
+ # still needs a key here, because the Description box builds one for whichever
+ # preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "Приведите своих [vassals|E] в лоно, затем развивайте их.\n\n#weak 1.#! Вассалам вашей [faith|E], владеющим графствами иной, велено $leo_mvd_ui_dir_1$.\n#weak 2.#! Вассалам вашей [culture|E], владеющим графствами иной, велено $leo_mvd_ui_dir_2$.\n#weak 3.#! Из остальных военно сильные $leo_mvd_ui_dir_9$, а слабые $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"

@@ -235,7 +235,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_0').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_0_tt', 'leo_mvd_ui_preset_0_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_0_tt', 'leo_mvd_ui_preset_0_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_0"
 											}
 											leo_mvd_button_dropdown = {
@@ -243,7 +243,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_1_tt', 'leo_mvd_ui_preset_1_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_1_tt', 'leo_mvd_ui_preset_1_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_1"
 											}
 											leo_mvd_button_dropdown = {
@@ -251,7 +251,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_2_tt', 'leo_mvd_ui_preset_2_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_2_tt', 'leo_mvd_ui_preset_2_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_2"
 											}
 											leo_mvd_button_dropdown = {
@@ -259,7 +259,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_3_tt', 'leo_mvd_ui_preset_3_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_3_tt', 'leo_mvd_ui_preset_3_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_3"
 											}
 											leo_mvd_button_dropdown = {
@@ -267,7 +267,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_4_tt', 'leo_mvd_ui_preset_4_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_4_tt', 'leo_mvd_ui_preset_4_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_4"
 											}
 											leo_mvd_button_dropdown = {
@@ -276,7 +276,7 @@ window = {
 												onclick = "[GetScriptedGui('leo_mvd_preset_8').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 												visible = "[HasDlcFeature( 'roads_to_power' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_8_tt', 'leo_mvd_ui_preset_8_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_8_tt', 'leo_mvd_ui_preset_8_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_8"
 											}
 											leo_mvd_button_dropdown = {
@@ -284,7 +284,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_5_tt', 'leo_mvd_ui_preset_5_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_5_tt', 'leo_mvd_ui_preset_5_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_5"
 											}
 									}
@@ -299,8 +299,17 @@ window = {
 							### The checkbox reflects a scripted GUI's is_shown
 							### as its checked state and runs its effect on
 							### click. It is expanding so its content left-aligns.
+							###
+							### Hidden while there is no player. The panel is a
+							### standalone widget, so it outlives the character
+							### it was opened on: during a switch GetPlayer is
+							### briefly nothing, and a scripted GUI evaluated
+							### against that logs a scope error every frame.
+							### Every other control here reads a variable, which
+							### is silent - only these two query script.
 							button_checkbox_label = {
 								layoutpolicy_horizontal = expanding
+								visible = "[GetPlayer.IsValid]"
 								onclick = "[GetScriptedGui('leo_mvd_toggle_auto').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 								enabled = "[GetScriptedGui('leo_mvd_toggle_auto').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 								tooltip = "leo_mvd_ui_auto_tt"
@@ -339,7 +348,7 @@ window = {
 								autoresize = yes
 								max_width = 440
 								align = left|nobaseline
-								text = "[Localize(Concatenate(Concatenate('leo_mvd_ui_preset_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue))), Select_CString( HasDlcFeature( 'roads_to_power' ), '_tt', '_tt_nodlc' )))]"
+								text = "[Localize(Concatenate(Concatenate('leo_mvd_ui_preset_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue))), Select_CString( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), '_tt', '_tt_nodlc' )))]"
 							}
 						}
 					}
@@ -9852,8 +9861,12 @@ window = {
 			margin_left = 16
 			spacing = 6
 
+			### Hidden while there is no player, for the reason given on the
+			### automation checkbox: these two are the only controls that ask
+			### script anything every frame.
 			button_standard = {
 				layoutpolicy_horizontal = expanding
+				visible = "[GetPlayer.IsValid]"
 				text = "leo_mvd_ui_apply"
 				onclick = "[GetScriptedGui('leo_mvd_apply_now').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				enabled = "[GetScriptedGui('leo_mvd_apply_now').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"

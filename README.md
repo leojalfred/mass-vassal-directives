@@ -4,7 +4,7 @@ A quality-of-life mod for **Crusader Kings III (1.19.x)** that hands out vassal 
 
 Nothing about directive _eligibility_ changes: the mod calls the game's own eligibility triggers and mirrors the vanilla interaction's conditions exactly. It only automates what you could already do by hand.
 
-It requires **no DLC, and supports them all**. The administrative directives come from _Roads to Power_ and nomad vassals from _Khans of the Steppe_; when you own a DLC the mod folds its content in, and when you do not, the panel hides what that DLC would add and the presets adjust their plans, so you only ever see options your game can actually use.
+It requires **no DLC, and supports them all**. The administrative directives come from _Roads to Power_ or _All Under Heaven_ (either one gives you administrative vassals) and nomad vassals from _Khans of the Steppe_; when you own a DLC the mod folds its content in, and when you do not, the panel hides what that DLC would add and the presets adjust their plans, so you only ever see options your game can actually use.
 
 ## How it works
 
@@ -27,7 +27,7 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 | Preset                  | What it does                                                                                        |
 | ----------------------- | --------------------------------------------------------------------------------------------------- |
 | **None**                | Nothing is assigned, and the automation gives up whatever it handed out. The default.               |
-| **Convert and Develop** | Faith, then culture, then growth: the strong develop their land, the weak build up their military.  |
+| **Convert and Develop** | Faith, then culture, then growth: the strong develop their land, the weak raise men-at-arms.        |
 | **Unify the Realm**     | Converts harder, at the cost of growth. Cultural acceptance grinds down what conversion cannot.     |
 | **Prepare for War**     | Arms the realm, each vassal to their strength. Ignores faith and culture.                           |
 | **Grow the Economy**    | Wealth first: the undeveloped develop, the established build. Ignores faith and culture.            |
@@ -40,7 +40,7 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 
 Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Same House as You · Administrative Government · Governor Theme · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Average Development · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You
 
-Every measured condition reads the same way (**"is at least"**), so the true branch is always the high side. Two are worth knowing about. Military Strength's number is the **duchy baseline**, and it scales by title tier so it stays meaningful at every realm size (counts ×0.4, dukes ×1, kings ×3, emperors ×8; tunable in `common/script_values/leo_mvd_values.txt`). Governor Theme is the one exception to "is at least": it matches a single theme outright, so a rule asking for Military Administration is answered no by every other theme, and by every vassal who is not a governor. Administrative Government and Governor Theme appear only with _Roads to Power_.
+Every measured condition reads the same way (**"is at least"**), so the true branch is always the high side. Two are worth knowing about. Military Strength's number is the **duchy baseline**, and it scales by title tier so it stays meaningful at every realm size (counts ×0.4, dukes ×1, kings ×3, emperors ×8; tunable in `common/script_values/leo_mvd_values.txt`). Governor Theme is the one exception to "is at least": it matches a single theme outright, so a rule asking for Military Administration is answered no by every other theme, and by every vassal who is not a governor. Administrative Government appears with _Roads to Power_ or _All Under Heaven_, and Governor Theme only with _Roads to Power_, whose themes it reads.
 
 ## Using the mod
 
@@ -58,7 +58,7 @@ Settings are stored per playthrough and carry over to your heir on succession.
 
 ## Compatibility
 
-- **DLC**: none required, all supported. _Roads to Power_ adds the administrative directives (Improve Development, Train Commanders, Build Men-at-Arms) and the Administrative Government condition; _Khans of the Steppe_ adds nomad vassals and their four directives. Without a given DLC the panel hides what it would enable and the built-in presets adapt their plans, so nothing ever points at an option your game cannot use.
+- **DLC**: none required, all supported. Either _Roads to Power_ or _All Under Heaven_ adds the administrative directives (Improve Development, Train Commanders, Build Men-at-Arms) and the Administrative Government condition, since both bring governments the game counts as administrative: Byzantium's from the first, and China's, Korea's, the steppe's and Japan's from the second. Governor Theme needs _Roads to Power_ in particular, the only expansion with governor themes. _Khans of the Steppe_ adds nomad vassals and their four directives. Without a given DLC the panel hides what it would enable and the built-in presets adapt their plans, so nothing ever points at an option your game cannot use.
 - **Achievements**: not affected. Since CK3 1.9, mods do not disable achievements.
 - **Existing saves**: safe to add mid-run (automation bootstraps within a game-year, or immediately from the panel) and safe to remove (mod-assigned directives are ordinary vanilla directives; leftover mod variables are inert).
 - **Multiplayer**: settings and automation are per-player; every button routes through a synchronized scripted GUI.
@@ -98,7 +98,7 @@ The smallest set of in-game steps that catches everything the static check and r
 - **Exempt** a vassal (right-click their portrait). Its directive icon dims.
 - `logs/error.log` has no `leo_mvd` lines.
 
-Without _Roads to Power_, confirm instead that the administrative conditions and directives are absent. For AGOT, load `dist/agot` after the A Game of Thrones mod and repeat: the Westeros conditions appear, Settle the Wilderness assigns, and the dimmed exempt icon works (it depends on loading last).
+Without _Roads to Power_ or _All Under Heaven_, confirm instead that the administrative conditions and directives are absent. With _All Under Heaven_ but not _Roads to Power_, confirm the opposite: the administrative directives and the Administrative Government condition are all present, and only Governor Theme is missing. For AGOT, load `dist/agot` after the A Game of Thrones mod and repeat: the Westeros conditions appear, Settle the Wilderness assigns, and the dimmed exempt icon works (it depends on loading last).
 
 ## Building
 

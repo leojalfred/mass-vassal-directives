@@ -7,7 +7,7 @@ l_simp_chinese:
  # AGOT-only presets (6, 7). Style follows the base presets: directive names are
  # $leo_mvd_ui_dir_N$ refs (so they track any rename and carry the inline icon).
  # Unlike the base presets these use no administrative directives (the Seven
- # Kingdoms are feudal), so nothing changes with Roads to Power and the _tt and
+ # Kingdoms are feudal), so no administrative expansion changes them and the _tt
  # _tt_nodlc variants are identical.
  leo_mvd_ui_preset_6: "七大王国之主"
  leo_mvd_ui_preset_6_tt: "治理一个多元的王国，让各[vassal|E]各安其位。\n\n与你同[faith|E]的[vassals|E]$leo_mvd_ui_dir_1$；他[faith|E]者则不予干预。\n铁民$leo_mvd_ui_dir_8$。\n强大的[vassals|E]$leo_mvd_ui_dir_9$；弱小的则$leo_mvd_ui_dir_7$。"

@@ -8,7 +8,8 @@
 # Note on directives: the Seven Kingdoms are feudal, and Improve Development /
 # Train Commanders / Build Men-at-Arms are administrative-government only (the
 # Free Cities). So these presets use only directives feudal vassals can act on,
-# and none of them are administrative, so they do not branch on Roads to Power.
+# and none of them are administrative, so they do not branch on the expansions
+# that supply administrative government.
 #
 # Node shape per priority: n1 root, n2 its TRUE branch, n3 its FALSE branch.
 
