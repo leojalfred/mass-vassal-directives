@@ -40,13 +40,14 @@
  leo_mvd_ui_preset_5: "Personalizado"
  leo_mvd_ui_preset_5_tt: "Tus propias reglas, escritas abajo.\n\n#weak Elegir Personalizado aquí empieza desde cero. Para partir de un predefinido en su lugar, basta con cambiar una de sus reglas. El predefinido pasa a ser tuyo, tal como era, con tu cambio.#!"
 
- # Without Roads to Power the administrative directives drop out, so the three
- # built-ins that used them run a different flow (see the presets in
- # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
- # the presets whose flow does not change alias back to their base description.
- # Govern by Theme is hidden outright without that DLC rather than falling back,
- # but still needs a key here, because the Description box builds one for
- # whichever preset is selected.
+ # Without Roads to Power or All Under Heaven there are no administrative
+ # vassals, so the administrative directives drop out and the three built-ins
+ # that used them run a different flow (see the presets in leo_mvd_rules.txt).
+ # The panel shows these instead when neither expansion is present; the presets
+ # whose flow does not change alias back to their base description. Govern by
+ # Theme is hidden outright without Roads to Power rather than falling back, but
+ # still needs a key here, because the Description box builds one for whichever
+ # preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "Trae a tus [vassals|E] al redil, y luego hazlos crecer.\n\n#weak 1.#! A los vasallos de tu [faith|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_1$.\n#weak 2.#! A los vasallos de tu [culture|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_2$.\n#weak 3.#! Del resto, los militarmente fuertes $leo_mvd_ui_dir_9$ y los débiles $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"

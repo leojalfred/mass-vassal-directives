@@ -235,7 +235,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_0').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_0_tt', 'leo_mvd_ui_preset_0_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_0_tt', 'leo_mvd_ui_preset_0_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_0"
 											}
 											leo_mvd_button_dropdown = {
@@ -243,7 +243,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_1').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_1_tt', 'leo_mvd_ui_preset_1_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_1_tt', 'leo_mvd_ui_preset_1_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_1"
 											}
 											leo_mvd_button_dropdown = {
@@ -251,7 +251,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_2').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_2_tt', 'leo_mvd_ui_preset_2_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_2_tt', 'leo_mvd_ui_preset_2_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_2"
 											}
 											leo_mvd_button_dropdown = {
@@ -259,7 +259,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_3').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_3_tt', 'leo_mvd_ui_preset_3_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_3_tt', 'leo_mvd_ui_preset_3_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_3"
 											}
 											leo_mvd_button_dropdown = {
@@ -267,7 +267,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_4').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_4_tt', 'leo_mvd_ui_preset_4_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_4_tt', 'leo_mvd_ui_preset_4_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_4"
 											}
 											leo_mvd_button_dropdown = {
@@ -276,7 +276,7 @@ window = {
 												onclick = "[GetScriptedGui('leo_mvd_preset_8').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
 												visible = "[HasDlcFeature( 'roads_to_power' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_8_tt', 'leo_mvd_ui_preset_8_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_8_tt', 'leo_mvd_ui_preset_8_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_8"
 											}
 											leo_mvd_button_dropdown = {
@@ -284,7 +284,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_5').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												tooltip = "[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_5_tt', 'leo_mvd_ui_preset_5_tt_nodlc' )]"
+												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_5_tt', 'leo_mvd_ui_preset_5_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_5"
 											}
 									}
@@ -339,7 +339,7 @@ window = {
 								autoresize = yes
 								max_width = 440
 								align = left|nobaseline
-								text = "[Localize(Concatenate(Concatenate('leo_mvd_ui_preset_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue))), Select_CString( HasDlcFeature( 'roads_to_power' ), '_tt', '_tt_nodlc' )))]"
+								text = "[Localize(Concatenate(Concatenate('leo_mvd_ui_preset_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue))), Select_CString( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), '_tt', '_tt_nodlc' )))]"
 							}
 						}
 					}

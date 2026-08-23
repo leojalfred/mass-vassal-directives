@@ -246,31 +246,50 @@ sgui_valid() { echo "[GetScriptedGui('$1').IsValid( GuiScope.SetRoot( GetPlayer.
 # threshold picker can name its list from the condition beside it.
 dd_list() { echo "Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', '$1' ), $2, 'leo_mvd_x' )"; }
 
-# A GUI bool: is DLC feature <1> active? Vanilla gates its own admin/nomad UI
-# this way (frontend_bookmarks.gui, shared/mapmodes.gui). References to the
-# gated governments stay safe without the DLC - they simply never occur - so
-# this only spares a DLC-less player options that could never do anything.
-vdlc() { echo "HasDlcFeature( '$1' )"; }
+# A GUI bool: are any of the DLC features <@> active? Vanilla gates its own
+# admin/nomad UI this way (frontend_bookmarks.gui, shared/mapmodes.gui).
+# References to the gated governments stay safe without the DLC - they simply
+# never occur - so this only spares a DLC-less player options that could never
+# do anything. Several names combine with Or(), for content more than one
+# expansion can supply.
+vdlc() { local out=; for f in "$@"; do local e="HasDlcFeature( '$f' )"
+	if [ -z "$out" ]; then out=$e; else out="Or( $out, $e )"; fi; done; echo "$out"; }
+# The same gate script-side. One feature is a plain check; several become an OR,
+# the way vanilla writes its own two-expansion gates (see
+# convert_to_administrative_decision).
+sdlc() { if [ $# -eq 1 ]; then echo "has_dlc_feature = $1"; return; fi
+	local out=; for f in "$@"; do out="$out has_dlc_feature = $f"; done
+	echo "OR = {$out }"; }
 # Combine visibility sub-expressions with And(), dropping empties. Returns one
 # expression, or nothing when every input is empty - so an unneeded gate leaves
 # the original binding untouched.
 vis_and() { local out=; for e in "$@"; do [ -z "$e" ] && continue
 	if [ -z "$out" ]; then out=$e; else out="And( $out, $e )"; fi; done; echo "$out"; }
-# The DLC gate a directive/condition needs, if any, as a has_dlc_feature name.
-# The three administrative directives (improve development, train commanders,
-# build men-at-arms) and the Administrative Government and Governor Theme
-# conditions need Roads to Power - 'roads_to_power', the expansion flag vanilla's
-# own vassal_follows_directive trigger gates administrative on, not the finer
-# 'admin_gov', which does not track DLC ownership. The nomad directives need
-# Khans of the Steppe, but their whole section is gated as a block, so they need
-# nothing here.
+# The DLC features that can put an administrative vassal in a realm. Vanilla
+# gates the three administrative directives (improve development, train
+# commanders, build men-at-arms) on `government_allows = administrative` and
+# nothing else, and five governments answer yes to that: Byzantium's
+# administrative from Roads to Power, plus the celestial, meritocratic, steppe
+# administrative and Ritsuryo governments from All Under Heaven. So an All Under
+# Heaven realm has administrative vassals with no Roads to Power in sight, and
+# gating on that one expansion hid directives its player could use. Vanilla
+# pairs the two the same way wherever administrative content belongs to neither
+# alone (convert_to_administrative_decision).
+ADMIN_DLC="roads_to_power all_under_heaven"
+# The DLC gate a directive/condition needs, if any, as has_dlc_feature names.
+# Governor Theme is the one piece of administrative content that really is Roads
+# to Power only: it reads the admin_theme_* subject-contract flags, and only that
+# expansion's contract group defines them. All Under Heaven's governments carry
+# province flags of their own instead, so the condition could never match there.
+# The nomad directives need Khans of the Steppe, but their whole section is gated
+# as a block, so they need nothing here.
 #
 # Empty when the option needs no DLC. The option list keeps every entry in its
 # declared order and wraps just the gated ones in their own has_dlc_feature
 # check, so a DLC's options sit where they belong rather than being appended
 # after everything else.
-dir_dlc_feature()  { case $1 in 3|4|5) echo roads_to_power ;; esac; }
-cond_dlc_feature() { case $1 in 6|20)  echo roads_to_power ;; esac; }
+dir_dlc_feature()  { case $1 in 3|4|5) echo "$ADMIN_DLC" ;; esac; }
+cond_dlc_feature() { case $1 in 6) echo "$ADMIN_DLC" ;; 20) echo roads_to_power ;; esac; }
 # A preset is hidden outright when the DLC it is built around is missing, rather
 # than falling back the way 1/3/4 do. Govern by Theme sorts governors by their
 # theme, and without Roads to Power there are neither, so every rule it could
@@ -1021,11 +1040,11 @@ HEAD
 		p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]\""
 		local pdv; pdv=$(preset_dlc_vis "$n")
 		[ -n "$pdv" ] && p "visible = \"[$pdv]\""
-		# Built-ins 1/3/4 describe a different flow without Roads to Power, since
-		# their administrative directives drop out (see leo_mvd_rules.txt). The
-		# _nodlc key holds that flow; presets with no such change alias it back to
-		# the base description.
-		p "tooltip = \"[SelectLocalization( HasDlcFeature( 'roads_to_power' ), 'leo_mvd_ui_preset_${n}_tt', 'leo_mvd_ui_preset_${n}_tt_nodlc' )]\""
+		# Built-ins 1/3/4 describe a different flow where no expansion supplies an
+		# administrative government, since their administrative directives drop
+		# out (see leo_mvd_rules.txt). The _nodlc key holds that flow; presets
+		# with no such change alias it back to the base description.
+		p "tooltip = \"[SelectLocalization( $(vdlc $ADMIN_DLC), 'leo_mvd_ui_preset_${n}_tt', 'leo_mvd_ui_preset_${n}_tt_nodlc' )]\""
 		p "text = \"leo_mvd_ui_preset_${n}\""
 		ind "$DD_ROW_DEPTH"; p "}"
 	done
@@ -1058,9 +1077,9 @@ MID
 
 	# What the chosen preset actually does, in the panel rather than only in a
 	# tooltip. Selects the same _tt / _tt_nodlc pair the dropdown's own tooltip
-	# does, so the two can never disagree - including which flow is shown without
-	# Roads to Power. Hidden for Custom, where the rules are spelled out below
-	# anyway; on None it is what tells a new player where to start.
+	# does, so the two can never disagree - including which flow is shown with no
+	# administrative expansion. Hidden for Custom, where the rules are spelled
+	# out below anyway; on None it is what tells a new player where to start.
 	ind 5; p ""
 	p "### Description section. Hidden while the player's own rules are"
 	p "### selected, since the editor below says the same thing."
@@ -1087,7 +1106,7 @@ MID
 	p "autoresize = yes"
 	p "max_width = 440"
 	p "align = left|nobaseline"
-	p "text = \"[Localize(Concatenate(Concatenate('leo_mvd_ui_preset_', $(vint leo_mvd_preset)), Select_CString( HasDlcFeature( 'roads_to_power' ), '_tt', '_tt_nodlc' )))]\""
+	p "text = \"[Localize(Concatenate(Concatenate('leo_mvd_ui_preset_', $(vint leo_mvd_preset)), Select_CString( $(vdlc $ADMIN_DLC), '_tt', '_tt_nodlc' )))]\""
 	ind 7; p "}"
 	ind 6; p "}"
 	ind 5; p "}"
@@ -1288,7 +1307,7 @@ HEAD
 	for c in $CONDS; do
 		local feat; feat=$(cond_dlc_feature "$c")
 		if [ -n "$feat" ]; then
-			echo -e "\tif = { limit = { has_dlc_feature = $feat } add_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c } }"
+			echo -e "\tif = { limit = { $(sdlc $feat) } add_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c } }"
 		else
 			echo -e "\tadd_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c }"
 		fi
@@ -1307,7 +1326,7 @@ HEAD
 	for d in $DIRS; do
 		local feat; feat=$(dir_dlc_feature "$d")
 		if [ -n "$feat" ]; then
-			echo -e "\tif = { limit = { has_dlc_feature = $feat } add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_$d } }"
+			echo -e "\tif = { limit = { $(sdlc $feat) } add_to_variable_list = { name = leo_mvd_dirs target = flag:dir_$d } }"
 		else
 			echo -e "\tadd_to_variable_list = { name = leo_mvd_dirs target = flag:dir_$d }"
 		fi

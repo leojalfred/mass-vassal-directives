@@ -40,13 +40,14 @@
  leo_mvd_ui_preset_5: "カスタム"
  leo_mvd_ui_preset_5_tt: "以下に書く、あなた自身のルール。\n\n#weak ここでカスタムを選ぶと何もない状態から始まります。代わりにプリセットから始めるには、そのルールの一つを変更するだけです。プリセットは元のまま、あなたの変更を加えてあなたのものになります。#!"
 
- # Without Roads to Power the administrative directives drop out, so the three
- # built-ins that used them run a different flow (see the presets in
- # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
- # the presets whose flow does not change alias back to their base description.
- # Govern by Theme is hidden outright without that DLC rather than falling back,
- # but still needs a key here, because the Description box builds one for
- # whichever preset is selected.
+ # Without Roads to Power or All Under Heaven there are no administrative
+ # vassals, so the administrative directives drop out and the three built-ins
+ # that used them run a different flow (see the presets in leo_mvd_rules.txt).
+ # The panel shows these instead when neither expansion is present; the presets
+ # whose flow does not change alias back to their base description. Govern by
+ # Theme is hidden outright without Roads to Power rather than falling back, but
+ # still needs a key here, because the Description box builds one for whichever
+ # preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "[vassals|E]を仲間に引き入れ、それから育てます。\n\n#weak 1.#! あなたの[faith|E]で他の信仰の県を持つ臣下には $leo_mvd_ui_dir_1$ を命じます。\n#weak 2.#! あなたの[culture|E]で他の文化の県を持つ臣下には $leo_mvd_ui_dir_2$ を命じます。\n#weak 3.#! 残りのうち、軍事的に強い者は $leo_mvd_ui_dir_9$、弱い者は $leo_mvd_ui_dir_8$。"
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"

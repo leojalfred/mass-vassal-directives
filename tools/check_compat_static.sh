@@ -129,6 +129,7 @@ def "panel toggle variable: mass_directives_window" gui "Toggle\( *'mass_directi
 echo
 echo "== Vanilla: DLC feature names (no definition file; matched against use) =="
 def "dlc feature: roads_to_power"      common/scripted_triggers "has_dlc_feature = roads_to_power"
+def "dlc feature: all_under_heaven"    common/scripted_triggers "has_dlc_feature = all_under_heaven"
 def "dlc feature: khans_of_the_steppe" common/scripted_triggers "has_dlc_feature = khans_of_the_steppe"
 
 echo

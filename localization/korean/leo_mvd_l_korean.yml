@@ -40,13 +40,14 @@
  leo_mvd_ui_preset_5: "커스텀"
  leo_mvd_ui_preset_5_tt: "아래에 작성한 당신만의 규칙입니다.\n\n#weak 여기서 커스텀을 선택하면 아무것도 없는 상태에서 시작합니다. 대신 프리셋에서 시작하려면 그 규칙 중 하나를 바꾸기만 하면 됩니다. 그러면 프리셋은 원래 모습 그대로, 당신의 변경 사항이 더해진 당신의 것이 됩니다.#!"
 
- # Without Roads to Power the administrative directives drop out, so the three
- # built-ins that used them run a different flow (see the presets in
- # leo_mvd_rules.txt). The panel shows these instead when that DLC is absent;
- # the presets whose flow does not change alias back to their base description.
- # Govern by Theme is hidden outright without that DLC rather than falling back,
- # but still needs a key here, because the Description box builds one for
- # whichever preset is selected.
+ # Without Roads to Power or All Under Heaven there are no administrative
+ # vassals, so the administrative directives drop out and the three built-ins
+ # that used them run a different flow (see the presets in leo_mvd_rules.txt).
+ # The panel shows these instead when neither expansion is present; the presets
+ # whose flow does not change alias back to their base description. Govern by
+ # Theme is hidden outright without Roads to Power rather than falling back, but
+ # still needs a key here, because the Description box builds one for whichever
+ # preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "[vassals|E]을(를) 품 안에 들인 뒤 성장시킵니다.\n\n#weak 1.#! 당신의 [faith|E]을(를) 따르면서 다른 신앙의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_1$을(를) 지시합니다.\n#weak 2.#! 당신의 [culture|E]을(를) 따르면서 다른 문화의 백작령을 보유한 봉신에게는 $leo_mvd_ui_dir_2$을(를) 지시합니다.\n#weak 3.#! 나머지 중 군사적으로 강한 자는 $leo_mvd_ui_dir_9$, 약한 자는 $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
