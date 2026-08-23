@@ -27,7 +27,7 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 | Preset                  | What it does                                                                                        |
 | ----------------------- | --------------------------------------------------------------------------------------------------- |
 | **None**                | Nothing is assigned, and the automation gives up whatever it handed out. The default.               |
-| **Convert and Develop** | Faith, then culture, then growth: the strong develop their land, the weak build up their military.  |
+| **Convert and Develop** | Faith, then culture, then growth: the strong develop their land, the weak raise men-at-arms.        |
 | **Unify the Realm**     | Converts harder, at the cost of growth. Cultural acceptance grinds down what conversion cannot.     |
 | **Prepare for War**     | Arms the realm, each vassal to their strength. Ignores faith and culture.                           |
 | **Grow the Economy**    | Wealth first: the undeveloped develop, the established build. Ignores faith and culture.            |

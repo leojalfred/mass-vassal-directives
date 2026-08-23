@@ -505,7 +505,8 @@ leo_mvd_preset_0_effect = {
 
 # Current scope: the player.
 # Steer vassals onto your faith, then your culture, then grow them: strong
-# vassals develop their land, weaker ones build up their military.
+# vassals develop their land, weaker ones raise men-at-arms where they can and
+# build up their economy where they cannot.
 leo_mvd_preset_1_effect = {
 	leo_mvd_clear_rules_effect = yes
 
@@ -520,17 +521,18 @@ leo_mvd_preset_1_effect = {
 	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 2 }
 
 	# 3+: grow the realm. Where administrative vassals exist the strong develop
-	# their land, and a fourth priority catches those who fail Improve
-	# Development's duchy gate. Where they do not there is no Improve Development
-	# directive, so the strong build economy instead and the catch-all is not
-	# needed. Either expansion supplies an administrative government, so both are
-	# asked about.
+	# their land and the weak raise men-at-arms, with a fourth priority behind
+	# both: it catches the strong who fail Improve Development's duchy gate and
+	# the weak who are not administrative and so cannot recruit at all. Where
+	# such vassals do not exist there is no Improve Development directive, so the
+	# strong build economy instead and the catch-all is not needed. Either
+	# expansion supplies an administrative government, so both are asked about.
 	if = {
 		limit = { OR = { has_dlc_feature = roads_to_power has_dlc_feature = all_under_heaven } }
 		set_variable = { name = leo_mvd_rule_count value = 4 }
 		leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = leo_mvd_mil_baseline }
 		leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 3 }
-		leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 8 }
+		leo_mvd_set_node_dir_effect = { NODE = r3_n3 DIR = 5 }
 		leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
 	}
 	else = {
@@ -576,16 +578,18 @@ leo_mvd_preset_2_effect = {
 }
 
 # Current scope: the player.
-# Arm the realm, each vassal to their strength. Administrative vassals raise
-# men-at-arms, the rest fortify, and the weak build up their military. A single
-# priority places every vassal, so it is the only one either way.
+# Arm the realm, each vassal to their strength. Administrative vassals put their
+# men-at-arms to work, the rest build fortifications or military buildings. A
+# single priority places every vassal, so it is the only one either way.
 leo_mvd_preset_3_effect = {
 	leo_mvd_clear_rules_effect = yes
 	set_variable = { name = leo_mvd_rule_count value = 1 }
 
-	# Where administrative vassals exist the priority splits first on government
-	# (administrative vassals raise men-at-arms, the rest fortify), then on
-	# strength. Where they do not there is no men-at-arms directive either, so it
+	# Where administrative vassals exist the priority splits first on government,
+	# then on strength. Administrative vassals field troops of their own: the
+	# strong sharpen the ones they have, the weak raise more. The rest build,
+	# fortifications for the strong and military buildings for the weak. Where
+	# such vassals do not exist there is no men-at-arms directive either, so it
 	# splits on strength alone: the strong fortify, the weak build military. Both
 	# trees place every vassal, so neither needs a catch-all priority behind it.
 	if = {
@@ -593,8 +597,8 @@ leo_mvd_preset_3_effect = {
 		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 6 THRESH = 0 }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n2 COND = 9 THRESH = leo_mvd_mil_baseline }
 		leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 9 THRESH = leo_mvd_mil_baseline }
-		leo_mvd_set_node_dir_effect = { NODE = r1_n4 DIR = 5 }
-		leo_mvd_set_node_dir_effect = { NODE = r1_n5 DIR = 8 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n4 DIR = 4 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n5 DIR = 5 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 7 }
 		leo_mvd_set_node_dir_effect = { NODE = r1_n7 DIR = 8 }
 	}
