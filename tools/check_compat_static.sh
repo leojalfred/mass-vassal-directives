@@ -125,6 +125,7 @@ defd "on_action: on_game_start_after_lobby" common/on_action on_game_start_after
 defd "on_action: on_death"                  common/on_action on_death
 defd "on_action: yearly_playable_pulse"     common/on_action yearly_playable_pulse
 def "panel toggle variable: mass_directives_window" gui "Toggle\( *'mass_directives_window' *\)"
+def "gui datafunction: GetPlayer.IsValid"          gui "GetPlayer\.IsValid"
 
 echo
 echo "== Vanilla: DLC feature names (no definition file; matched against use) =="

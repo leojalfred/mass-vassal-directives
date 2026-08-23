@@ -1055,8 +1055,17 @@ cat << 'MID'
 							### The checkbox reflects a scripted GUI's is_shown
 							### as its checked state and runs its effect on
 							### click. It is expanding so its content left-aligns.
+							###
+							### Hidden while there is no player. The panel is a
+							### standalone widget, so it outlives the character
+							### it was opened on: during a switch GetPlayer is
+							### briefly nothing, and a scripted GUI evaluated
+							### against that logs a scope error every frame.
+							### Every other control here reads a variable, which
+							### is silent - only these two query script.
 							button_checkbox_label = {
 								layoutpolicy_horizontal = expanding
+								visible = "[GetPlayer.IsValid]"
 								onclick = "[GetScriptedGui('leo_mvd_toggle_auto').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 								enabled = "[GetScriptedGui('leo_mvd_toggle_auto').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 								tooltip = "leo_mvd_ui_auto_tt"
@@ -1129,8 +1138,12 @@ cat << 'TAIL'
 			margin_left = 16
 			spacing = 6
 
+			### Hidden while there is no player, for the reason given on the
+			### automation checkbox: these two are the only controls that ask
+			### script anything every frame.
 			button_standard = {
 				layoutpolicy_horizontal = expanding
+				visible = "[GetPlayer.IsValid]"
 				text = "leo_mvd_ui_apply"
 				onclick = "[GetScriptedGui('leo_mvd_apply_now').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 				enabled = "[GetScriptedGui('leo_mvd_apply_now').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
