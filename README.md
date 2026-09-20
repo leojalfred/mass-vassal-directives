@@ -34,6 +34,8 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 | **Govern by Theme**     | Each governor does what their administration type suits them for; everyone else builds economy.     |
 | **Custom**              | Your own rules, up to six priorities plus three for nomads.                                         |
 
+Govern by Theme goes by whichever word your own government uses, so it reads as **Govern by Theme** in Byzantium, **Govern by Circuit** in a Celestial realm, and **Govern by Administration** elsewhere. It loads the rules that fit that government, and is hidden from a government that has no administration types at all.
+
 **A preset is a starting point, not a take-it-or-leave-it.** Change any of its rules and the whole thing becomes yours, exactly as it was, plus your change. Suiting one to your realm costs a click rather than a rebuild. Picking Custom outright starts you from nothing instead. Your own rules are kept aside while a preset is loaded, so trying one never costs you your waterfall.
 
 ### Conditions
@@ -46,7 +48,7 @@ Every measured condition reads the same way (**"is at least"**), so the true bra
 
 All configuration lives in a panel docked to the **Realm → Subjects** tab.
 
-1. **Open it**: in the Realm window's Subjects tab, click the directives button in the header (next to _Toggle Compact List_). The panel appears alongside; drag it wherever you like.
+1. **Open it**: in the Realm window's Subjects tab, click the directives button in the header (next to _Toggle Compact List_). The panel appears alongside; drag it wherever you like. In the _Fallen Eagle_ build the button sits between the tab's two filter dropdowns instead, because TFE's Realm window has no header to put it in; the `mass_directives` keybind opens it either way.
 2. **Choose a preset.** Nothing is assigned until you do.
 3. **Tick Automatically Reassign Vassal Directives** to run the rules every month and again whenever you change anything. **Apply Now** runs them once, on demand.
 4. **Exempt individuals**: right-click a vassal's portrait → Vassal section → **"Exempt from Directive Automation"**. Exempt vassals show their directive icon **dimmed gray** everywhere in the UI and are skipped entirely; manage them by hand with the vanilla _Give Vassal Directive_ interaction. Undo with **"Include in Directive Automation"**. A vassal also exempts itself the moment you re-assign a directive the mod had given it, so overriding the automation by hand is never undone.
