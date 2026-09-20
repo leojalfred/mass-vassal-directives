@@ -90,6 +90,7 @@ A few files copy or mirror vanilla content that can change meaning without chang
 - `common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt`: a by-name override of vanilla's `vassal_directive_icon` and `vassal_directive_text` (from `game/common/customizable_localization/00_vassal_custom_loc.txt`), each vanilla entry paired with an exempt twin. Re-diff those two functions after a patch; a new directive means new twins.
 - `gui/leo_mvd_panel.gui`: latches onto the vanilla Subjects-tab directives button and its `mass_directives_window` GUI variable (`game/gui/window_my_realm.gui`); confirm that button and variable still exist. Also carries copies of vanilla's `button_drop` and `button_dropdown` (`game/gui/shared/buttons.gui`).
 - `gui/leo_mvd_texticons.gui`: gray and inline-sized twins of the vanilla directive texticons (`game/gui/texticons.gui`); confirm the source textures still exist.
+- `tfe/files/gui/leo_mvd_tfe_opener.gui`: the TFE build's own way into the panel. It shows itself while TFE's Realm window is open on its Subjects tab (TFE's `bookmark_subjects` variable), borrows vanilla's `button_standard`, `button_give_directive` and `mass_directives` keybind, and is positioned by hand between TFE's two filter dropdowns. After a TFE patch, confirm the variable still exists and the button still lands in the row; `check_compat_static.sh` asserts the names but cannot see where it sits.
 
 ### 3. Smoke-test the built mod
 
@@ -109,8 +110,9 @@ The repository is **shared source, not a mod you load.** One build step produces
 
 - `dist/vanilla/`: the base mod, for plain Crusader Kings III.
 - `dist/agot/`: the same mod adapted for the _A Game of Thrones_ total conversion.
+- `dist/tfe/`: the same mod adapted for _The Fallen Eagle_.
 
-Build both with:
+Build all three with:
 
 ```
 bash tools/build.sh        # add -v to narrate each phase
@@ -120,18 +122,21 @@ All three mods share one set of source files. The total-conversion builds layer 
 
 ## File layout
 
-Both mods build from one shared set of game files:
+All three mods build from one shared set of game files:
 
 ```
 common/character_interactions/leo_mvd_interactions.txt   exempt / include toggle interactions
+common/customizable_localization/leo_mvd_admin_type_loc.txt  the panel's words for administration types, per government
 common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt  by-name override: dimmed exemption marker
 common/on_action/leo_mvd_on_actions.txt                  game-start bootstrap, succession carry-over, yearly watchdog
 common/script_values/leo_mvd_values.txt                  tier-scaled military threshold (tunable multipliers)
 common/scripted_effects/leo_mvd_effects.txt              assignment, cleanup, the run across all vassals
 common/scripted_effects/leo_mvd_rules.txt                the rule engine, the presets, the editor's writes
+common/scripted_effects/leo_mvd_options.txt              GENERATED: the option lists the dropdowns iterate
 common/scripted_guis/leo_mvd_sguis.txt                   panel buttons (synchronized)
 common/scripted_guis/leo_mvd_edit.txt                    GENERATED: the editor's scripted GUIs
 common/scripted_triggers/leo_mvd_triggers.txt            eligibility, per-directive gates, the conditions
+common/scripted_triggers/leo_mvd_options_ack.txt         GENERATED: names those lists so the validator sees them used
 events/leo_mvd_events.txt                                monthly self-rescheduling pulse
 gui/leo_mvd_panel.gui                                    GENERATED: the configuration panel
 gui/leo_mvd_texticons.gui                                gray and inline directive icons
@@ -140,7 +145,7 @@ localization/english/leo_mvd_l_english.yml               static panel text
 localization/english/leo_mvd_ui_l_english.yml            GENERATED: the editor's labels
 ```
 
-The three files marked GENERATED come out of `tools/gen_panel.sh`, so **edit that generator, not its output.** The generator is target-aware, so the AGOT panel (Settle Wilderness in, nomads out) and the TFE one (its own administration types) are the same script run in another mode.
+The five files marked GENERATED come out of `tools/gen_panel.sh`, so **edit that generator, not its output.** The generator is target-aware, so the AGOT panel (Settle Wilderness in, nomads out) and the TFE one (its own administration types) are the same script run in another mode.
 
 Each total-conversion build adds its differences from a small overlay plus the build script:
 
@@ -168,10 +173,10 @@ Most of the interesting decisions here were forced by what CK3's script and GUI 
 
 - **The rule tree is capped at two levels of conditions because scripted effects cannot recurse.** The walk is unrolled by hand, one effect per level (`leo_mvd_eval_root_effect` → `_mid_` → `_leaf_`).
 - **A variable name cannot be built at runtime**, so rules live in fixed node slots reached by macro expansion, and **a condition cannot be chosen at runtime**, so the condition and directive chains are written once and driven by a value staged into a temporary scope rather than duplicated per node.
-- **The panel is generated** (`tools/gen_panel.sh`). The editor is the same widgets repeated per node, differing only in the variable they bind to, and GUI has no way to factor that out. `blockoverride` cannot parameterize a variable name inside a binding. Six priorities plus the nomads' three come to ~25,000 lines. **Edit the generator, not the files it writes.**
+- **The panel is generated** (`tools/gen_panel.sh`), about 11,000 lines for six priorities plus the nomads' three. **Edit the generator, not the files it writes.** What truly cannot be factored out is the _script_ side: a script variable name is fixed at parse time, so the editor's writes are a hand-written dispatch with one branch per node and field. The GUI side could be smaller than it is, since a binding _can_ build a variable name at runtime, which is exactly how the dropdown options work.
 - **Controls read their state straight from the variable they represent**: `EqualTo_CFixedPoint` against `Var(...).GetValue` for a bool, or pasting the value onto a loc key prefix for a dropdown's label. Only clicking one runs script, so the panel costs no per-frame script evaluation.
-- **GUI cannot hand script a number.** So choosing an option runs two scripted GUIs in order: one points a cursor at the node, the next writes to whatever the cursor points at. That is what keeps the editor at ~110 scripted GUIs rather than one per node-and-option pair.
-- **Dropdown lists push the rows below them down rather than floating over them.** Draw order is tree order and there is no z-index for a non-window widget, so a list inside its row is painted over by every row after it. Floating would need either a datamodel to mirror for alignment (script lists hold scopes, so rule nodes cannot be items) or the button's screen position (no datafunction returns one). Vanilla hits the same wall: `game_rules.gui` is this same panel and puts its dropdowns outside the scrollbox, using an arrow cycler for the rows inside.
+- **GUI cannot hand script a number.** So choosing an option runs two scripted GUIs in order: one points a cursor at the node, the next writes to whatever the cursor points at. That is what keeps the editor at ~140 scripted GUIs rather than one per node-and-option pair.
+- **Dropdown lists push the rows below them down rather than floating over them.** Draw order is tree order and there is no z-index for a non-window widget, so a list inside its row is painted over by every row after it. Floating would need the button's screen position, and no datafunction returns one. Vanilla hits the same wall: `game_rules.gui` is this same panel and puts its dropdowns outside the scrollbox, using an arrow cycler for the rows inside.
 - Vanilla directives are character flags (`vassal_directive_*`); assignment matches the vanilla interaction exactly (`remove_vassal_directives` + `add_character_flag`).
 - The mod tracks what it assigned via a `leo_mvd_managed` variable on each vassal, so it can clean up after itself without ever clearing a player's manual assignment.
 - There is no monthly on_action in vanilla, so a self-rescheduling hidden event (`leo_mvd.1`) drives the auto-run, with a heartbeat flag and a yearly watchdog to restart it after loading pre-mod saves or switching characters.
