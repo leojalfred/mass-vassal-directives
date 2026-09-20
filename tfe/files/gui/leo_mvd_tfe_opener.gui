@@ -16,15 +16,25 @@
 
 window = {
 	name = "leo_mvd_tfe_opener"
-	# The realm window is 655 wide, anchored to the top right with a 50px inset
-	# for the main tab bar (shared/windows.gui:74, :100). This sits in its bottom
-	# right corner, which is the one place in the Subjects tab that content
-	# cannot push around: the rows above it vary in height with dread, the vassal
-	# limit warning and the stance counters, so anything aligned to the filter row
-	# would drift. The list scrolls underneath.
-	size = { 54 34 }
-	parentanchor = bottom|right
-	position = { -66 -44 }
+
+	### Centered in the gap between TFE's two filter dropdowns, which is where a
+	### Subjects-tab button belongs and where vanilla keeps its own.
+	###
+	### Both numbers are measured from the game rather than computed, because the
+	### layout cannot be read off the file. TFE's vassal_filters_container is an
+	### expanding hbox holding two dropdown_menu_standard of 200x32 with
+	### spacing = 30, but the engine spreads the slack around them rather than
+	### packing them left, so the real gap is far wider than that spacing and the
+	### row is inset on both sides. The realm window is 655 wide and anchored to
+	### the screen's top right (shared/windows.gui:74), and this window is
+	### anchored by its own right edge, so x is that edge's distance back from
+	### the screen's right.
+	###
+	### If either number ever needs re-tuning, these two are the only values to
+	### touch: nothing else here depends on where the button sits.
+	size = { 50 32 }
+	parentanchor = top|right
+	position = { -308 343 }
 
 	# Above the realm window rather than beside it. Both would otherwise sit on
 	# windows_layer, where the realm window opens later and takes the clicks.
@@ -33,11 +43,11 @@ window = {
 	layer = top
 
 	### Only on the Subjects tab of an open realm window.
-	#
-	# TFE gives each tab its own variable and sets bookmark_subjects while the
-	# Subjects tab is active (window_my_realm.gui:212-216), so the pair answers
-	# both questions - is the realm window open, and is it on the right tab.
-	# IsGameViewOpen is vanilla's own test for that window (hud.gui:484).
+	###
+	### TFE gives each tab its own variable and sets bookmark_subjects while the
+	### Subjects tab is active (window_my_realm.gui:212-216), so the pair answers
+	### both questions - is the realm window open, and is it on the right tab.
+	### IsGameViewOpen is vanilla's own test for that window (hud.gui:484).
 	visible = "[And( IsGameViewOpen( 'my_realm' ), GetVariableSystem.Exists( 'bookmark_subjects' ) )]"
 
 	### Closing the realm window closes the panel, which is what vanilla's own
@@ -49,15 +59,19 @@ window = {
 		on_start = "[GetVariableSystem.Clear( 'mass_directives_window' )]"
 	}
 
+	### Vanilla's own button, line for line (window_my_realm.gui:3460): the framed
+	### button_standard with the directive icon inside it, the same tooltip, and
+	### the same shortcut, so the keybind works here too and it reads as the
+	### button TFE removed rather than a bare icon.
+	###
+	### Vanilla also sets compact_vassal_list_realm, which it needs because its
+	### panel takes over the compact list's space. TFE removed that list, so the
+	### variable would do nothing here and is left out.
 	button_standard = {
 		size = { 50 30 }
 		parentanchor = center
 
-		# Vanilla's button, line for line: the same toggle, the same companion
-		# variable, the same tooltip and the same shortcut, so the keybind works
-		# here too and the button reads as the one TFE removed.
 		onclick = "[GetVariableSystem.Toggle( 'mass_directives_window' )]"
-		onclick = "[GetVariableSystem.Set( 'compact_vassal_list_realm', 'yes' )]"
 		shortcut = "mass_directives"
 		tooltip = "MY_REALM_MASS_DIRECTIVES"
 		down = "[GetVariableSystem.Exists( 'mass_directives_window' )]"
