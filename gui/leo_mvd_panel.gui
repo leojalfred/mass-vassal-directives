@@ -217,6 +217,7 @@ window = {
 								
 								leo_mvd_button_drop = {
 									layoutpolicy_horizontal = expanding
+									onclick = "[GetScriptedGui('leo_mvd_ensure_options').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 									onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', 'preset' ), 'none', 'preset' ) )]"
 									text = "[Localize(Concatenate('leo_mvd_ui_preset_', IntToString(FixedPointToInt(GetPlayer.MakeScope.Var('leo_mvd_preset').GetValue))))]"
 								}
@@ -275,7 +276,7 @@ window = {
 												size = { -1 30 }
 												onclick = "[GetScriptedGui('leo_mvd_preset_8').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 												onclick = "[GetVariableSystem.Set( 'leo_mvd_dd', 'none' )]"
-												visible = "[HasDlcFeature( 'roads_to_power' )]"
+												visible = "[Not( EqualTo_CFixedPoint( GetPlayer.MakeScope.Var('leo_mvd_admin_family').GetValue, '(CFixedPoint)0' ) )]"
 												tooltip = "[SelectLocalization( Or( HasDlcFeature( 'roads_to_power' ), HasDlcFeature( 'all_under_heaven' ) ), 'leo_mvd_ui_preset_8_tt', 'leo_mvd_ui_preset_8_tt_nodlc' )]"
 												text = "leo_mvd_ui_preset_8"
 											}

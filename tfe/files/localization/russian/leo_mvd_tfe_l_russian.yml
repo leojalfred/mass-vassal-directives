@@ -1,0 +1,4 @@
+l_russian:
+ leo_mvd_ui_type_exarchate: "@frontier_administration! Экзархат"
+ leo_mvd_ui_term_imperial: "Тип имперской администрации"
+ leo_mvd_ui_preset_8_tt_roman: "Поручить каждому губернатору то, к чему его [GetPlayer.Custom('leo_mvd_cl_admin_term')] и без того располагает.\n\n#weak 1.#! Губернаторы с типом $admin_theme_military$ получают приказ $leo_mvd_ui_dir_5$.\n#weak 2.#! Губернаторы с типом $leo_mvd_ui_type_exarchate$ получают приказ $leo_mvd_ui_dir_7$.\n#weak 3.#! Губернаторы с типом $admin_theme_civilian$ получают приказ $leo_mvd_ui_dir_3$.\n#weak 4.#! Любой другой [vassal|E], губернатор или нет, получает приказ $leo_mvd_ui_dir_9$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"

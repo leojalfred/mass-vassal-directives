@@ -35,8 +35,14 @@
  leo_mvd_ui_preset_3_tt: "Arm the realm, each [vassal|E] to their strength.\n\n[administrative|E] vassals put their own troops to work: the strong $leo_mvd_ui_dir_4$, the weak $leo_mvd_ui_dir_5$.\nEverywhere else the strong $leo_mvd_ui_dir_7$ and the weak $leo_mvd_ui_dir_8$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_4: "Grow the Economy"
  leo_mvd_ui_preset_4_tt: "Build wealth before anything else.\n\nUndeveloped vassals are told to $leo_mvd_ui_dir_3$.\nEstablished vassals turn to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
- leo_mvd_ui_preset_8: "Govern by Theme"
- leo_mvd_ui_preset_8_tt: "Set each governor to what their theme already suits them for.\n\n#weak 1.#! $admin_theme_military$ governors are told to $leo_mvd_ui_dir_5$.\n#weak 2.#! $admin_theme_civilian$ governors are told to $leo_mvd_ui_dir_3$.\n#weak 3.#! $admin_theme_frontier$ governors are told to $leo_mvd_ui_dir_7$.\n#weak 4.#! Every other [vassal|E], governor or not, is told to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ # Every administrative government names this mechanic and its types its own
+ # way, so the label, the description and the type names all come from
+ # leo_mvd_admin_type_loc.txt, which picks the player's own government's words.
+ leo_mvd_ui_preset_8: "Govern by [GetPlayer.Custom('leo_mvd_cl_admin_term_short')]"
+ leo_mvd_ui_preset_8_tt: "[GetPlayer.Custom('leo_mvd_cl_preset_8_tt')]"
+ leo_mvd_ui_preset_8_tt_rtp: "Set each [governor|E] to what their [GetPlayer.Custom('leo_mvd_cl_admin_term')] already suits them for.\n\n#weak 1.#! $admin_theme_military$ governors are told to $leo_mvd_ui_dir_5$.\n#weak 2.#! $admin_theme_frontier$ governors are told to $leo_mvd_ui_dir_7$.\n#weak 3.#! $admin_theme_civilian$ governors are told to $leo_mvd_ui_dir_3$.\n#weak 4.#! $admin_theme_naval$ governors are told to $leo_mvd_ui_dir_8$.\n#weak 5.#! Every other [vassal|E], governor or not, is told to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_8_tt_celestial: "Set each [governor|E] to what their [GetPlayer.Custom('leo_mvd_cl_admin_term')] already suits them for.\n\n#weak 1.#! $celestial_province_military$ and $celestial_province_protectorate$ governors are told to $leo_mvd_ui_dir_5$.\n#weak 2.#! $celestial_province_industrial$ governors are told to $leo_mvd_ui_dir_3$.\n#weak 3.#! Every other [vassal|E], governor or not, is told to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
+ leo_mvd_ui_preset_8_tt_standard_set: "Set each [governor|E] to what their [GetPlayer.Custom('leo_mvd_cl_admin_term')] already suits them for.\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')] governors are told to $leo_mvd_ui_dir_5$.\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')] governors are told to $leo_mvd_ui_dir_3$.\n#weak 3.#! Every other [vassal|E], governor or not, is told to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"
  leo_mvd_ui_preset_5: "Custom"
  leo_mvd_ui_preset_5_tt: "Your own rules, written below.\n\n#weak Choosing Custom here starts from nothing. To start from a preset instead, simply change one of its rules. The preset becomes yours, as it was, with your change.#!"
 
@@ -45,9 +51,9 @@
  # that used them run a different flow (see the presets in leo_mvd_rules.txt).
  # The panel shows these instead when neither expansion is present; the presets
  # whose flow does not change alias back to their base description. Govern by
- # Theme is hidden outright without Roads to Power rather than falling back, but
- # still needs a key here, because the Description box builds one for whichever
- # preset is selected.
+ # Administration is hidden outright from a player whose government has no
+ # administration types, rather than falling back, but still needs a key here,
+ # because the Description box builds one for whichever preset is selected.
  leo_mvd_ui_preset_0_tt_nodlc: "$leo_mvd_ui_preset_0_tt$"
  leo_mvd_ui_preset_1_tt_nodlc: "Bring your [vassals|E] into the fold, then grow them.\n\n#weak 1.#! Vassals of your [faith|E] holding counties of another are told to $leo_mvd_ui_dir_1$.\n#weak 2.#! Vassals of your [culture|E] holding counties of another are told to $leo_mvd_ui_dir_2$.\n#weak 3.#! Of the rest, the militarily strong $leo_mvd_ui_dir_9$ and the weak $leo_mvd_ui_dir_8$."
  leo_mvd_ui_preset_2_tt_nodlc: "$leo_mvd_ui_preset_2_tt$"
@@ -60,12 +66,25 @@
  # Most conditions are self-explanatory from their label. Three are not, and
  # carry a tooltip on their option only: Military Strength, because its number is
  # a duchy-tier yardstick scaled by the vassal's rank (see leo_mvd_values.txt),
- # Governor Theme, because it is the one picker that matches a value outright
- # instead of reading as "is at least", and Average Development, because the
- # label cannot say which counties are averaged.
- leo_mvd_ui_cond_20_tt: "Matches one theme exactly. A [vassal|E] who is not a [governor|E] never meets this condition.\n\n#weak Themes are set on a governor's contract, so this only ever sorts [administrative|E] [vassals|E].#!"
+ # Administration Type, because it is the one picker that matches a value
+ # outright instead of reading as "is at least", and Average Development, because
+ # the label cannot say which counties are averaged.
+ leo_mvd_ui_cond_20_tt: "Matches one [GetPlayer.Custom('leo_mvd_cl_admin_term')] exactly. A [vassal|E] who is not a [governor|E] never meets this condition.\n\n#weak Set on a governor's contract, so this only ever sorts [administrative|E] [vassals|E]. Only the types your own [government|E] uses are offered.#!"
  leo_mvd_ui_cond_9_tt: "The figure is a [duchy|E]-tier yardstick, scaled to each [vassal|E]'s rank so a single setting stays meaningful across the realm. Larger realms raise larger armies.\n\nAgainst the figure a [county|E]-tier vassal is asked 0.4x, a [duchy|E]-tier one 1x, a [kingdom|E]-tier one 3x, an [empire|E]-tier one 8x.\n\n#weak So a choice of 1000 comes out to 400 troops for a count, 1000 for a duke, 3000 for a king, and 8000 for an emperor.#!"
  leo_mvd_ui_cond_21_tt: "The average [development|E] of the [counties|E] the [vassal|E] holds personally. Those are the counties a [directive|E] can actually improve, since directives are not passed down to the vassals of vassals.\n\n#weak A vassal who holds no county, such as a [baron|E], never meets this condition.#!"
+
+ ### Administration types
+ # What the game itself calls the mechanic, picked per player in
+ # leo_mvd_admin_type_loc.txt: Roads to Power's themes, the celestial circuits,
+ # and the plain provinces everyone else sees. Both forms are the game's own
+ # keys, so they are the words the rest of that player's game uses.
+ leo_mvd_ui_term_theme: "[theme_administration|E]"
+ leo_mvd_ui_term_circuit: "[circuit_administration|E]"
+ leo_mvd_ui_term_province: "[province_administration|E]"
+ # The bare noun, for a button with no room for a concept link.
+ leo_mvd_ui_term_theme_short: "$game_concept_theme$"
+ leo_mvd_ui_term_circuit_short: "$game_concept_circuit$"
+ leo_mvd_ui_term_province_short: "$game_concept_province_administration_short$"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Exempt from Directive Automation"

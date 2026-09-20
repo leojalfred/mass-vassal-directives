@@ -515,6 +515,18 @@ leo_mvd_set_thresh_6 = {
 	scope = character
 	effect = { leo_mvd_edit_effect = { FIELD = 3 VALUE = 6 } }
 }
+leo_mvd_set_thresh_7 = {
+	scope = character
+	effect = { leo_mvd_edit_effect = { FIELD = 3 VALUE = 7 } }
+}
+leo_mvd_set_thresh_8 = {
+	scope = character
+	effect = { leo_mvd_edit_effect = { FIELD = 3 VALUE = 8 } }
+}
+leo_mvd_set_thresh_9 = {
+	scope = character
+	effect = { leo_mvd_edit_effect = { FIELD = 3 VALUE = 9 } }
+}
 leo_mvd_set_thresh_10 = {
 	scope = character
 	effect = { leo_mvd_edit_effect = { FIELD = 3 VALUE = 10 } }

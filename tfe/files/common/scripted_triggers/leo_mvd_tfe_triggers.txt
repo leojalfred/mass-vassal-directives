@@ -1,0 +1,16 @@
+# Leo VI's Mass Vassal Directives - The Fallen Eagle's own triggers.
+#
+# Shipped only to dist/tfe. The base families live in leo_mvd_triggers.txt; this
+# adds the one TFE brings.
+
+# Current scope: a character, normally the player.
+#
+# TFE's Roman Imperial government has its own contract group with three
+# assignments of its own - Civilian, Military and Exarchate - where its plain
+# Roman government uses Roads to Power's six themes. TFE locks the assignment,
+# so a player sorts by it rather than setting it, which is still worth sorting
+# by: the realm's dioceses, its military commands and its frontier exarchates
+# want different things built.
+leo_mvd_admin_family_roman_imperial_trigger = {
+	has_government = roman_imperial_government
+}

@@ -1,0 +1,15 @@
+	else_if = {
+		# TFE's Roman Imperial governors: Civilian, Military and Exarchate. TFE
+		# locks the assignment itself (only its own decisions change one), so
+		# this sorts what the realm already is rather than what the player picks.
+		# The Exarchate is TFE's frontier province, so it fortifies.
+		limit = { leo_mvd_admin_family_roman_imperial_trigger = yes }
+		set_variable = { name = leo_mvd_rule_count value = 3 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 20 THRESH = 3 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 5 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 20 THRESH = 11 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 7 }
+		leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 20 THRESH = 2 }
+		leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 3 }
+		leo_mvd_set_node_dir_effect = { NODE = r3_n1 DIR = 9 }
+	}

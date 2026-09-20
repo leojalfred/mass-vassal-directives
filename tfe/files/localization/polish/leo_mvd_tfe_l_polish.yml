@@ -1,0 +1,4 @@
+l_polish:
+ leo_mvd_ui_type_exarchate: "@frontier_administration! Egzarchat"
+ leo_mvd_ui_term_imperial: "Typ administracji cesarskiej"
+ leo_mvd_ui_preset_8_tt_roman: "Przydziel każdemu namiestnikowi to, do czego jego [GetPlayer.Custom('leo_mvd_cl_admin_term')] i tak go predysponuje.\n\n#weak 1.#! Namiestnicy $admin_theme_military$ otrzymują polecenie $leo_mvd_ui_dir_5$.\n#weak 2.#! Namiestnicy $leo_mvd_ui_type_exarchate$ otrzymują polecenie $leo_mvd_ui_dir_7$.\n#weak 3.#! Namiestnicy $admin_theme_civilian$ otrzymują polecenie $leo_mvd_ui_dir_3$.\n#weak 4.#! Każdy inny [vassal|E], namiestnik czy nie, otrzymuje polecenie $leo_mvd_ui_dir_9$.\n\n#weak Całkowicie ignoruje [faith|E] i [culture|E].#!"

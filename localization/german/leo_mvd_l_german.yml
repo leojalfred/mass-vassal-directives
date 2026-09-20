@@ -35,8 +35,11 @@
  leo_mvd_ui_preset_3_tt: "Rüste das Reich, jeden [vassal|E] nach seiner Stärke.\n\n[administrative|E] Vasallen setzen ihre eigenen Truppen ein: die Starken sollen $leo_mvd_ui_dir_4$, die Schwachen $leo_mvd_ui_dir_5$.\nÜberall sonst sollen die Starken $leo_mvd_ui_dir_7$ und die Schwachen $leo_mvd_ui_dir_8$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
  leo_mvd_ui_preset_4: "Die Wirtschaft ausbauen"
  leo_mvd_ui_preset_4_tt: "Schaffe Wohlstand vor allem anderen.\n\nUnentwickelte Vasallen sollen $leo_mvd_ui_dir_3$.\nEtablierte Vasallen sollen $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
- leo_mvd_ui_preset_8: "Nach Thema regieren"
- leo_mvd_ui_preset_8_tt: "Jeden Gouverneur dem zuweisen, wofür sein Thema ihn ohnehin eignet.\n\n#weak 1.#! $admin_theme_military$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_5$.\n#weak 2.#! $admin_theme_civilian$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_3$.\n#weak 3.#! $admin_theme_frontier$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_7$.\n#weak 4.#! Jeder andere [vassal|E], ob Gouverneur oder nicht, erhält den Befehl zu $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
+ leo_mvd_ui_preset_8: "Nach [GetPlayer.Custom('leo_mvd_cl_admin_term_short')] regieren"
+ leo_mvd_ui_preset_8_tt: "[GetPlayer.Custom('leo_mvd_cl_preset_8_tt')]"
+ leo_mvd_ui_preset_8_tt_rtp: "Jeden Gouverneur dem zuweisen, wofür sein [GetPlayer.Custom('leo_mvd_cl_admin_term')] ihn ohnehin eignet.\n\n#weak 1.#! $admin_theme_military$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_5$.\n#weak 2.#! $admin_theme_frontier$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_7$.\n#weak 3.#! $admin_theme_civilian$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_3$.\n#weak 4.#! $admin_theme_naval$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_8$.\n#weak 5.#! Jeder andere [vassal|E], ob Gouverneur oder nicht, erhält den Befehl zu $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
+ leo_mvd_ui_preset_8_tt_celestial: "Jeden Gouverneur dem zuweisen, wofür sein [GetPlayer.Custom('leo_mvd_cl_admin_term')] ihn ohnehin eignet.\n\n#weak 1.#! $celestial_province_military$- und $celestial_province_protectorate$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_5$.\n#weak 2.#! $celestial_province_industrial$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_3$.\n#weak 3.#! Jeder andere [vassal|E], ob Gouverneur oder nicht, erhält den Befehl zu $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
+ leo_mvd_ui_preset_8_tt_standard_set: "Jeden Gouverneur dem zuweisen, wofür sein [GetPlayer.Custom('leo_mvd_cl_admin_term')] ihn ohnehin eignet.\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')]-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_5$.\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')]-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_3$.\n#weak 3.#! Jeder andere [vassal|E], ob Gouverneur oder nicht, erhält den Befehl zu $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
  leo_mvd_ui_preset_5: "Benutzerdefiniert"
  leo_mvd_ui_preset_5_tt: "Deine eigenen Regeln, unten geschrieben.\n\n#weak Benutzerdefiniert hier zu wählen beginnt bei null. Um stattdessen von einer Vorlage auszugehen, ändere einfach eine ihrer Regeln. Die Vorlage wird zu deiner, wie sie war, mit deiner Änderung.#!"
 
@@ -63,9 +66,15 @@
  # Governor Theme, because it is the one picker that matches a value outright
  # instead of reading as "is at least", and Average Development, because the
  # label cannot say which counties are averaged.
- leo_mvd_ui_cond_20_tt: "Trifft genau ein Thema. Ein [vassal|E], der kein [governor|E] ist, erfüllt diese Bedingung nie.\n\n#weak Themen stehen im Vertrag eines Gouverneurs, dies sortiert also nur [administrative|E] [vassals|E].#!"
+ leo_mvd_ui_cond_20_tt: "Trifft genau einen Typ. Ein [vassal|E], der kein [governor|E] ist, erfüllt diese Bedingung nie.\n\n#weak Steht im Vertrag eines Gouverneurs, dies sortiert also nur [administrative|E] [vassals|E]. Angeboten werden nur die Typen, die Eure eigene [government|E] verwendet.#!"
  leo_mvd_ui_cond_9_tt: "Die Zahl ist ein Maßstab auf [duchy|E]-Ebene, skaliert nach dem Rang jedes [vassal|E], damit eine einzige Einstellung im ganzen Reich sinnvoll bleibt. Größere Reiche stellen größere Heere auf.\n\nAnhand der Zahl wird von einem Vasallen auf [county|E]-Ebene 0.4x verlangt, auf [duchy|E]-Ebene 1x, auf [kingdom|E]-Ebene 3x, auf [empire|E]-Ebene 8x.\n\n#weak So ergibt eine Wahl von 1000 etwa 400 Soldaten für einen Grafen, 1000 für einen Herzog, 3000 für einen König und 8000 für einen Kaiser.#!"
  leo_mvd_ui_cond_21_tt: "Die durchschnittliche [development|E] der [counties|E], die der [vassal|E] persönlich hält. Das sind die Grafschaften, die eine [directive|E] tatsächlich verbessern kann, da Direktiven nicht an die Vasallen der Vasallen weitergegeben werden.\n\n#weak Ein Vasall ohne eigene Grafschaft, etwa ein [baron|E], erfüllt diese Bedingung nie.#!"
+ leo_mvd_ui_term_theme: "[theme_administration|E]"
+ leo_mvd_ui_term_circuit: "[circuit_administration|E]"
+ leo_mvd_ui_term_province: "[province_administration|E]"
+ leo_mvd_ui_term_theme_short: "$game_concept_theme$"
+ leo_mvd_ui_term_circuit_short: "$game_concept_circuit$"
+ leo_mvd_ui_term_province_short: "$game_concept_province_administration_short$"
 
  ### Interactions
  leo_mvd_exempt_interaction: "Von der Anweisungs-Automatik ausnehmen"

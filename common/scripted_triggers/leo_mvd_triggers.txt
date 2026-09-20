@@ -150,6 +150,55 @@ leo_mvd_gate_raid_herd_intent_trigger = {
 	government_has_flag = government_is_nomadic
 }
 
+### Administrative government families.
+#
+# Every administrative government gives its governors an administration type on
+# their contract, but each one has its own set of types with its own flags:
+# Roads to Power's themes, and the celestial, meritocratic (shared with steppe
+# administrative) and Ritsuryo province types from All Under Heaven. The sets
+# overlap by name, not by flag - Military exists in all of them, Standard and
+# Industrial in the three All Under Heaven ones.
+#
+# These name the governments behind each set. The panel offers a player the row
+# their own government uses and labels it with that government's own names, and
+# the preset loads the rules that fit it.
+#
+# Current scope: a character, normally the player.
+leo_mvd_admin_family_rtp_trigger = {
+	OR = {
+		has_government = administrative_government
+		# @AGOT:family_rtp@
+		# @TFE:family_rtp@
+	}
+}
+
+leo_mvd_admin_family_celestial_trigger = {
+	has_government = celestial_government
+}
+
+# One set, two governments.
+leo_mvd_admin_family_meritocratic_trigger = {
+	OR = {
+		has_government = meritocratic_government
+		has_government = steppe_admin_government
+	}
+}
+
+leo_mvd_admin_family_ritsuryo_trigger = {
+	has_government = japan_administrative_government
+}
+
+# Any of them. What the panel asks before offering administration types at all.
+leo_mvd_admin_family_any_trigger = {
+	OR = {
+		leo_mvd_admin_family_rtp_trigger = yes
+		leo_mvd_admin_family_celestial_trigger = yes
+		leo_mvd_admin_family_meritocratic_trigger = yes
+		leo_mvd_admin_family_ritsuryo_trigger = yes
+		# @TFE:family_any@
+	}
+}
+
 ### Rule conditions.
 #
 # The closed set of conditions a rule can branch on, evaluated in the vassal's
@@ -280,36 +329,94 @@ leo_mvd_cond_holds_trigger = {
 		exists = scope:leo_mvd_liege.house
 		house = scope:leo_mvd_liege.house
 	}
-	# 20 - Governor Theme is. The only condition whose picked value selects a
-	# value rather than setting a floor: themes are unordered, so this reads as
-	# equality where every other measured condition reads "is at least".
-	# vassal_contract_has_flag is a flag query on the contract, not a scope
-	# change, so it simply answers no for a vassal who is not a governor.
+	# 20 - Administration Type is. The only condition whose picked value selects a
+	# value rather than setting a floor: administration types are unordered, so
+	# this reads as equality where every other measured condition reads "is at
+	# least". vassal_contract_has_flag is a flag query on the contract, not a
+	# scope change, so it simply answers no for a vassal who is not a governor.
+	#
+	# A value is a type's name, not one government's flag. Each administrative
+	# government has its own set (see the family triggers above), and where two of
+	# them use the same name they are the same question asked of a different
+	# contract - so each value matches every flag of that name. Which values a
+	# player is offered is decided in the panel's option list; matching all of them
+	# here is what keeps a rule working in a realm that holds governors of more
+	# than one government, and when the liege's own government changes.
 	trigger_else_if = {
 		limit = { scope:leo_mvd_cond_id = 20 }
 		is_governor = yes
+		# Balanced - Roads to Power's default.
 		trigger_if = {
 			limit = { scope:leo_mvd_thresh = 1 }
 			vassal_contract_has_flag = admin_theme_balanced
 		}
+		# Civilian
 		trigger_else_if = {
 			limit = { scope:leo_mvd_thresh = 2 }
-			vassal_contract_has_flag = admin_theme_civilian
+			OR = {
+				vassal_contract_has_flag = admin_theme_civilian
+				# @TFE:theme_civilian@
+			}
 		}
+		# Military - the one type every administrative government has.
 		trigger_else_if = {
 			limit = { scope:leo_mvd_thresh = 3 }
-			vassal_contract_has_flag = admin_theme_military
+			OR = {
+				vassal_contract_has_flag = admin_theme_military
+				vassal_contract_has_flag = celestial_province_military
+				vassal_contract_has_flag = meritocratic_province_military
+				vassal_contract_has_flag = japan_administrative_province_military
+			}
 		}
+		# Frontier
 		trigger_else_if = {
 			limit = { scope:leo_mvd_thresh = 4 }
 			vassal_contract_has_flag = admin_theme_frontier
 		}
+		# Imperial
 		trigger_else_if = {
 			limit = { scope:leo_mvd_thresh = 5 }
 			vassal_contract_has_flag = admin_theme_imperial
 		}
-		trigger_else = {
+		# Naval
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 6 }
 			vassal_contract_has_flag = admin_theme_naval
+		}
+		# Standard - the default of all three All Under Heaven sets.
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 7 }
+			OR = {
+				vassal_contract_has_flag = celestial_province_standard
+				vassal_contract_has_flag = meritocratic_province_standard
+				vassal_contract_has_flag = japan_administrative_province_standard
+			}
+		}
+		# Industrial. Ritsuryo names the flag for trade and the type for industry,
+		# so there the flag and the name it is offered under differ.
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 8 }
+			OR = {
+				vassal_contract_has_flag = celestial_province_industrial
+				vassal_contract_has_flag = meritocratic_province_industrial
+				vassal_contract_has_flag = japan_administrative_province_trade
+			}
+		}
+		# Metropolitan - celestial only.
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 9 }
+			vassal_contract_has_flag = celestial_province_metropolitan
+		}
+		# Protectorate - celestial only.
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 10 }
+			vassal_contract_has_flag = celestial_province_protectorate
+		}
+		# @TFE:theme_extra@
+		# No type picked, or one this build does not know: answered no rather
+		# than falling into whichever branch happened to be last.
+		trigger_else = {
+			always = no
 		}
 	}
 	# 21 - Average Development is at least. Averaged over the counties the

@@ -6,6 +6,10 @@
 # installing or removing a DLC between sessions is picked up.
 
 leo_mvd_build_options_effect = {
+	# Which administration types this realm uses. Decided first: the
+	# condition below and the preset's visibility both read it.
+	leo_mvd_set_admin_family_effect = yes
+
 	# Conditions offered by the settled waterfall, in panel order.
 	clear_variable_list = leo_mvd_conds
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_1 }
@@ -15,7 +19,7 @@ leo_mvd_build_options_effect = {
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_5 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_19 }
 	if = { limit = { OR = { has_dlc_feature = roads_to_power has_dlc_feature = all_under_heaven } } add_to_variable_list = { name = leo_mvd_conds target = flag:cond_6 } }
-	if = { limit = { has_dlc_feature = roads_to_power } add_to_variable_list = { name = leo_mvd_conds target = flag:cond_20 } }
+	if = { limit = { leo_mvd_admin_family_any_trigger = yes } add_to_variable_list = { name = leo_mvd_conds target = flag:cond_20 } }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_7 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_8 }
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_9 }
@@ -96,12 +100,35 @@ leo_mvd_build_options_effect = {
 	add_to_variable_list = { name = leo_mvd_t_14 target = flag:thresh_75 }
 	add_to_variable_list = { name = leo_mvd_t_14 target = flag:thresh_90 }
 	clear_variable_list = leo_mvd_t_20
-	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_1 }
-	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_2 }
-	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_3 }
-	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_4 }
-	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_5 }
-	add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_6 }
+	if = {
+		limit = { leo_mvd_admin_family_rtp_trigger = yes }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_1 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_2 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_3 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_4 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_5 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_6 }
+	}
+	else_if = {
+		limit = { leo_mvd_admin_family_celestial_trigger = yes }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_7 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_8 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_9 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_3 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_10 }
+	}
+	else_if = {
+		limit = { leo_mvd_admin_family_meritocratic_trigger = yes }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_7 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_8 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_3 }
+	}
+	else_if = {
+		limit = { leo_mvd_admin_family_ritsuryo_trigger = yes }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_7 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_8 }
+		add_to_variable_list = { name = leo_mvd_t_20 target = flag:thresh_3 }
+	}
 	clear_variable_list = leo_mvd_t_21
 	add_to_variable_list = { name = leo_mvd_t_21 target = flag:thresh_5 }
 	add_to_variable_list = { name = leo_mvd_t_21 target = flag:thresh_10 }
@@ -157,6 +184,9 @@ leo_mvd_build_options_effect = {
 	set_variable = { name = leo_mvd_x_thresh_4 value = 4 }
 	set_variable = { name = leo_mvd_x_thresh_5 value = 5 }
 	set_variable = { name = leo_mvd_x_thresh_6 value = 6 }
+	set_variable = { name = leo_mvd_x_thresh_7 value = 7 }
+	set_variable = { name = leo_mvd_x_thresh_8 value = 8 }
+	set_variable = { name = leo_mvd_x_thresh_9 value = 9 }
 	set_variable = { name = leo_mvd_x_thresh_10 value = 10 }
 	set_variable = { name = leo_mvd_x_thresh_20 value = 20 }
 	set_variable = { name = leo_mvd_x_thresh_25 value = 25 }

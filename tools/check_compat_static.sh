@@ -26,6 +26,7 @@ set -uo pipefail
 
 GAME="${GAME_DIR:-C:/Games/Steam/steamapps/common/Crusader Kings III/game}"
 AGOT="${AGOT_DIR:-C:/Games/Steam/steamapps/workshop/content/1158310/2962333032}"
+TFE="${TFE_DIR:-C:/Games/Steam/steamapps/workshop/content/1158310/2243307127}"
 
 P=0; F=0; W=0
 FAILS=""
@@ -39,6 +40,17 @@ def()  { # <label> <subdir under GAME> <regex>   strong, FAIL on miss
 adef() { # <label> <subdir under AGOT> <regex>   strong (AGOT), FAIL on miss
 	if _g "$AGOT/$2" "$3"; then printf '  ok    %s\n' "$1"; P=$((P+1))
 	else printf '  FAIL  %s\n' "$1"; F=$((F+1)); FAILS="$FAILS\n  - $1"; fi
+}
+tdef() { # <label> <subdir under TFE> <regex>   strong (TFE), FAIL on miss
+	if _g "$TFE/$2" "$3"; then printf '  ok    %s\n' "$1"; P=$((P+1))
+	else printf '  FAIL  %s\n' "$1"; F=$((F+1)); FAILS="$FAILS\n  - $1"; fi
+}
+# A file TFE must NOT override, because the opener borrows what vanilla keeps
+# there: button_give_directive from shared/buttons_icons.gui, and the
+# mass_directives keybind from shortcuts.shortcuts.
+tabsent() { # <label> <path under TFE>
+	if [ -e "$TFE/$2" ]; then printf '  warn  %s (TFE now ships this file - re-check the opener against it)\n' "$1"; W=$((W+1))
+	else printf '  ok    %s\n' "$1"; P=$((P+1)); fi
 }
 use()  { # <label> <regex>                        proxy, WARN on miss
 	if _g "$GAME/common" "$2" || _g "$GAME/events" "$2"; then printf '  ok    %s\n' "$1"; P=$((P+1))
@@ -93,9 +105,34 @@ for t in vassal_is_valid_and_follows_directive_trigger \
 done
 
 echo
-echo "== Vanilla: governor themes (Governor Theme condition) =="
+echo "== Vanilla: administration types (Administration Type condition) =="
+# Every administrative government sets one of these on a governor's contract.
+# The condition matches by name across all of them, so a rename in any one set
+# silently drops that government's governors out of the rules that ask for it.
 for th in balanced civilian military frontier imperial naval; do
 	def "contract theme flag: admin_theme_$th" common/subject_contracts "flag = admin_theme_$th"
+done
+for pt in standard industrial metropolitan military protectorate; do
+	def "contract flag: celestial_province_$pt" common/subject_contracts "flag = celestial_province_$pt"
+done
+for pt in standard industrial military; do
+	def "contract flag: meritocratic_province_$pt" common/subject_contracts "flag = meritocratic_province_$pt"
+done
+# Ritsuryo's industrial type carries a flag named for trade, which is why the
+# panel offers it under one name and matches it under another.
+for pt in standard trade military; do
+	def "contract flag: japan_administrative_province_$pt" common/subject_contracts "flag = japan_administrative_province_$pt"
+done
+
+echo
+echo "== Vanilla: the governments each administration-type set belongs to =="
+# leo_mvd_admin_family_*_trigger names these outright. A government renamed here
+# means its player is offered no types at all, and the preset silently vanishes.
+for g in administrative_government celestial_government meritocratic_government \
+         steppe_admin_government japan_administrative_government; do
+	# Unanchored on the left: a government defined on a file's first line is
+	# preceded by the UTF-8 BOM, which an anchored match would not see past.
+	def "government: $g" common/governments "(^|[^a-z_])$g = [{]"
 done
 
 echo
@@ -181,6 +218,21 @@ done
 for th in balanced civilian military frontier imperial naval; do
 	def "theme loc key: admin_theme_$th" localization/english "^ *admin_theme_$th:"
 done
+# The other sets' names, which the option labels reach through
+# leo_mvd_admin_type_loc.txt. A missing key shows as a raw key in the picker.
+for k in celestial_province_standard celestial_province_industrial \
+         celestial_province_metropolitan celestial_province_military \
+         celestial_province_protectorate meritocratic_province_standard \
+         meritocratic_province_industrial meritocratic_province_military \
+         japan_administrative_province_standard japan_administrative_province_trade \
+         japan_administrative_province_military; do
+	def "administration type loc key: $k" localization/english "^ *$k:"
+done
+# The words for the mechanic itself, per government, as concept keys.
+for k in theme_administration circuit_administration province_administration \
+         theme circuit province; do
+	def "concept loc key: game_concept_$k" localization/english "^ *game_concept_$k:"
+done
 def "text color: color_gray" gui "name = color_gray"
 
 echo
@@ -258,6 +310,71 @@ if [ -d "$AGOT" ]; then
 else
 	echo
 	echo "agot: not found at $AGOT - skipping AGOT checks (set AGOT_DIR to include them)"
+fi
+
+if [ -d "$TFE" ]; then
+	echo
+	echo "tfe: $TFE"
+
+	echo
+	echo "== TFE: what the opener is attached to =="
+	# TFE ships its own window_my_realm.gui with no mass directives button, which
+	# is why dist/tfe adds one. The button shows itself on these two facts: the
+	# realm window is open, and its Subjects tab is the active one. TFE sets a
+	# variable per tab; if it went back to vanilla's single 'bookmark' variable,
+	# or renamed the window, the opener would never appear.
+	tdef "TFE realm window: my_realm_window"      gui "widgetid = \"my_realm_window\""
+	tdef "TFE realm window: bookmark_subjects"    gui "bookmark_subjects"
+	# The button borrows two vanilla widget types and vanilla's own shortcut. TFE
+	# does not override the files holding them today; if it starts to, the opener
+	# has to be re-checked against TFE's versions.
+	tabsent "TFE leaves shared/buttons_icons.gui alone (button_give_directive)" gui/shared/buttons_icons.gui
+	tabsent "TFE leaves shortcuts.shortcuts alone (mass_directives keybind)"    gui/shortcuts.shortcuts
+
+	echo
+	echo "== TFE: the directives themselves are still vanilla's =="
+	# TFE overrides 00_vassal_interactions.txt but has so far kept the directive
+	# interaction byte-identical. The mod's per-directive gates mirror vanilla's
+	# send_options, so a TFE edit here would silently desync dist/tfe: directives
+	# would be assigned and then dropped next tick.
+	if [ -f "$TFE/common/character_interactions/00_vassal_interactions.txt" ]; then
+		_blk() { awk '/^give_vassal_directive_interaction = \{/{on=1} on{print} on&&/^\}/{exit}' "$1"; }
+		if diff -q <(_blk "$GAME/common/character_interactions/00_vassal_interactions.txt") \
+		           <(_blk "$TFE/common/character_interactions/00_vassal_interactions.txt") >/dev/null 2>&1; then
+			printf '  ok    TFE give_vassal_directive_interaction matches vanilla\n'; P=$((P+1))
+		else
+			printf '  FAIL  TFE give_vassal_directive_interaction differs from vanilla\n'
+			F=$((F+1)); FAILS="$FAILS\n  - TFE give_vassal_directive_interaction differs from vanilla (re-diff the leo_mvd_gate_* triggers)"
+		fi
+	else
+		printf '  ok    TFE does not override the directive interaction\n'; P=$((P+1))
+	fi
+
+	echo
+	echo "== TFE: Roman administration types =="
+	# roman_government uses Roads to Power's contract group, so its governors carry
+	# the six themes; roman_imperial_government has three assignments of its own.
+	tdef "TFE government: roman_government"          common/governments "(^|[^a-z_])roman_government = [{]"
+	tdef "TFE government: roman_imperial_government" common/governments "(^|[^a-z_])roman_imperial_government = [{]"
+	tdef "TFE contract flag: roman_imperial_civilian_assignment"  common/subject_contracts "flag = roman_imperial_civilian_assignment"
+	tdef "TFE contract flag: roman_imperial_exarchate_assignment" common/subject_contracts "flag = roman_imperial_exarchate_assignment"
+	# The Military assignment needs no value of its own because TFE sets vanilla's
+	# theme flag on it, which value 3 already matches. If that stopped being true,
+	# Roman military governors would silently stop matching Military.
+	tdef "TFE military assignment still sets admin_theme_military" common/subject_contracts "flag = admin_theme_military"
+
+	echo
+	echo "== TFE: the exempt-dimming override has no rival =="
+	# TFE does not define these, so the mod's by-name override wins wherever it
+	# loads. If TFE starts defining them, dist/tfe must load after TFE.
+	if _g "$TFE/common/customizable_localization" "(^|[^a-z_])vassal_directive_(icon|text) = [{]"; then
+		printf '  warn  TFE now defines vassal_directive_icon/text - dist/tfe must load after TFE\n'; W=$((W+1))
+	else
+		printf '  ok    TFE defines neither vassal_directive_icon nor vassal_directive_text\n'; P=$((P+1))
+	fi
+else
+	echo
+	echo "tfe: not found at $TFE - skipping TFE checks (set TFE_DIR to include them)"
 fi
 
 echo

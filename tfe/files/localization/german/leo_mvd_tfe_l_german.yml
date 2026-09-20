@@ -1,0 +1,4 @@
+l_german:
+ leo_mvd_ui_type_exarchate: "@frontier_administration! Exarchat"
+ leo_mvd_ui_term_imperial: "Kaiserlicher Verwaltungstyp"
+ leo_mvd_ui_preset_8_tt_roman: "Jeden Gouverneur dem zuweisen, wofür sein [GetPlayer.Custom('leo_mvd_cl_admin_term')] ihn ohnehin eignet.\n\n#weak 1.#! $admin_theme_military$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_5$.\n#weak 2.#! $leo_mvd_ui_type_exarchate$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_7$.\n#weak 3.#! $admin_theme_civilian$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_3$.\n#weak 4.#! Jeder andere [vassal|E], ob Gouverneur oder nicht, erhält den Befehl zu $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"

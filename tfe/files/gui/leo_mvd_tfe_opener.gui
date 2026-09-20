@@ -1,0 +1,71 @@
+### Leo VI's Mass Vassal Directives - the panel's opener, for The Fallen Eagle.
+#
+# The base mod needs no opener: vanilla's Subjects tab has a mass directives
+# button (window_my_realm.gui:3460) that toggles the mass_directives_window GUI
+# variable, and the panel simply shows itself while that variable exists.
+#
+# The Fallen Eagle ships its own window_my_realm.gui, and its Subjects tab keeps
+# only the two filter dropdowns - the directives button is gone, and nothing
+# else in TFE ever sets that variable. So this puts the button back, as a
+# standalone window rather than an override: a mod cannot add a widget inside
+# another mod's file, and re-shipping TFE's own 4600-line window would go stale
+# the day TFE touched it and would fight every other TFE submod.
+#
+# It toggles the same variable vanilla's button does, so the panel, its close
+# button and everything downstream are shared with the base mod.
+
+window = {
+	name = "leo_mvd_tfe_opener"
+	# The realm window is 655 wide, anchored to the top right with a 50px inset
+	# for the main tab bar (shared/windows.gui:74, :100). This sits in its bottom
+	# right corner, which is the one place in the Subjects tab that content
+	# cannot push around: the rows above it vary in height with dread, the vassal
+	# limit warning and the stance counters, so anything aligned to the filter row
+	# would drift. The list scrolls underneath.
+	size = { 54 34 }
+	parentanchor = bottom|right
+	position = { -66 -44 }
+
+	# Above the realm window rather than beside it. Both would otherwise sit on
+	# windows_layer, where the realm window opens later and takes the clicks.
+	# The panel itself stays on windows_layer: it opens to the left of the realm
+	# window and overlaps nothing.
+	layer = top
+
+	### Only on the Subjects tab of an open realm window.
+	#
+	# TFE gives each tab its own variable and sets bookmark_subjects while the
+	# Subjects tab is active (window_my_realm.gui:212-216), so the pair answers
+	# both questions - is the realm window open, and is it on the right tab.
+	# IsGameViewOpen is vanilla's own test for that window (hud.gui:484).
+	visible = "[And( IsGameViewOpen( 'my_realm' ), GetVariableSystem.Exists( 'bookmark_subjects' ) )]"
+
+	### Closing the realm window closes the panel, which is what vanilla's own
+	### window does on hide (window_my_realm.gui:62) and TFE's does not. Without
+	### this the panel would be left hanging over the map with no way back to the
+	### button that dismisses it.
+	state = {
+		name = _hide
+		on_start = "[GetVariableSystem.Clear( 'mass_directives_window' )]"
+	}
+
+	button_standard = {
+		size = { 50 30 }
+		parentanchor = center
+
+		# Vanilla's button, line for line: the same toggle, the same companion
+		# variable, the same tooltip and the same shortcut, so the keybind works
+		# here too and the button reads as the one TFE removed.
+		onclick = "[GetVariableSystem.Toggle( 'mass_directives_window' )]"
+		onclick = "[GetVariableSystem.Set( 'compact_vassal_list_realm', 'yes' )]"
+		shortcut = "mass_directives"
+		tooltip = "MY_REALM_MASS_DIRECTIVES"
+		down = "[GetVariableSystem.Exists( 'mass_directives_window' )]"
+
+		button_give_directive = {
+			parentanchor = center
+			size = { 30 30 }
+			alwaystransparent = yes
+		}
+	}
+}

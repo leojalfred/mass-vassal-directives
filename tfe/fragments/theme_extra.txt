@@ -1,0 +1,8 @@
+		# 11 - Exarchate. TFE's third Roman Imperial assignment: a mixed
+		# military-civil frontier province, which TFE itself draws with the
+		# frontier icon. Its Military assignment needs no entry here, because TFE
+		# sets admin_theme_military on it and value 3 already matches that.
+		trigger_else_if = {
+			limit = { scope:leo_mvd_thresh = 11 }
+			vassal_contract_has_flag = roman_imperial_exarchate_assignment
+		}

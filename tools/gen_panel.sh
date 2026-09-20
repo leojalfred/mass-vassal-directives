@@ -135,7 +135,8 @@ cond_name() { case $1 in
 	13) echo "[counties|E] Held is at Least" ;;
 	14) echo "[cultural_acceptance|E] with You is at Least" ;;
 	19) echo "Same [house|E] as You" ;;
-	20) echo "[governor|E] Theme is" ;;
+	# Themes, circuits or provinces, whichever word the player's own game uses.
+	20) echo "[GetPlayer.Custom('leo_mvd_cl_admin_term')] is" ;;
 	21) echo "Average [development|E] is at Least" ;;
 	15) echo "Is Ironborn" ;;
 	16) echo "Follows the Faith of the Seven" ;;
@@ -164,7 +165,13 @@ cond_thresh() { case $1 in
 	12) echo "0 25 50 75" ;;
 	13) echo "1 2 3 5 10" ;;
 	14) echo "10 25 50 75 90" ;;
-	20) echo "1 2 3 4 5 6" ;;
+	# Every administration type any administrative government has, by name: the
+	# six Roads to Power themes, then the four All Under Heaven province types
+	# that are not one of those names. A player is offered only their own
+	# government's row (see admin_type_row), but the codes are one shared set, so
+	# a rule survives the liege changing government. Append-only, like the
+	# condition codes and for the same reason.
+	20) if [ "$TARGET" = tfe ]; then echo "1 2 3 4 5 6 7 8 9 10 11"; else echo "1 2 3 4 5 6 7 8 9 10"; fi ;;
 	# Lower than Capital Development's ladder: the capital is usually the best
 	# county a vassal holds, so an average over the whole domain runs behind it.
 	21) echo "5 10 20 40 60" ;;
@@ -183,17 +190,29 @@ thresh_label() { local c=$1 t=$2
 	10) case $t in 2) echo "[county|E]" ;; 3) echo "[duchy|E]" ;; 4) echo "[kingdom|E]" ;; 5) echo "[empire|E]" ;; esac ;;
 	14) echo "$t%" ;;
 	13) case $t in 1) echo "1 [county|E]" ;; *) echo "$t [counties|E]" ;; esac ;;
-	# The themes have no game concept, but they do have the game's own names,
-	# icon and all. Referencing those keys keeps the labels identical to the
-	# contract screen and translates them everywhere for free. Their order is
-	# the order the contract itself lists them in.
+	# The administration types have no game concept, but they do have the game's
+	# own names, icon and all. Referencing those keys keeps the labels identical
+	# to the contract screen and translates them everywhere for free.
+	#
+	# A name several governments share carries a different key and icon in each,
+	# so those go through a customizable localization that picks the player's own
+	# government's key (leo_mvd_admin_type_loc.txt). The rest belong to one
+	# government and are named outright.
 	20) case $t in
 		1) echo "\$admin_theme_balanced\$" ;;
 		2) echo "\$admin_theme_civilian\$" ;;
-		3) echo "\$admin_theme_military\$" ;;
+		3) echo "[GetPlayer.Custom('leo_mvd_cl_type_military')]" ;;
 		4) echo "\$admin_theme_frontier\$" ;;
 		5) echo "\$admin_theme_imperial\$" ;;
 		6) echo "\$admin_theme_naval\$" ;;
+		7) echo "[GetPlayer.Custom('leo_mvd_cl_type_standard')]" ;;
+		8) echo "[GetPlayer.Custom('leo_mvd_cl_type_industrial')]" ;;
+		9) echo "\$celestial_province_metropolitan\$" ;;
+		10) echo "\$celestial_province_protectorate\$" ;;
+		# The Fallen Eagle's own, and the one name here that is not the game's:
+		# TFE ships English only, so borrowing its key would leave every other
+		# language showing a raw key. The TFE overlay carries our own, translated.
+		11) echo "\$leo_mvd_ui_type_exarchate\$" ;;
 	esac ;;
 	*)  echo "$t" ;;
 	esac
@@ -277,10 +296,9 @@ vis_and() { local out=; for e in "$@"; do [ -z "$e" ] && continue
 # alone (convert_to_administrative_decision).
 ADMIN_DLC="roads_to_power all_under_heaven"
 # The DLC gate a directive/condition needs, if any, as has_dlc_feature names.
-# Governor Theme is the one piece of administrative content that really is Roads
-# to Power only: it reads the admin_theme_* subject-contract flags, and only that
-# expansion's contract group defines them. All Under Heaven's governments carry
-# province flags of their own instead, so the condition could never match there.
+# Administration Type needs none: it is offered only to a player whose own
+# government has administration types, which is a stricter question than any
+# expansion's, and one no DLC-less game can answer yes to.
 # The nomad directives need Khans of the Steppe, but their whole section is gated
 # as a block, so they need nothing here.
 #
@@ -289,14 +307,38 @@ ADMIN_DLC="roads_to_power all_under_heaven"
 # check, so a DLC's options sit where they belong rather than being appended
 # after everything else.
 dir_dlc_feature()  { case $1 in 3|4|5) echo "$ADMIN_DLC" ;; esac; }
-cond_dlc_feature() { case $1 in 6) echo "$ADMIN_DLC" ;; 20) echo roads_to_power ;; esac; }
-# A preset is hidden outright when the DLC it is built around is missing, rather
-# than falling back the way 1/3/4 do. Govern by Theme sorts governors by their
-# theme, and without Roads to Power there are neither, so every rule it could
-# write would collapse to "everyone builds economy" - which is exactly what Grow
-# the Economy already offers. Two presets that do the same thing is worse than
-# one that is absent.
-preset_dlc_vis() { case $1 in 8) vdlc roads_to_power ;; esac; }
+cond_dlc_feature() { case $1 in 6) echo "$ADMIN_DLC" ;; esac; }
+# A preset is hidden outright when what it sorts by does not exist, rather than
+# falling back the way 1/3/4 do. Govern by Administration sorts governors by
+# their administration type, and a player whose government has none would get
+# every rule collapsing to "everyone builds economy" - which is exactly what
+# Grow the Economy already offers. Two presets that do the same thing is worse
+# than one that is absent.
+#
+# Read from the variable rather than asked of script: a GUI binding cannot call
+# a trigger, and leo_mvd_set_admin_family_effect has already answered the same
+# question for the option list.
+preset_dlc_vis() { case $1 in 8) echo "Not( $(veq leo_mvd_admin_family 0) )" ;; esac; }
+
+### Administration types, per administrative government.
+#
+# Each administrative government has its own set of types on its governors'
+# contracts. The sets overlap by name, so the codes are shared (see cond_thresh
+# 20) while the row a player is offered is their own government's, in the order
+# that government's own contract lists them.
+ADMIN_FAMILIES="rtp celestial meritocratic ritsuryo"
+# The Fallen Eagle's Roman Imperial government has a set of its own. Its plain
+# Roman government does not: that one uses the admin_vassal contract group, so
+# its governors carry the same six themes, and the fragment adds it to the Roads
+# to Power family instead.
+if [ "$TARGET" = tfe ]; then ADMIN_FAMILIES="$ADMIN_FAMILIES roman_imperial"; fi
+admin_type_row() { case $1 in
+	rtp)            echo "1 2 3 4 5 6" ;;   # balanced civilian military frontier imperial naval
+	celestial)      echo "7 8 9 3 10" ;;    # standard industrial metropolitan military protectorate
+	meritocratic)   echo "7 8 3" ;;         # standard industrial military
+	ritsuryo)       echo "7 8 3" ;;         # the same three, under Ritsuryo's own names
+	roman_imperial) echo "2 3 11" ;;        # civilian military exarchate
+esac; }
 
 # Explanatory tooltip for a condition option, if it needs one. Three do.
 # Military Strength's threshold is a duchy-tier baseline scaled by the vassal's
@@ -384,7 +426,11 @@ emit_dd_start() { local depth=$1 id=$2 label=$3
 	# is opened by a vanilla button, so a session can reach this point with no
 	# script of ours having run - and then the list would be empty. Runs before
 	# the variable that opens the list, and the two onclicks run in order.
-	[ -n "${4:-}" ] && p "onclick = \"$(sgui leo_mvd_ensure_options)\""
+	#
+	# DD_ENSURE asks for the same on a dropdown whose rows are literal widgets.
+	# The preset list needs it: its rows are fixed, but which of them are shown
+	# depends on a variable the same effect refreshes.
+	[ -n "${4:-}${DD_ENSURE:-}" ] && p "onclick = \"$(sgui leo_mvd_ensure_options)\""
 	p "onclick = \"[GetVariableSystem.Set( 'leo_mvd_dd', Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' ), 'none', '$id' ) )]\""
 	p "text = \"[$label]\""
 	ind $((depth+1)); p "}"
@@ -1029,7 +1075,9 @@ window = {
 HEAD
 
 	# The preset comes first: it decides what the monthly run would even do.
+	DD_ENSURE=1
 	emit_dd_start 7 preset "$(vkey 'leo_mvd_ui_preset_' leo_mvd_preset)"
+	DD_ENSURE=
 	for n in $PRESET_RANGE; do
 		ind "$DD_ROW_DEPTH"
 		p "leo_mvd_button_dropdown = {"
@@ -1310,6 +1358,10 @@ cat << 'HEAD'
 HEAD
 	echo
 	echo "leo_mvd_build_options_effect = {"
+	echo -e "\t# Which administration types this realm uses. Decided first: the"
+	echo -e "\t# condition below and the preset's visibility both read it."
+	echo -e "\tleo_mvd_set_admin_family_effect = yes"
+	echo
 
 	# CONDS is the display order, so the list is built in that order and a gated
 	# condition is wrapped in its own DLC check in place rather than pushed to the
@@ -1319,7 +1371,12 @@ HEAD
 	echo -e "\tclear_variable_list = leo_mvd_conds"
 	for c in $CONDS; do
 		local feat; feat=$(cond_dlc_feature "$c")
-		if [ -n "$feat" ]; then
+		if [ "$c" = 20 ]; then
+			# Offered only where there are administration types to ask about. A
+			# player whose government has none could only ever answer no, and the
+			# ladder below would have nothing to put in the picker.
+			echo -e "\tif = { limit = { leo_mvd_admin_family_any_trigger = yes } add_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c } }"
+		elif [ -n "$feat" ]; then
 			echo -e "\tif = { limit = { $(sdlc $feat) } add_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c } }"
 		else
 			echo -e "\tadd_to_variable_list = { name = leo_mvd_conds target = flag:cond_$c }"
@@ -1353,6 +1410,23 @@ HEAD
 	echo -e "\t# One threshold ladder per measured condition."
 	for c in $NUMERIC_CONDS; do
 		echo -e "\tclear_variable_list = leo_mvd_t_$c"
+		if [ "$c" = 20 ]; then
+			# Not a ladder but a row of names, and which names exist depends on the
+			# player's government. Only their own government's row is offered, so
+			# the picker never shows a type their realm cannot have - and the
+			# labels, which follow the same government, always agree with it.
+			local first=1
+			for fam in $ADMIN_FAMILIES; do
+				local kw="if"; [ "$first" = 1 ] || kw="else_if"; first=0
+				echo -e "\t$kw = {"
+				echo -e "\t\tlimit = { leo_mvd_admin_family_${fam}_trigger = yes }"
+				for t in $(admin_type_row "$fam"); do
+					echo -e "\t\tadd_to_variable_list = { name = leo_mvd_t_$c target = flag:thresh_$t }"
+				done
+				echo -e "\t}"
+			done
+			continue
+		fi
 		for t in $(cond_thresh "$c"); do
 			echo -e "\tadd_to_variable_list = { name = leo_mvd_t_$c target = flag:thresh_$t }"
 		done
@@ -1427,6 +1501,8 @@ HEAD
 	echo
 	echo "leo_mvd_options_ack_trigger = {"
 	echo -e "\talways = no"
+	echo -e "\t# Read by the panel alone: it hides the Govern by Administration preset."
+	echo -e "\tvar:leo_mvd_admin_family = 0"
 	for c in $CONDS; do
 		echo -e "\tis_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_$c }"
 		echo -e "\tvar:leo_mvd_x_cond_$c = $c"

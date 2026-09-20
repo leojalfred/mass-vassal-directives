@@ -1,0 +1,4 @@
+l_simp_chinese:
+ leo_mvd_ui_type_exarchate: "@frontier_administration! 总督区"
+ leo_mvd_ui_term_imperial: "帝国行政类型"
+ leo_mvd_ui_preset_8_tt_roman: "让每位总督去做其[GetPlayer.Custom('leo_mvd_cl_admin_term')]本就擅长的事。\n\n#weak 1.#! $admin_theme_military$总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! $leo_mvd_ui_type_exarchate$总督受命$leo_mvd_ui_dir_7$。\n#weak 3.#! $admin_theme_civilian$总督受命$leo_mvd_ui_dir_3$。\n#weak 4.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"

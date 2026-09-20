@@ -1,0 +1,4 @@
+l_korean:
+ leo_mvd_ui_type_exarchate: "@frontier_administration! 총독령"
+ leo_mvd_ui_term_imperial: "제국 행정 유형"
+ leo_mvd_ui_preset_8_tt_roman: "각 총독에게 해당 [GetPlayer.Custom('leo_mvd_cl_admin_term')]이(가) 이미 어울리는 임무를 맡깁니다.\n\n#weak 1.#! $admin_theme_military$ 총독은 $leo_mvd_ui_dir_5$ 지시를 받습니다.\n#weak 2.#! $leo_mvd_ui_type_exarchate$ 총독은 $leo_mvd_ui_dir_7$ 지시를 받습니다.\n#weak 3.#! $admin_theme_civilian$ 총독은 $leo_mvd_ui_dir_3$ 지시를 받습니다.\n#weak 4.#! 그 외 모든 [vassal|E]은 총독 여부와 관계없이 $leo_mvd_ui_dir_9$ 지시를 받습니다.\n\n#weak [faith|E]와 [culture|E]는 전혀 고려하지 않습니다.#!"

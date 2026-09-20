@@ -1,0 +1,6 @@
+	text = {
+		trigger = {
+			leo_mvd_admin_family_roman_imperial_trigger = yes
+		}
+		localization_key = leo_mvd_ui_preset_8_tt_roman
+	}

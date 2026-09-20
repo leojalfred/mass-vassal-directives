@@ -35,8 +35,11 @@
  leo_mvd_ui_preset_3_tt: "武装王国，各[vassal|E]依其所长。\n\n[administrative|E]封臣调动自己的军队：强大者$leo_mvd_ui_dir_4$，弱小者$leo_mvd_ui_dir_5$。\n其余封臣中，强大者$leo_mvd_ui_dir_7$，弱小者$leo_mvd_ui_dir_8$。\n\n#weak 完全不考虑[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_4: "发展经济"
  leo_mvd_ui_preset_4_tt: "凡事以积累财富为先。\n\n欠发达的封臣被要求$leo_mvd_ui_dir_3$。\n已发达的封臣转向$leo_mvd_ui_dir_9$。\n\n#weak 完全不考虑[faith|E]与[culture|E]。#!"
- leo_mvd_ui_preset_8: "按主题治理"
- leo_mvd_ui_preset_8_tt: "让每位总督去做其主题本就擅长的事。\n\n#weak 1.#! $admin_theme_military$总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! $admin_theme_civilian$总督受命$leo_mvd_ui_dir_3$。\n#weak 3.#! $admin_theme_frontier$总督受命$leo_mvd_ui_dir_7$。\n#weak 4.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"
+ leo_mvd_ui_preset_8: "按[GetPlayer.Custom('leo_mvd_cl_admin_term_short')]治理"
+ leo_mvd_ui_preset_8_tt: "[GetPlayer.Custom('leo_mvd_cl_preset_8_tt')]"
+ leo_mvd_ui_preset_8_tt_rtp: "让每位总督去做其[GetPlayer.Custom('leo_mvd_cl_admin_term')]本就擅长的事。\n\n#weak 1.#! $admin_theme_military$总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! $admin_theme_frontier$总督受命$leo_mvd_ui_dir_7$。\n#weak 3.#! $admin_theme_civilian$总督受命$leo_mvd_ui_dir_3$。\n#weak 4.#! $admin_theme_naval$总督受命$leo_mvd_ui_dir_8$。\n#weak 5.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"
+ leo_mvd_ui_preset_8_tt_celestial: "让每位总督去做其[GetPlayer.Custom('leo_mvd_cl_admin_term')]本就擅长的事。\n\n#weak 1.#! $celestial_province_military$与$celestial_province_protectorate$总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! $celestial_province_industrial$总督受命$leo_mvd_ui_dir_3$。\n#weak 3.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"
+ leo_mvd_ui_preset_8_tt_standard_set: "让每位总督去做其[GetPlayer.Custom('leo_mvd_cl_admin_term')]本就擅长的事。\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')]总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')]总督受命$leo_mvd_ui_dir_3$。\n#weak 3.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_5: "自定义"
  leo_mvd_ui_preset_5_tt: "你自己的规则，写在下方。\n\n#weak 在此选择自定义将从零开始。若想改从某个预设起步，只需更改其中一条规则即可。该预设便会成为你的，保持原样，并带上你的更改。#!"
 
@@ -63,9 +66,15 @@
  # Governor Theme, because it is the one picker that matches a value outright
  # instead of reading as "is at least", and Average Development, because the
  # label cannot say which counties are averaged.
- leo_mvd_ui_cond_20_tt: "精确匹配某一主题。并非[governor|E]的[vassal|E]永远不满足此条件。\n\n#weak 主题设定于总督的契约之上，故此项仅能区分[administrative|E][vassals|E]。#!"
+ leo_mvd_ui_cond_20_tt: "精确匹配某一类型。并非[governor|E]的[vassal|E]永远不满足此条件。\n\n#weak 设定于总督的契约之上，故此项仅能区分[administrative|E][vassals|E]。只会提供你自己[government|E]所用的类型。#!"
  leo_mvd_ui_cond_9_tt: "该数值是一个[duchy|E]级的基准，按每个[vassal|E]的头衔等级缩放，使单一设置在整个王国内始终有意义。更大的王国能募集更庞大的军队。\n\n以该数值为基准，一个[county|E]级封臣被要求0.4倍，[duchy|E]级为1倍，[kingdom|E]级为3倍，[empire|E]级为8倍。\n\n#weak 因此选择1000，对伯爵而言为400兵力，对公爵为1000，对国王为3000，对皇帝为8000。#!"
  leo_mvd_ui_cond_21_tt: "[vassal|E]亲自持有的[counties|E]的平均[development|E]。由于指令不会下达给封臣的封臣，[directive|E]能够实际改善的正是这些伯爵领。\n\n#weak 未持有伯爵领的封臣，例如[baron|E]，永远不满足此条件。#!"
+ leo_mvd_ui_term_theme: "[theme_administration|E]"
+ leo_mvd_ui_term_circuit: "[circuit_administration|E]"
+ leo_mvd_ui_term_province: "[province_administration|E]"
+ leo_mvd_ui_term_theme_short: "$game_concept_theme$"
+ leo_mvd_ui_term_circuit_short: "$game_concept_circuit$"
+ leo_mvd_ui_term_province_short: "$game_concept_province_administration_short$"
 
  ### Interactions
  leo_mvd_exempt_interaction: "豁免于指令自动化"

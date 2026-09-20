@@ -35,8 +35,11 @@
  leo_mvd_ui_preset_3_tt: "각 [vassal|E]의 무력에 맞춰 왕국을 무장시킵니다.\n\n[administrative|E] 봉신은 자신의 군대를 활용합니다. 강한 자는 $leo_mvd_ui_dir_4$, 약한 자는 $leo_mvd_ui_dir_5$.\n그 외에는 강한 자가 $leo_mvd_ui_dir_7$, 약한 자가 $leo_mvd_ui_dir_8$.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
  leo_mvd_ui_preset_4: "경제 성장"
  leo_mvd_ui_preset_4_tt: "무엇보다 먼저 부를 쌓습니다.\n\n미개발 봉신에게는 $leo_mvd_ui_dir_3$을(를) 지시합니다.\n자리를 잡은 봉신은 $leo_mvd_ui_dir_9$(으)로 돌아섭니다.\n\n#weak [faith|E]와(과) [culture|E]은(는) 전혀 고려하지 않습니다.#!"
- leo_mvd_ui_preset_8: "테마별 통치"
- leo_mvd_ui_preset_8_tt: "각 총독에게 해당 테마가 이미 어울리는 임무를 맡깁니다.\n\n#weak 1.#! $admin_theme_military$ 총독은 $leo_mvd_ui_dir_5$ 지시를 받습니다.\n#weak 2.#! $admin_theme_civilian$ 총독은 $leo_mvd_ui_dir_3$ 지시를 받습니다.\n#weak 3.#! $admin_theme_frontier$ 총독은 $leo_mvd_ui_dir_7$ 지시를 받습니다.\n#weak 4.#! 그 외 모든 [vassal|E]은 총독 여부와 관계없이 $leo_mvd_ui_dir_9$ 지시를 받습니다.\n\n#weak [faith|E]와 [culture|E]는 전혀 고려하지 않습니다.#!"
+ leo_mvd_ui_preset_8: "[GetPlayer.Custom('leo_mvd_cl_admin_term_short')]별 통치"
+ leo_mvd_ui_preset_8_tt: "[GetPlayer.Custom('leo_mvd_cl_preset_8_tt')]"
+ leo_mvd_ui_preset_8_tt_rtp: "각 총독에게 해당 [GetPlayer.Custom('leo_mvd_cl_admin_term')]이(가) 이미 어울리는 임무를 맡깁니다.\n\n#weak 1.#! $admin_theme_military$ 총독은 $leo_mvd_ui_dir_5$ 지시를 받습니다.\n#weak 2.#! $admin_theme_frontier$ 총독은 $leo_mvd_ui_dir_7$ 지시를 받습니다.\n#weak 3.#! $admin_theme_civilian$ 총독은 $leo_mvd_ui_dir_3$ 지시를 받습니다.\n#weak 4.#! $admin_theme_naval$ 총독은 $leo_mvd_ui_dir_8$ 지시를 받습니다.\n#weak 5.#! 그 외 모든 [vassal|E]은 총독 여부와 관계없이 $leo_mvd_ui_dir_9$ 지시를 받습니다.\n\n#weak [faith|E]와 [culture|E]는 전혀 고려하지 않습니다.#!"
+ leo_mvd_ui_preset_8_tt_celestial: "각 총독에게 해당 [GetPlayer.Custom('leo_mvd_cl_admin_term')]이(가) 이미 어울리는 임무를 맡깁니다.\n\n#weak 1.#! $celestial_province_military$ 및 $celestial_province_protectorate$ 총독은 $leo_mvd_ui_dir_5$ 지시를 받습니다.\n#weak 2.#! $celestial_province_industrial$ 총독은 $leo_mvd_ui_dir_3$ 지시를 받습니다.\n#weak 3.#! 그 외 모든 [vassal|E]은 총독 여부와 관계없이 $leo_mvd_ui_dir_9$ 지시를 받습니다.\n\n#weak [faith|E]와 [culture|E]는 전혀 고려하지 않습니다.#!"
+ leo_mvd_ui_preset_8_tt_standard_set: "각 총독에게 해당 [GetPlayer.Custom('leo_mvd_cl_admin_term')]이(가) 이미 어울리는 임무를 맡깁니다.\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')] 총독은 $leo_mvd_ui_dir_5$ 지시를 받습니다.\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')] 총독은 $leo_mvd_ui_dir_3$ 지시를 받습니다.\n#weak 3.#! 그 외 모든 [vassal|E]은 총독 여부와 관계없이 $leo_mvd_ui_dir_9$ 지시를 받습니다.\n\n#weak [faith|E]와 [culture|E]는 전혀 고려하지 않습니다.#!"
  leo_mvd_ui_preset_5: "커스텀"
  leo_mvd_ui_preset_5_tt: "아래에 작성한 당신만의 규칙입니다.\n\n#weak 여기서 커스텀을 선택하면 아무것도 없는 상태에서 시작합니다. 대신 프리셋에서 시작하려면 그 규칙 중 하나를 바꾸기만 하면 됩니다. 그러면 프리셋은 원래 모습 그대로, 당신의 변경 사항이 더해진 당신의 것이 됩니다.#!"
 
@@ -63,9 +66,15 @@
  # Governor Theme, because it is the one picker that matches a value outright
  # instead of reading as "is at least", and Average Development, because the
  # label cannot say which counties are averaged.
- leo_mvd_ui_cond_20_tt: "하나의 테마와 정확히 일치합니다. [governor|E]이(가) 아닌 [vassal|E]은(는) 이 조건을 결코 충족하지 못합니다.\n\n#weak 테마는 총독의 계약에 설정되므로, 이 조건은 [administrative|E] [vassals|E]만 분류합니다.#!"
+ leo_mvd_ui_cond_20_tt: "하나의 유형과 정확히 일치합니다. [governor|E]이(가) 아닌 [vassal|E]은(는) 이 조건을 결코 충족하지 못합니다.\n\n#weak 총독의 계약에 설정되므로, 이 조건은 [administrative|E] [vassals|E]만 분류합니다. 본인의 [government|E]이(가) 사용하는 유형만 제시됩니다.#!"
  leo_mvd_ui_cond_9_tt: "이 수치는 [duchy|E] 등급을 기준으로 한 척도로, 각 [vassal|E]의 등급에 맞춰 조정되어 하나의 설정이 왕국 전역에서 의미를 유지하도록 합니다. 큰 왕국일수록 더 큰 군대를 일으킵니다.\n\n이 수치에 대해 [county|E] 등급 봉신에게는 0.4배, [duchy|E] 등급에게는 1배, [kingdom|E] 등급에게는 3배, [empire|E] 등급에게는 8배를 요구합니다.\n\n#weak 따라서 1000을 선택하면 백작에게는 400명, 공작에게는 1000명, 왕에게는 3000명, 황제에게는 8000명의 병력이 됩니다.#!"
  leo_mvd_ui_cond_21_tt: "[vassal|E]이(가) 직접 보유한 [counties|E]의 평균 [development|E]입니다. 지침은 봉신의 봉신에게 전달되지 않으므로, [directive|E]이(가) 실제로 개선할 수 있는 백작령은 바로 이들입니다.\n\n#weak 백작령을 보유하지 않은 봉신, 예를 들어 [baron|E]은(는) 이 조건을 결코 충족하지 못합니다.#!"
+ leo_mvd_ui_term_theme: "[theme_administration|E]"
+ leo_mvd_ui_term_circuit: "[circuit_administration|E]"
+ leo_mvd_ui_term_province: "[province_administration|E]"
+ leo_mvd_ui_term_theme_short: "$game_concept_theme$"
+ leo_mvd_ui_term_circuit_short: "$game_concept_circuit$"
+ leo_mvd_ui_term_province_short: "$game_concept_province_administration_short$"
 
  ### Interactions
  leo_mvd_exempt_interaction: "지침 자동화에서 제외"

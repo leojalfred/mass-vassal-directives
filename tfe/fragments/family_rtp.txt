@@ -1,0 +1,3 @@
+		# TFE's plain Roman government uses the admin_vassal contract group, so
+		# its governors carry the same six themes a Byzantine realm's do.
+		has_government = roman_government
