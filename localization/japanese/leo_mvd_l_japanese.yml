@@ -35,8 +35,12 @@
  leo_mvd_ui_preset_3_tt: "王国を武装させ、各[vassal|E]をその強さに応じて働かせます。\n\n[administrative|E]の臣下は自らの軍を活かします。強い者は $leo_mvd_ui_dir_4$、弱い者は $leo_mvd_ui_dir_5$。\nそれ以外は、強い者が $leo_mvd_ui_dir_7$、弱い者が $leo_mvd_ui_dir_8$。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
  leo_mvd_ui_preset_4: "経済の成長"
  leo_mvd_ui_preset_4_tt: "何よりもまず富を築きます。\n\n未発展の臣下には $leo_mvd_ui_dir_3$ を命じます。\n発展した臣下は $leo_mvd_ui_dir_9$ に転じます。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
- leo_mvd_ui_preset_8: "テーマ別統治"
- leo_mvd_ui_preset_8_tt: "各総督に、そのテーマが元より適した務めを与える。\n\n#weak 1.#! $admin_theme_military$の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! $admin_theme_civilian$の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 3.#! $admin_theme_frontier$の総督は$leo_mvd_ui_dir_7$を命じられる。\n#weak 4.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
+ leo_mvd_ui_preset_8: "[GetPlayer.Custom('leo_mvd_cl_admin_term_short')]別統治"
+ leo_mvd_ui_preset_8_tt: "[GetPlayer.Custom('leo_mvd_cl_preset_8_tt')]"
+ leo_mvd_ui_preset_8_tt_rtp: "各総督に、その[GetPlayer.Custom('leo_mvd_cl_admin_term')]が元より適した務めを与える。\n\n#weak 1.#! $admin_theme_military$の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! $admin_theme_frontier$の総督は$leo_mvd_ui_dir_7$を命じられる。\n#weak 3.#! $admin_theme_civilian$の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 4.#! $admin_theme_naval$の総督は$leo_mvd_ui_dir_8$を命じられる。\n#weak 5.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
+ leo_mvd_ui_preset_8_tt_celestial: "各総督に、その[GetPlayer.Custom('leo_mvd_cl_admin_term')]が元より適した務めを与える。\n\n#weak 1.#! $celestial_province_military$と$celestial_province_protectorate$の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! $celestial_province_industrial$の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 3.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
+ leo_mvd_ui_preset_8_tt_standard_set: "各総督に、その[GetPlayer.Custom('leo_mvd_cl_admin_term')]が元より適した務めを与える。\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')]の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')]の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 3.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
+ leo_mvd_ui_preset_8_tt_ritsuryo: "各総督に、その[GetPlayer.Custom('leo_mvd_cl_admin_term')]が元より適した務めを与える。\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')]の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')]の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 3.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak $leo_mvd_ui_dir_3$は[duchy|E]位以上の[vassal|E]にしか与えられず、$japan_administrative_government$の総督は通常[county|E]を一つ持つのみであるため、多くは$leo_mvd_ui_dir_9$に流れる。#!\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
  leo_mvd_ui_preset_5: "カスタム"
  leo_mvd_ui_preset_5_tt: "以下に書く、あなた自身のルール。\n\n#weak ここでカスタムを選ぶと何もない状態から始まります。代わりにプリセットから始めるには、そのルールの一つを変更するだけです。プリセットは元のまま、あなたの変更を加えてあなたのものになります。#!"
 
@@ -63,9 +67,15 @@
  # Governor Theme, because it is the one picker that matches a value outright
  # instead of reading as "is at least", and Average Development, because the
  # label cannot say which counties are averaged.
- leo_mvd_ui_cond_20_tt: "ひとつのテーマと正確に一致する。[governor|E]でない[vassal|E]はこの条件を決して満たさない。\n\n#weak テーマは総督の契約に設定されるため、これは[administrative|E]な[vassals|E]しか分類しない。#!"
+ leo_mvd_ui_cond_20_tt: "ひとつの種類と正確に一致する。[governor|E]でない[vassal|E]はこの条件を決して満たさない。\n\n#weak 総督の契約に設定されるため、これは[administrative|E]な[vassals|E]しか分類しない。提示されるのは自身の[government|E]が用いる種類のみ。#!"
  leo_mvd_ui_cond_9_tt: "この数値は[duchy|E]級の基準で、各[vassal|E]の位に応じて調整されるため、一つの設定が王国全体で意味を保ちます。大きな王国はより大きな軍を興します。\n\nこの数値に対し、[county|E]級の臣下は0.4倍、[duchy|E]級は1倍、[kingdom|E]級は3倍、[empire|E]級は8倍を求められます。\n\n#weak つまり1000という選択は、伯には400、公には1000、王には3000、皇帝には8000の兵となります。#!"
  leo_mvd_ui_cond_21_tt: "[vassal|E]が直接保有する[counties|E]の平均[development|E]。指令は臣下の臣下には引き継がれないため、これらが[directive|E]の実際に改善できる伯爵領である。\n\n#weak 伯爵領を保有しない臣下、たとえば[baron|E]はこの条件を決して満たさない。#!"
+ leo_mvd_ui_term_theme: "[theme_administration|E]"
+ leo_mvd_ui_term_circuit: "[circuit_administration|E]"
+ leo_mvd_ui_term_province: "[province_administration|E]"
+ leo_mvd_ui_term_theme_short: "$game_concept_theme$"
+ leo_mvd_ui_term_circuit_short: "$game_concept_circuit$"
+ leo_mvd_ui_term_province_short: "$game_concept_province_administration_short$"
 
  ### Interactions
  leo_mvd_exempt_interaction: "指令の自動割り当てから除外する"

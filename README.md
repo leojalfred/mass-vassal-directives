@@ -31,16 +31,16 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 | **Unify the Realm**     | Converts harder, at the cost of growth. Cultural acceptance grinds down what conversion cannot.     |
 | **Prepare for War**     | Arms the realm, each vassal to their strength. Ignores faith and culture.                           |
 | **Grow the Economy**    | Wealth first: the undeveloped develop, the established build. Ignores faith and culture.            |
-| **Govern by Theme**     | Each governor does what their theme suits them for; everyone else builds economy.                   |
+| **Govern by Theme**     | Each governor does what their administration type suits them for; everyone else builds economy.     |
 | **Custom**              | Your own rules, up to six priorities plus three for nomads.                                         |
 
 **A preset is a starting point, not a take-it-or-leave-it.** Change any of its rules and the whole thing becomes yours, exactly as it was, plus your change. Suiting one to your realm costs a click rather than a rebuild. Picking Custom outright starts you from nothing instead. Your own rules are kept aside while a preset is loaded, so trying one never costs you your waterfall.
 
 ### Conditions
 
-Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Same House as You · Administrative Government · Governor Theme · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Average Development · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You
+Faith is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Same House as You · Administrative Government · Administration Type · Is a Powerful Vassal · Is on Your Council · Military Strength · Title Tier · Average Development · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You
 
-Every measured condition reads the same way (**"is at least"**), so the true branch is always the high side. Two are worth knowing about. Military Strength's number is the **duchy baseline**, and it scales by title tier so it stays meaningful at every realm size (counts ×0.4, dukes ×1, kings ×3, emperors ×8; tunable in `common/script_values/leo_mvd_values.txt`). Governor Theme is the one exception to "is at least": it matches a single theme outright, so a rule asking for Military Administration is answered no by every other theme, and by every vassal who is not a governor. Administrative Government appears with _Roads to Power_ or _All Under Heaven_, and Governor Theme only with _Roads to Power_, whose themes it reads.
+Every measured condition reads the same way (**"is at least"**), so the true branch is always the high side. Two are worth knowing about. Military Strength's number is the **duchy baseline**, and it scales by title tier so it stays meaningful at every realm size (counts ×0.4, dukes ×1, kings ×3, emperors ×8; tunable in `common/script_values/leo_mvd_values.txt`). Administration Type is the one exception to "is at least": it matches a single type outright, so a rule asking for Military Administration is answered no by every other type, and by every vassal who is not a governor. It speaks your own government's language, because every administrative government has its own set of types under its own names: a Byzantine emperor picks from the six themes, a Celestial one from the five circuit administrations, and a meritocratic, steppe administrative or Ritsuryo realm from its own three. Only the ones your realm can actually have are offered. Administration Type and Administrative Government both appear with _Roads to Power_ or _All Under Heaven_.
 
 ## Using the mod
 
@@ -58,18 +58,19 @@ Settings are stored per playthrough and carry over to your heir on succession.
 
 ## Compatibility
 
-- **DLC**: none required, all supported. Either _Roads to Power_ or _All Under Heaven_ adds the administrative directives (Improve Development, Train Commanders, Build Men-at-Arms) and the Administrative Government condition, since both bring governments the game counts as administrative: Byzantium's from the first, and China's, Korea's, the steppe's and Japan's from the second. Governor Theme needs _Roads to Power_ in particular, the only expansion with governor themes. _Khans of the Steppe_ adds nomad vassals and their four directives. Without a given DLC the panel hides what it would enable and the built-in presets adapt their plans, so nothing ever points at an option your game cannot use.
+- **DLC**: none required, all supported. Either _Roads to Power_ or _All Under Heaven_ adds the administrative directives (Improve Development, Train Commanders, Build Men-at-Arms) and the Administrative Government condition, since both bring governments the game counts as administrative: Byzantium's from the first, and China's, Korea's, the steppe's and Japan's from the second. Either expansion also brings the Administration Type condition and the Govern by Theme preset, each speaking the language of whichever administrative government you play. _Khans of the Steppe_ adds nomad vassals and their four directives. Without a given DLC the panel hides what it would enable and the built-in presets adapt their plans, so nothing ever points at an option your game cannot use.
 - **Achievements**: not affected. Since CK3 1.9, mods do not disable achievements.
 - **Existing saves**: safe to add mid-run (automation bootstraps within a game-year, or immediately from the panel) and safe to remove (mod-assigned directives are ordinary vanilla directives; leftover mod variables are inert).
 - **Multiplayer**: settings and automation are per-player; every button routes through a synchronized scripted GUI.
 - **Other mods**: the mod replaces no vanilla file. Its one point of contact with vanilla is a by-name override of two customizable-localization functions (`vassal_directive_icon` and `vassal_directive_text`) that draw the vassal-directive display, so an exempt vassal's icon can be dimmed. It conflicts only with another mod that redefines those exact two functions (resolved by load order), not with any mod that merely touches the same vanilla file. The panel is added as a standalone widget and overrides no vanilla GUI file.
 - **A Game of Thrones**: a separate build of this mod, adapted for the _A Game of Thrones_ total conversion, is published on its own. It swaps in AGOT's Settle Wilderness directive, adds Westeros conditions (Is Ironborn, or follows the Faith of the Seven, the Old Gods, or R'hllor), retunes the Military Strength thresholds for AGOT's larger armies, and drops the nomad section AGOT does not use. Play that version alongside AGOT instead of this one, and load it after AGOT in your playset so an exempt vassal's directive icon still dims (both mods redefine the directive-display text functions, so whichever loads last wins; load it before AGOT and everything works except the dimming).
+- **The Fallen Eagle**: a separate build, published on its own, for _The Fallen Eagle_ total conversion. TFE replaces the Realm window and its Subjects tab has no directives button, so that build brings its own: a small button in the Subjects tab that opens the same panel and answers the same keybind. It also recognizes TFE's Roman Imperial administration types (Civilian, Military and the Exarchate). Play that version alongside TFE instead of this one, and load it after TFE in your playset.
 - **Herders**: vanilla gives herders no directives at all, so neither does the mod.
 - **Languages**: available in every language Crusader Kings III officially supports (English, French, German, Spanish, Russian, Korean, Simplified Chinese, Japanese, and Polish). Only the English is written by hand; the rest are machine-generated and may read a little stiffly. Corrections and hand-written translations are very welcome.
 
 ## Updating after game patches
 
-Three steps after each CK3 (or A Game of Thrones) patch, in order. The first is automatic; the other two catch what a name check cannot.
+Three steps after each CK3 (or A Game of Thrones, or The Fallen Eagle) patch, in order. The first is automatic; the other two catch what a name check cannot.
 
 ### 1. Check the names
 
@@ -77,7 +78,7 @@ Three steps after each CK3 (or A Game of Thrones) patch, in order. The first is 
 bash tools/check_compat_static.sh
 ```
 
-This asserts every vanilla and AGOT name the mod relies on still exists in the installed game files (set `GAME_DIR` / `AGOT_DIR` if your install is elsewhere). A FAIL is something the patch renamed or removed; fix it before shipping. It checks names only: a name that still exists but changed meaning passes here, which is what steps 2 and 3 are for.
+This asserts every vanilla, AGOT and TFE name the mod relies on still exists in the installed files (set `GAME_DIR` / `AGOT_DIR` / `TFE_DIR` if an install is elsewhere). A FAIL is something the patch renamed or removed; fix it before shipping. It checks names only: a name that still exists but changed meaning passes here, which is what steps 2 and 3 are for.
 
 ### 2. Re-diff the vanilla mirrors
 
@@ -98,11 +99,11 @@ The smallest set of in-game steps that catches everything the static check and r
 - **Exempt** a vassal (right-click their portrait). Its directive icon dims.
 - `logs/error.log` has no `leo_mvd` lines.
 
-Without _Roads to Power_ or _All Under Heaven_, confirm instead that the administrative conditions and directives are absent. With _All Under Heaven_ but not _Roads to Power_, confirm the opposite: the administrative directives and the Administrative Government condition are all present, and only Governor Theme is missing. For AGOT, load `dist/agot` after the A Game of Thrones mod and repeat: the Westeros conditions appear, Settle the Wilderness assigns, and the dimmed exempt icon works (it depends on loading last).
+Without _Roads to Power_ or _All Under Heaven_, confirm instead that the administrative conditions and directives are absent. With _All Under Heaven_ but not _Roads to Power_, confirm the opposite: the administrative directives, the Administrative Government condition and Administration Type are all present, the last offering that government's own types. For AGOT, load `dist/agot` after the A Game of Thrones mod and repeat: the Westeros conditions appear, Settle the Wilderness assigns, and the dimmed exempt icon works (it depends on loading last). For TFE, load `dist/tfe` after The Fallen Eagle and repeat, starting with the opener: the button shows in the Subjects tab only, opens and closes the panel, and closing the Realm window closes the panel with it.
 
 ## Building
 
-The repository is **shared source, not a mod you load.** One build step produces two finished mods under `dist/`, and those are what the launcher points at and what goes to the Workshop:
+The repository is **shared source, not a mod you load.** One build step produces three finished mods under `dist/`, and those are what the launcher points at and what goes to the Workshop:
 
 - `dist/vanilla/`: the base mod, for plain Crusader Kings III.
 - `dist/agot/`: the same mod adapted for the _A Game of Thrones_ total conversion.
@@ -113,7 +114,7 @@ Build both with:
 bash tools/build.sh        # add -v to narrate each phase
 ```
 
-Both mods share one set of source files. The AGOT build layers its differences on at build time, so there is no runtime "am I running under AGOT" check anywhere. `dist/` is regenerated on every build, never hand-edited, and gitignored, so load and test from `dist/vanilla` or `dist/agot`, not from the repo root. (The generated files committed at the repo root are the vanilla output, kept current so generator changes show up as reviewable diffs.)
+All three mods share one set of source files. The total-conversion builds layer their differences on at build time, so there is no runtime "am I running under AGOT" check anywhere. `dist/` is regenerated on every build, never hand-edited, and gitignored, so load and test from `dist/vanilla`, `dist/agot` or `dist/tfe`, not from the repo root. (The generated files committed at the repo root are the vanilla output, kept current so generator changes show up as reviewable diffs.)
 
 ## File layout
 
@@ -137,9 +138,9 @@ localization/english/leo_mvd_l_english.yml               static panel text
 localization/english/leo_mvd_ui_l_english.yml            GENERATED: the editor's labels
 ```
 
-The three files marked GENERATED come out of `tools/gen_panel.sh`, so **edit that generator, not its output.** The generator is target-aware, so the AGOT panel (Settle Wilderness in, nomads out) is the same script run in AGOT mode.
+The three files marked GENERATED come out of `tools/gen_panel.sh`, so **edit that generator, not its output.** The generator is target-aware, so the AGOT panel (Settle Wilderness in, nomads out) and the TFE one (its own administration types) are the same script run in another mode.
 
-The AGOT build adds its differences from a small overlay plus the build script:
+Each total-conversion build adds its differences from a small overlay plus the build script:
 
 ```
 agot/descriptor.mod                                      the AGOT build's descriptor (declares the AGOT dependency)
@@ -148,11 +149,16 @@ agot/files/                                              AGOT-only whole files, 
                                                          Westeros presets, the military-threshold override, and the
                                                          per-language AGOT text
 agot/fragments/                                          small snippets the build injects into the shared files
+tfe/descriptor.mod                                       the TFE build's descriptor (declares the TFE dependency)
+tfe/files/                                               TFE-only whole files, copied into dist/tfe as-is: the panel's
+                                                         opener button, the Roman Imperial government trigger, and
+                                                         the per-language TFE text
+tfe/fragments/                                           the same kind of snippets, for TFE
 tools/gen_panel.sh                                       generates the three files above, per target
-tools/build.sh                                           builds dist/vanilla and dist/agot from all of the above
+tools/build.sh                                           builds dist/vanilla, dist/agot and dist/tfe from all of the above
 ```
 
-The AGOT build differs from the base in exactly three places: `TARGET=agot` branches in the generator, the fragments injected at the `# @AGOT:...@` markers the shared files carry (the vanilla build just strips those markers), and the whole files under `agot/files/`. None of it changes directive eligibility: it only surfaces content AGOT itself allows.
+A total-conversion build differs from the base in exactly three places: `TARGET=` branches in the generator, the fragments injected at the `# @AGOT:...@` and `# @TFE:...@` markers the shared files carry (every build strips the markers that are not its own), and the whole files under `agot/files/` or `tfe/files/`. None of it changes directive eligibility: it only surfaces content that conversion itself allows.
 
 ### Implementation notes
 

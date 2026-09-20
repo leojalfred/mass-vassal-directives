@@ -1,0 +1,8 @@
+	# TFE names the whole mechanic on the contract screen: "Imperial
+	# Administration Type". Its own word, so its own key.
+	text = {
+		trigger = {
+			leo_mvd_admin_family_roman_imperial_trigger = yes
+		}
+		localization_key = leo_mvd_ui_term_imperial
+	}

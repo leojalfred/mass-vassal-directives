@@ -1,0 +1,4 @@
+l_japanese:
+ leo_mvd_ui_type_exarchate: "@frontier_administration! 総督領"
+ leo_mvd_ui_term_imperial: "帝国行政の種類"
+ leo_mvd_ui_preset_8_tt_roman: "各総督に、その[GetPlayer.Custom('leo_mvd_cl_admin_term')]が元より適した務めを与える。\n\n#weak 1.#! $admin_theme_military$の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! $leo_mvd_ui_type_exarchate$の総督は$leo_mvd_ui_dir_7$を命じられる。\n#weak 3.#! $admin_theme_civilian$の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 4.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"

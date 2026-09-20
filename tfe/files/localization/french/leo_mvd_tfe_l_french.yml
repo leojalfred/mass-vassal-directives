@@ -1,0 +1,4 @@
+l_french:
+ leo_mvd_ui_type_exarchate: "@frontier_administration! Exarchat"
+ leo_mvd_ui_term_imperial: "Type d'administration impériale"
+ leo_mvd_ui_preset_8_tt_roman: "Affecter chaque gouverneur à ce que son [GetPlayer.Custom('leo_mvd_cl_admin_term')] lui permet déjà de faire.\n\n#weak 1.#! Les gouverneurs $admin_theme_military$ reçoivent l'ordre de $leo_mvd_ui_dir_5$.\n#weak 2.#! Les gouverneurs $leo_mvd_ui_type_exarchate$ reçoivent l'ordre de $leo_mvd_ui_dir_7$.\n#weak 3.#! Les gouverneurs $admin_theme_civilian$ reçoivent l'ordre de $leo_mvd_ui_dir_3$.\n#weak 4.#! Tout autre [vassal|E], gouverneur ou non, reçoit l'ordre de $leo_mvd_ui_dir_9$.\n\n#weak Ignore entièrement la [faith|E] et la [culture|E].#!"

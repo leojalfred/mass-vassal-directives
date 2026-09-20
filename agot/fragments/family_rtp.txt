@@ -1,0 +1,5 @@
+		# A Game of Thrones' own administrative government, held by Norvos,
+		# Lorath and Ghoyan Drohe. It uses the admin_vassal contract group, so its
+		# governors carry the same six administration types a vanilla
+		# administrative realm's do.
+		has_government = norvos_government

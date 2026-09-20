@@ -648,32 +648,83 @@ leo_mvd_preset_4_effect = {
 }
 
 # Current scope: the player.
-# Let each governor do what their theme already makes them good at, and give
-# everyone else the safe default.
+# Let each governor do what their administration type already makes them good
+# at, and give everyone else the safe default.
+#
+# Every administrative government sets an administration type on its governors,
+# but each has its own set of them, so this loads the rules that fit the
+# player's own government. No fallback branch, unlike presets 1/3/4: a player
+# whose government has no administration types would get every rule here
+# collapsing to "everyone builds economy", which Grow the Economy already is.
+# The panel hides this preset outright instead (preset_dlc_vis in the
+# generator), so this only ever runs where there are types to sort by.
+#
+# Each type's directive follows what the type itself does, and matches vanilla's
+# own weighting where vanilla has one (give_vassal_directive_interaction's
+# ai_will_do for the themes; the men-at-arms budget in 00_ai_values.txt for the
+# celestial and meritocratic types):
+#
+#   Military and Protectorate  raise troops (they carry the levy and damage
+#                              bonuses, and vanilla spends their income on
+#                              men-at-arms)
+#   Civilian and Industrial    grow their land (development and tax bonuses)
+#   Frontier                   fortifies (it borders another realm and may raid)
+#   Naval                      builds military, which is where its ports are
+#   everyone else              builds economy, from the last priority
+#
+# Balanced, Standard, Imperial and Metropolitan governors have no directive of
+# their own: the first three carry no bonus worth steering, and the last two are
+# tax provinces, which is what the economy default already serves. They fall
+# through, as does every vassal who is not a governor at all.
 leo_mvd_preset_8_effect = {
 	leo_mvd_clear_rules_effect = yes
 
-	# No fallback branch, unlike presets 1/3/4: themes are Roads to Power alone
-	# (All Under Heaven's administrative governments carry province flags of
-	# their own, not admin_theme_*), and without them every rule here would
-	# collapse to "everyone builds economy", which Grow the Economy already is.
-	# The panel hides this preset outright instead (preset_dlc_vis in the
-	# generator), so this only ever runs where themes exist.
-	set_variable = { name = leo_mvd_rule_count value = 4 }
-	# Each theme gets the directive its own bonuses point at: military governors
-	# raise troops, civilian ones grow their land, frontier ones fortify.
-	# Balanced, imperial and naval governors, and every vassal who is not a
-	# governor at all, fall through to the last priority.
-	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 20 THRESH = 3 }
-	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 5 }
-	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 20 THRESH = 2 }
-	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 3 }
-	leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 20 THRESH = 4 }
-	leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 7 }
-	leo_mvd_set_node_dir_effect = { NODE = r4_n1 DIR = 9 }
+	if = {
+		limit = { leo_mvd_admin_family_celestial_trigger = yes }
+		set_variable = { name = leo_mvd_rule_count value = 3 }
+		# Both military types raise troops, so one priority asks about both.
+		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 20 THRESH = 3 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 5 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 20 THRESH = 10 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 5 }
+		leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 20 THRESH = 8 }
+		leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 3 }
+		leo_mvd_set_node_dir_effect = { NODE = r3_n1 DIR = 9 }
+	}
+	else_if = {
+		# Meritocratic, steppe administrative and Ritsuryo: three types each, so
+		# both rules fit in one priority.
+		limit = {
+			OR = {
+				leo_mvd_admin_family_meritocratic_trigger = yes
+				leo_mvd_admin_family_ritsuryo_trigger = yes
+			}
+		}
+		set_variable = { name = leo_mvd_rule_count value = 2 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 20 THRESH = 3 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 5 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 20 THRESH = 8 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 3 }
+		leo_mvd_set_node_dir_effect = { NODE = r2_n1 DIR = 9 }
+	}
+	# @TFE:preset_8@
+	else = {
+		# The six Roads to Power themes, which is also what this preset started
+		# as. Four of them are steered, in two priorities.
+		set_variable = { name = leo_mvd_rule_count value = 3 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 20 THRESH = 3 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 5 }
+		leo_mvd_set_node_cond_effect = { NODE = r1_n3 COND = 20 THRESH = 4 }
+		leo_mvd_set_node_dir_effect = { NODE = r1_n6 DIR = 7 }
+		leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 20 THRESH = 2 }
+		leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 3 }
+		leo_mvd_set_node_cond_effect = { NODE = r2_n3 COND = 20 THRESH = 6 }
+		leo_mvd_set_node_dir_effect = { NODE = r2_n6 DIR = 8 }
+		leo_mvd_set_node_dir_effect = { NODE = r3_n1 DIR = 9 }
+	}
 
 	# Nomads: grow what they hold. No nomad is administrative, so there is no
-	# theme to sort them by.
+	# administration type to sort them by.
 	set_variable = { name = leo_mvd_qrule_count value = 1 }
 	leo_mvd_set_node_dir_effect = { NODE = q1_n1 DIR = 10 }
 

@@ -1,0 +1,4 @@
+l_spanish:
+ leo_mvd_ui_type_exarchate: "@frontier_administration! Exarcado"
+ leo_mvd_ui_term_imperial: "Tipo de administración imperial"
+ leo_mvd_ui_preset_8_tt_roman: "Asignar a cada gobernador aquello para lo que su [GetPlayer.Custom('leo_mvd_cl_admin_term')] ya lo hace apto.\n\n#weak 1.#! Los gobernadores $admin_theme_military$ reciben la orden de $leo_mvd_ui_dir_5$.\n#weak 2.#! Los gobernadores $leo_mvd_ui_type_exarchate$ reciben la orden de $leo_mvd_ui_dir_7$.\n#weak 3.#! Los gobernadores $admin_theme_civilian$ reciben la orden de $leo_mvd_ui_dir_3$.\n#weak 4.#! Todo otro [vassal|E], sea gobernador o no, recibe la orden de $leo_mvd_ui_dir_9$.\n\n#weak Ignora por completo la [faith|E] y la [culture|E].#!"

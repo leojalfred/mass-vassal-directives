@@ -1,0 +1,4 @@
+	else_if = {
+		limit = { leo_mvd_admin_family_roman_imperial_trigger = yes }
+		set_variable = { name = leo_mvd_admin_family value = 5 }
+	}

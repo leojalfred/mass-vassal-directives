@@ -1,0 +1,12 @@
+l_english:
+ ### Leo VI's Mass Vassal Directives - The Fallen Eagle overlay
+ # Shipped only with the TFE build. The Fallen Eagle's Roman Imperial government
+ # has administration types of its own, and names the mechanic its own way.
+ #
+ # TFE ships English only, so these are written here rather than pointing at
+ # TFE's keys: a French or Korean game would show a raw key otherwise. The icon
+ # is the game's frontier one, which is what TFE draws the Exarchate with.
+ leo_mvd_ui_type_exarchate: "@frontier_administration! Exarchate"
+ # What TFE's own contract screen calls the mechanic.
+ leo_mvd_ui_term_imperial: "Imperial Administration Type"
+ leo_mvd_ui_preset_8_tt_roman: "Set each [governor|E] to what their [GetPlayer.Custom('leo_mvd_cl_admin_term')] already suits them for.\n\n#weak 1.#! $admin_theme_military$ governors are told to $leo_mvd_ui_dir_5$.\n#weak 2.#! $leo_mvd_ui_type_exarchate$ governors are told to $leo_mvd_ui_dir_7$.\n#weak 3.#! $admin_theme_civilian$ governors are told to $leo_mvd_ui_dir_3$.\n#weak 4.#! Every other [vassal|E], governor or not, is told to $leo_mvd_ui_dir_9$.\n\n#weak Ignores [faith|E] and [culture|E] entirely.#!"

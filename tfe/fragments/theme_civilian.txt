@@ -1,0 +1,5 @@
+				# TFE's Roman Imperial civilian assignment is the same type under
+				# another flag: civil administration, high taxes, a stewardship
+				# and construction bonus. It is named and iconned as Civilian by
+				# TFE too, so it belongs to this value rather than its own.
+				vassal_contract_has_flag = roman_imperial_civilian_assignment

@@ -8,6 +8,8 @@
 
 leo_mvd_options_ack_trigger = {
 	always = no
+	# Read by the panel alone: it hides the Govern by Administration preset.
+	var:leo_mvd_admin_family = 0
 	is_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_1 }
 	var:leo_mvd_x_cond_1 = 1
 	is_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_2 }
@@ -82,6 +84,12 @@ leo_mvd_options_ack_trigger = {
 	var:leo_mvd_x_thresh_5 = 5
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_6 }
 	var:leo_mvd_x_thresh_6 = 6
+	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_7 }
+	var:leo_mvd_x_thresh_7 = 7
+	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_8 }
+	var:leo_mvd_x_thresh_8 = 8
+	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_9 }
+	var:leo_mvd_x_thresh_9 = 9
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_10 }
 	var:leo_mvd_x_thresh_10 = 10
 	is_target_in_variable_list = { name = leo_mvd_t_9 target = flag:thresh_20 }

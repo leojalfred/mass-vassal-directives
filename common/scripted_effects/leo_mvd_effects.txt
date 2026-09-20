@@ -141,6 +141,39 @@ leo_mvd_remove_all_effect = {
 	remove_variable = leo_mvd_auto
 }
 
+# Current scope: the player. Which set of administration types this realm uses:
+# 0 none, 1 Roads to Power's themes, 2 celestial, 3 meritocratic (and steppe
+# administrative), 4 Ritsuryo.
+#
+# The player's own government decides it, because in an administrative realm the
+# governors share it. Everything else that has to know - the option list, the
+# preset, the labels - reads the family from here or asks the same triggers, so
+# the panel can never offer a type under one government's name and match it
+# under another's.
+#
+# The panel needs this as a number because a GUI binding cannot call a trigger:
+# the Govern by Administration preset is hidden while this reads 0.
+leo_mvd_set_admin_family_effect = {
+	set_variable = { name = leo_mvd_admin_family value = 0 }
+	if = {
+		limit = { leo_mvd_admin_family_rtp_trigger = yes }
+		set_variable = { name = leo_mvd_admin_family value = 1 }
+	}
+	else_if = {
+		limit = { leo_mvd_admin_family_celestial_trigger = yes }
+		set_variable = { name = leo_mvd_admin_family value = 2 }
+	}
+	else_if = {
+		limit = { leo_mvd_admin_family_meritocratic_trigger = yes }
+		set_variable = { name = leo_mvd_admin_family value = 3 }
+	}
+	else_if = {
+		limit = { leo_mvd_admin_family_ritsuryo_trigger = yes }
+		set_variable = { name = leo_mvd_admin_family value = 4 }
+	}
+	# @TFE:family_value@
+}
+
 # Current scope: the player. Idempotent config defaults.
 #
 # The default is deliberately no rules and no preset selected: the mod must

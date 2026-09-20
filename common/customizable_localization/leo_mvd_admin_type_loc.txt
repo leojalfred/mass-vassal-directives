@@ -1,0 +1,181 @@
+﻿# Leo VI's Mass Vassal Directives. Administration-type wording.
+#
+# Every administrative government gives its governors an administration type,
+# and each one names the mechanic and its types differently. These pick the
+# player's own government's words, so the panel says what the rest of that
+# player's game says: a Byzantine liege reads about themes, a celestial one
+# about circuits, and the types carry their own government's names and icons.
+#
+# Reached from localization as [GetPlayer.Custom('...')], which is how vanilla
+# does the same thing (GetProvinceConcept, GetGovernorConcept in
+# 07_ep3_custom_loc.txt). The keys named here are the game's own, so every
+# language gets them translated without this mod translating anything.
+#
+# A fallback entry is required and must be last: its trigger never passes, and
+# the engine uses it when nothing else matched.
+
+# The mechanic, as a concept link. Mirrors vanilla's GetProvinceConcept
+# (07_ep3_custom_loc.txt:1333): the word follows the top liege's heritage first
+# and their government second, so a player never meets a term their own game
+# does not use elsewhere.
+leo_mvd_cl_admin_term = {
+	type = character
+
+	text = {
+		trigger = {
+			top_liege.culture ?= { has_cultural_pillar = heritage_byzantine }
+		}
+		localization_key = leo_mvd_ui_term_theme
+	}
+
+	text = {
+		trigger = {
+			leo_mvd_admin_family_celestial_trigger = yes
+		}
+		localization_key = leo_mvd_ui_term_circuit
+	}
+
+	# @TFE:term@
+
+	text = {
+		trigger = { always = no }
+		fallback = yes
+		localization_key = leo_mvd_ui_term_province
+	}
+}
+
+# The same word bare, for a label with no room for a concept link.
+leo_mvd_cl_admin_term_short = {
+	type = character
+
+	text = {
+		trigger = {
+			top_liege.culture ?= { has_cultural_pillar = heritage_byzantine }
+		}
+		localization_key = leo_mvd_ui_term_theme_short
+	}
+
+	text = {
+		trigger = {
+			leo_mvd_admin_family_celestial_trigger = yes
+		}
+		localization_key = leo_mvd_ui_term_circuit_short
+	}
+
+	text = {
+		trigger = { always = no }
+		fallback = yes
+		localization_key = leo_mvd_ui_term_province_short
+	}
+}
+
+### The types a player can be offered, under their own government's name.
+#
+# Only the shared names need one of these. A type only one government has
+# (Balanced, Frontier, Imperial, Naval, Metropolitan, Protectorate) is named
+# outright in the option's own localization.
+
+# Military exists in every administrative government.
+leo_mvd_cl_type_military = {
+	type = character
+
+	text = {
+		trigger = { leo_mvd_admin_family_celestial_trigger = yes }
+		localization_key = celestial_province_military
+	}
+
+	text = {
+		trigger = { leo_mvd_admin_family_meritocratic_trigger = yes }
+		localization_key = meritocratic_province_military
+	}
+
+	text = {
+		trigger = { leo_mvd_admin_family_ritsuryo_trigger = yes }
+		localization_key = japan_administrative_province_military
+	}
+
+	text = {
+		trigger = { always = no }
+		fallback = yes
+		localization_key = admin_theme_military
+	}
+}
+
+# Standard is the default of all three All Under Heaven sets. No Roads to Power
+# realm is ever offered it, so the fallback is celestial rather than a theme.
+leo_mvd_cl_type_standard = {
+	type = character
+
+	text = {
+		trigger = { leo_mvd_admin_family_meritocratic_trigger = yes }
+		localization_key = meritocratic_province_standard
+	}
+
+	text = {
+		trigger = { leo_mvd_admin_family_ritsuryo_trigger = yes }
+		localization_key = japan_administrative_province_standard
+	}
+
+	text = {
+		trigger = { always = no }
+		fallback = yes
+		localization_key = celestial_province_standard
+	}
+}
+
+# Industrial, the same. Ritsuryo names its flag for trade and the type itself
+# for industry, which is why its key looks unlike the other two.
+leo_mvd_cl_type_industrial = {
+	type = character
+
+	text = {
+		trigger = { leo_mvd_admin_family_meritocratic_trigger = yes }
+		localization_key = meritocratic_province_industrial
+	}
+
+	text = {
+		trigger = { leo_mvd_admin_family_ritsuryo_trigger = yes }
+		localization_key = japan_administrative_province_trade
+	}
+
+	text = {
+		trigger = { always = no }
+		fallback = yes
+		localization_key = celestial_province_industrial
+	}
+}
+
+# The preset's tooltip, which has to list that government's own types and what
+# each one is told to do.
+leo_mvd_cl_preset_8_tt = {
+	type = character
+
+	text = {
+		trigger = { leo_mvd_admin_family_celestial_trigger = yes }
+		localization_key = leo_mvd_ui_preset_8_tt_celestial
+	}
+
+	# Ritsuryo reads the same as the other two, plus a caveat they do not need:
+	# its governors hold a single county by design (main_administrative_tier =
+	# county, where every other administrative government says duchy), and
+	# vanilla offers Improve Development only from duchy tier. So most Ritsuryo
+	# industrial governors fall through to the economy default, and the tooltip
+	# says so rather than promising a directive the game will refuse.
+	text = {
+		trigger = { leo_mvd_admin_family_ritsuryo_trigger = yes }
+		localization_key = leo_mvd_ui_preset_8_tt_ritsuryo
+	}
+
+	text = {
+		trigger = { leo_mvd_admin_family_meritocratic_trigger = yes }
+		localization_key = leo_mvd_ui_preset_8_tt_standard_set
+	}
+
+	# @TFE:preset_8_tt@
+
+	text = {
+		trigger = { always = no }
+		fallback = yes
+		localization_key = leo_mvd_ui_preset_8_tt_rtp
+	}
+}
