@@ -125,10 +125,10 @@ All three mods share one set of source files. The total-conversion builds layer 
 
 Steam updates a subscribed mod whatever version the game is on, so a player who rolls Crusader Kings III back still gets the newest mod. Every version of each mod is therefore also published on the [GitHub releases page](https://github.com/leojalfred/mass-vassal-directives/releases) as a zip that installs as a local mod. Each release's title names the game version it is for and, for the total-conversion builds, the version of that conversion it was tested with. Its notes say how to install it.
 
-Releases are cut by tag, one per mod, since the three are versioned separately: `vanilla-vX.Y.Z`, `agot-vX.Y.Z`, `tfe-vX.Y.Z`. Pushing a tag runs `.github/workflows/release.yml`, which builds that mod and publishes it; the tag's version must match the mod's `descriptor.mod`. Tag the commit that was published to the Workshop. An annotated tag's message becomes the release notes:
+Releases are cut by tag, one per mod, since the three are versioned separately: `vanilla-vX.Y.Z`, `agot-vX.Y.Z`, `tfe-vX.Y.Z`. Pushing a tag runs `.github/workflows/release.yml`, which builds that mod and publishes it; the tag's version must match the mod's `descriptor.mod`. Tag the commit that was published to the Workshop. `tools/tag_release.sh` creates the tag with that version's patch notes as its message, which the release shows under its changes. The notes are the plain-text block of `publishing/patch_notes/<mod>-<version>.md` (`base`, `agot` or `tfe`), the same one pasted into Paradox Mods. `publishing/` is not in git, so the tag message is how they reach the release:
 
 ```
-git tag -a vanilla-vX.Y.Z -F notes.txt --cleanup=strip
+bash tools/tag_release.sh vanilla-vX.Y.Z      # tags HEAD; pass a commit to tag another
 git push origin vanilla-vX.Y.Z
 ```
 
@@ -180,6 +180,7 @@ tfe/fragments/                                           the same kind of snippe
 tools/gen_panel.sh                                       generates the three files above, per target
 tools/build.sh                                           builds dist/vanilla, dist/agot and dist/tfe from all of the above
 tools/package_release.sh                                 packages one mod version as a GitHub release zip
+tools/tag_release.sh                                     tags a release, with its patch notes as the message
 tools/check_compat_static.sh                             checks every game, AGOT and TFE name the mod leans on
 agot/tested_with, tfe/tested_with                        the conversion version each build was last tested with
 .github/workflows/release.yml                            publishes a release when a vanilla-v / agot-v / tfe-v tag is pushed

@@ -3,7 +3,7 @@
 # tools/package_release.sh land in dist/release.
 /dist/
 
-# Publishing copy: the Workshop descriptions, the patch notes for each release
-# and the release tags' messages. Written for the store pages and GitHub, not
+# Publishing copy: the Workshop descriptions and the patch notes for each
+# release (tools/tag_release.sh reads them). Written for the store pages, not
 # shipped in any mod, and kept out of git so drafts do not clutter the history.
 /publishing/

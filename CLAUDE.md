@@ -150,7 +150,7 @@ Each mod is versioned and published on its own, so each release is its own tag: 
 
 - Tag the commit that was published to the Workshop. A tag push runs the workflow file of the tagged commit, so only commits that contain the workflow can be released.
 - The tag's version must equal that mod's `descriptor.mod` version, or packaging fails.
-- An annotated tag's message becomes the release notes. Drafts live in the gitignored `publishing/tag_notes/` (copy its `TEMPLATE.txt`), next to the Workshop text and patch notes: `git tag -a <tag> -F publishing/tag_notes/<tag>.txt --cleanup=strip`.
+- `tools/tag_release.sh <tag> [commit]` creates the tag, with the plain-text (Paradox Mods) block of `publishing/patch_notes/<mod>-<version>.md` as its message, which becomes the release notes. `publishing/` is gitignored, so the tag message is the only way the notes reach the workflow. It also refuses a tag whose version the commit does not build, before anything is pushed.
 - **A conversion build must record what it was tested with**: `agot/tested_with` / `tfe/tested_with`, one line holding that conversion's version as its own `descriptor.mod` gives it. Packaging refuses without it, and `check_compat_static.sh` warns when the installed conversion no longer matches. Write it only once the targeted checks and smoke test pass against that version, then tag.
 - Only the newest `vanilla-v*` release is marked Latest, since the three mods share one release list.
 - Publishing the Workshop copy is separate and manual.
