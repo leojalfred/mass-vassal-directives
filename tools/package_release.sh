@@ -104,7 +104,12 @@ if [ "$TARGET" = vanilla ] && { [ -z "$NEWEST" ] || [ "$NEWEST" = "$TAG" ]; }; t
 	echo "### Installing"
 	echo
 	echo "1. Unsubscribe from the Workshop version, or Steam will keep updating it and both will show up."
-	echo "2. Unzip \`$ZIP\` into \`Documents/Paradox Interactive/Crusader Kings III/mod/\`, so that \`$DIR\` and \`$DIR.mod\` sit side by side there."
+	# Only the folder differs between systems: the .mod file's path is relative to
+	# whichever one the game uses.
+	echo "2. Unzip \`$ZIP\` into your Crusader Kings III \`mod\` folder, so that \`$DIR\` and \`$DIR.mod\` sit side by side there:"
+	echo "   - Windows: \`Documents\\Paradox Interactive\\Crusader Kings III\\mod\`"
+	echo "   - macOS: \`~/Documents/Paradox Interactive/Crusader Kings III/mod\`"
+	echo "   - Linux: \`~/.local/share/Paradox Interactive/Crusader Kings III/mod\`"
 	if [ -n "$TC_VER" ]; then
 		echo "3. In the launcher, add **$LOCAL_NAME** to your playset. Load it after $TC_NAME."
 	else
