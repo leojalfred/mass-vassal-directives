@@ -3,21 +3,25 @@
 # Eligibility must match vanilla exactly. Wherever possible we call the vanilla
 # scripted triggers directly (00_vassal_stance_triggers.txt). The remaining
 # conditions are verbatim mirrors of give_vassal_directive_interaction
-# (00_vassal_interactions.txt:3428-3453 and its send_option blocks) because the
+# (00_vassal_interactions.txt:3592-3618 and its send_option blocks) because the
 # interaction's inline is_shown/is_valid blocks cannot be invoked from script.
 # Re-diff those mirrored lines against vanilla after each game patch.
 
 # Current scope: vassal candidate. $LIEGE$ = the liege issuing directives.
 #
 # Verbatim mirror of give_vassal_directive_interaction's is_shown
-# (00_vassal_interactions.txt:3428-3444) - the vassals vanilla will even offer a
+# (00_vassal_interactions.txt:3592-3609) - the vassals vanilla will even offer a
 # directive for. Re-diff this against vanilla after each game patch; it is the
 # one block both the rules and the exempt interaction depend on, so a drift here
 # is a drift everywhere.
+#
+# Vanilla writes the liege as scope:puppet_or_actor, because a ruler can also
+# direct a puppet's vassals through that puppet. $LIEGE$ is always the player
+# directing their own vassals, which is the case where that scope is the actor.
 leo_mvd_directive_shown_trigger = {
 	trigger_if = {
 		limit = {
-			$LIEGE$ = { government_allows = administrative }
+			$LIEGE$ = { government_has_mechanic = administrative }
 		}
 		is_vassal_or_below_of = $LIEGE$
 	}
@@ -36,13 +40,97 @@ leo_mvd_directive_shown_trigger = {
 # is_valid_showing_failures_only.
 leo_mvd_base_eligible_trigger = {
 	leo_mvd_directive_shown_trigger = { LIEGE = $LIEGE$ }
-	# is_valid_showing_failures_only mirror (:3450-3453); the follows/valid
+	# is_valid_showing_failures_only mirror (:3615-3618); the follows/valid
 	# sub-triggers are both included in the vanilla composite below
 	is_physically_able = yes
 	# is_valid mirror - the canonical vanilla eligibility composite
 	vassal_is_valid_and_follows_directive_trigger = { VASSAL = this LIEGE = $LIEGE$ }
 	# mod-side: skip vassals the player exempted from automation
 	NOT = { has_variable = leo_mvd_exempt }
+}
+
+### Puppets.
+#
+# By God Alone lets a ruler act through a puppet, and one of the things a puppet
+# can be made to do is give its own vassals directives: vanilla's Give Vassal
+# Directive then runs with the puppet as the liege (scope:puppet_or_actor). Three
+# puppet types carry that action (puppet_action_give_vassal_directive in
+# pam_puppet_types.txt), and a ruler holds at most one puppet of each, so every
+# puppet a directive can go through is one of these three links:
+#
+#   theological_agent_puppet           - can_have_realm_priest_puppet_trigger
+#   external_theological_agent_puppet  - can_have_theological_agent_puppet_trigger
+#   external_ruler_puppet              - can_have_external_ruler_puppet_trigger
+#
+# Each is paired with its type's can_have. The engine removes a puppet that stops
+# being valid, and vanilla does not say whether it also re-asks can_have before
+# an action, so asking it here can only ever hold back a directive vanilla would
+# allow, never let through one it would not.
+
+# Current scope: vassal candidate. $ACTOR$ = the puppeteer, $TYPE$ = a puppet
+# type from the list above, $CAN_HAVE$ = that type's can_have trigger.
+# True when vanilla would offer the actor a directive for this vassal through
+# that puppet. The exists comes first so the rest never touches a missing scope.
+leo_mvd_puppet_shown_trigger = {
+	exists = $ACTOR$.puppet:$TYPE$
+	$ACTOR$ = { $CAN_HAVE$ = yes }
+	leo_mvd_directive_shown_trigger = { LIEGE = $ACTOR$.puppet:$TYPE$ }
+}
+
+# Current scope: vassal candidate. Requires scope:leo_mvd_liege (the player) and
+# scope:leo_mvd_puppet (the puppet being walked). Everything
+# leo_mvd_base_eligible_trigger asks, with the puppet as the liege - which is who
+# vanilla measures a directive's acceptance against when it goes through one.
+#
+# A vassal the player can direct in their own right is left to the player's own
+# pass, so that nobody is run through the rules twice in one go. Asking the full
+# eligibility rather than only whether the vassal is the player's means one the
+# player cannot direct themselves, a rival say, is still reached through the
+# puppet, as it could be by hand.
+leo_mvd_puppet_eligible_trigger = {
+	leo_mvd_base_eligible_trigger = { LIEGE = scope:leo_mvd_puppet }
+	NOT = { leo_mvd_base_eligible_trigger = { LIEGE = scope:leo_mvd_liege } }
+}
+
+# Current scope: vassal candidate. $ACTOR$ = the player. True when the actor can
+# direct this vassal through any of their puppets. Only asked once the player has
+# turned puppets on (leo_mvd_puppets), so the exempt interaction does not offer
+# itself in every foreign realm the moment a puppet exists.
+leo_mvd_puppet_directed_trigger = {
+	$ACTOR$ = { has_variable = leo_mvd_puppets }
+	OR = {
+		leo_mvd_puppet_shown_trigger = { ACTOR = $ACTOR$ TYPE = theological_agent_puppet CAN_HAVE = can_have_realm_priest_puppet_trigger }
+		leo_mvd_puppet_shown_trigger = { ACTOR = $ACTOR$ TYPE = external_theological_agent_puppet CAN_HAVE = can_have_theological_agent_puppet_trigger }
+		leo_mvd_puppet_shown_trigger = { ACTOR = $ACTOR$ TYPE = external_ruler_puppet CAN_HAVE = can_have_external_ruler_puppet_trigger }
+	}
+}
+
+# No current scope needed. $ACTOR$ = the player, $VASSAL$ = the vassal, $CHECK$ =
+# one of vanilla's two directive triggers (vassal_follows_directive_trigger or
+# vassal_follows_directive_valid_trigger). Asks $CHECK$ with whichever liege the
+# actor would direct this vassal through: the actor themselves when they can,
+# otherwise the puppet that can. This is how the exempt interaction grays out
+# exactly where Give Vassal Directive would.
+leo_mvd_directing_liege_check_trigger = {
+	trigger_if = {
+		limit = { $VASSAL$ = { leo_mvd_directive_shown_trigger = { LIEGE = $ACTOR$ } } }
+		$CHECK$ = { VASSAL = $VASSAL$ LIEGE = $ACTOR$ }
+	}
+	trigger_else_if = {
+		limit = { $VASSAL$ = { leo_mvd_puppet_shown_trigger = { ACTOR = $ACTOR$ TYPE = theological_agent_puppet CAN_HAVE = can_have_realm_priest_puppet_trigger } } }
+		$CHECK$ = { VASSAL = $VASSAL$ LIEGE = $ACTOR$.puppet:theological_agent_puppet }
+	}
+	trigger_else_if = {
+		limit = { $VASSAL$ = { leo_mvd_puppet_shown_trigger = { ACTOR = $ACTOR$ TYPE = external_theological_agent_puppet CAN_HAVE = can_have_theological_agent_puppet_trigger } } }
+		$CHECK$ = { VASSAL = $VASSAL$ LIEGE = $ACTOR$.puppet:external_theological_agent_puppet }
+	}
+	trigger_else_if = {
+		limit = { $VASSAL$ = { leo_mvd_puppet_shown_trigger = { ACTOR = $ACTOR$ TYPE = external_ruler_puppet CAN_HAVE = can_have_external_ruler_puppet_trigger } } }
+		$CHECK$ = { VASSAL = $VASSAL$ LIEGE = $ACTOR$.puppet:external_ruler_puppet }
+	}
+	trigger_else = {
+		always = no
+	}
 }
 
 ### Per-directive gates.
@@ -57,23 +145,23 @@ leo_mvd_base_eligible_trigger = {
 # falls through to the next priority, which is what vanilla does when a
 # send_option is unavailable.
 
-# Current scope: vassal. improve_development (:3455)
+# Current scope: vassal. improve_development (:3620)
 leo_mvd_gate_improve_development_trigger = {
-	government_allows = administrative
+	government_has_mechanic = administrative
 	highest_held_title_tier >= tier_duchy
 }
 
-# Current scope: vassal. train_commanders (:3469)
+# Current scope: vassal. train_commanders (:3634)
 leo_mvd_gate_train_commanders_trigger = {
-	government_allows = administrative
+	government_has_mechanic = administrative
 }
 
-# Current scope: vassal. build_maa (:3480)
+# Current scope: vassal. build_maa (:3645)
 leo_mvd_gate_build_maa_trigger = {
-	government_allows = administrative
+	government_has_mechanic = administrative
 }
 
-# Current scope: vassal. convert_faith (:3491)
+# Current scope: vassal. convert_faith (:3656)
 leo_mvd_gate_convert_faith_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 	NOT = { government_has_flag = government_is_nomadic }
@@ -82,7 +170,7 @@ leo_mvd_gate_convert_faith_trigger = {
 	}
 }
 
-# Current scope: vassal. convert_culture (:3510)
+# Current scope: vassal. convert_culture (:3675)
 leo_mvd_gate_convert_culture_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 	NOT = { government_has_flag = government_is_nomadic }
@@ -91,7 +179,7 @@ leo_mvd_gate_convert_culture_trigger = {
 	}
 }
 
-# Current scope: vassal. improve_cultural_acceptance (:3529)
+# Current scope: vassal. improve_cultural_acceptance (:3694)
 leo_mvd_gate_improve_cultural_acceptance_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 	NOT = { government_has_flag = government_is_nomadic }
@@ -101,8 +189,8 @@ leo_mvd_gate_improve_cultural_acceptance_trigger = {
 	}
 }
 
-# Current scope: vassal. building_focus_fortification (:3549),
-# building_focus_military (:3560) and building_focus_economy (:3571) all share
+# Current scope: vassal. building_focus_fortification (:3714),
+# building_focus_military (:3725) and building_focus_economy (:3736) all share
 # the same single vanilla condition.
 leo_mvd_gate_building_focus_trigger = {
 	NOT = { government_has_flag = government_is_nomadic }
@@ -116,14 +204,14 @@ leo_mvd_gate_building_focus_trigger = {
 # rules are their own waterfall rather than a special case inside the main one.
 #
 # Herders are not part of this: vanilla's is_shown excludes them from directives
-# altogether (:3440), and leo_mvd_base_eligible_trigger mirrors that.
+# altogether (:3605), and leo_mvd_base_eligible_trigger mirrors that.
 
-# Current scope: vassal. manage_fertility (:3582). Vanilla asks nothing further.
+# Current scope: vassal. manage_fertility (:3747). Vanilla asks nothing further.
 leo_mvd_gate_manage_fertility_trigger = {
 	government_has_flag = government_is_nomadic
 }
 
-# Current scope: vassal. explore_cultures (:3592)
+# Current scope: vassal. explore_cultures (:3757)
 leo_mvd_gate_explore_cultures_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 	government_has_flag = government_is_nomadic
@@ -132,7 +220,7 @@ leo_mvd_gate_explore_cultures_trigger = {
 	}
 }
 
-# Current scope: vassal. raid_innovation_intent (:3610)
+# Current scope: vassal. raid_innovation_intent (:3775)
 #
 # Vanilla also refuses this to a vassal who already has it - alone among the
 # thirteen. That is a menu nicety: it greys out an option that would do nothing.
@@ -145,7 +233,7 @@ leo_mvd_gate_raid_innovation_intent_trigger = {
 	government_has_flag = government_is_nomadic
 }
 
-# Current scope: vassal. raid_herd_intent (:3628). Vanilla asks nothing further.
+# Current scope: vassal. raid_herd_intent (:3793). Vanilla asks nothing further.
 leo_mvd_gate_raid_herd_intent_trigger = {
 	government_has_flag = government_is_nomadic
 }
@@ -249,7 +337,7 @@ leo_mvd_cond_holds_trigger = {
 	# 6 - Administrative Government
 	trigger_else_if = {
 		limit = { scope:leo_mvd_cond_id = 6 }
-		government_allows = administrative
+		government_has_mechanic = administrative
 	}
 	# 7 - Is a Powerful Vassal
 	trigger_else_if = {

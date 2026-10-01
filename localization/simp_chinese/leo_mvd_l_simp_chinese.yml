@@ -13,6 +13,8 @@
  leo_mvd_ui_nomads_empty_tt: "你的[nomad|E][vassals|E]不受干预。\n\n他们遵循一套专属的执行顺序，因为可以指派给他们的[directives|E]是他们独有的。没有[nomad|E]会兴建[fortification_buildings|E]，也没有其他人会放牧[herd|E]。\n\n#weak 添加一条优先级，让他们各司其职。#!"
  leo_mvd_ui_auto: "自动重新分配封臣指令"
  leo_mvd_ui_auto_tt: "启用后，[directive|E]优先级瀑布流会在每月，以及每当你在此处更改设置时，对所有符合条件的[vassals|E]重新执行。开启它会立即应用指令。\n\n#weak 更改一个由自动化分配的[directive|E]，该[vassal|E]便会自动为你豁免，你的选择得以保留。若想在此之前将某个[vassal|E]排除在外，请通过其互动菜单将其豁免。#!"
+ leo_mvd_ui_puppets: "包括你的傀儡的封臣"
+ leo_mvd_ui_puppets_tt: "启用后，你的规则也会作用于你的[puppets|E]的[vassals|E]，也就是你本可以亲自通过[puppet|E]下达[directive|E]的那些人。你的规则保持不变，其条件仍会将每位[vassal|E]与你比较，但[vassal|E]是否接受[directive|E]，取决于他们与其领主[puppet|E]的关系。\n\n#weak 关闭后会收回自动化通过[puppet|E]下达的所有[directive|E]。#!"
  leo_mvd_ui_apply: "立即应用"
  leo_mvd_ui_apply_tt: "立即对所有符合条件且未豁免的[vassals|E]应用已配置的[directive|E]优先级。"
  leo_mvd_ui_remove_all: "全部移除"

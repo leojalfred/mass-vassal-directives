@@ -107,7 +107,7 @@ leo_mvd_evaluate_vassal_effect = {
 leo_mvd_run_waterfall_effect = {
 	save_scope_as = leo_mvd_liege
 	if = {
-		limit = { government_allows = administrative }
+		limit = { government_has_mechanic = administrative }
 		every_vassal_or_below = {
 			limit = {
 				leo_mvd_base_eligible_trigger = { LIEGE = scope:leo_mvd_liege }
@@ -123,10 +123,92 @@ leo_mvd_run_waterfall_effect = {
 			leo_mvd_evaluate_vassal_effect = yes
 		}
 	}
+	# Then the vassals of the player's puppets, when the player has asked for it.
+	# The rules are still the player's and the conditions still measure the
+	# player: only who the vassal must accept the directive from changes.
+	if = {
+		limit = { has_variable = leo_mvd_puppets }
+		leo_mvd_run_puppet_effect = { TYPE = theological_agent_puppet CAN_HAVE = can_have_realm_priest_puppet_trigger }
+		leo_mvd_run_puppet_effect = { TYPE = external_theological_agent_puppet CAN_HAVE = can_have_theological_agent_puppet_trigger }
+		leo_mvd_run_puppet_effect = { TYPE = external_ruler_puppet CAN_HAVE = can_have_external_ruler_puppet_trigger }
+	}
+}
+
+# Current scope: the player. Requires scope:leo_mvd_liege. Run the waterfall
+# across the vassals the player can direct through their puppet of type $TYPE$
+# (see the puppet list in leo_mvd_triggers.txt). The reach follows vanilla's
+# is_shown with the puppet as the liege: all the vassals below an administrative
+# puppet, only the direct vassals of any other.
+leo_mvd_run_puppet_effect = {
+	if = {
+		limit = {
+			exists = puppet:$TYPE$
+			$CAN_HAVE$ = yes
+		}
+		puppet:$TYPE$ = {
+			save_scope_as = leo_mvd_puppet
+			if = {
+				limit = { government_has_mechanic = administrative }
+				every_vassal_or_below = {
+					limit = { leo_mvd_puppet_eligible_trigger = yes }
+					leo_mvd_evaluate_vassal_effect = yes
+				}
+			}
+			else = {
+				every_vassal = {
+					limit = { leo_mvd_puppet_eligible_trigger = yes }
+					leo_mvd_evaluate_vassal_effect = yes
+				}
+			}
+		}
+	}
+}
+
+# Current scope: the player. Requires scope:leo_mvd_liege. Give up every
+# directive the automation handed out through the player's puppet of type
+# $TYPE$, for when the player stops directing puppets' vassals. A vassal who is
+# also the player's own to direct keeps theirs, since the player's own pass owns
+# them. Exemptions stay, as they do everywhere else a setting changes.
+leo_mvd_release_puppet_effect = {
+	if = {
+		limit = { exists = puppet:$TYPE$ }
+		puppet:$TYPE$ = {
+			every_vassal_or_below = {
+				limit = {
+					has_variable = leo_mvd_managed
+					NOT = { leo_mvd_directive_shown_trigger = { LIEGE = scope:leo_mvd_liege } }
+				}
+				leo_mvd_clear_stale_effect = yes
+			}
+		}
+	}
+}
+
+# Current scope: the player. leo_mvd_remove_all_effect's sweep, over the vassals
+# of the player's puppet of type $TYPE$.
+leo_mvd_remove_all_puppet_effect = {
+	if = {
+		limit = { exists = puppet:$TYPE$ }
+		puppet:$TYPE$ = {
+			every_vassal_or_below = {
+				limit = {
+					OR = {
+						has_variable = leo_mvd_managed
+						has_variable = leo_mvd_exempt
+					}
+				}
+				leo_mvd_clear_stale_effect = yes
+				remove_variable = leo_mvd_exempt
+			}
+		}
+	}
 }
 
 # Current scope: the player. Escape hatch: remove every mod-assigned directive
 # and exemption, then disable the mod. Manually assigned directives are kept.
+# Swept whether or not puppets are switched on now, since they may have been.
+# A former puppet is out of reach: once the link is gone there is no way back to
+# its vassals, just as there is none to a vassal who has left the realm.
 leo_mvd_remove_all_effect = {
 	every_vassal_or_below = {
 		limit = {
@@ -138,6 +220,9 @@ leo_mvd_remove_all_effect = {
 		leo_mvd_clear_stale_effect = yes
 		remove_variable = leo_mvd_exempt
 	}
+	leo_mvd_remove_all_puppet_effect = { TYPE = theological_agent_puppet }
+	leo_mvd_remove_all_puppet_effect = { TYPE = external_theological_agent_puppet }
+	leo_mvd_remove_all_puppet_effect = { TYPE = external_ruler_puppet }
 	remove_variable = leo_mvd_auto
 }
 

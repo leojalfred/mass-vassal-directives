@@ -152,16 +152,50 @@ done
 
 echo
 echo "== Vanilla: government features the mod branches on =="
-# .txt only: _governments.info carries a doc comment "( administrative = yes )"
-# that would otherwise keep this green after the feature were removed.
-if grep -rqsE --include=*.txt -- "administrative = yes" "$GAME/common/governments" 2>/dev/null; then
-	printf '  ok    government feature: administrative\n'; P=$((P+1))
-else printf '  FAIL  government feature: administrative\n'; F=$((F+1)); FAILS="$FAILS\n  - government feature: administrative"; fi
+# Administrative is a government's mechanic_type, tested with
+# government_has_mechanic. It was a government rule (government_allows) until
+# 1.20, so if vanilla's directive interaction stops asking it this way the mod's
+# gates are asking a question vanilla no longer does.
+def "interaction tests: government_has_mechanic = administrative" common/character_interactions/00_vassal_interactions.txt "government_has_mechanic = administrative"
+# Each of the five must carry the mechanic inside its own block; one that lost it
+# would quietly stop getting the administrative directives from the mod.
+for g in administrative_government celestial_government meritocratic_government \
+         steppe_admin_government japan_administrative_government; do
+	if awk -v g="$g" '$0 ~ "(^|[^a-z_])" g " = [{]" {on=1} on && /^[[:space:]]*mechanic_type = administrative/ {ok=1} on && /^\}/ {on=0} END {exit !ok}' \
+	       "$GAME"/common/governments/*.txt 2>/dev/null; then
+		printf '  ok    administrative mechanic: %s\n' "$g"; P=$((P+1))
+	else printf '  FAIL  administrative mechanic: %s\n' "$g"; F=$((F+1)); FAILS="$FAILS\n  - administrative mechanic: $g"; fi
+done
 # These are listed one per line inside a government's flags block, so match the
 # token alone on its line: a usage (government_has_flag = ...) or a doc comment
 # has other text on the line and will not.
 def "government flag: government_is_nomadic"  common/governments "^[[:space:]]*government_is_nomadic[[:space:]]*$"
 def "government flag: government_is_herder"   common/governments "^[[:space:]]*government_is_herder[[:space:]]*$"
+
+echo
+echo "== Vanilla: puppets a directive can be given through (By God Alone) =="
+# The mod walks exactly three puppet links, the types whose actions include
+# giving a directive. The set is compared whole, so a patch that adds the action
+# to a fourth type, or takes it from one, fails here rather than leaving that
+# puppet's vassals unreached or reached wrongly.
+_ptypes() { awk '/^[a-z_]+ = \{/{t=$1} /^[[:space:]]*puppet_action_give_vassal_directive[[:space:]]*$/{print t}' "$GAME"/common/puppets/types/*.txt 2>/dev/null | sort -u | tr '\n' ' '; }
+want="external_ruler_puppet external_theological_agent_puppet theological_agent_puppet "
+got=$(_ptypes)
+if [ "$got" = "$want" ]; then printf '  ok    puppet types that give directives: %s\n' "$got"; P=$((P+1))
+else printf '  FAIL  puppet types that give directives: expected [%s] got [%s]\n' "$want" "$got"; F=$((F+1)); FAILS="$FAILS\n  - puppet types that give directives changed (update the three links in leo_mvd_effects.txt / leo_mvd_triggers.txt)"; fi
+# Each type's can_have, which the mod asks alongside it.
+for t in can_have_realm_priest_puppet_trigger can_have_theological_agent_puppet_trigger \
+         can_have_external_ruler_puppet_trigger; do
+	defd "puppet can_have trigger: $t" common/scripted_triggers "$t"
+done
+# The action itself: still vanilla's directive interaction, and still with no
+# is_enabled of its own. One added there is a condition the mod does not ask.
+_pact() { awk '/^puppet_action_give_vassal_directive = \{/{on=1} on{print} on&&/^\}/{exit}' "$GAME"/common/puppets/actions/*.txt 2>/dev/null; }
+if _pact | grep -q "interaction = give_vassal_directive_interaction" && ! _pact | grep -q "is_enabled"; then
+	printf '  ok    puppet action: give_vassal_directive (no is_enabled)\n'; P=$((P+1))
+else printf '  FAIL  puppet action: give_vassal_directive changed\n'; F=$((F+1)); FAILS="$FAILS\n  - puppet_action_give_vassal_directive changed (mirror any is_enabled in leo_mvd_puppet_shown_trigger)"; fi
+use "link: puppet:<type>" "puppet:theological_agent_puppet"
+def "interaction liege scope: puppet_or_actor" common/character_interactions/00_vassal_interactions.txt "is_vassal_of = scope:puppet_or_actor"
 
 echo
 echo "== Vanilla: the exempt-dimming override targets (must exist to override) =="
@@ -184,12 +218,13 @@ echo "== Vanilla: DLC feature names (no definition file; matched against use) ==
 def "dlc feature: roads_to_power"      common/scripted_triggers "has_dlc_feature = roads_to_power"
 def "dlc feature: all_under_heaven"    common/scripted_triggers "has_dlc_feature = all_under_heaven"
 def "dlc feature: khans_of_the_steppe" common/scripted_triggers "has_dlc_feature = khans_of_the_steppe"
+def "dlc feature: by_god_alone"        common/scripted_triggers "has_dlc_feature = by_god_alone"
 
 echo
 echo "== Vanilla: engine built-in triggers (proxy: still used by vanilla) =="
 for t in is_powerful_vassal_of is_councillor_of max_military_strength \
          vassal_contract_has_flag highest_held_title_tier development_level \
-         cultural_acceptance has_dynasty government_allows government_has_flag \
+         cultural_acceptance has_dynasty government_has_mechanic government_has_flag \
          any_sub_realm_county any_held_county any_held_title every_held_title \
          capital_county opinion save_temporary_scope_value_as; do
 	use "trigger: $t" "\b$t\b"

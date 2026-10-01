@@ -42,6 +42,36 @@ leo_mvd_toggle_auto = {
 	}
 }
 
+# Whether the rules also reach the vassals of the player's puppets (By God
+# Alone). Off by default: directing another ruler's vassals is not something the
+# mod should start on its own. Turning it off hands back every directive it gave
+# through a puppet, the way picking None hands back the rest.
+leo_mvd_toggle_puppets = {
+	scope = character
+
+	is_shown = {
+		has_variable = leo_mvd_puppets
+	}
+	effect = {
+		leo_mvd_init_defaults_effect = yes
+		if = {
+			limit = { has_variable = leo_mvd_puppets }
+			remove_variable = leo_mvd_puppets
+			save_scope_as = leo_mvd_liege
+			leo_mvd_release_puppet_effect = { TYPE = theological_agent_puppet }
+			leo_mvd_release_puppet_effect = { TYPE = external_theological_agent_puppet }
+			leo_mvd_release_puppet_effect = { TYPE = external_ruler_puppet }
+		}
+		else = {
+			set_variable = leo_mvd_puppets
+			if = {
+				limit = { has_variable = leo_mvd_auto }
+				leo_mvd_run_waterfall_effect = yes
+			}
+		}
+	}
+}
+
 # Preset selection. Each loads a built-in rule set, replacing the rules in
 # place. leo_mvd_select_preset_effect re-applies when automation is on.
 #

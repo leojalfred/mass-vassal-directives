@@ -13,6 +13,8 @@
  leo_mvd_ui_nomads_empty_tt: "당신의 [nomad|E] [vassals|E]은(는) 그대로 둡니다.\n\n그들은 자신들만의 서열에 따라 움직입니다. 그들에게 내릴 수 있는 [directives|E]은(는) 오직 그들만의 것이기 때문입니다. 어떤 [nomad|E]도 [fortification_buildings|E]을(를) 세우지 않으며, 다른 누구도 [herd|E]을(를) 기르지 않습니다.\n\n#weak 우선순위를 추가하여 그들에게 임무를 맡기세요.#!"
  leo_mvd_ui_auto: "봉신 지침 자동 재배정"
  leo_mvd_ui_auto_tt: "활성화하면 [directive|E] 우선순위 폭포가 매달, 그리고 여기서 설정을 변경할 때마다 모든 자격 있는 [vassals|E]에게 다시 실행됩니다. 켜면 지침이 즉시 적용됩니다.\n\n#weak 자동화가 배정한 [directive|E]을(를) 변경하면 해당 [vassal|E]은(는) 자동으로 제외되어 당신의 선택이 유지됩니다. 그 전에 [vassal|E]을(를) 빼두려면 상호작용 메뉴에서 제외하세요.#!"
+ leo_mvd_ui_puppets: "꼭두각시의 봉신 포함"
+ leo_mvd_ui_puppets_tt: "활성화하면 규칙이 당신의 [puppets|E]의 [vassals|E], 즉 당신이 직접 [puppet|E]을(를) 통해 [directive|E]을(를) 내릴 수 있는 이들에게도 적용됩니다. 규칙은 그대로이며 조건도 여전히 각 [vassal|E]을(를) 당신과 비교하지만, [vassal|E]이(가) [directive|E]을(를) 받아들일지는 그들의 주군인 [puppet|E]과(와)의 관계에 달려 있습니다.\n\n#weak 끄면 자동화가 [puppet|E]을(를) 통해 내린 모든 [directive|E]을(를) 거둬들입니다.#!"
  leo_mvd_ui_apply: "지금 적용"
  leo_mvd_ui_apply_tt: "설정된 [directive|E] 우선순위를 자격 있고 제외되지 않은 모든 [vassals|E]에게 지금 적용합니다."
  leo_mvd_ui_remove_all: "모두 제거"

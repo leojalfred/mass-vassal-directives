@@ -13,6 +13,8 @@
  leo_mvd_ui_nomads_empty_tt: "Deine [nomad|E]-[vassals|E] bleiben unangetastet.\n\nSie folgen einer eigenen Reihenfolge, denn die [directives|E], die ihnen gegeben werden können, sind ihnen allein vorbehalten. Kein [nomad|E] errichtet [fortification_buildings|E], und niemand sonst hält eine [herd|E].\n\n#weak Füge eine Priorität hinzu, um sie zu beschäftigen.#!"
  leo_mvd_ui_auto: "Vasallenanweisungen automatisch neu zuweisen"
  leo_mvd_ui_auto_tt: "Wenn aktiviert, wird der [directive|E]-Prioritätenwasserfall jeden Monat und jedes Mal, wenn du hier eine Einstellung änderst, für alle infrage kommenden [vassals|E] erneut ausgeführt. Beim Einschalten werden die Anweisungen sofort angewandt.\n\n#weak Änderst du eine [directive|E], die die Automatik zugewiesen hat, wird dieser [vassal|E] für dich ausgenommen, sodass deine Wahl bestehen bleibt. Um einen [vassal|E] schon vorher herauszuhalten, nimm ihn über sein Interaktionsmenü aus.#!"
+ leo_mvd_ui_puppets: "Vasallen deiner Marionetten einbeziehen"
+ leo_mvd_ui_puppets_tt: "Wenn aktiviert, erreichen deine Regeln auch die [vassals|E] deiner [puppets|E], also jene, denen du selbst über eine [puppet|E] eine [directive|E] erteilen könntest. Deine Regeln bleiben gleich und ihre Bedingungen vergleichen jeden [vassal|E] weiterhin mit dir, doch ob ein [vassal|E] eine [directive|E] annimmt, hängt von seinem Verhältnis zur [puppet|E] ab, die sein Lehnsherr ist.\n\n#weak Beim Ausschalten werden alle [directive|E] zurückgenommen, die die Automatik über eine [puppet|E] erteilt hat.#!"
  leo_mvd_ui_apply: "Jetzt anwenden"
  leo_mvd_ui_apply_tt: "Wende die konfigurierte [directive|E]-Priorität jetzt auf alle infrage kommenden, nicht ausgenommenen [vassals|E] an."
  leo_mvd_ui_remove_all: "Alle entfernen"

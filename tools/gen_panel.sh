@@ -286,7 +286,7 @@ vis_and() { local out=; for e in "$@"; do [ -z "$e" ] && continue
 	if [ -z "$out" ]; then out=$e; else out="And( $out, $e )"; fi; done; echo "$out"; }
 # The DLC features that can put an administrative vassal in a realm. Vanilla
 # gates the three administrative directives (improve development, train
-# commanders, build men-at-arms) on `government_allows = administrative` and
+# commanders, build men-at-arms) on `government_has_mechanic = administrative` and
 # nothing else, and five governments answer yes to that: Byzantium's
 # administrative from Roads to Power, plus the celestial, meritocratic, steppe
 # administrative and Ritsuryo governments from All Under Heaven. So an All Under
@@ -1110,7 +1110,7 @@ cat << 'MID'
 							### briefly nothing, and a scripted GUI evaluated
 							### against that logs a scope error every frame.
 							### Every other control here reads a variable, which
-							### is silent - only these two query script.
+							### is silent - only these checkboxes query script.
 							button_checkbox_label = {
 								layoutpolicy_horizontal = expanding
 								visible = "[GetPlayer.IsValid]"
@@ -1126,6 +1126,24 @@ cat << 'MID'
 								}
 								blockoverride "text" {
 									text = "leo_mvd_ui_auto"
+								}
+							}
+
+							### Whether the rules also reach the vassals of the
+							### player's puppets. Puppets exist only with By God
+							### Alone, so without it the box would never do
+							### anything and is not shown.
+							button_checkbox_label = {
+								layoutpolicy_horizontal = expanding
+								visible = "[And( GetPlayer.IsValid, HasDlcFeature( 'by_god_alone' ) )]"
+								onclick = "[GetScriptedGui('leo_mvd_toggle_puppets').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+								tooltip = "leo_mvd_ui_puppets_tt"
+								blockoverride "checkbox" {
+									checked = "[GetScriptedGui('leo_mvd_toggle_puppets').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+									size = { 22 22 }
+								}
+								blockoverride "text" {
+									text = "leo_mvd_ui_puppets"
 								}
 							}
 						}
