@@ -142,6 +142,17 @@ Without Roads to Power or All Under Heaven, confirm instead that the gated condi
 
 There is no committed in-game check tool: opening the real dropdown above tests the same GUI mechanism a synthetic one would, on the real panel rather than a proxy. If a mechanism ever does break and needs isolating to debug, a throwaway probe like the one in this repo's history can be rebuilt for the occasion.
 
+## Releasing
+
+Each mod is versioned and published on its own, so each release is its own tag: `vanilla-vX.Y.Z`, `agot-vX.Y.Z`, `tfe-vX.Y.Z`. Pushing one runs `.github/workflows/release.yml`, which builds that mod with `tools/package_release.sh` and publishes it as a GitHub release: a zip that installs as a local mod (a versioned folder and its `.mod` file, the name suffixed with the version, `remote_file_id` removed so the launcher cannot confuse it with the Workshop item). This exists because Steam updates a subscribed mod whatever game version its player is on; a player who rolls CK3 back needs somewhere to get a build that matches.
+
+- Tag the commit that was published to the Workshop. A tag push runs the workflow file of the tagged commit, so only commits that contain the workflow can be released.
+- The tag's version must equal that mod's `descriptor.mod` version, or packaging fails.
+- An annotated tag's message becomes the release notes. Drafts live in the gitignored `publishing/tag_notes/` (copy its `TEMPLATE.txt`), next to the Workshop text and patch notes: `git tag -a <tag> -F publishing/tag_notes/<tag>.txt --cleanup=strip`.
+- **A conversion build must record what it was tested with**: `agot/tested_with` / `tfe/tested_with`, one line holding that conversion's version as its own `descriptor.mod` gives it. Packaging refuses without it, and `check_compat_static.sh` warns when the installed conversion no longer matches. Write it only once the targeted checks and smoke test pass against that version, then tag.
+- Only the newest `vanilla-v*` release is marked Latest, since the three mods share one release list.
+- Publishing the Workshop copy is separate and manual.
+
 ## Conventions
 
 - Prefix everything `leo_mvd_`.

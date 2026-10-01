@@ -78,6 +78,21 @@ deff()  { # <label> <path under GAME>            strong, FAIL on miss
 	else printf '  FAIL  %s\n' "$1"; F=$((F+1)); FAILS="$FAILS\n  - $1"; fi
 }
 
+# The conversion version a build was last checked against, in <target>/tested_with,
+# is what its GitHub release says it is compatible with. Compare it with the one
+# installed: a mismatch means the conversion has moved on since the last check.
+# Once this script and the smoke test pass against it, write the installed
+# version there before tagging a release.
+tested_with() {   # <label> <conversion dir> <target>
+	local inst rec
+	inst=$(grep -m1 '^version=' "$2/descriptor.mod" 2>/dev/null | sed -E 's/^version="([^"]*)".*/\1/')
+	rec=; [ -f "$ROOT_DIR/$3/tested_with" ] && rec=$(tr -d '[:space:]' < "$ROOT_DIR/$3/tested_with")
+	if [ -z "$rec" ]; then printf '  warn  %s %s installed; no tested version recorded in %s/tested_with\n' "$1" "$inst" "$3"; W=$((W+1))
+	elif [ "$rec" = "$inst" ]; then printf '  ok    %s %s is the version recorded as tested\n' "$1" "$inst"; P=$((P+1))
+	else printf '  warn  %s %s installed, but %s/tested_with says %s - re-test, then update it\n' "$1" "$inst" "$3" "$rec"; W=$((W+1)); fi
+}
+ROOT_DIR=$(cd "$(dirname "$0")/.." && pwd)
+
 [ -d "$GAME" ] || { echo "game not found at: $GAME" >&2; echo "set GAME_DIR to your install." >&2; exit 2; }
 echo "game: $GAME"
 
@@ -285,6 +300,7 @@ done
 if [ -d "$AGOT" ]; then
 	echo
 	echo "agot: $AGOT"
+	tested_with "A Game of Thrones" "$AGOT" agot
 	echo "== AGOT: Westeros conditions =="
 	# No ^ anchor on the religions: each is defined on line 1 of its file, right
 	# after the UTF-8 BOM, which a ^ would sit in front of. "= {" pins it to the
@@ -315,6 +331,7 @@ fi
 if [ -d "$TFE" ]; then
 	echo
 	echo "tfe: $TFE"
+	tested_with "The Fallen Eagle" "$TFE" tfe
 
 	echo
 	echo "== TFE: what the opener is attached to =="

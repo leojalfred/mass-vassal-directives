@@ -1,9 +1,9 @@
 # Built mods (produced by tools/build.sh). The launcher and Workshop uploads
-# point at these; they are regenerated, never hand-edited.
+# point at these; they are regenerated, never hand-edited. Release packages from
+# tools/package_release.sh land in dist/release.
 /dist/
 
-# Store copy: the Workshop descriptions (BB Code) and the patch notes that go
-# with each release. Written for the store pages, not shipped in any mod, and
-# kept out of git so drafts do not clutter the history.
-/workshop/
-/patch_notes/
+# Publishing copy: the Workshop descriptions, the patch notes for each release
+# and the release tags' messages. Written for the store pages and GitHub, not
+# shipped in any mod, and kept out of git so drafts do not clutter the history.
+/publishing/
