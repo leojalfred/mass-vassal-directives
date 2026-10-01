@@ -93,11 +93,8 @@ leo_mvd_puppet_eligible_trigger = {
 }
 
 # Current scope: vassal candidate. $ACTOR$ = the player. True when the actor can
-# direct this vassal through any of their puppets. Only asked once the player has
-# turned puppets on (leo_mvd_puppets), so the exempt interaction does not offer
-# itself in every foreign realm the moment a puppet exists.
+# direct this vassal through any of their puppets.
 leo_mvd_puppet_directed_trigger = {
-	$ACTOR$ = { has_variable = leo_mvd_puppets }
 	OR = {
 		leo_mvd_puppet_shown_trigger = { ACTOR = $ACTOR$ TYPE = theological_agent_puppet CAN_HAVE = can_have_realm_priest_puppet_trigger }
 		leo_mvd_puppet_shown_trigger = { ACTOR = $ACTOR$ TYPE = external_theological_agent_puppet CAN_HAVE = can_have_theological_agent_puppet_trigger }

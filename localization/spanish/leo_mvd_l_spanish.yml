@@ -13,8 +13,6 @@
  leo_mvd_ui_nomads_empty_tt: "Tus [vassals|E] [nomad|E] quedan al margen.\n\nResponden a un orden de prioridad propio, porque las [directives|E] que se les pueden asignar son solo suyas. Ningún [nomad|E] alza [fortification_buildings|E], y nadie más mantiene un [herd|E].\n\n#weak Añade una prioridad para ponerlos a trabajar.#!"
  leo_mvd_ui_auto: "Reasignar directivas de vasallos automáticamente"
  leo_mvd_ui_auto_tt: "Cuando está activado, la cascada de prioridad de [directive|E] se vuelve a ejecutar sobre todos los [vassals|E] elegibles cada mes y de nuevo siempre que cambies un ajuste aquí. Activarlo aplica las directivas de inmediato.\n\n#weak Cambia una [directive|E] que la automatización asignó y ese [vassal|E] queda exento por ti, para que tu elección se mantenga. Para excluir a un [vassal|E] antes de eso, exímelo desde su menú de interacción.#!"
- leo_mvd_ui_puppets: "Incluir a los vasallos de tus títeres"
- leo_mvd_ui_puppets_tt: "Cuando está activado, tus reglas también alcanzan a los [vassals|E] de tus [puppets|E], aquellos a los que tú mismo podrías dar una [directive|E] a través de un [puppet|E]. Tus reglas no cambian y sus condiciones siguen comparando a cada [vassal|E] contigo, pero que un [vassal|E] acepte una [directive|E] depende de su relación con el [puppet|E], que es su señor.\n\n#weak Desactivarlo retira todas las [directive|E] que la automatización dio a través de un [puppet|E].#!"
  leo_mvd_ui_apply: "Aplicar ahora"
  leo_mvd_ui_apply_tt: "Aplica ahora la prioridad de [directive|E] configurada a todos los [vassals|E] elegibles y no exentos."
  leo_mvd_ui_remove_all: "Quitar todo"

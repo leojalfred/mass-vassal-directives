@@ -13,8 +13,6 @@
  leo_mvd_ui_nomads_empty_tt: "Vos [vassals|E] [nomad|E] sont laissés tranquilles.\n\nIls obéissent à un ordre de marche qui leur est propre, car les [directives|E] qu'on peut leur donner n'appartiennent qu'à eux. Aucun [nomad|E] n'élève de [fortification_buildings|E], et personne d'autre ne garde de [herd|E].\n\n#weak Ajoutez une priorité pour les mettre au travail.#!"
  leo_mvd_ui_auto: "Réassigner automatiquement les directives des vassaux"
  leo_mvd_ui_auto_tt: "Une fois activée, la cascade de priorités de [directive|E] est relancée sur tous les [vassals|E] éligibles chaque mois, et de nouveau à chaque fois que vous modifiez un réglage ici. L'activer applique les directives immédiatement.\n\n#weak Modifiez une [directive|E] assignée par l'automatisation et ce [vassal|E] est exempté pour vous, afin que votre choix soit respecté. Pour mettre un [vassal|E] à l'écart au préalable, exemptez-le via son menu d'interaction.#!"
- leo_mvd_ui_puppets: "Inclure les vassaux de vos fantoches"
- leo_mvd_ui_puppets_tt: "Une fois activée, vos règles s'appliquent aussi aux [vassals|E] de vos [puppets|E], ceux à qui vous pourriez vous-même donner une [directive|E] par l'intermédiaire d'un [puppet|E]. Vos règles restent les mêmes et leurs conditions comparent toujours chaque [vassal|E] à vous, mais l'acceptation d'une [directive|E] par un [vassal|E] dépend de ses relations avec le [puppet|E], qui est son suzerain.\n\n#weak La désactiver retire toutes les [directive|E] que l'automatisation a données par l'intermédiaire d'un [puppet|E].#!"
  leo_mvd_ui_apply: "Appliquer maintenant"
  leo_mvd_ui_apply_tt: "Appliquer maintenant la priorité de [directive|E] configurée à tous les [vassals|E] éligibles et non exemptés."
  leo_mvd_ui_remove_all: "Tout retirer"

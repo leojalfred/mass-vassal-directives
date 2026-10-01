@@ -13,8 +13,6 @@
  leo_mvd_ui_nomads_empty_tt: "Twoi [nomad|E] [vassals|E] są pozostawieni w spokoju.\n\nRządzą się własną kolejnością, ponieważ [directives|E], które można im nadać, należą tylko do nich. Żaden [nomad|E] nie wznosi [fortification_buildings|E], a nikt inny nie utrzymuje [herd|E].\n\n#weak Dodaj priorytet, aby dać im zajęcie.#!"
  leo_mvd_ui_auto: "Automatycznie przydzielaj dyrektywy wasali"
  leo_mvd_ui_auto_tt: "Po włączeniu wodospad priorytetów [directive|E] uruchamia się ponownie dla wszystkich uprawnionych [vassals|E] co miesiąc, a także za każdym razem, gdy zmienisz tu ustawienie. Włączenie tej opcji przydziela dyrektywy natychmiast.\n\n#weak Zmień [directive|E] przydzieloną przez automatyzację, a ten [vassal|E] zostanie za ciebie zwolniony, aby twój wybór pozostał w mocy. Aby wyłączyć [vassal|E] wcześniej, zwolnij go z jego menu interakcji.#!"
- leo_mvd_ui_puppets: "Uwzględniaj wasali twoich marionetek"
- leo_mvd_ui_puppets_tt: "Po włączeniu twoje reguły obejmują także [vassals|E] twoich [puppets|E], czyli tych, którym sam mógłbyś wydać [directive|E] za pośrednictwem [puppet|E]. Twoje reguły pozostają takie same, a ich warunki nadal porównują każdego [vassal|E] z tobą, ale to, czy [vassal|E] przyjmie [directive|E], zależy od jego stosunków z [puppet|E], który jest jego seniorem.\n\n#weak Wyłączenie cofa wszystkie [directive|E] wydane przez automatyzację za pośrednictwem [puppet|E].#!"
  leo_mvd_ui_apply: "Zastosuj teraz"
  leo_mvd_ui_apply_tt: "Zastosuj skonfigurowany priorytet [directive|E] do wszystkich uprawnionych, niezwolnionych [vassals|E] już teraz."
  leo_mvd_ui_remove_all: "Usuń wszystko"

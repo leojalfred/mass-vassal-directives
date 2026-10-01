@@ -13,8 +13,6 @@
  leo_mvd_ui_nomads_empty_tt: "あなたの[nomad|E]の[vassals|E]は手を付けられません。\n\n彼らは独自の優先順位に従います。与えられる[directives|E]が彼らだけのものだからです。[nomad|E]は[fortification_buildings|E]を築かず、他の誰も[herd|E]を保ちません。\n\n#weak 優先順位を追加して彼らを働かせましょう。#!"
  leo_mvd_ui_auto: "臣下の指令を自動的に再割り当てする"
  leo_mvd_ui_auto_tt: "有効にすると、[directive|E]の優先順位のウォーターフォールが、毎月すべての対象[vassals|E]に対して、またここで設定を変更するたびに再実行されます。オンにすると指令が即座に適用されます。\n\n#weak 自動割り当てされた[directive|E]を変更すると、その[vassal|E]は自動的に除外され、あなたの選択が保たれます。それ以前に[vassal|E]を除外するには、対話メニューから除外してください。#!"
- leo_mvd_ui_puppets: "傀儡の臣下を含める"
- leo_mvd_ui_puppets_tt: "有効にすると、ルールはあなたの[puppets|E]の[vassals|E]、つまりあなた自身が[puppet|E]を通じて[directive|E]を与えられる者たちにも適用されます。ルールはそのままで、条件も引き続き各[vassal|E]をあなたと比較しますが、[vassal|E]が[directive|E]を受け入れるかどうかは、その主君である[puppet|E]との関係によって決まります。\n\n#weak オフにすると、自動化が[puppet|E]を通じて与えたすべての[directive|E]を取り消します。#!"
  leo_mvd_ui_apply: "今すぐ適用"
  leo_mvd_ui_apply_tt: "設定した[directive|E]の優先順位を、対象かつ除外されていないすべての[vassals|E]に今すぐ適用します。"
  leo_mvd_ui_remove_all: "すべて解除"

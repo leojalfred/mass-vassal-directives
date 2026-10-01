@@ -123,15 +123,13 @@ leo_mvd_run_waterfall_effect = {
 			leo_mvd_evaluate_vassal_effect = yes
 		}
 	}
-	# Then the vassals of the player's puppets, when the player has asked for it.
-	# The rules are still the player's and the conditions still measure the
-	# player: only who the vassal must accept the directive from changes.
-	if = {
-		limit = { has_variable = leo_mvd_puppets }
-		leo_mvd_run_puppet_effect = { TYPE = theological_agent_puppet CAN_HAVE = can_have_realm_priest_puppet_trigger }
-		leo_mvd_run_puppet_effect = { TYPE = external_theological_agent_puppet CAN_HAVE = can_have_theological_agent_puppet_trigger }
-		leo_mvd_run_puppet_effect = { TYPE = external_ruler_puppet CAN_HAVE = can_have_external_ruler_puppet_trigger }
-	}
+	# Then the vassals of the player's puppets, whom vanilla lets the player direct
+	# through the puppet just as they direct their own. The rules are still the
+	# player's and the conditions still measure the player: only who the vassal
+	# must accept the directive from changes.
+	leo_mvd_run_puppet_effect = { TYPE = theological_agent_puppet CAN_HAVE = can_have_realm_priest_puppet_trigger }
+	leo_mvd_run_puppet_effect = { TYPE = external_theological_agent_puppet CAN_HAVE = can_have_theological_agent_puppet_trigger }
+	leo_mvd_run_puppet_effect = { TYPE = external_ruler_puppet CAN_HAVE = can_have_external_ruler_puppet_trigger }
 }
 
 # Current scope: the player. Requires scope:leo_mvd_liege. Run the waterfall
@@ -164,26 +162,6 @@ leo_mvd_run_puppet_effect = {
 	}
 }
 
-# Current scope: the player. Requires scope:leo_mvd_liege. Give up every
-# directive the automation handed out through the player's puppet of type
-# $TYPE$, for when the player stops directing puppets' vassals. A vassal who is
-# also the player's own to direct keeps theirs, since the player's own pass owns
-# them. Exemptions stay, as they do everywhere else a setting changes.
-leo_mvd_release_puppet_effect = {
-	if = {
-		limit = { exists = puppet:$TYPE$ }
-		puppet:$TYPE$ = {
-			every_vassal_or_below = {
-				limit = {
-					has_variable = leo_mvd_managed
-					NOT = { leo_mvd_directive_shown_trigger = { LIEGE = scope:leo_mvd_liege } }
-				}
-				leo_mvd_clear_stale_effect = yes
-			}
-		}
-	}
-}
-
 # Current scope: the player. leo_mvd_remove_all_effect's sweep, over the vassals
 # of the player's puppet of type $TYPE$.
 leo_mvd_remove_all_puppet_effect = {
@@ -206,9 +184,9 @@ leo_mvd_remove_all_puppet_effect = {
 
 # Current scope: the player. Escape hatch: remove every mod-assigned directive
 # and exemption, then disable the mod. Manually assigned directives are kept.
-# Swept whether or not puppets are switched on now, since they may have been.
-# A former puppet is out of reach: once the link is gone there is no way back to
-# its vassals, just as there is none to a vassal who has left the realm.
+# Its puppets' vassals are swept too. A former puppet is out of reach: once the
+# link is gone there is no way back to its vassals, just as there is none to a
+# vassal who has left the realm.
 leo_mvd_remove_all_effect = {
 	every_vassal_or_below = {
 		limit = {

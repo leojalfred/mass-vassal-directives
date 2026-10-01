@@ -53,10 +53,6 @@ leo_mvd_on_death = {
 					limit = { root = { has_variable = leo_mvd_auto } }
 					set_variable = leo_mvd_auto
 				}
-				if = {
-					limit = { root = { has_variable = leo_mvd_puppets } }
-					set_variable = leo_mvd_puppets
-				}
 				leo_mvd_copy_rules_effect = yes
 				if = {
 					limit = {
