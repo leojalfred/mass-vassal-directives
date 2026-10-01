@@ -62,6 +62,9 @@ NAME=$(desc_field name "$DESC")
 # by side in one mod folder and a player can tell them apart in the launcher.
 DIR="leo_mvd_${TARGET}_${VER}"
 rm -rf "$OUT"; mkdir -p "$OUT/stage/$DIR"
+# Absolute from here on: the zip is written from inside the staging folder, where
+# a relative out dir would point somewhere that does not exist.
+OUT=$(cd "$OUT" && pwd)
 cp -r "$DIST/." "$OUT/stage/$DIR/"
 LOCAL_NAME="$NAME (v$VER)"
 sed -i -e '/^remote_file_id=/d' -e "s/^name=.*/name=\"$LOCAL_NAME\"/" "$OUT/stage/$DIR/descriptor.mod"
