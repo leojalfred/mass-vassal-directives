@@ -1,0 +1,43 @@
+# Publishes one mod version as a GitHub release, so a player whose game is not
+# on the version the Workshop copy supports can still get a build that matches.
+#
+# Each of the three mods is versioned and released on its own, so each has its
+# own tag: vanilla-vX.Y.Z, agot-vX.Y.Z, tfe-vX.Y.Z. Pushing one releases that
+# mod and nothing else. An annotated tag's message becomes the release's notes.
+# All the work is in tools/package_release.sh, which runs the same locally.
+name: Release
+
+on:
+  push:
+    tags:
+      - 'vanilla-v*'
+      - 'agot-v*'
+      - 'tfe-v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Every tag, so the packager can tell whether this is the newest base
+          # mod release.
+          fetch-depth: 0
+
+      - name: Build and package
+        run: |
+          # checkout can leave an annotated tag as a plain ref; fetch the tag
+          # object itself so its message is there to become the notes.
+          git fetch --force origin "refs/tags/$TAG:refs/tags/$TAG"
+          bash tools/package_release.sh "$TAG" out
+
+      - name: Publish
+        run: |
+          gh release create "$TAG" out/*.zip --verify-tag \
+            --title "$(cat out/title.txt)" --notes-file out/notes.md --latest="$(cat out/latest.txt)"

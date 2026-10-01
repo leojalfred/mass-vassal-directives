@@ -120,6 +120,21 @@ bash tools/build.sh        # add -v to narrate each phase
 
 All three mods share one set of source files. The total-conversion builds layer their differences on at build time, so there is no runtime "am I running under AGOT" check anywhere. `dist/` is regenerated on every build, never hand-edited, and gitignored, so load and test from `dist/vanilla`, `dist/agot` or `dist/tfe`, not from the repo root. (The generated files committed at the repo root are the vanilla output, kept current so generator changes show up as reviewable diffs.)
 
+## Releases for older game versions
+
+Steam updates a subscribed mod whatever version the game is on, so a player who rolls Crusader Kings III back still gets the newest mod. Every version of each mod is therefore also published on the [GitHub releases page](https://github.com/leojalfred/mass-vassal-directives/releases) as a zip that installs as a local mod. Each release's title names the game version it is for and, for the total-conversion builds, the version of that conversion it was tested with. Its notes say how to install it.
+
+Releases are cut by tag, one per mod, since the three are versioned separately: `vanilla-vX.Y.Z`, `agot-vX.Y.Z`, `tfe-vX.Y.Z`. Pushing a tag runs `.github/workflows/release.yml`, which builds that mod and publishes it; the tag's version must match the mod's `descriptor.mod`. Tag the commit that was published to the Workshop. `tools/tag_release.sh` creates the tag with that version's patch notes as its message, which the release shows under its changes. The notes are the plain-text block of `publishing/patch_notes/<mod>-<version>.md` (`base`, `agot` or `tfe`), the same one pasted into Paradox Mods. `publishing/` is not in git, so the tag message is how they reach the release:
+
+```
+bash tools/tag_release.sh vanilla-vX.Y.Z      # tags HEAD; pass a commit to tag another
+git push origin vanilla-vX.Y.Z
+```
+
+A total-conversion build also says which version of the conversion it was tested with. That lives in `agot/tested_with` and `tfe/tested_with`: one line each, holding the version exactly as the conversion's own `descriptor.mod` gives it (e.g. `0.5.2.1`). Packaging refuses a conversion build without one, and `tools/check_compat_static.sh` warns when the installed conversion no longer matches it. When a conversion updates, run the checks and the smoke test against the new version, write that version into the file, and only then tag.
+
+`bash tools/package_release.sh <tag>` builds the same zip, title and notes locally, into `dist/release`.
+
 ## File layout
 
 All three mods build from one shared set of game files:
@@ -163,6 +178,11 @@ tfe/files/                                               TFE-only whole files, c
 tfe/fragments/                                           the same kind of snippets, for TFE
 tools/gen_panel.sh                                       generates the three files above, per target
 tools/build.sh                                           builds dist/vanilla, dist/agot and dist/tfe from all of the above
+tools/package_release.sh                                 packages one mod version as a GitHub release zip
+tools/tag_release.sh                                     tags a release, with its patch notes as the message
+tools/check_compat_static.sh                             checks every game, AGOT and TFE name the mod leans on
+agot/tested_with, tfe/tested_with                        the conversion version each build was last tested with
+.github/workflows/release.yml                            publishes a release when a vanilla-v / agot-v / tfe-v tag is pushed
 ```
 
 A total-conversion build differs from the base in exactly three places: `TARGET=` branches in the generator, the fragments injected at the `# @AGOT:...@` and `# @TFE:...@` markers the shared files carry (every build strips the markers that are not its own), and the whole files under `agot/files/` or `tfe/files/`. None of it changes directive eligibility: it only surfaces content that conversion itself allows.
