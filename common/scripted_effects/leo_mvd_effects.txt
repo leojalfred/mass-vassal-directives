@@ -134,9 +134,11 @@ leo_mvd_run_waterfall_effect = {
 
 # Current scope: the player. Requires scope:leo_mvd_liege. Run the waterfall
 # across the vassals the player can direct through their puppet of type $TYPE$
-# (see the puppet list in leo_mvd_triggers.txt). The reach follows vanilla's
-# is_shown with the puppet as the liege: all the vassals below an administrative
-# puppet, only the direct vassals of any other.
+# (see the puppet list in leo_mvd_triggers.txt). The walk follows vanilla's
+# is_shown with the puppet as the liege, everyone below an administrative
+# puppet, but only direct vassals pass: vanilla's
+# vassal_follows_directive_valid_trigger asks is_vassal_of for every government,
+# so a sub-vassal is shown the directive and can never be given it.
 leo_mvd_run_puppet_effect = {
 	if = {
 		limit = {
