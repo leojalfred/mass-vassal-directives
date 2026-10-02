@@ -286,7 +286,7 @@ vis_and() { local out=; for e in "$@"; do [ -z "$e" ] && continue
 	if [ -z "$out" ]; then out=$e; else out="And( $out, $e )"; fi; done; echo "$out"; }
 # The DLC features that can put an administrative vassal in a realm. Vanilla
 # gates the three administrative directives (improve development, train
-# commanders, build men-at-arms) on `government_allows = administrative` and
+# commanders, build men-at-arms) on `government_has_mechanic = administrative` and
 # nothing else, and five governments answer yes to that: Byzantium's
 # administrative from Roads to Power, plus the celestial, meritocratic, steppe
 # administrative and Ritsuryo governments from All Under Heaven. So an All Under

@@ -1,10 +1,10 @@
 # Leo VI's Mass Vassal Directives
 
-A quality-of-life mod for **Crusader Kings III (1.19.x)** that hands out vassal directives for you, by rules you write, so you never have to click through every vassal one by one again.
+A quality-of-life mod for **Crusader Kings III (1.20.x)** that hands out vassal directives for you, by rules you write, so you never have to click through every vassal one by one again.
 
 Nothing about directive _eligibility_ changes: the mod calls the game's own eligibility triggers and mirrors the vanilla interaction's conditions exactly. It only automates what you could already do by hand.
 
-It requires **no DLC, and supports them all**. The administrative directives come from _Roads to Power_ or _All Under Heaven_ (either one gives you administrative vassals) and nomad vassals from _Khans of the Steppe_; when you own a DLC the mod folds its content in, and when you do not, the panel hides what that DLC would add and the presets adjust their plans, so you only ever see options your game can actually use.
+It requires **no DLC, and supports them all**. The administrative directives come from _Roads to Power_ or _All Under Heaven_ (either one gives you administrative vassals), nomad vassals from _Khans of the Steppe_, and directing your puppets' vassals from _By God Alone_; when you own a DLC the mod folds its content in, and when you do not, the panel hides what that DLC would add and the presets adjust their plans, so you only ever see options your game can actually use.
 
 ## How it works
 
@@ -50,7 +50,7 @@ All configuration lives in a panel docked to the **Realm → Subjects** tab.
 
 1. **Open it**: in the Realm window's Subjects tab, click the directives button in the header (next to _Toggle Compact List_). The panel appears alongside; drag it wherever you like. In the _Fallen Eagle_ build the button sits between the tab's two filter dropdowns instead, because TFE's Realm window has no header to put it in; the `mass_directives` keybind opens it either way.
 2. **Choose a preset.** Nothing is assigned until you do.
-3. **Tick Automatically Reassign Vassal Directives** to run the rules every month and again whenever you change anything. **Apply Now** runs them once, on demand.
+3. **Tick Automatically Reassign Vassal Directives** to run the rules every month and again whenever you change anything. **Apply Now** runs them once, on demand. With _By God Alone_, the rules also reach the vassals of your puppets: the ones you could give a directive through a puppet yourself. Your rules and their conditions still measure each vassal against you, but whether a vassal accepts a directive depends on their standing with the puppet, their liege, exactly as when you do it by hand. Exempting works on them the same way.
 4. **Exempt individuals**: right-click a vassal's portrait → Vassal section → **"Exempt from Directive Automation"**. Exempt vassals show their directive icon **dimmed gray** everywhere in the UI and are skipped entirely; manage them by hand with the vanilla _Give Vassal Directive_ interaction. Undo with **"Include in Directive Automation"**. A vassal also exempts itself the moment you re-assign a directive the mod had given it, so overriding the automation by hand is never undone.
 5. **Escape hatch**: **Remove All** clears every directive the mod assigned, removes all exemptions, and turns automation off.
 
@@ -60,7 +60,7 @@ Settings are stored per playthrough and carry over to your heir on succession.
 
 ## Compatibility
 
-- **DLC**: none required, all supported. Either _Roads to Power_ or _All Under Heaven_ adds the administrative directives (Improve Development, Train Commanders, Build Men-at-Arms) and the Administrative Government condition, since both bring governments the game counts as administrative: Byzantium's from the first, and China's, Korea's, the steppe's and Japan's from the second. Either expansion also brings the Administration Type condition and the Govern by Theme preset, each speaking the language of whichever administrative government you play. _Khans of the Steppe_ adds nomad vassals and their four directives. Without a given DLC the panel hides what it would enable and the built-in presets adapt their plans, so nothing ever points at an option your game cannot use.
+- **DLC**: none required, all supported. Either _Roads to Power_ or _All Under Heaven_ adds the administrative directives (Improve Development, Train Commanders, Build Men-at-Arms) and the Administrative Government condition, since both bring governments the game counts as administrative: Byzantium's from the first, and China's, Korea's, the steppe's and Japan's from the second. Either expansion also brings the Administration Type condition and the Govern by Theme preset, each speaking the language of whichever administrative government you play. _Khans of the Steppe_ adds nomad vassals and their four directives. _By God Alone_ adds puppets, and with them the option to run your rules over your puppets' vassals too. Without a given DLC the panel hides what it would enable and the built-in presets adapt their plans, so nothing ever points at an option your game cannot use.
 - **Achievements**: not affected. Since CK3 1.9, mods do not disable achievements.
 - **Existing saves**: safe to add mid-run (automation bootstraps within a game-year, or immediately from the panel) and safe to remove (mod-assigned directives are ordinary vanilla directives; leftover mod variables are inert).
 - **Multiplayer**: settings and automation are per-player; every button routes through a synchronized scripted GUI.
@@ -86,7 +86,7 @@ This asserts every vanilla, AGOT and TFE name the mod relies on still exists in 
 
 A few files copy or mirror vanilla content that can change meaning without changing its name. Re-diff each against the game files (every one is commented with what to compare):
 
-- `common/scripted_triggers/leo_mvd_triggers.txt`: mirrors `give_vassal_directive_interaction`'s eligibility and its per-directive gates (`game/common/character_interactions/00_vassal_interactions.txt:3420+`). `leo_mvd_directive_shown_trigger` is the one copy of vanilla's is_shown, used by both the rules and the exempt interaction.
+- `common/scripted_triggers/leo_mvd_triggers.txt`: mirrors `give_vassal_directive_interaction`'s eligibility and its per-directive gates (`game/common/character_interactions/00_vassal_interactions.txt:3577+`). `leo_mvd_directive_shown_trigger` is the one copy of vanilla's is_shown, used by both the rules and the exempt interaction.
 - `common/customizable_localization/zz_leo_mvd_vassal_directive_loc.txt`: a by-name override of vanilla's `vassal_directive_icon` and `vassal_directive_text` (from `game/common/customizable_localization/00_vassal_custom_loc.txt`), each vanilla entry paired with an exempt twin. Re-diff those two functions after a patch; a new directive means new twins.
 - `gui/leo_mvd_panel.gui`: latches onto the vanilla Subjects-tab directives button and its `mass_directives_window` GUI variable (`game/gui/window_my_realm.gui`); confirm that button and variable still exist. Also carries copies of vanilla's `button_drop` and `button_dropdown` (`game/gui/shared/buttons.gui`).
 - `gui/leo_mvd_texticons.gui`: gray and inline-sized twins of the vanilla directive texticons (`game/gui/texticons.gui`); confirm the source textures still exist.
@@ -100,6 +100,7 @@ The smallest set of in-game steps that catches everything the static check and r
 - Open a **condition dropdown**. Real condition names fill it; pick one and it applies. (This single action exercises the whole panel mechanism: the data-driven option lists, the runtime-built labels, and the click that writes the value.)
 - Choose a **preset**, then **Apply Now**. Directives assign to eligible vassals. Advance about three months: they **stay**, and none flip on and off. (A directive that assigns then vanishes the next month means the per-directive gates in `leo_mvd_triggers.txt` no longer match vanilla's `send_option`s, which step 2 is where you fix.)
 - **Exempt** a vassal (right-click their portrait). Its directive icon dims.
+- With _By God Alone_, make a foreign ruler with vassals your puppet (_Puppet Secular Ruler_, or in the console `effect random_neighboring_top_liege_realm_owner = { limit = { any_vassal = { highest_held_title_tier >= tier_county } } save_scope_as = test_puppet } set_puppet = { target = scope:test_puppet type = external_ruler_puppet }`, which picks a neighboring ruler with count vassals), then **Apply Now**. The puppet's eligible vassals get directives, keep them after a few months, and can be exempted from their portrait.
 - `logs/error.log` has no `leo_mvd` lines.
 
 Without _Roads to Power_ or _All Under Heaven_, confirm instead that the administrative conditions and directives are absent. With _All Under Heaven_ but not _Roads to Power_, confirm the opposite: the administrative directives, the Administrative Government condition and Administration Type are all present, the last offering that government's own types. For AGOT, load `dist/agot` after the A Game of Thrones mod and repeat: the Westeros conditions appear, Settle the Wilderness assigns, and the dimmed exempt icon works (it depends on loading last). For TFE, load `dist/tfe` after The Fallen Eagle and repeat, starting with the opener: the button shows in the Subjects tab only, opens and closes the panel, and closing the Realm window closes the panel with it.

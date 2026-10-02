@@ -16,24 +16,31 @@ leo_mvd_exempt_interaction = {
 
 	# Shown for exactly the vassals vanilla's Give Vassal Directive is shown for,
 	# and additionally only for a human actor and a vassal not already exempt.
-	# The vanilla mirror lives in one place, so it cannot drift between here and
-	# the rules.
+	# That includes a puppet's vassals once the player has the rules reach them:
+	# vanilla offers those a directive through the puppet, and this is offered in
+	# the ordinary menu instead, since a puppet action has to be declared in the
+	# game's own puppet types. The vanilla mirror lives in one place, so it cannot
+	# drift between here and the rules.
 	is_shown = {
 		scope:actor = { is_ai = no }
 		scope:recipient = {
-			leo_mvd_directive_shown_trigger = { LIEGE = scope:actor }
+			OR = {
+				leo_mvd_directive_shown_trigger = { LIEGE = scope:actor }
+				leo_mvd_puppet_directed_trigger = { ACTOR = scope:actor }
+			}
 			NOT = { has_variable = leo_mvd_exempt }
 		}
 	}
 
 	# Grays out under exactly the same conditions as Give Vassal Directive,
 	# so exemption is only offered where a directive could actually be given
-	# (these mirror that interaction's is_valid / is_valid_showing_failures_only).
+	# (these mirror that interaction's is_valid / is_valid_showing_failures_only),
+	# asked of whichever liege the directive would come from.
 	is_valid = {
-		vassal_follows_directive_trigger = { VASSAL = scope:recipient LIEGE = scope:actor }
+		leo_mvd_directing_liege_check_trigger = { ACTOR = scope:actor VASSAL = scope:recipient CHECK = vassal_follows_directive_trigger }
 	}
 	is_valid_showing_failures_only = {
-		vassal_follows_directive_valid_trigger = { VASSAL = scope:recipient LIEGE = scope:actor }
+		leo_mvd_directing_liege_check_trigger = { ACTOR = scope:actor VASSAL = scope:recipient CHECK = vassal_follows_directive_valid_trigger }
 		scope:recipient = { is_physically_able = yes }
 	}
 
