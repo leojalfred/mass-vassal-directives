@@ -11,7 +11,7 @@ l_english:
  # _tt_nodlc just aliases its _tt with a ref, the way the non-branching base
  # presets do.
  leo_mvd_ui_preset_6: "Master of the Seven Kingdoms"
- leo_mvd_ui_preset_6_tt: "Rule a mixed realm, each [vassal|E] to their place.\n\n[vassals|E] who share your [faith|E] $leo_mvd_ui_dir_1$; off-[faith|E] ones are left alone.\nThe Ironborn $leo_mvd_ui_dir_8$.\nStrong [vassals|E] $leo_mvd_ui_dir_9$; the weak $leo_mvd_ui_dir_7$."
+ leo_mvd_ui_preset_6_tt: "Rule a mixed realm, each [vassal|E] to their place.\n\nVassals who share your [faith|E] $leo_mvd_ui_dir_1$; off-faith ones are left alone.\nThe Ironborn $leo_mvd_ui_dir_8$.\nStrong vassals $leo_mvd_ui_dir_9$; the weak $leo_mvd_ui_dir_7$."
  leo_mvd_ui_preset_6_tt_nodlc: "$leo_mvd_ui_preset_6_tt$"
  leo_mvd_ui_preset_7: "Settle the Frontier"
  leo_mvd_ui_preset_7_tt: "Grow the realm and push its borders outward.\n\n[vassals|E] who share your [faith|E] $leo_mvd_ui_dir_1$.\nThe Ironborn $leo_mvd_ui_dir_8$.\nEveryone else $leo_mvd_ui_dir_14$."

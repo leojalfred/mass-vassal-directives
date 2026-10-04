@@ -10,9 +10,9 @@
  # Nomads keep their own running order: they have four directives no one else
  # can be given, and can be given none of the other nine.
  leo_mvd_ui_heading_nomads: "游牧优先级"
- leo_mvd_ui_nomads_empty_tt: "你的[nomad|E][vassals|E]不受干预。\n\n他们遵循一套专属的执行顺序，因为可以指派给他们的[directives|E]是他们独有的。没有[nomad|E]会兴建[fortification_buildings|E]，也没有其他人会放牧[herd|E]。\n\n#weak 添加一条优先级，让他们各司其职。#!"
+ leo_mvd_ui_nomads_empty_tt: "你的[nomad|E][vassals|E]不受干预。\n\n他们遵循一套专属的执行顺序，因为可以指派给他们的[directives|E]是他们独有的。没有游牧ä¼å´å»º[fortification_buildings|E]ï¼ä¹æ²¡æå¶ä»äººä¼æ¾ç§[herd|E]ã\n\n#weak æ·»å ä¸æ¡ä¼åçº§ï¼è®©ä»ä»¬åå¸å¶èã#!"
  leo_mvd_ui_auto: "自动重新分配封臣指令"
- leo_mvd_ui_auto_tt: "启用后，[directive|E]优先级瀑布流会在每月，以及每当你在此处更改设置时，对所有符合条件的[vassals|E]重新执行。开启它会立即应用指令。\n\n#weak 更改一个由自动化分配的[directive|E]，该[vassal|E]便会自动为你豁免，你的选择得以保留。若想在此之前将某个[vassal|E]排除在外，请通过其互动菜单将其豁免。#!"
+ leo_mvd_ui_auto_tt: "启用后，[directive|E]优先级瀑布流会在每月，以及每当你在此处更改设置时，对所有符合条件的[vassals|E]重新执行。开启它会立即应用指令。\n\n#weak 更改一个由自动化分配的指令，该封臣便会自动为你豁免，你的选择得以保留。若想在此之前将某个封臣排除在外，请通过其互动菜单将其豁免。#!"
  leo_mvd_ui_apply: "立即应用"
  leo_mvd_ui_apply_tt: "立即对所有符合条件且未豁免的[vassals|E]应用已配置的[directive|E]优先级。"
  leo_mvd_ui_remove_all: "全部移除"
@@ -26,11 +26,11 @@
  leo_mvd_ui_preset_0: "无"
  # Doubles as the panel's Description text while None is selected, so it has to
  # both say what None does and point a new player somewhere useful.
- leo_mvd_ui_preset_0_tt: "不进行任何分配，且自动化会放弃它此前发出的所有[directives|E]。你亲自指派给[vassal|E]的[directives|E]不受影响。\n\n预设是一套执行顺序：每个[vassal|E]会被指派其中第一个适合他们的[directive|E]。在上方选择其一，其方案便会显示在此处。\n\n或选择#V 自定义#!，逐条优先级自行编写顺序。为每个[vassal|E]指派相同的[directive|E]，或依你所选的标准评判他们——从[faith|E]与[culture|E]，到实力、[development|E]与地位——并为每人指派合适的[directive|E]。\n\n#weak 在你做出选择前，不会发生任何事。#!"
+ leo_mvd_ui_preset_0_tt: "不进行任何分配，且自动化会放弃它此前发出的所有[directives|E]。你亲自指派给[vassal|E]的指令不受影响。\n\n预设是一套执行顺序：每个封臣会被指派其中第一个适合他们的指令。在上方选择其一，其方案便会显示在此处。\n\n或选择#V 自定义#!，逐条优先级自行编写顺序。为每个封臣指派相同的指令，或依你所选的标准评判他们——从[faith|E]与[culture|E]，到实力、[development|E]与地位——并为每人指派合适的指令。\n\n#weak 在你做出选择前，不会发生任何事。#!"
  leo_mvd_ui_preset_1: "皈依与发展"
  leo_mvd_ui_preset_1_tt: "先将你的[vassals|E]纳入麾下，再让他们壮大。\n\n#weak 1.#! 与你同[faith|E]、却持有他信仰领地的封臣，被要求$leo_mvd_ui_dir_1$。\n#weak 2.#! 与你同[culture|E]、却持有他文化领地的封臣，被要求$leo_mvd_ui_dir_2$。\n#weak 3.#! 其余封臣中，军事强大者$leo_mvd_ui_dir_3$，弱小者$leo_mvd_ui_dir_5$。\n#weak 4.#! 所有剩下的封臣$leo_mvd_ui_dir_9$。"
  leo_mvd_ui_preset_2: "统一王国"
- leo_mvd_ui_preset_2_tt: "让王国成为一个民族。\n\n#weak 1.#! 与你同[faith|E]、却持有他信仰领地的封臣，被要求$leo_mvd_ui_dir_1$。\n#weak 2.#! 与你同[culture|E]、却持有他文化领地的封臣，被要求$leo_mvd_ui_dir_2$。\n#weak 3.#! 仍持有外[culture|E]领地者，致力于$leo_mvd_ui_dir_6$。\n#weak 4.#! 所有剩下的封臣$leo_mvd_ui_dir_9$。\n\n#weak 比皈依与发展的转化力度更强，代价是牺牲发展。#!"
+ leo_mvd_ui_preset_2_tt: "让王国成为一个民族。\n\n#weak 1.#! 与你同[faith|E]、却持有他信仰领地的封臣，被要求$leo_mvd_ui_dir_1$。\n#weak 2.#! 与你同[culture|E]、却持有他文化领地的封臣，被要求$leo_mvd_ui_dir_2$。\n#weak 3.#! 仍持有外文化领地者，致力于$leo_mvd_ui_dir_6$。\n#weak 4.#! 所有剩下的封臣$leo_mvd_ui_dir_9$。\n\n#weak 比皈依与发展的转化力度更强，代价是牺牲发展。#!"
  leo_mvd_ui_preset_3: "备战"
  leo_mvd_ui_preset_3_tt: "武装王国，各[vassal|E]依其所长。\n\n[administrative|E]封臣调动自己的军队：强大者$leo_mvd_ui_dir_4$，弱小者$leo_mvd_ui_dir_5$。\n其余封臣中，强大者$leo_mvd_ui_dir_7$，弱小者$leo_mvd_ui_dir_8$。\n\n#weak 完全不考虑[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_4: "发展经济"
@@ -40,7 +40,7 @@
  leo_mvd_ui_preset_8_tt_rtp: "让每位总督去做其[GetPlayer.Custom('leo_mvd_cl_admin_term')]本就擅长的事。\n\n#weak 1.#! $admin_theme_military$总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! $admin_theme_frontier$总督受命$leo_mvd_ui_dir_7$。\n#weak 3.#! $admin_theme_civilian$总督受命$leo_mvd_ui_dir_3$。\n#weak 4.#! $admin_theme_naval$总督受命$leo_mvd_ui_dir_8$。\n#weak 5.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_8_tt_celestial: "让每位总督去做其[GetPlayer.Custom('leo_mvd_cl_admin_term')]本就擅长的事。\n\n#weak 1.#! $celestial_province_military$与$celestial_province_protectorate$总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! $celestial_province_industrial$总督受命$leo_mvd_ui_dir_3$。\n#weak 3.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_8_tt_standard_set: "让每位总督去做其[GetPlayer.Custom('leo_mvd_cl_admin_term')]本就擅长的事。\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')]总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')]总督受命$leo_mvd_ui_dir_3$。\n#weak 3.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"
- leo_mvd_ui_preset_8_tt_ritsuryo: "让每位总督去做其[GetPlayer.Custom('leo_mvd_cl_admin_term')]本就擅长的事。\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')]总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')]总督受命$leo_mvd_ui_dir_3$。\n#weak 3.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak $leo_mvd_ui_dir_3$仅提供给[duchy|E]及以上的[vassal|E]，而$japan_administrative_government$总督通常只持有一个[county|E]，故多数人最终改为$leo_mvd_ui_dir_9$。#!\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"
+ leo_mvd_ui_preset_8_tt_ritsuryo: "让每位总督去做其[GetPlayer.Custom('leo_mvd_cl_admin_term')]本就擅长的事。\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')]总督受命$leo_mvd_ui_dir_5$。\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')]总督受命$leo_mvd_ui_dir_3$。\n#weak 3.#! 其余所有[vassal|E]，无论是否为总督，皆受命$leo_mvd_ui_dir_9$。\n\n#weak $leo_mvd_ui_dir_3$仅提供给[duchy|E]及以上的封臣，而$japan_administrative_government$总督通常只持有一个[county|E]，故多数人最终改为$leo_mvd_ui_dir_9$。#!\n\n#weak 完全忽略[faith|E]与[culture|E]。#!"
  leo_mvd_ui_preset_5: "自定义"
  leo_mvd_ui_preset_5_tt: "你自己的规则，写在下方。\n\n#weak 在此选择自定义将从零开始。若想改从某个预设起步，只需更改其中一条规则即可。该预设便会成为你的，保持原样，并带上你的更改。#!"
 
@@ -67,8 +67,8 @@
  # Governor Theme, because it is the one picker that matches a value outright
  # instead of reading as "is at least", and Average Development, because the
  # label cannot say which counties are averaged.
- leo_mvd_ui_cond_20_tt: "精确匹配某一类型。并非[governor|E]的[vassal|E]永远不满足此条件。\n\n#weak 设定于总督的契约之上，故此项仅能区分[administrative|E][vassals|E]。只会提供你自己[government|E]所用的类型。#!"
- leo_mvd_ui_cond_9_tt: "该数值是一个[duchy|E]级的基准，按每个[vassal|E]的头衔等级缩放，使单一设置在整个王国内始终有意义。更大的王国能募集更庞大的军队。\n\n以该数值为基准，一个[county|E]级封臣被要求0.4倍，[duchy|E]级为1倍，[kingdom|E]级为3倍，[empire|E]级为8倍。\n\n#weak 因此选择1000，对伯爵而言为400兵力，对公爵为1000，对国王为3000，对皇帝为8000。#!"
+ leo_mvd_ui_cond_20_tt: "精确匹配某一类型。并非[governor|E]的[vassal|E]永远不满足此条件。\n\n#weak 设定于总督的契约之上，故此项仅能区分[administrative|E]封臣。只会提供你自己[government|E]所用的类型。#!"
+ leo_mvd_ui_cond_9_tt: "该数值是一个[duchy|E]级的基准，按每个[vassal|E]的头衔等级缩放，使单一设置在整个王国内始终有意义。更大的王国能募集更庞大的军队。\n\n以该数值为基准，一个[county|E]级封臣被要求0.4倍，公国级为1倍，[kingdom|E]级为3倍，[empire|E]级为8倍。\n\n#weak 因此选择1000，对伯爵而言为400兵力，对公爵为1000，对国王为3000，对皇帝为8000。#!"
  leo_mvd_ui_cond_21_tt: "[vassal|E]亲自持有的[counties|E]的平均[development|E]。由于指令不会下达给封臣的封臣，[directive|E]能够实际改善的正是这些伯爵领。\n\n#weak 未持有伯爵领的封臣，例如[baron|E]，永远不满足此条件。#!"
  leo_mvd_ui_cond_22_tt: "该[vassal|E]的领主是你的一个[puppets|E]，因此其[directive|E]经由该傀儡下达，是否接受取决于其与傀儡而非与你的关系。用它来区别对待他们与你自己的封臣。"
  leo_mvd_ui_term_theme: "[theme_administration|E]"
