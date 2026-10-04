@@ -10,7 +10,7 @@
  # Nomads keep their own running order: they have four directives no one else
  # can be given, and can be given none of the other nine.
  leo_mvd_ui_heading_nomads: "遊牧民の優先順位"
- leo_mvd_ui_nomads_empty_tt: "あなたの[nomad|E]の[vassals|E]は手を付けられません。\n\n彼らは独自の優先順位に従います。与えられる[directives|E]が彼らだけのものだからです。遊牧民ã¯[fortification_buildings|E]ãç¯ãããä»ã®èª°ã[herd|E]ãä¿ã¡ã¾ããã\n\n#weak åªåé ä½ãè¿½å ãã¦å½¼ããåããã¾ãããã#!"
+ leo_mvd_ui_nomads_empty_tt: "あなたの[nomad|E]の[vassals|E]は手を付けられません。\n\n彼らは独自の優先順位に従います。与えられる[directives|E]が彼らだけのものだからです。遊牧民は[fortification_buildings|E]を築かず、他の誰も[herd|E]を保ちません。\n\n#weak 優先順位を追加して彼らを働かせましょう。#!"
  leo_mvd_ui_auto: "臣下の指令を自動的に再割り当てする"
  leo_mvd_ui_auto_tt: "有効にすると、[directive|E]の優先順位のウォーターフォールが、毎月すべての対象[vassals|E]に対して、またここで設定を変更するたびに再実行されます。オンにすると指令が即座に適用されます。\n\n#weak 自動割り当てされた指令を変更すると、その封臣は自動的に除外され、あなたの選択が保たれます。それ以前に封臣を除外するには、対話メニューから除外してください。#!"
  leo_mvd_ui_apply: "今すぐ適用"

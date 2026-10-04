@@ -10,7 +10,7 @@
  # Nomads keep their own running order: they have four directives no one else
  # can be given, and can be given none of the other nine.
  leo_mvd_ui_heading_nomads: "Priorytety koczowników"
- leo_mvd_ui_nomads_empty_tt: "Twoi [nomad|E] [vassals|E] są pozostawieni w spokoju.\n\nRządzą się własną kolejnością, ponieważ [directives|E], które można im nadać, należą tylko do nich. Żaden koczownik nie wznosi [fortification_buildings|E], a nikt inny nie utrzymuje [herd|E].\n\n#weak Dodaj priorytet, aby daÄ im zajÄcie.#!"
+ leo_mvd_ui_nomads_empty_tt: "Twoi [nomad|E] [vassals|E] są pozostawieni w spokoju.\n\nRządzą się własną kolejnością, ponieważ [directives|E], które można im nadać, należą tylko do nich. Żaden koczownik nie wznosi [fortification_buildings|E], a nikt inny nie utrzymuje [herd|E].\n\n#weak Dodaj priorytet, aby dać im zajęcie.#!"
  leo_mvd_ui_auto: "Automatycznie przydzielaj dyrektywy wasali"
  leo_mvd_ui_auto_tt: "Po włączeniu wodospad priorytetów [directive|E] uruchamia się ponownie dla wszystkich uprawnionych [vassals|E] co miesiąc, a także za każdym razem, gdy zmienisz tu ustawienie. Włączenie tej opcji przydziela dyrektywy natychmiast.\n\n#weak Zmień dyrektywa przydzieloną przez automatyzację, a ten wasal zostanie za ciebie zwolniony, aby twój wybór pozostał w mocy. Aby wyłączyć wasal wcześniej, zwolnij go z jego menu interakcji.#!"
  leo_mvd_ui_apply: "Zastosuj teraz"
