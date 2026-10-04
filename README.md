@@ -4,7 +4,7 @@ A quality-of-life mod for **Crusader Kings III (1.20.x)** that hands out vassal 
 
 Nothing about directive _eligibility_ changes: the mod calls the game's own eligibility triggers and mirrors the vanilla interaction's conditions exactly. It only automates what you could already do by hand.
 
-It requires **no DLC, and supports them all**. The administrative directives come from _Roads to Power_ or _All Under Heaven_ (either one gives you administrative vassals), nomad vassals from _Khans of the Steppe_, and most puppets from _By God Alone_; when you own a DLC the mod folds its content in, and when you do not, the panel hides what that DLC would add and the presets adjust their plans, so you only ever see options your game can actually use.
+It requires **no DLC, and supports them all**. The administrative directives come from _Roads to Power_ or _All Under Heaven_ (either one gives you administrative vassals) and nomad vassals from _Khans of the Steppe_; when you own a DLC the mod folds its content in, and when you do not, the panel hides what that DLC would add and the presets adjust their plans, so you only ever see options your game can actually use.
 
 ## How it works
 
