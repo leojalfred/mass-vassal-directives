@@ -70,6 +70,7 @@
  leo_mvd_ui_cond_20_tt: "하나의 유형과 정확히 일치합니다. [governor|E]이(가) 아닌 [vassal|E]은(는) 이 조건을 결코 충족하지 못합니다.\n\n#weak 총독의 계약에 설정되므로, 이 조건은 [administrative|E] [vassals|E]만 분류합니다. 본인의 [government|E]이(가) 사용하는 유형만 제시됩니다.#!"
  leo_mvd_ui_cond_9_tt: "이 수치는 [duchy|E] 등급을 기준으로 한 척도로, 각 [vassal|E]의 등급에 맞춰 조정되어 하나의 설정이 왕국 전역에서 의미를 유지하도록 합니다. 큰 왕국일수록 더 큰 군대를 일으킵니다.\n\n이 수치에 대해 [county|E] 등급 봉신에게는 0.4배, [duchy|E] 등급에게는 1배, [kingdom|E] 등급에게는 3배, [empire|E] 등급에게는 8배를 요구합니다.\n\n#weak 따라서 1000을 선택하면 백작에게는 400명, 공작에게는 1000명, 왕에게는 3000명, 황제에게는 8000명의 병력이 됩니다.#!"
  leo_mvd_ui_cond_21_tt: "[vassal|E]이(가) 직접 보유한 [counties|E]의 평균 [development|E]입니다. 지침은 봉신의 봉신에게 전달되지 않으므로, [directive|E]이(가) 실제로 개선할 수 있는 백작령은 바로 이들입니다.\n\n#weak 백작령을 보유하지 않은 봉신, 예를 들어 [baron|E]은(는) 이 조건을 결코 충족하지 못합니다.#!"
+ leo_mvd_ui_cond_22_tt: "이 [vassal|E]의 주군은 당신의 [puppets|E] 중 하나이므로, [directive|E]은(는) 그 [puppet|E]을(를) 통해 내려지며, 받아들일지는 당신이 아닌 [puppet|E]과(와)의 관계에 달려 있습니다. 이를 이용해 당신의 [vassals|E]와(과) 다르게 다룰 수 있습니다."
  leo_mvd_ui_term_theme: "[theme_administration|E]"
  leo_mvd_ui_term_circuit: "[circuit_administration|E]"
  leo_mvd_ui_term_province: "[province_administration|E]"

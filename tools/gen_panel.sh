@@ -103,10 +103,11 @@ esac; }
 # This list is also the order the panel offers them in, which is why 19, 20 and
 # 21 sit beside the questions they refine rather than at the end: Same House
 # reads next to Same Dynasty, Governor Theme next to Administrative Government,
-# Average Development next to Capital Development. The codes themselves are
-# append-only - they are stored in player variables that persist in saves, so
-# renumbering would silently rewrite existing rule sets.
-CONDS="1 2 3 4 5 19 6 20 7 8 9 10 21 11 12 13 14"
+# Average Development next to Capital Development, and 22 (Is Your Puppet's
+# Vassal) with the other questions about where a vassal stands with you. The
+# codes themselves are append-only - they are stored in player variables that
+# persist in saves, so renumbering would silently rewrite existing rule sets.
+CONDS="1 2 3 4 5 19 6 20 7 8 22 9 10 21 11 12 13 14"
 # Westeros conditions (15-18: Ironborn and three faith blocs) are boolean and
 # AGOT-only; the AGOT build injects their evaluation branches.
 if [ "$TARGET" = agot ]; then CONDS="$CONDS 15 16 17 18"; fi
@@ -118,7 +119,7 @@ PRESET_RANGE="0 1 2 3 4 8 5"
 if [ "$TARGET" = agot ]; then PRESET_RANGE="0 1 2 3 4 8 6 7 5"; fi
 # 6 (Administrative Government) and 20 (Governor Theme) are left out for nomads:
 # no nomad is administrative, so both could only ever answer no.
-NOMAD_CONDS="1 2 3 4 5 19 7 8 9 10 21 11 12 13 14"
+NOMAD_CONDS="1 2 3 4 5 19 7 8 22 9 10 21 11 12 13 14"
 cond_name() { case $1 in
 	1) echo "[faith|E] is Yours" ;;
 	2) echo "[culture|E] is Yours" ;;
@@ -138,6 +139,7 @@ cond_name() { case $1 in
 	# Themes, circuits or provinces, whichever word the player's own game uses.
 	20) echo "[GetPlayer.Custom('leo_mvd_cl_admin_term')] is" ;;
 	21) echo "Average [development|E] is at Least" ;;
+	22) echo "Is Your [puppet|E]'s [vassal|E]" ;;
 	15) echo "Is Ironborn" ;;
 	16) echo "Follows the Faith of the Seven" ;;
 	17) echo "Follows the Old Gods" ;;
@@ -307,6 +309,10 @@ ADMIN_DLC="roads_to_power all_under_heaven"
 # check, so a DLC's options sit where they belong rather than being appended
 # after everything else.
 dir_dlc_feature()  { case $1 in 3|4|5) echo "$ADMIN_DLC" ;; esac; }
+# 22 (Is Your Puppet's Vassal) is deliberately ungated. Two of the three puppet
+# types need By God Alone, but the realm priest puppet does not: vanilla's
+# can_have_realm_priest_puppet_trigger never asks for it, so a game without the
+# DLC can still direct a puppet's vassals.
 cond_dlc_feature() { case $1 in 6) echo "$ADMIN_DLC" ;; esac; }
 # A preset is hidden outright when what it sorts by does not exist, rather than
 # falling back the way 1/3/4 do. Govern by Administration sorts governors by
@@ -346,7 +352,7 @@ esac; }
 # Governor Theme picks a value rather than a floor, the one place the panel
 # departs from "is at least", so it says so. Average Development's label cannot
 # say which counties are averaged (the personally held ones).
-cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; 20) echo "leo_mvd_ui_cond_20_tt" ;; 21) echo "leo_mvd_ui_cond_21_tt" ;; esac; }
+cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; 20) echo "leo_mvd_ui_cond_20_tt" ;; 21) echo "leo_mvd_ui_cond_21_tt" ;; 22) echo "leo_mvd_ui_cond_22_tt" ;; esac; }
 
 # One shared threshold picker per node serves every numeric condition, instead
 # of one hidden picker per condition (which multiplied the panel's widget count).

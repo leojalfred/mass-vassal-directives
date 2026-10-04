@@ -54,6 +54,7 @@
  leo_mvd_ui_cond_20: "[GetPlayer.Custom('leo_mvd_cl_admin_term')]이(가) 다음과 같음"
  leo_mvd_ui_cond_7: "[powerful_vassal|E]임"
  leo_mvd_ui_cond_8: "당신의 [council|E]에 있음"
+ leo_mvd_ui_cond_22: "당신의 [puppet|E]의 [vassal|E]임"
  leo_mvd_ui_cond_9: "군사력이 최소 이상"
  leo_mvd_ui_cond_10: "[title|E] 등급이 최소 이상"
  leo_mvd_ui_cond_21: "평균 [development|E]이(가) 최소 이상"

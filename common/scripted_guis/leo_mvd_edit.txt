@@ -436,6 +436,13 @@ leo_mvd_set_cond_8 = {
 		leo_mvd_edit_effect = { FIELD = 3 VALUE = 0 }
 	}
 }
+leo_mvd_set_cond_22 = {
+	scope = character
+	effect = {
+		leo_mvd_edit_effect = { FIELD = 2 VALUE = 22 }
+		leo_mvd_edit_effect = { FIELD = 3 VALUE = 0 }
+	}
+}
 leo_mvd_set_cond_9 = {
 	scope = character
 	effect = {

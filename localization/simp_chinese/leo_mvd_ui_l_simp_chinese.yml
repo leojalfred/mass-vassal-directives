@@ -54,6 +54,7 @@
  leo_mvd_ui_cond_20: "[GetPlayer.Custom('leo_mvd_cl_admin_term')]为"
  leo_mvd_ui_cond_7: "是[powerful_vassal|E]"
  leo_mvd_ui_cond_8: "在你的[council|E]中"
+ leo_mvd_ui_cond_22: "是你的[puppet|E]的[vassal|E]"
  leo_mvd_ui_cond_9: "军事实力不低于"
  leo_mvd_ui_cond_10: "[title|E]等级不低于"
  leo_mvd_ui_cond_21: "平均[development|E]不低于"

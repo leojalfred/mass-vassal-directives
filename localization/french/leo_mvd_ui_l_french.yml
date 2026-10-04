@@ -54,6 +54,7 @@
  leo_mvd_ui_cond_20: "[GetPlayer.Custom('leo_mvd_cl_admin_term')] :"
  leo_mvd_ui_cond_7: "Est un [powerful_vassal|E]"
  leo_mvd_ui_cond_8: "Est à votre [council|E]"
+ leo_mvd_ui_cond_22: "Est un [vassal|E] de votre [puppet|E]"
  leo_mvd_ui_cond_9: "Force militaire d'au moins"
  leo_mvd_ui_cond_10: "Rang de [title|E] d'au moins"
  leo_mvd_ui_cond_21: "[development|E] moyen d'au moins"

@@ -519,6 +519,21 @@ leo_mvd_cond_holds_trigger = {
 		}
 		scope:leo_mvd_avg_dev >= scope:leo_mvd_thresh
 	}
+	# 22 - Is Your Puppet's Vassal. True when the vassal's liege is one of the
+	# player's puppets, of any of the three types that can give directives (see
+	# the puppet list above). Only the player's own puppets count: the question is
+	# whose puppet the liege is, so a vassal of the player is answered no even
+	# when the player is someone else's puppet. ?= answers no for a type the
+	# player holds no puppet of.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 22 }
+		exists = liege
+		OR = {
+			scope:leo_mvd_liege.puppet:theological_agent_puppet ?= liege
+			scope:leo_mvd_liege.puppet:external_theological_agent_puppet ?= liege
+			scope:leo_mvd_liege.puppet:external_ruler_puppet ?= liege
+		}
+	}
 	# @AGOT:conditions@
 	# No condition picked yet: the branch is inert rather than silently true.
 	trigger_else = {
