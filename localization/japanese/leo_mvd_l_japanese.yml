@@ -10,9 +10,9 @@
  # Nomads keep their own running order: they have four directives no one else
  # can be given, and can be given none of the other nine.
  leo_mvd_ui_heading_nomads: "遊牧民の優先順位"
- leo_mvd_ui_nomads_empty_tt: "あなたの[nomad|E]の[vassals|E]は手を付けられません。\n\n彼らは独自の優先順位に従います。与えられる[directives|E]が彼らだけのものだからです。[nomad|E]は[fortification_buildings|E]を築かず、他の誰も[herd|E]を保ちません。\n\n#weak 優先順位を追加して彼らを働かせましょう。#!"
+ leo_mvd_ui_nomads_empty_tt: "あなたの[nomad|E]の[vassals|E]は手を付けられません。\n\n彼らは独自の優先順位に従います。与えられる[directives|E]が彼らだけのものだからです。遊牧民は[fortification_buildings|E]を築かず、他の誰も[herd|E]を保ちません。\n\n#weak 優先順位を追加して彼らを働かせましょう。#!"
  leo_mvd_ui_auto: "臣下の指令を自動的に再割り当てする"
- leo_mvd_ui_auto_tt: "有効にすると、[directive|E]の優先順位のウォーターフォールが、毎月すべての対象[vassals|E]に対して、またここで設定を変更するたびに再実行されます。オンにすると指令が即座に適用されます。\n\n#weak 自動割り当てされた[directive|E]を変更すると、その[vassal|E]は自動的に除外され、あなたの選択が保たれます。それ以前に[vassal|E]を除外するには、対話メニューから除外してください。#!"
+ leo_mvd_ui_auto_tt: "有効にすると、[directive|E]の優先順位のウォーターフォールが、毎月すべての対象[vassals|E]に対して、またここで設定を変更するたびに再実行されます。オンにすると指令が即座に適用されます。\n\n#weak 自動割り当てされた指令を変更すると、その封臣は自動的に除外され、あなたの選択が保たれます。それ以前に封臣を除外するには、対話メニューから除外してください。#!"
  leo_mvd_ui_apply: "今すぐ適用"
  leo_mvd_ui_apply_tt: "設定した[directive|E]の優先順位を、対象かつ除外されていないすべての[vassals|E]に今すぐ適用します。"
  leo_mvd_ui_remove_all: "すべて解除"
@@ -26,11 +26,11 @@
  leo_mvd_ui_preset_0: "なし"
  # Doubles as the panel's Description text while None is selected, so it has to
  # both say what None does and point a new player somewhere useful.
- leo_mvd_ui_preset_0_tt: "何も割り当てられず、自動割り当ては配った[directives|E]をすべて手放します。あなた自身が[vassal|E]に与えた[directives|E]はそのまま残されます。\n\nプリセットとは優先順位です。各[vassal|E]には、その中で適した最初の[directive|E]が与えられます。上から一つ選ぶと、その計画がここに表示されます。\n\nあるいは #V カスタム#! を選んで、優先順位を一つずつ自分で書くこともできます。すべての[vassal|E]に同じ[directive|E]を与えるも、[faith|E]や[culture|E]から強さ、[development|E]、立場に至るまで選んだ基準で判断し、それぞれに合った[directive|E]を与えるもよし。\n\n#weak 選ぶまで何も起こりません。#!"
+ leo_mvd_ui_preset_0_tt: "何も割り当てられず、自動割り当ては配った[directives|E]をすべて手放します。あなた自身が[vassal|E]に与えた指令はそのまま残されます。\n\nプリセットとは優先順位です。各封臣には、その中で適した最初の指令が与えられます。上から一つ選ぶと、その計画がここに表示されます。\n\nあるいは #V カスタム#! を選んで、優先順位を一つずつ自分で書くこともできます。すべての封臣に同じ指令を与えるも、[faith|E]や[culture|E]から強さ、[development|E]、立場に至るまで選んだ基準で判断し、それぞれに合った指令を与えるもよし。\n\n#weak 選ぶまで何も起こりません。#!"
  leo_mvd_ui_preset_1: "改宗と発展"
  leo_mvd_ui_preset_1_tt: "[vassals|E]を仲間に引き入れ、それから育てます。\n\n#weak 1.#! あなたの[faith|E]で他の信仰の県を持つ臣下には $leo_mvd_ui_dir_1$ を命じます。\n#weak 2.#! あなたの[culture|E]で他の文化の県を持つ臣下には $leo_mvd_ui_dir_2$ を命じます。\n#weak 3.#! 残りのうち、軍事的に強い者は $leo_mvd_ui_dir_3$、弱い者は $leo_mvd_ui_dir_5$。\n#weak 4.#! 残ったすべての臣下は $leo_mvd_ui_dir_9$。"
  leo_mvd_ui_preset_2: "王国の統一"
- leo_mvd_ui_preset_2_tt: "王国を一つの民にします。\n\n#weak 1.#! あなたの[faith|E]で他の信仰の県を持つ臣下には $leo_mvd_ui_dir_1$ を命じます。\n#weak 2.#! あなたの[culture|E]で他の文化の県を持つ臣下には $leo_mvd_ui_dir_2$ を命じます。\n#weak 3.#! なお他文化の[culture|E]の県を持つ者は $leo_mvd_ui_dir_6$ に取り組みます。\n#weak 4.#! 残ったすべての臣下は $leo_mvd_ui_dir_9$。\n\n#weak 改宗と発展より強く改宗させますが、発展を犠牲にします。#!"
+ leo_mvd_ui_preset_2_tt: "王国を一つの民にします。\n\n#weak 1.#! あなたの[faith|E]で他の信仰の県を持つ臣下には $leo_mvd_ui_dir_1$ を命じます。\n#weak 2.#! あなたの[culture|E]で他の文化の県を持つ臣下には $leo_mvd_ui_dir_2$ を命じます。\n#weak 3.#! なお他文化の文化の県を持つ者は $leo_mvd_ui_dir_6$ に取り組みます。\n#weak 4.#! 残ったすべての臣下は $leo_mvd_ui_dir_9$。\n\n#weak 改宗と発展より強く改宗させますが、発展を犠牲にします。#!"
  leo_mvd_ui_preset_3: "戦への備え"
  leo_mvd_ui_preset_3_tt: "王国を武装させ、各[vassal|E]をその強さに応じて働かせます。\n\n[administrative|E]の臣下は自らの軍を活かします。強い者は $leo_mvd_ui_dir_4$、弱い者は $leo_mvd_ui_dir_5$。\nそれ以外は、強い者が $leo_mvd_ui_dir_7$、弱い者が $leo_mvd_ui_dir_8$。\n\n#weak [faith|E]と[culture|E]は一切考慮しません。#!"
  leo_mvd_ui_preset_4: "経済の成長"
@@ -40,7 +40,7 @@
  leo_mvd_ui_preset_8_tt_rtp: "各総督に、その[GetPlayer.Custom('leo_mvd_cl_admin_term')]が元より適した務めを与える。\n\n#weak 1.#! $admin_theme_military$の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! $admin_theme_frontier$の総督は$leo_mvd_ui_dir_7$を命じられる。\n#weak 3.#! $admin_theme_civilian$の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 4.#! $admin_theme_naval$の総督は$leo_mvd_ui_dir_8$を命じられる。\n#weak 5.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
  leo_mvd_ui_preset_8_tt_celestial: "各総督に、その[GetPlayer.Custom('leo_mvd_cl_admin_term')]が元より適した務めを与える。\n\n#weak 1.#! $celestial_province_military$と$celestial_province_protectorate$の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! $celestial_province_industrial$の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 3.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
  leo_mvd_ui_preset_8_tt_standard_set: "各総督に、その[GetPlayer.Custom('leo_mvd_cl_admin_term')]が元より適した務めを与える。\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')]の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')]の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 3.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
- leo_mvd_ui_preset_8_tt_ritsuryo: "各総督に、その[GetPlayer.Custom('leo_mvd_cl_admin_term')]が元より適した務めを与える。\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')]の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')]の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 3.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak $leo_mvd_ui_dir_3$は[duchy|E]位以上の[vassal|E]にしか与えられず、$japan_administrative_government$の総督は通常[county|E]を一つ持つのみであるため、多くは$leo_mvd_ui_dir_9$に流れる。#!\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
+ leo_mvd_ui_preset_8_tt_ritsuryo: "各総督に、その[GetPlayer.Custom('leo_mvd_cl_admin_term')]が元より適した務めを与える。\n\n#weak 1.#! [GetPlayer.Custom('leo_mvd_cl_type_military')]の総督は$leo_mvd_ui_dir_5$を命じられる。\n#weak 2.#! [GetPlayer.Custom('leo_mvd_cl_type_industrial')]の総督は$leo_mvd_ui_dir_3$を命じられる。\n#weak 3.#! それ以外の[vassal|E]は、総督か否かを問わず$leo_mvd_ui_dir_9$を命じられる。\n\n#weak $leo_mvd_ui_dir_3$は[duchy|E]位以上の封臣にしか与えられず、$japan_administrative_government$の総督は通常[county|E]を一つ持つのみであるため、多くは$leo_mvd_ui_dir_9$に流れる。#!\n\n#weak [faith|E]と[culture|E]は一切考慮しない。#!"
  leo_mvd_ui_preset_5: "カスタム"
  leo_mvd_ui_preset_5_tt: "以下に書く、あなた自身のルール。\n\n#weak ここでカスタムを選ぶと何もない状態から始まります。代わりにプリセットから始めるには、そのルールの一つを変更するだけです。プリセットは元のまま、あなたの変更を加えてあなたのものになります。#!"
 
@@ -67,9 +67,10 @@
  # Governor Theme, because it is the one picker that matches a value outright
  # instead of reading as "is at least", and Average Development, because the
  # label cannot say which counties are averaged.
- leo_mvd_ui_cond_20_tt: "ひとつの種類と正確に一致する。[governor|E]でない[vassal|E]はこの条件を決して満たさない。\n\n#weak 総督の契約に設定されるため、これは[administrative|E]な[vassals|E]しか分類しない。提示されるのは自身の[government|E]が用いる種類のみ。#!"
- leo_mvd_ui_cond_9_tt: "この数値は[duchy|E]級の基準で、各[vassal|E]の位に応じて調整されるため、一つの設定が王国全体で意味を保ちます。大きな王国はより大きな軍を興します。\n\nこの数値に対し、[county|E]級の臣下は0.4倍、[duchy|E]級は1倍、[kingdom|E]級は3倍、[empire|E]級は8倍を求められます。\n\n#weak つまり1000という選択は、伯には400、公には1000、王には3000、皇帝には8000の兵となります。#!"
+ leo_mvd_ui_cond_20_tt: "ひとつの種類と正確に一致する。[governor|E]でない[vassal|E]はこの条件を決して満たさない。\n\n#weak 総督の契約に設定されるため、これは[administrative|E]な封臣しか分類しない。提示されるのは自身の[government|E]が用いる種類のみ。#!"
+ leo_mvd_ui_cond_9_tt: "この数値は[duchy|E]級の基準で、各[vassal|E]の位に応じて調整されるため、一つの設定が王国全体で意味を保ちます。大きな王国はより大きな軍を興します。\n\nこの数値に対し、[county|E]級の臣下は0.4倍、公爵領級は1倍、[kingdom|E]級は3倍、[empire|E]級は8倍を求められます。\n\n#weak つまり1000という選択は、伯には400、公には1000、王には3000、皇帝には8000の兵となります。#!"
  leo_mvd_ui_cond_21_tt: "[vassal|E]が直接保有する[counties|E]の平均[development|E]。指令は臣下の臣下には引き継がれないため、これらが[directive|E]の実際に改善できる伯爵領である。\n\n#weak 伯爵領を保有しない臣下、たとえば[baron|E]はこの条件を決して満たさない。#!"
+ leo_mvd_ui_cond_22_tt: "この[vassal|E]の主君は自分の[puppets|E]の一人であるため、[directive|E]はその傀儡を通じて与えられ、受け入れるかどうかは自分ではなく傀儡との関係で決まります。自分の封臣とは別に扱うために使います。"
  leo_mvd_ui_term_theme: "[theme_administration|E]"
  leo_mvd_ui_term_circuit: "[circuit_administration|E]"
  leo_mvd_ui_term_province: "[province_administration|E]"

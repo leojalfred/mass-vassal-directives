@@ -2,7 +2,7 @@ l_russian:
  leo_mvd_x_settle_wilderness_icon: "@leo_mvd_gray_settle_wilderness!"
  leo_mvd_x_settle_wilderness_text: "[directive|E]: Осваивать дикие графства$leo_mvd_exempt_suffix$"
  leo_mvd_ui_preset_6: "Владыка Семи Королевств"
- leo_mvd_ui_preset_6_tt: "Правьте пёстрой державой, каждого [vassal|E] на своё место.\n\n[vassals|E] вашей [faith|E] должны $leo_mvd_ui_dir_1$; те, кто иной [faith|E], остаются нетронутыми.\nЖелезнорождённые должны $leo_mvd_ui_dir_8$.\nСильные [vassals|E] должны $leo_mvd_ui_dir_9$; слабым велено $leo_mvd_ui_dir_7$."
+ leo_mvd_ui_preset_6_tt: "Правьте пёстрой державой, каждого [vassal|E] на своё место.\n\nВассалы вашей [faith|E] должны $leo_mvd_ui_dir_1$; те, кто иной конфессия, остаются нетронутыми.\nЖелезнорождённые должны $leo_mvd_ui_dir_8$.\nСильные вассалы должны $leo_mvd_ui_dir_9$; слабым велено $leo_mvd_ui_dir_7$."
  leo_mvd_ui_preset_6_tt_nodlc: "$leo_mvd_ui_preset_6_tt$"
  leo_mvd_ui_preset_7: "Осваивать границу"
  leo_mvd_ui_preset_7_tt: "Растите державу и раздвигайте её границы наружу.\n\n[vassals|E] вашей [faith|E] должны $leo_mvd_ui_dir_1$.\nЖелезнорождённые должны $leo_mvd_ui_dir_8$.\nВсе остальные должны $leo_mvd_ui_dir_14$."
