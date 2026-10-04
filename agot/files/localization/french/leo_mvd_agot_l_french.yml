@@ -2,7 +2,7 @@ l_french:
  leo_mvd_x_settle_wilderness_icon: "@leo_mvd_gray_settle_wilderness!"
  leo_mvd_x_settle_wilderness_text: "[directive|E] : Coloniser les comtés sauvages$leo_mvd_exempt_suffix$"
  leo_mvd_ui_preset_6: "Maître des Sept Couronnes"
- leo_mvd_ui_preset_6_tt: "Gouvernez un royaume mêlé, chaque [vassal|E] à sa place.\n\nLes [vassals|E] qui partagent votre [faith|E] $leo_mvd_ui_dir_1$ ; ceux d'une autre [faith|E] sont laissés tranquilles.\nLes Fer-nés $leo_mvd_ui_dir_8$.\nLes [vassals|E] forts $leo_mvd_ui_dir_9$ ; les faibles $leo_mvd_ui_dir_7$."
+ leo_mvd_ui_preset_6_tt: "Gouvernez un royaume mêlé, chaque [vassal|E] à sa place.\n\nLes vassaux qui partagent votre [faith|E] $leo_mvd_ui_dir_1$ ; ceux d'une autre foi sont laissés tranquilles.\nLes Fer-nés $leo_mvd_ui_dir_8$.\nLes vassaux forts $leo_mvd_ui_dir_9$ ; les faibles $leo_mvd_ui_dir_7$."
  leo_mvd_ui_preset_6_tt_nodlc: "$leo_mvd_ui_preset_6_tt$"
  leo_mvd_ui_preset_7: "Coloniser la frontière"
  leo_mvd_ui_preset_7_tt: "Développez le royaume et repoussez ses frontières vers l'extérieur.\n\nLes [vassals|E] qui partagent votre [faith|E] $leo_mvd_ui_dir_1$.\nLes Fer-nés $leo_mvd_ui_dir_8$.\nTous les autres $leo_mvd_ui_dir_14$."
