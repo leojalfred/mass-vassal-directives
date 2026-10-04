@@ -10,7 +10,7 @@
  # Nomads keep their own running order: they have four directives no one else
  # can be given, and can be given none of the other nine.
  leo_mvd_ui_heading_nomads: "유목민 우선순위"
- leo_mvd_ui_nomads_empty_tt: "당신의 [nomad|E] [vassals|E]은(는) 그대로 둡니다.\n\n그들은 자신들만의 서열에 따라 움직입니다. 그들에게 내릴 수 있는 [directives|E]은(는) 오직 그들만의 것이기 때문입니다. 어떤 유목민ë [fortification_buildings|E]ì(ë¥¼) ì¸ì°ì§ ìì¼ë©°, ë¤ë¥¸ ëêµ¬ë [herd|E]ì(ë¥¼) ê¸°ë¥´ì§ ììµëë¤.\n\n#weak ì°ì ììë¥¼ ì¶ê°íì¬ ê·¸ë¤ìê² ìë¬´ë¥¼ ë§¡ê¸°ì¸ì.#!"
+ leo_mvd_ui_nomads_empty_tt: "당신의 [nomad|E] [vassals|E]은(는) 그대로 둡니다.\n\n그들은 자신들만의 서열에 따라 움직입니다. 그들에게 내릴 수 있는 [directives|E]은(는) 오직 그들만의 것이기 때문입니다. 어떤 유목민도 [fortification_buildings|E]을(를) 세우지 않으며, 다른 누구도 [herd|E]을(를) 기르지 않습니다.\n\n#weak 우선순위를 추가하여 그들에게 임무를 맡기세요.#!"
  leo_mvd_ui_auto: "봉신 지침 자동 재배정"
  leo_mvd_ui_auto_tt: "활성화하면 [directive|E] 우선순위 폭포가 매달, 그리고 여기서 설정을 변경할 때마다 모든 자격 있는 [vassals|E]에게 다시 실행됩니다. 켜면 지침이 즉시 적용됩니다.\n\n#weak 자동화가 배정한 지령을(를) 변경하면 해당 봉신은(는) 자동으로 제외되어 당신의 선택이 유지됩니다. 그 전에 봉신을(를) 빼두려면 상호작용 메뉴에서 제외하세요.#!"
  leo_mvd_ui_apply: "지금 적용"

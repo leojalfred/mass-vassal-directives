@@ -10,7 +10,7 @@
  # Nomads keep their own running order: they have four directives no one else
  # can be given, and can be given none of the other nine.
  leo_mvd_ui_heading_nomads: "Nomaden-Prioritäten"
- leo_mvd_ui_nomads_empty_tt: "Deine [nomad|E]-[vassals|E] bleiben unangetastet.\n\nSie folgen einer eigenen Reihenfolge, denn die [directives|E], die ihnen gegeben werden können, sind ihnen allein vorbehalten. Kein Nomade errichtet [fortification_buildings|E], und niemand sonst hÃ¤lt eine [herd|E].\n\n#weak FÃ¼ge eine PrioritÃ¤t hinzu, um sie zu beschÃ¤ftigen.#!"
+ leo_mvd_ui_nomads_empty_tt: "Deine [nomad|E]-[vassals|E] bleiben unangetastet.\n\nSie folgen einer eigenen Reihenfolge, denn die [directives|E], die ihnen gegeben werden können, sind ihnen allein vorbehalten. Kein Nomade errichtet [fortification_buildings|E], und niemand sonst hält eine [herd|E].\n\n#weak Füge eine Priorität hinzu, um sie zu beschäftigen.#!"
  leo_mvd_ui_auto: "Vasallenanweisungen automatisch neu zuweisen"
  leo_mvd_ui_auto_tt: "Wenn aktiviert, wird der [directive|E]-Prioritätenwasserfall jeden Monat und jedes Mal, wenn du hier eine Einstellung änderst, für alle infrage kommenden [vassals|E] erneut ausgeführt. Beim Einschalten werden die Anweisungen sofort angewandt.\n\n#weak Änderst du eine Anweisung, die die Automatik zugewiesen hat, wird dieser Vasall für dich ausgenommen, sodass deine Wahl bestehen bleibt. Um einen Vasall schon vorher herauszuhalten, nimm ihn über sein Interaktionsmenü aus.#!"
  leo_mvd_ui_apply: "Jetzt anwenden"

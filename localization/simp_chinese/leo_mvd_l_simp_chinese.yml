@@ -10,7 +10,7 @@
  # Nomads keep their own running order: they have four directives no one else
  # can be given, and can be given none of the other nine.
  leo_mvd_ui_heading_nomads: "游牧优先级"
- leo_mvd_ui_nomads_empty_tt: "你的[nomad|E][vassals|E]不受干预。\n\n他们遵循一套专属的执行顺序，因为可以指派给他们的[directives|E]是他们独有的。没有游牧ä¼å´å»º[fortification_buildings|E]ï¼ä¹æ²¡æå¶ä»äººä¼æ¾ç§[herd|E]ã\n\n#weak æ·»å ä¸æ¡ä¼åçº§ï¼è®©ä»ä»¬åå¸å¶èã#!"
+ leo_mvd_ui_nomads_empty_tt: "你的[nomad|E][vassals|E]不受干预。\n\n他们遵循一套专属的执行顺序，因为可以指派给他们的[directives|E]是他们独有的。没有游牧会兴建[fortification_buildings|E]，也没有其他人会放牧[herd|E]。\n\n#weak 添加一条优先级，让他们各司其职。#!"
  leo_mvd_ui_auto: "自动重新分配封臣指令"
  leo_mvd_ui_auto_tt: "启用后，[directive|E]优先级瀑布流会在每月，以及每当你在此处更改设置时，对所有符合条件的[vassals|E]重新执行。开启它会立即应用指令。\n\n#weak 更改一个由自动化分配的指令，该封臣便会自动为你豁免，你的选择得以保留。若想在此之前将某个封臣排除在外，请通过其互动菜单将其豁免。#!"
  leo_mvd_ui_apply: "立即应用"

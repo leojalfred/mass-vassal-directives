@@ -10,7 +10,7 @@
  # Nomads keep their own running order: they have four directives no one else
  # can be given, and can be given none of the other nine.
  leo_mvd_ui_heading_nomads: "Prioridades de nómadas"
- leo_mvd_ui_nomads_empty_tt: "Tus [vassals|E] [nomad|E] quedan al margen.\n\nResponden a un orden de prioridad propio, porque las [directives|E] que se les pueden asignar son solo suyas. Ningún nómada alza [fortification_buildings|E], y nadie mÃ¡s mantiene un [herd|E].\n\n#weak AÃ±ade una prioridad para ponerlos a trabajar.#!"
+ leo_mvd_ui_nomads_empty_tt: "Tus [vassals|E] [nomad|E] quedan al margen.\n\nResponden a un orden de prioridad propio, porque las [directives|E] que se les pueden asignar son solo suyas. Ningún nómada alza [fortification_buildings|E], y nadie más mantiene un [herd|E].\n\n#weak Añade una prioridad para ponerlos a trabajar.#!"
  leo_mvd_ui_auto: "Reasignar directivas de vasallos automáticamente"
  leo_mvd_ui_auto_tt: "Cuando está activado, la cascada de prioridad de [directive|E] se vuelve a ejecutar sobre todos los [vassals|E] elegibles cada mes y de nuevo siempre que cambies un ajuste aquí. Activarlo aplica las directivas de inmediato.\n\n#weak Cambia una directiva que la automatización asignó y ese vasallo queda exento por ti, para que tu elección se mantenga. Para excluir a un vasallo antes de eso, exímelo desde su menú de interacción.#!"
  leo_mvd_ui_apply: "Aplicar ahora"
