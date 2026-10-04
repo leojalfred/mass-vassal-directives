@@ -73,7 +73,7 @@
  leo_mvd_ui_cond_20_tt: "Matches one [GetPlayer.Custom('leo_mvd_cl_admin_term')] exactly. A [vassal|E] who is not a [governor|E] never meets this condition.\n\n#weak Set on a governor's contract, so this only ever sorts [administrative|E] [vassals|E]. Only the types your own [government|E] uses are offered.#!"
  leo_mvd_ui_cond_9_tt: "The figure is a [duchy|E]-tier yardstick, scaled to each [vassal|E]'s rank so a single setting stays meaningful across the realm. Larger realms raise larger armies.\n\nAgainst the figure a [county|E]-tier vassal is asked 0.4x, a [duchy|E]-tier one 1x, a [kingdom|E]-tier one 3x, an [empire|E]-tier one 8x.\n\n#weak So a choice of 1000 comes out to 400 troops for a count, 1000 for a duke, 3000 for a king, and 8000 for an emperor.#!"
  leo_mvd_ui_cond_21_tt: "The average [development|E] of the [counties|E] the [vassal|E] holds personally. Those are the counties a [directive|E] can actually improve, since directives are not passed down to the vassals of vassals.\n\n#weak A vassal who holds no county, such as a [baron|E], never meets this condition.#!"
- leo_mvd_ui_cond_22_tt: "The [vassal|E]'s liege is one of your [puppets|E], so their [directive|E] goes through that [puppet|E], and whether they accept it depends on their standing with the [puppet|E] rather than with you. Use this to handle them differently from your own [vassals|E]."
+ leo_mvd_ui_cond_22_tt: "The [vassal|E]'s liege is one of your [puppets|E], so their [directive|E] goes through that puppet, and whether they accept it depends on their standing with the puppet rather than with you. Use this to handle them differently from your own vassals."
 
  ### Administration types
  # What the game itself calls the mechanic, picked per player in

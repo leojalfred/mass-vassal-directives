@@ -70,7 +70,7 @@
  leo_mvd_ui_cond_20_tt: "ひとつの種類と正確に一致する。[governor|E]でない[vassal|E]はこの条件を決して満たさない。\n\n#weak 総督の契約に設定されるため、これは[administrative|E]な[vassals|E]しか分類しない。提示されるのは自身の[government|E]が用いる種類のみ。#!"
  leo_mvd_ui_cond_9_tt: "この数値は[duchy|E]級の基準で、各[vassal|E]の位に応じて調整されるため、一つの設定が王国全体で意味を保ちます。大きな王国はより大きな軍を興します。\n\nこの数値に対し、[county|E]級の臣下は0.4倍、[duchy|E]級は1倍、[kingdom|E]級は3倍、[empire|E]級は8倍を求められます。\n\n#weak つまり1000という選択は、伯には400、公には1000、王には3000、皇帝には8000の兵となります。#!"
  leo_mvd_ui_cond_21_tt: "[vassal|E]が直接保有する[counties|E]の平均[development|E]。指令は臣下の臣下には引き継がれないため、これらが[directive|E]の実際に改善できる伯爵領である。\n\n#weak 伯爵領を保有しない臣下、たとえば[baron|E]はこの条件を決して満たさない。#!"
- leo_mvd_ui_cond_22_tt: "この[vassal|E]の主君は自分の[puppets|E]の一人であるため、[directive|E]はその[puppet|E]を通じて与えられ、受け入れるかどうかは自分ではなく[puppet|E]との関係で決まります。自分の[vassals|E]とは別に扱うために使います。"
+ leo_mvd_ui_cond_22_tt: "この[vassal|E]の主君は自分の[puppets|E]の一人であるため、[directive|E]はその傀儡を通じて与えられ、受け入れるかどうかは自分ではなく傀儡との関係で決まります。自分の臣下とは別に扱うために使います。"
  leo_mvd_ui_term_theme: "[theme_administration|E]"
  leo_mvd_ui_term_circuit: "[circuit_administration|E]"
  leo_mvd_ui_term_province: "[province_administration|E]"
