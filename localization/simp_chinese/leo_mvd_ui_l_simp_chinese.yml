@@ -44,7 +44,7 @@
  leo_mvd_ui_dir_13: "@leo_mvd_dir_icon_raid_herd_intent! 将[raid_intent|E]设为[herd|E]"
 
  leo_mvd_ui_cond_0: "#weak 选择一个条件#!"
- leo_mvd_ui_cond_1: "[faith|E]与你相同"
+ leo_mvd_ui_cond_1: "[rite|E]与你相同"
  leo_mvd_ui_cond_2: "[culture|E]与你相同"
  leo_mvd_ui_cond_3: "持有他[faith|E]的[counties|E]"
  leo_mvd_ui_cond_4: "持有他[culture|E]的[counties|E]"

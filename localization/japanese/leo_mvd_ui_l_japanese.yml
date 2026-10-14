@@ -44,7 +44,7 @@
  leo_mvd_ui_dir_13: "@leo_mvd_dir_icon_raid_herd_intent! [raid_intent|E]を[herd|E]に設定"
 
  leo_mvd_ui_cond_0: "#weak 条件を選ぶ#!"
- leo_mvd_ui_cond_1: "[faith|E]が自分と同じ"
+ leo_mvd_ui_cond_1: "[rite|E]が自分と同じ"
  leo_mvd_ui_cond_2: "[culture|E]が自分と同じ"
  leo_mvd_ui_cond_3: "他の[faith|E]の[counties|E]を保有"
  leo_mvd_ui_cond_4: "他の[culture|E]の[counties|E]を保有"

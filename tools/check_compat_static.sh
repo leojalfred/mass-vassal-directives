@@ -118,6 +118,10 @@ for t in vassal_is_valid_and_follows_directive_trigger \
          is_physically_able is_governor; do
 	defd "scripted trigger: $t" common/scripted_triggers "$t"
 done
+# Rite is Yours compares rites because the conversion task spreads the
+# converting ruler's rite, not just their faith. If this stops matching, re-check
+# whether that is still so.
+def "conversion spreads the liege's rite" common/scripted_triggers "rite != scope:councillor_liege\.rite"
 
 echo
 echo "== Vanilla: administration types (Administration Type condition) =="

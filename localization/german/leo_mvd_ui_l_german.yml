@@ -44,7 +44,7 @@
  leo_mvd_ui_dir_13: "@leo_mvd_dir_icon_raid_herd_intent! [raid_intent|E] auf [herd|E] setzen"
 
  leo_mvd_ui_cond_0: "#weak Eine Bedingung wählen#!"
- leo_mvd_ui_cond_1: "[faith|E] ist deiner"
+ leo_mvd_ui_cond_1: "[rite|E] ist deiner"
  leo_mvd_ui_cond_2: "[culture|E] ist deine"
  leo_mvd_ui_cond_3: "Hält [counties|E] eines anderen [faith|E]"
  leo_mvd_ui_cond_4: "Hält [counties|E] einer anderen [culture|E]"

@@ -44,7 +44,7 @@
  leo_mvd_ui_dir_13: "@leo_mvd_dir_icon_raid_herd_intent! Задать [raid_intent|E] на [herd|E]"
 
  leo_mvd_ui_cond_0: "#weak Выберите условие#!"
- leo_mvd_ui_cond_1: "[faith|E] — ваша"
+ leo_mvd_ui_cond_1: "[rite|E] — ваше"
  leo_mvd_ui_cond_2: "[culture|E] — ваша"
  leo_mvd_ui_cond_3: "Держит [counties|E] иной [faith|E]"
  leo_mvd_ui_cond_4: "Держит [counties|E] иной [culture|E]"
