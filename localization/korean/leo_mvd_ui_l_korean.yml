@@ -44,7 +44,7 @@
  leo_mvd_ui_dir_13: "@leo_mvd_dir_icon_raid_herd_intent! [raid_intent|E]을(를) [herd|E](으)로 설정"
 
  leo_mvd_ui_cond_0: "#weak 조건 선택#!"
- leo_mvd_ui_cond_1: "[faith|E]이(가) 당신과 같음"
+ leo_mvd_ui_cond_1: "[rite|E]이(가) 당신과 같음"
  leo_mvd_ui_cond_2: "[culture|E]이(가) 당신과 같음"
  leo_mvd_ui_cond_3: "다른 [faith|E]의 [counties|E] 보유"
  leo_mvd_ui_cond_4: "다른 [culture|E]의 [counties|E] 보유"

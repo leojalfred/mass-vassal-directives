@@ -510,9 +510,9 @@ leo_mvd_preset_0_effect = {
 leo_mvd_preset_1_effect = {
 	leo_mvd_clear_rules_effect = yes
 
-	# 1: Faith is Yours -> Convert Faith. Vanilla's gate only asks whether a
-	# vassal holds an off-faith county, not whose faith they hold, so without
-	# this condition an off-faith vassal would be told to spread their own.
+	# 1: Rite is Yours -> Convert Faith. Vanilla's gate only asks whether a
+	# vassal holds an off-faith county, not whose rite they hold, so without
+	# this condition an off-rite vassal would be told to spread their own.
 	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 1 THRESH = 0 }
 	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 1 }
 

@@ -20,7 +20,7 @@ leo_mvd_preset_6_effect = {
 	leo_mvd_clear_rules_effect = yes
 	set_variable = { name = leo_mvd_rule_count value = 3 }
 
-	# 1: same-faith vassals spread the realm's faith; off-faith are left alone.
+	# 1: same-rite vassals spread the realm's rite; off-rite are left alone.
 	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 1 THRESH = 0 }
 	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 1 }
 
@@ -45,7 +45,7 @@ leo_mvd_preset_7_effect = {
 	leo_mvd_clear_rules_effect = yes
 	set_variable = { name = leo_mvd_rule_count value = 3 }
 
-	# 1: same-faith vassals spread the realm's faith.
+	# 1: same-rite vassals spread the realm's rite.
 	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 1 THRESH = 0 }
 	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 1 }
 

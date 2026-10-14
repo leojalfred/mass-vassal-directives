@@ -121,7 +121,7 @@ if [ "$TARGET" = agot ]; then PRESET_RANGE="0 1 2 3 4 8 6 7 5"; fi
 # no nomad is administrative, so both could only ever answer no.
 NOMAD_CONDS="1 2 3 4 5 19 7 8 22 9 10 21 11 12 13 14"
 cond_name() { case $1 in
-	1) echo "[faith|E] is Yours" ;;
+	1) echo "[rite|E] is Yours" ;;
 	2) echo "[culture|E] is Yours" ;;
 	3) echo "Holds [counties|E] of Another [faith|E]" ;;
 	4) echo "Holds [counties|E] of Another [culture|E]" ;;

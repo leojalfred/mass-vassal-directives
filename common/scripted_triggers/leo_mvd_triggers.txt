@@ -300,10 +300,12 @@ leo_mvd_admin_family_any_trigger = {
 leo_mvd_cond_holds_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 
-	# 1 - Faith is Yours
+	# 1 - Rite is Yours. The rite, not the faith: Convert Faith has the vassal's
+	# chaplain spread the vassal's own rite, so a vassal of your faith but another
+	# rite would convert your land away from yours.
 	trigger_if = {
 		limit = { scope:leo_mvd_cond_id = 1 }
-		faith = scope:leo_mvd_liege.faith
+		rite = scope:leo_mvd_liege.rite
 	}
 	# 2 - Culture is Yours
 	trigger_else_if = {
