@@ -1,0 +1,2 @@
+				has_character_flag = vassal_directive_settle_wastelands
+				has_character_flag = vassal_directive_elven_settlement

@@ -1,0 +1,11 @@
+		# Realms in Exile narrows which counties count: a county in the halls only
+		# for an underground race, an elven holding only for an elf (the #LotR lines
+		# of its Convert Faith and Convert Culture send_options).
+		trigger_if = {
+			limit = { title_province = { terrain = halls } }
+			scope:leo_mvd_vassal_tmp = { is_underground_race = yes }
+		}
+		trigger_if = {
+			limit = { title_province = { has_holding_type = elven_holding } }
+			scope:leo_mvd_vassal_tmp = { is_elf = yes }
+		}

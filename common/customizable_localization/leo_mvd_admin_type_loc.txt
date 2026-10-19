@@ -17,16 +17,19 @@
 # The mechanic, as a concept link. Mirrors vanilla's GetProvinceConcept
 # (07_ep3_custom_loc.txt:1333): the word follows the top liege's heritage first
 # and their government second, so a player never meets a term their own game
-# does not use elsewhere.
+# does not use elsewhere. Realms in Exile has no Byzantine heritage and drops
+# that branch from its own GetProvinceConcept, so its build cuts it here too.
 leo_mvd_cl_admin_term = {
 	type = character
 
+	# @RIE:cut_byzantine@
 	text = {
 		trigger = {
 			top_liege.culture ?= { has_cultural_pillar = heritage_byzantine }
 		}
 		localization_key = leo_mvd_ui_term_theme
 	}
+	# @RIE:cut_byzantine@
 
 	text = {
 		trigger = {
@@ -48,12 +51,14 @@ leo_mvd_cl_admin_term = {
 leo_mvd_cl_admin_term_short = {
 	type = character
 
+	# @RIE:cut_byzantine@
 	text = {
 		trigger = {
 			top_liege.culture ?= { has_cultural_pillar = heritage_byzantine }
 		}
 		localization_key = leo_mvd_ui_term_theme_short
 	}
+	# @RIE:cut_byzantine@
 
 	text = {
 		trigger = {

@@ -13,11 +13,17 @@
 #
 # Re-diff these two functions against vanilla's 00_vassal_custom_loc.txt after
 # every game patch. A new directive means new twin entries here.
+#
+# A total conversion's own directives join in two places, the way the
+# conversions write their own copies of these functions. Their flags go into
+# the no-directive and refusal lists (the flags marker), so a vassal holding one
+# is neither shown as having no directive nor spared the refusal icon when they
+# will not follow it. Their own icon and text entries go after everything else
+# (custloc_icon, custloc_text), where only a directive being followed reaches.
 
 vassal_directive_icon = {
 	type = character
 
-	# @AGOT:custloc_icon@
 	text = {
 		localization_key = leo_mvd_x_no_directive_icon
 		trigger = {
@@ -36,6 +42,8 @@ vassal_directive_icon = {
 				has_character_flag = vassal_directive_explore_cultures
 				has_character_flag = vassal_directive_raid_innovation_intent
 				has_character_flag = vassal_directive_raid_herd_intent
+				# @AGOT:flags@
+				# @RIE:flags@
 			}
 		}
 	}
@@ -57,6 +65,8 @@ vassal_directive_icon = {
 				has_character_flag = vassal_directive_explore_cultures
 				has_character_flag = vassal_directive_raid_innovation_intent
 				has_character_flag = vassal_directive_raid_herd_intent
+				# @AGOT:flags@
+				# @RIE:flags@
 			}
 		}
 	}
@@ -79,6 +89,8 @@ vassal_directive_icon = {
 				has_character_flag = vassal_directive_explore_cultures
 				has_character_flag = vassal_directive_raid_innovation_intent
 				has_character_flag = vassal_directive_raid_herd_intent
+				# @AGOT:flags@
+				# @RIE:flags@
 			}
 			save_temporary_scope_as = vassal_scope
 			NOT = { vassal_is_valid_and_follows_directive_trigger = { VASSAL = scope:vassal_scope LIEGE = scope:vassal_scope.liege } }
@@ -102,6 +114,8 @@ vassal_directive_icon = {
 				has_character_flag = vassal_directive_explore_cultures
 				has_character_flag = vassal_directive_raid_innovation_intent
 				has_character_flag = vassal_directive_raid_herd_intent
+				# @AGOT:flags@
+				# @RIE:flags@
 			}
 			save_temporary_scope_as = vassal_scope
 			NOT = { vassal_is_valid_and_follows_directive_trigger = { VASSAL = scope:vassal_scope LIEGE = scope:vassal_scope.liege } }
@@ -297,6 +311,8 @@ vassal_directive_icon = {
 		}
 	}
 
+	# @AGOT:custloc_icon@
+	# @RIE:custloc_icon@
 	text = {
 		localization_key = blank_line
 		trigger = {
@@ -309,7 +325,6 @@ vassal_directive_icon = {
 vassal_directive_text = {
 	type = character
 
-	# @AGOT:custloc_text@
 	text = {
 		localization_key = leo_mvd_x_no_directive_text
 		trigger = {
@@ -328,6 +343,8 @@ vassal_directive_text = {
 				has_character_flag = vassal_directive_explore_cultures
 				has_character_flag = vassal_directive_raid_innovation_intent
 				has_character_flag = vassal_directive_raid_herd_intent
+				# @AGOT:flags@
+				# @RIE:flags@
 			}
 		}
 	}
@@ -349,6 +366,8 @@ vassal_directive_text = {
 				has_character_flag = vassal_directive_explore_cultures
 				has_character_flag = vassal_directive_raid_innovation_intent
 				has_character_flag = vassal_directive_raid_herd_intent
+				# @AGOT:flags@
+				# @RIE:flags@
 			}
 		}
 	}
@@ -371,6 +390,8 @@ vassal_directive_text = {
 				has_character_flag = vassal_directive_explore_cultures
 				has_character_flag = vassal_directive_raid_innovation_intent
 				has_character_flag = vassal_directive_raid_herd_intent
+				# @AGOT:flags@
+				# @RIE:flags@
 			}
 			save_temporary_scope_as = vassal_scope
 			NOT = { vassal_is_valid_and_follows_directive_trigger = { VASSAL = scope:vassal_scope LIEGE = scope:vassal_scope.liege } }
@@ -394,6 +415,8 @@ vassal_directive_text = {
 				has_character_flag = vassal_directive_explore_cultures
 				has_character_flag = vassal_directive_raid_innovation_intent
 				has_character_flag = vassal_directive_raid_herd_intent
+				# @AGOT:flags@
+				# @RIE:flags@
 			}
 			save_temporary_scope_as = vassal_scope
 			NOT = { vassal_is_valid_and_follows_directive_trigger = { VASSAL = scope:vassal_scope LIEGE = scope:vassal_scope.liege } }
@@ -589,6 +612,8 @@ vassal_directive_text = {
 		}
 	}
 
+	# @AGOT:custloc_text@
+	# @RIE:custloc_text@
 	text = {
 		localization_key = blank_line
 		trigger = {

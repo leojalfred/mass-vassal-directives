@@ -1,0 +1,14 @@
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 15
+				leo_mvd_gate_settle_wastelands_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = settle_wastelands CODE = 15 }
+		}
+		else_if = {
+			limit = {
+				scope:leo_mvd_dir_id = 16
+				leo_mvd_gate_elven_settlement_trigger = yes
+			}
+			leo_mvd_assign_effect = { DIRECTIVE = elven_settlement CODE = 16 }
+		}

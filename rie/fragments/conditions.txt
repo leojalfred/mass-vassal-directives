@@ -1,0 +1,32 @@
+	# 23 - Borders the Wilderness. A county of the vassal's realm neighbors, by
+	# land or across water, a wasteland county that could be settled: not in the
+	# halls and not barred from settlement. That is the neighborhood Realms in
+	# Exile's own colonization looks in (wastelands.0006), without its gold and
+	# income checks, which would have the answer change month to month.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 23 }
+		any_sub_realm_county = {
+			any_title_to_title_neighboring_and_across_water_county = {
+				is_wastelands = yes
+				is_underground_county = no
+				NOT = { has_county_modifier = block_settlement_ability }
+			}
+		}
+	}
+	# 24 - Same Race as You. Realms in Exile's own comparison.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 24 }
+		same_race = { TARGET = scope:leo_mvd_liege }
+	}
+	# 25 - Holds Counties of Another Race. A county's race is its culture's, so
+	# the cultures are compared. For an elven vassal this asks what Elven
+	# Settlement's own gate asks.
+	trigger_else_if = {
+		limit = { scope:leo_mvd_cond_id = 25 }
+		exists = culture
+		any_sub_realm_county = {
+			culture = {
+				NOT = { same_race_culture = { TARGET = scope:leo_mvd_vassal_tmp.culture } }
+			}
+		}
+	}

@@ -67,12 +67,13 @@ Settings are stored per playthrough and carry over to your heir on succession.
 - **Other mods**: the mod replaces no vanilla file. Its one point of contact with vanilla is a by-name override of two customizable-localization functions (`vassal_directive_icon` and `vassal_directive_text`) that draw the vassal-directive display, so an exempt vassal's icon can be dimmed. It conflicts only with another mod that redefines those exact two functions (resolved by load order), not with any mod that merely touches the same vanilla file. The panel is added as a standalone widget and overrides no vanilla GUI file.
 - **A Game of Thrones**: a separate build of this mod, adapted for the _A Game of Thrones_ total conversion, is published on its own. It swaps in AGOT's Settle Wilderness directive, adds Westeros conditions (Is Ironborn, or follows the Faith of the Seven, the Old Gods, or R'hllor), retunes the Military Strength thresholds for AGOT's larger armies, and drops the nomad section AGOT does not use. Play that version alongside AGOT instead of this one, and load it after AGOT in your playset so an exempt vassal's directive icon still dims (both mods redefine the directive-display text functions, so whichever loads last wins; load it before AGOT and everything works except the dimming).
 - **The Fallen Eagle**: a separate build, published on its own, for _The Fallen Eagle_ total conversion. TFE replaces the Realm window and its Subjects tab has no directives button, so that build brings its own: a small button in the Subjects tab that opens the same panel and answers the same keybind. It also recognizes TFE's Roman Imperial administration types (Civilian, Military and the Exarchate). Play that version alongside TFE instead of this one, and load it after TFE in your playset.
+- **LotR: Realms in Exile**: a separate build, published on its own, for the _Realms in Exile_ total conversion. It adds Realms in Exile's two directives, Settle the Wilderness and Elven Settlement, follows its own rules on which counties a vassal may convert (dwarven halls and elven holdings), and adds three conditions: Borders the Wilderness, Same Race as You, and Holds Counties of Another Race. Two presets put them to work: Settle the Wilds, and Elven Realm for an elven ruler. Settling matters more there than anywhere: a Realms in Exile vassal only ever colonizes the wilderness while holding Settle the Wilderness. Play that version alongside Realms in Exile instead of this one, and load it after Realms in Exile in your playset so an exempt vassal's directive icon still dims.
 - **Herders**: vanilla gives herders no directives at all, so neither does the mod.
 - **Languages**: available in every language Crusader Kings III officially supports (English, French, German, Spanish, Russian, Korean, Simplified Chinese, Japanese, and Polish). Only the English is written by hand; the rest are machine-generated and may read a little stiffly. Corrections and hand-written translations are very welcome.
 
 ## Updating after game patches
 
-Three steps after each CK3 (or A Game of Thrones, or The Fallen Eagle) patch, in order. The first is automatic; the other two catch what a name check cannot.
+Three steps after each CK3 (or A Game of Thrones, The Fallen Eagle or Realms in Exile) patch, in order. The first is automatic; the other two catch what a name check cannot.
 
 ### 1. Check the names
 
@@ -80,7 +81,7 @@ Three steps after each CK3 (or A Game of Thrones, or The Fallen Eagle) patch, in
 bash tools/check_compat_static.sh
 ```
 
-This asserts every vanilla, AGOT and TFE name the mod relies on still exists in the installed files (set `GAME_DIR` / `AGOT_DIR` / `TFE_DIR` if an install is elsewhere). A FAIL is something the patch renamed or removed; fix it before shipping. It checks names only: a name that still exists but changed meaning passes here, which is what steps 2 and 3 are for.
+This asserts every vanilla, AGOT, TFE and Realms in Exile name the mod relies on still exists in the installed files (set `GAME_DIR` / `AGOT_DIR` / `TFE_DIR` / `RIE_DIR` if an install is elsewhere). Realms in Exile rewrites the directive interaction itself, so for it the check also compares that block against the one the mod mirrors and fails if it has changed. A FAIL is something the patch renamed or removed; fix it before shipping. It checks names only: a name that still exists but changed meaning passes here, which is what steps 2 and 3 are for.
 
 ### 2. Re-diff the vanilla mirrors
 
@@ -102,42 +103,43 @@ The smallest set of in-game steps that catches everything the static check and r
 - **Exempt** a vassal (right-click their portrait). Its directive icon dims.
 - `logs/error.log` has no `leo_mvd` lines.
 
-Without _Roads to Power_ or _All Under Heaven_, confirm instead that the administrative conditions and directives are absent. With _All Under Heaven_ but not _Roads to Power_, confirm the opposite: the administrative directives, the Administrative Government condition and Administration Type are all present, the last offering that government's own types. For AGOT, load `dist/agot` after the A Game of Thrones mod and repeat: the Westeros conditions appear, Settle the Wilderness assigns, and the dimmed exempt icon works (it depends on loading last). For TFE, load `dist/tfe` after The Fallen Eagle and repeat, starting with the opener: the button shows in the Subjects tab only, opens and closes the panel, and closing the Realm window closes the panel with it.
+Without _Roads to Power_ or _All Under Heaven_, confirm instead that the administrative conditions and directives are absent. With _All Under Heaven_ but not _Roads to Power_, confirm the opposite: the administrative directives, the Administrative Government condition and Administration Type are all present, the last offering that government's own types. For AGOT, load `dist/agot` after the A Game of Thrones mod and repeat: the Westeros conditions appear, Settle the Wilderness assigns, and the dimmed exempt icon works (it depends on loading last). For TFE, load `dist/tfe` after The Fallen Eagle and repeat, starting with the opener: the button shows in the Subjects tab only, opens and closes the panel, and closing the Realm window closes the panel with it. For Realms in Exile, load `dist/rie` after Realms in Exile and repeat: its three conditions and two directives appear, Settle the Wilderness assigns to a vassal on the edge of the wilderness and stays, and a vassal holding either Realms in Exile directive shows its icon, dimmed when exempt.
 
 ## Building
 
-The repository is **shared source, not a mod you load.** One build step produces three finished mods under `dist/`, and those are what the launcher points at and what goes to the Workshop:
+The repository is **shared source, not a mod you load.** One build step produces four finished mods under `dist/`, and those are what the launcher points at and what goes to the Workshop:
 
 - `dist/vanilla/`: the base mod, for plain Crusader Kings III.
 - `dist/agot/`: the same mod adapted for the _A Game of Thrones_ total conversion.
 - `dist/tfe/`: the same mod adapted for _The Fallen Eagle_.
+- `dist/rie/`: the same mod adapted for _LotR: Realms in Exile_.
 
-Build all three with:
+Build all four with:
 
 ```
 bash tools/build.sh        # add -v to narrate each phase
 ```
 
-All three mods share one set of source files. The total-conversion builds layer their differences on at build time, so there is no runtime "am I running under AGOT" check anywhere. `dist/` is regenerated on every build, never hand-edited, and gitignored, so load and test from `dist/vanilla`, `dist/agot` or `dist/tfe`, not from the repo root. (The generated files committed at the repo root are the vanilla output, kept current so generator changes show up as reviewable diffs.)
+All four mods share one set of source files. The total-conversion builds layer their differences on at build time, so there is no runtime "am I running under AGOT" check anywhere. `dist/` is regenerated on every build, never hand-edited, and gitignored, so load and test from `dist/vanilla`, `dist/agot`, `dist/tfe` or `dist/rie`, not from the repo root. (The generated files committed at the repo root are the vanilla output, kept current so generator changes show up as reviewable diffs.)
 
 ## Releases for older game versions
 
 Steam updates a subscribed mod whatever version the game is on, so a player who rolls Crusader Kings III back still gets the newest mod. Every version of each mod is therefore also published on the [GitHub releases page](https://github.com/leojalfred/mass-vassal-directives/releases) as a zip that installs as a local mod. Each release's title names the game version it is for and, for the total-conversion builds, the version of that conversion it was tested with. Its notes say how to install it.
 
-Releases are cut by tag, one per mod, since the three are versioned separately: `vanilla-vX.Y.Z`, `agot-vX.Y.Z`, `tfe-vX.Y.Z`. Pushing a tag runs `.github/workflows/release.yml`, which builds that mod and publishes it; the tag's version must match the mod's `descriptor.mod`. Tag the commit that was published to the Workshop. `tools/tag_release.sh` creates the tag with that version's patch notes as its message, which the release shows under its changes. The notes are the plain-text block of `publishing/patch_notes/<mod>-<version>.md` (`base`, `agot` or `tfe`), the same one pasted into Paradox Mods. `publishing/` is not in git, so the tag message is how they reach the release:
+Releases are cut by tag, one per mod, since the four are versioned separately: `vanilla-vX.Y.Z`, `agot-vX.Y.Z`, `tfe-vX.Y.Z`, `rie-vX.Y.Z`. Pushing a tag runs `.github/workflows/release.yml`, which builds that mod and publishes it; the tag's version must match the mod's `descriptor.mod`. Tag the commit that was published to the Workshop. `tools/tag_release.sh` creates the tag with that version's patch notes as its message, which the release shows under its changes. The notes are the plain-text block of `publishing/patch_notes/<mod>-<version>.md` (`base`, `agot`, `tfe` or `rie`), the same one pasted into Paradox Mods. `publishing/` is not in git, so the tag message is how they reach the release:
 
 ```
 bash tools/tag_release.sh vanilla-vX.Y.Z      # tags HEAD; pass a commit to tag another
 git push origin vanilla-vX.Y.Z
 ```
 
-A total-conversion build also says which version of the conversion it was tested with. That lives in `agot/tested_with` and `tfe/tested_with`: one line each, holding the version exactly as the conversion's own `descriptor.mod` gives it (e.g. `0.5.2.1`). Packaging refuses a conversion build without one, and `tools/check_compat_static.sh` warns when the installed conversion no longer matches it. When a conversion updates, run the checks and the smoke test against the new version, write that version into the file, and only then tag.
+A total-conversion build also says which version of the conversion it was tested with. That lives in `agot/tested_with`, `tfe/tested_with` and `rie/tested_with`: one line each, holding the version exactly as the conversion's own `descriptor.mod` gives it (e.g. `0.5.2.1`). Realms in Exile's descriptor carries no version, so its line is the number from its `LOTR_VERSION` text instead (`4.3.4.1` for "Mûmakan v4.3.4.1"). Packaging refuses a conversion build without one, and `tools/check_compat_static.sh` warns when the installed conversion no longer matches it. When a conversion updates, run the checks and the smoke test against the new version, write that version into the file, and only then tag.
 
 `bash tools/package_release.sh <tag>` builds the same zip, title and notes locally, into `dist/release`.
 
 ## File layout
 
-All three mods build from one shared set of game files:
+All four mods build from one shared set of game files:
 
 ```
 common/character_interactions/leo_mvd_interactions.txt   exempt / include toggle interactions
@@ -160,7 +162,7 @@ localization/english/leo_mvd_l_english.yml               static panel text
 localization/english/leo_mvd_ui_l_english.yml            GENERATED: the editor's labels
 ```
 
-The five files marked GENERATED come out of `tools/gen_panel.sh`, so **edit that generator, not its output.** The generator is target-aware, so the AGOT panel (Settle Wilderness in, nomads out) and the TFE one (its own administration types) are the same script run in another mode.
+The five files marked GENERATED come out of `tools/gen_panel.sh`, so **edit that generator, not its output.** The generator is target-aware, so the AGOT panel (Settle Wilderness in, nomads out), the TFE one (its own administration types) and the Realms in Exile one (its directives and conditions in, nomads out) are the same script run in another mode.
 
 Each total-conversion build adds its differences from a small overlay plus the build script:
 
@@ -176,16 +178,22 @@ tfe/files/                                               TFE-only whole files, c
                                                          opener button, the Roman Imperial government trigger, and
                                                          the per-language TFE text
 tfe/fragments/                                           the same kind of snippets, for TFE
-tools/gen_panel.sh                                       generates the three files above, per target
-tools/build.sh                                           builds dist/vanilla, dist/agot and dist/tfe from all of the above
+rie/descriptor.mod                                       the Realms in Exile build's descriptor (declares its dependency)
+rie/files/                                               Realms in Exile-only whole files, copied into dist/rie as-is:
+                                                         the two directives' gates and icons, the two presets, and
+                                                         the per-language text
+rie/fragments/                                           the same kind of snippets, for Realms in Exile: its directives'
+                                                         dispatch and display, its conversion rules, its conditions
+tools/gen_panel.sh                                       generates the five files above, per target
+tools/build.sh                                           builds dist/vanilla, dist/agot, dist/tfe and dist/rie from all of the above
 tools/package_release.sh                                 packages one mod version as a GitHub release zip
 tools/tag_release.sh                                     tags a release, with its patch notes as the message
-tools/check_compat_static.sh                             checks every game, AGOT and TFE name the mod leans on
-agot/tested_with, tfe/tested_with                        the conversion version each build was last tested with
-.github/workflows/release.yml                            publishes a release when a vanilla-v / agot-v / tfe-v tag is pushed
+tools/check_compat_static.sh                             checks every game, AGOT, TFE and Realms in Exile name the mod leans on
+agot/tested_with, tfe/tested_with, rie/tested_with       the conversion version each build was last tested with
+.github/workflows/release.yml                            publishes a release when a vanilla-v / agot-v / tfe-v / rie-v tag is pushed
 ```
 
-A total-conversion build differs from the base in exactly three places: `TARGET=` branches in the generator, the fragments injected at the `# @AGOT:...@` and `# @TFE:...@` markers the shared files carry (every build strips the markers that are not its own), and the whole files under `agot/files/` or `tfe/files/`. None of it changes directive eligibility: it only surfaces content that conversion itself allows.
+A total-conversion build differs from the base in exactly three places: `TARGET=` branches in the generator, the fragments injected at the `# @AGOT:...@`, `# @TFE:...@` and `# @RIE:...@` markers the shared files carry (every build strips the markers that are not its own), and the whole files under `agot/files/`, `tfe/files/` or `rie/files/`. None of it changes directive eligibility: it only surfaces content that conversion itself allows.
 
 ### Implementation notes
 

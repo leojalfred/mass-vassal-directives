@@ -152,6 +152,7 @@ leo_mvd_try_assign_effect = {
 			leo_mvd_assign_effect = { DIRECTIVE = raid_herd_intent CODE = 13 }
 		}
 		# @AGOT:dispatch@
+		# @RIE:dispatch@
 	}
 }
 

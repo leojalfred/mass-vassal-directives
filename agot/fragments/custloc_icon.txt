@@ -1,8 +1,8 @@
-	# Settle Wilderness (an A Game of Thrones directive), matched ahead of the
-	# no-directive fallback so that fallback's NOR need not name it. The colored
-	# entry uses AGOT's own settle_wilderness_icon; the exempt twin uses the mod's
-	# grayed icon. Built only into the AGOT mod, which runs with AGOT, so both keys
-	# resolve.
+	# Settle Wilderness (an A Game of Thrones directive), after the refusal
+	# entries as AGOT orders its own, so a vassal refusing it shows the refusal
+	# icon. The colored entry uses AGOT's own settle_wilderness_icon; the exempt
+	# twin uses the mod's grayed icon. Built only into the AGOT mod, which runs
+	# with AGOT, so both keys resolve.
 	text = {
 		localization_key = leo_mvd_x_settle_wilderness_icon
 		trigger = {

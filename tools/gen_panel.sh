@@ -37,10 +37,11 @@ QPRIORITIES=3         # nomad rule priorities to emit (max 3)
 
 ### Build target and output.
 #
-# vanilla (default) or agot. The AGOT panel adds the settle_wilderness directive
-# and drops the nomad section, which A Game of Thrones never populates;
-# everything else is identical. tools/build.sh sets these; a bare run regenerates
-# the vanilla files in place.
+# vanilla (default), agot, tfe or rie. The AGOT panel adds the settle_wilderness
+# directive, the Realms in Exile panel its two directives and three conditions,
+# and both drop the nomad section, which neither conversion populates. The TFE
+# panel adds the Exarchate. Everything else is identical. tools/build.sh sets
+# these; a bare run regenerates the vanilla files in place.
 TARGET="${TARGET:-vanilla}"
 OUTDIR="${OUTDIR:-.}"
 # -v / --verbose (or VERBOSE=1) narrates each phase to stderr.
@@ -66,6 +67,9 @@ DIRS="1 2 3 4 5 6 7 8 9"
 # settle_wilderness (AGOT's one extra directive) rides the main waterfall, and
 # only in the AGOT build.
 if [ "$TARGET" = agot ]; then DIRS="$DIRS 14"; fi
+# Realms in Exile's two: settle_wastelands, and elven_settlement for an elven
+# liege's elven vassals.
+if [ "$TARGET" = rie ]; then DIRS="$DIRS 15 16"; fi
 # Only nomads can be given these four, and they can be given nothing else.
 NOMAD_DIRS="10 11 12 13"
 # Every directive there is. A setter and a label are needed for each, whichever
@@ -78,6 +82,7 @@ dir_icon() { case $1 in
 	7) echo building_focus_fortification ;; 8) echo building_focus_military ;;
 	9) echo building_focus_economy ;;
 	14) echo settle_wilderness ;;
+	15) echo settle_wastelands ;;           16) echo elven_settlement ;;
 	10) echo manage_fertility ;;             11) echo explore_cultures ;;
 	12) echo raid_innovation_intent ;;      13) echo raid_herd_intent ;;
 esac; }
@@ -92,6 +97,10 @@ dir_name() { case $1 in
 	8) echo "Construct [military_buildings|E]" ;;
 	9) echo "Construct [economic_buildings|E]" ;;
 	14) echo "Settle [wilderness|E]" ;;
+	# Realms in Exile's words, written out rather than linked: its concepts are
+	# untranslated in most of the languages this mod ships.
+	15) echo "Settle the Wilderness" ;;
+	16) echo "Elven Settlement" ;;
 	10) echo "Increase [county_fertility|E]" ;;
 	11) echo "Explore [cultures|E]" ;;
 	12) echo "Set [raid_intent|E] to [innovations|E]" ;;
@@ -110,12 +119,20 @@ CONDS="1 2 3 4 5 19 6 20 7 8 9 10 21 11 12 13 14"
 # Westeros conditions (15-18: Ironborn and three faith blocs) are boolean and
 # AGOT-only; the AGOT build injects their evaluation branches.
 if [ "$TARGET" = agot ]; then CONDS="$CONDS 15 16 17 18"; fi
+# Realms in Exile's three (23-25), each beside the question it pairs with: Same
+# Race after Culture, Another Race after Another Culture, and Borders the
+# Wilderness after both, since it is the other "what does this vassal hold"
+# question. Code 22 is held by a condition of the build for later game versions,
+# so these start after it.
+if [ "$TARGET" = rie ]; then CONDS="1 2 24 3 4 25 23 5 19 6 20 7 8 9 10 21 11 12 13 14"; fi
 
 # Preset dropdown order: None, the four built-ins, Govern by Theme, then (AGOT
-# build) two Westeros presets, then Custom. Custom stays index 5 - the engine
-# keys on it - so everything added since takes 6 and up and slots in ahead of it.
+# build) two Westeros presets or (Realms in Exile build) two Middle-earth ones,
+# then Custom. Custom stays index 5 - the engine keys on it - so everything added
+# since takes 6 and up and slots in ahead of it.
 PRESET_RANGE="0 1 2 3 4 8 5"
 if [ "$TARGET" = agot ]; then PRESET_RANGE="0 1 2 3 4 8 6 7 5"; fi
+if [ "$TARGET" = rie ]; then PRESET_RANGE="0 1 2 3 4 8 9 10 5"; fi
 # 6 (Administrative Government) and 20 (Governor Theme) are left out for nomads:
 # no nomad is administrative, so both could only ever answer no.
 NOMAD_CONDS="1 2 3 4 5 19 7 8 9 10 21 11 12 13 14"
@@ -142,6 +159,9 @@ cond_name() { case $1 in
 	16) echo "Follows the Faith of the Seven" ;;
 	17) echo "Follows the Old Gods" ;;
 	18) echo "Follows R'hllor" ;;
+	23) echo "Borders the Wilderness" ;;
+	24) echo "Same Race as You" ;;
+	25) echo "Holds [counties|E] of Another Race" ;;
 esac; }
 
 # Thresholds, per numeric condition. All non-negative: a label key is built by
@@ -346,7 +366,9 @@ esac; }
 # Governor Theme picks a value rather than a floor, the one place the panel
 # departs from "is at least", so it says so. Average Development's label cannot
 # say which counties are averaged (the personally held ones).
-cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; 20) echo "leo_mvd_ui_cond_20_tt" ;; 21) echo "leo_mvd_ui_cond_21_tt" ;; esac; }
+# Borders the Wilderness (Realms in Exile) says what it is for: only a vassal
+# given Settle the Wilderness ever colonizes.
+cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; 20) echo "leo_mvd_ui_cond_20_tt" ;; 21) echo "leo_mvd_ui_cond_21_tt" ;; 23) echo "leo_mvd_ui_cond_23_tt" ;; esac; }
 
 # One shared threshold picker per node serves every numeric condition, instead
 # of one hidden picker per condition (which multiplied the panel's widget count).
@@ -1169,8 +1191,10 @@ MID
 	ind 5; p "}"
 
 	emit_waterfall main
-	# A Game of Thrones never places nomads, so the AGOT build drops the section.
-	if [ "$TARGET" != agot ]; then emit_waterfall nomad; fi
+	# Neither A Game of Thrones nor Realms in Exile places nomads (Realms in Exile
+	# keeps the government but switches off every way into it), so those builds
+	# drop the section.
+	case $TARGET in agot|rie) ;; *) emit_waterfall nomad ;; esac
 
 cat << 'TAIL'
 				}

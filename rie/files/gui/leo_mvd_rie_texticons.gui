@@ -1,0 +1,45 @@
+### Leo VI's Mass Vassal Directives - Realms in Exile directive icons
+###
+### Built only into the Realms in Exile mod, so these reference its own textures
+### directly: the same two its directive texticons use (lotr_texticons.gui).
+
+# Inline (20x20) for the panel dropdown.
+texticon = {
+	icon = leo_mvd_dir_icon_settle_wastelands
+	iconsize = {
+		texture = "gfx/interface/icons/concept_icons/conceptwilderness.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+texticon = {
+	icon = leo_mvd_dir_icon_elven_settlement
+	iconsize = {
+		texture = "gfx/interface/icons/council_task_types/task_elven_settlement.dds"
+		size = { 20 20 }
+		offset = { 0 4 }
+		fontsize = 16
+	}
+}
+# Grayed (35x35) for an exempt vassal's dimmed directive marker in the Subjects tab.
+texticon = {
+	icon = leo_mvd_gray_settle_wastelands
+	iconsize = {
+		texture = "gfx/interface/icons/concept_icons/conceptwilderness.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}
+texticon = {
+	icon = leo_mvd_gray_elven_settlement
+	iconsize = {
+		texture = "gfx/interface/icons/council_task_types/task_elven_settlement.dds"
+		size = { 35 35 }
+		offset = { 0 11 }
+		fontsize = 16
+		color = "color_gray"
+	}
+}

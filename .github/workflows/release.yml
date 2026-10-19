@@ -1,9 +1,10 @@
 # Publishes one mod version as a GitHub release, so a player whose game is not
 # on the version the Workshop copy supports can still get a build that matches.
 #
-# Each of the three mods is versioned and released on its own, so each has its
-# own tag: vanilla-vX.Y.Z, agot-vX.Y.Z, tfe-vX.Y.Z. Pushing one releases that
-# mod and nothing else. An annotated tag's message becomes the release's notes.
+# Each of the four mods is versioned and released on its own, so each has its
+# own tag: vanilla-vX.Y.Z, agot-vX.Y.Z, tfe-vX.Y.Z, rie-vX.Y.Z. Pushing one
+# releases that mod and nothing else. An annotated tag's message becomes the
+# release's notes.
 # All the work is in tools/package_release.sh, which runs the same locally.
 name: Release
 
@@ -13,6 +14,7 @@ on:
       - 'vanilla-v*'
       - 'agot-v*'
       - 'tfe-v*'
+      - 'rie-v*'
 
 permissions:
   contents: write

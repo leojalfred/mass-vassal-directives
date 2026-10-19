@@ -4,8 +4,9 @@
 #
 #   bash tools/package_release.sh <tag> [out dir]
 #
-#   tag      vanilla-vX.Y.Z, agot-vX.Y.Z or tfe-vX.Y.Z. The prefix picks the mod,
-#            and the version must match that mod's descriptor.mod.
+#   tag      vanilla-vX.Y.Z, agot-vX.Y.Z, tfe-vX.Y.Z or rie-vX.Y.Z. The prefix
+#            picks the mod, and the version must match that mod's
+#            descriptor.mod.
 #   out dir  where the zip, title.txt, notes.md and latest.txt land
 #            (default: dist/release).
 #
@@ -19,8 +20,10 @@
 # launcher confuse the two.
 #
 # A total-conversion build also names the version of that conversion it was
-# tested with, read from agot/tested_with or tfe/tested_with: one line holding
-# the version exactly as the conversion's own descriptor.mod gives it.
+# tested with, read from agot/tested_with, tfe/tested_with or rie/tested_with:
+# one line holding the version exactly as the conversion's own descriptor.mod
+# gives it. Realms in Exile's descriptor has no version, so its line is the
+# number its LOTR_VERSION loc key gives (4.3.4.1 for "Mûmakan v4.3.4.1").
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$PWD"
@@ -32,7 +35,8 @@ case $TAG in
 	vanilla-v*) TARGET=vanilla; LABEL="Base mod" ;;
 	agot-v*)    TARGET=agot;    LABEL="A Game of Thrones build"; TC_NAME="A Game of Thrones"; TC_SHORT=AGOT ;;
 	tfe-v*)     TARGET=tfe;     LABEL="The Fallen Eagle build";  TC_NAME="The Fallen Eagle";  TC_SHORT=TFE ;;
-	*) echo "tag must start with vanilla-v, agot-v or tfe-v: $TAG" >&2; exit 1 ;;
+	rie-v*)     TARGET=rie;     LABEL="Realms in Exile build";  TC_NAME="LotR: Realms in Exile"; TC_SHORT=RiE ;;
+	*) echo "tag must start with vanilla-v, agot-v, tfe-v or rie-v: $TAG" >&2; exit 1 ;;
 esac
 VER=${TAG#*-v}
 
@@ -87,7 +91,7 @@ TITLE="$LABEL v$VER (CK3 $CK3"
 TITLE="$TITLE)"
 echo "$TITLE" > "$OUT/title.txt"
 
-# Only the newest base-mod release is marked Latest. The three mods share one
+# Only the newest base-mod release is marked Latest. The mods share one
 # release list, and a conversion build or an older version tagged late should
 # never push the current base mod off the top of it.
 NEWEST=$(git tag -l 'vanilla-v*' | sort -V | tail -1)

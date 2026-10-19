@@ -1,0 +1,26 @@
+# Leo VI's Mass Vassal Directives - Realms in Exile additions
+#
+# Built only into the Realms in Exile mod (tools/build.sh), which depends on and
+# runs with LotR: Realms in Exile, so triggers here may reference its content
+# freely. Each gate mirrors one of the two #LotR send_options Realms in Exile
+# adds to give_vassal_directive_interaction (00_vassal_interactions.txt). Base
+# eligibility, a landed AI vassal of at least county tier who is not a herder,
+# is checked before any directive is tried.
+
+# Current scope: vassal. settle_wastelands: both is_shown and is_valid are
+# empty, so every government may be given it. Nothing more to ask.
+leo_mvd_gate_settle_wastelands_trigger = {
+	always = yes
+}
+
+# Current scope: vassal. Requires scope:leo_mvd_liege, the player giving the
+# directive (scope:actor in the interaction). elven_settlement is shown only
+# when liege and vassal are both elves, and valid only for a vassal holding a
+# county that is not elven.
+leo_mvd_gate_elven_settlement_trigger = {
+	scope:leo_mvd_liege = { is_elf = yes }
+	is_elf = yes
+	any_sub_realm_county = {
+		NOT = { is_elf = yes }
+	}
+}

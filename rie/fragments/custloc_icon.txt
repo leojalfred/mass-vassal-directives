@@ -1,0 +1,30 @@
+	# Realms in Exile's two directives, after the refusal entries as Realms in
+	# Exile orders its own. The colored entries use its own keys, so they look
+	# exactly as they do without this mod; the exempt twins use the mod's grayed
+	# icons.
+	text = {
+		localization_key = leo_mvd_x_settle_wastelands_icon
+		trigger = {
+			has_variable = leo_mvd_exempt
+			has_character_flag = vassal_directive_settle_wastelands
+		}
+	}
+	text = {
+		localization_key = settle_wastelands_icon
+		trigger = {
+			has_character_flag = vassal_directive_settle_wastelands
+		}
+	}
+	text = {
+		localization_key = leo_mvd_x_elven_settlement_icon
+		trigger = {
+			has_variable = leo_mvd_exempt
+			has_character_flag = vassal_directive_elven_settlement
+		}
+	}
+	text = {
+		localization_key = elven_settlement_icon
+		trigger = {
+			has_character_flag = vassal_directive_elven_settlement
+		}
+	}

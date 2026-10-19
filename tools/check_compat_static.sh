@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 # Static compatibility check.
 #
-# Every vanilla (and A Game of Thrones) name this mod leans on, asserted against
-# the installed game files. Run it after a CK3 or AGOT patch: if Paradox renamed
-# or removed something the mod mirrors, a line here turns FAIL and points at what
-# broke, instead of finding out from a player.
+# Every vanilla (and A Game of Thrones, The Fallen Eagle and Realms in Exile)
+# name this mod leans on, asserted against the installed game files. Run it
+# after a CK3 or conversion patch: if a name the mod mirrors was renamed or
+# removed, a line here turns FAIL and points at what broke, instead of finding
+# out from a player.
 #
 #   bash tools/check_compat_static.sh
 #   GAME_DIR=/path/to/game AGOT_DIR=/path/to/agot bash tools/check_compat_static.sh
+#   (TFE_DIR and RIE_DIR likewise)
 #
 # Two kinds of check. A "def" is strong: a specific definition must exist in a
 # specific corner of the game files, and a miss is a FAIL. A "use" is a proxy for
@@ -27,6 +29,7 @@ set -uo pipefail
 GAME="${GAME_DIR:-C:/Games/Steam/steamapps/common/Crusader Kings III/game}"
 AGOT="${AGOT_DIR:-C:/Games/Steam/steamapps/workshop/content/1158310/2962333032}"
 TFE="${TFE_DIR:-C:/Games/Steam/steamapps/workshop/content/1158310/2243307127}"
+RIE="${RIE_DIR:-C:/Games/Steam/steamapps/workshop/content/1158310/2291024373}"
 
 P=0; F=0; W=0
 FAILS=""
@@ -44,6 +47,13 @@ adef() { # <label> <subdir under AGOT> <regex>   strong (AGOT), FAIL on miss
 tdef() { # <label> <subdir under TFE> <regex>   strong (TFE), FAIL on miss
 	if _g "$TFE/$2" "$3"; then printf '  ok    %s\n' "$1"; P=$((P+1))
 	else printf '  FAIL  %s\n' "$1"; F=$((F+1)); FAILS="$FAILS\n  - $1"; fi
+}
+rdef() { # <label> <subdir under RIE> <regex>   strong (Realms in Exile), FAIL on miss
+	if _g "$RIE/$2" "$3"; then printf '  ok    %s\n' "$1"; P=$((P+1))
+	else printf '  FAIL  %s\n' "$1"; F=$((F+1)); FAILS="$FAILS\n  - $1"; fi
+}
+rdefd() { # <label> <subdir under RIE> <name>   strong (Realms in Exile), FAIL on miss
+	rdef "$1" "$2" "(^|[^a-z_])$3 = [{]"
 }
 # A file TFE must NOT override, because the opener borrows what vanilla keeps
 # there: button_give_directive from shared/buttons_icons.gui, and the
@@ -392,6 +402,67 @@ if [ -d "$TFE" ]; then
 else
 	echo
 	echo "tfe: not found at $TFE - skipping TFE checks (set TFE_DIR to include them)"
+fi
+
+if [ -d "$RIE" ]; then
+	echo
+	echo "rie: $RIE"
+	# Realms in Exile's descriptor carries no version, so the one recorded in
+	# rie/tested_with is the number in its LOTR_VERSION loc key.
+	inst=$(grep -rhm1 '^ *LOTR_VERSION:' "$RIE/localization/english" 2>/dev/null | grep -oE '[0-9]+(\.[0-9]+)+' | head -1)
+	rec=; [ -f "$ROOT_DIR/rie/tested_with" ] && rec=$(tr -d '[:space:]' < "$ROOT_DIR/rie/tested_with")
+	if [ -z "$rec" ]; then printf '  warn  Realms in Exile %s installed; no tested version recorded in rie/tested_with\n' "$inst"; W=$((W+1))
+	elif [ "$rec" = "$inst" ]; then printf '  ok    Realms in Exile %s is the version recorded as tested\n' "$inst"; P=$((P+1))
+	else printf '  warn  Realms in Exile %s installed, but rie/tested_with says %s - re-test, then update it\n' "$inst" "$rec"; W=$((W+1)); fi
+
+	echo
+	echo "== RiE: its copy of the directive interaction =="
+	# Realms in Exile overrides 00_vassal_interactions.txt and changes the
+	# directive interaction: two directives of its own, and narrower Convert
+	# Faith and Convert Culture gates. The mod's gates mirror that block line for
+	# line, so any further change to it must be re-mirrored. The hash is of the
+	# block as last mirrored; when it changes, re-diff the leo_mvd_gate_*
+	# triggers, rie/fragments/convert_county.txt and
+	# leo_mvd_rie_triggers.txt against it, then update the hash.
+	RIE_BLOCK_MD5=50d0024c88aaea250ae216493136cd58
+	got=$(awk '/^give_vassal_directive_interaction = \{/{on=1} on{print} on&&/^\}/{exit}' "$RIE/common/character_interactions/00_vassal_interactions.txt" 2>/dev/null | tr -d '\r' | md5sum | cut -d' ' -f1)
+	if [ "$got" = "$RIE_BLOCK_MD5" ]; then printf '  ok    RiE give_vassal_directive_interaction is the one mirrored\n'; P=$((P+1))
+	else printf '  FAIL  RiE give_vassal_directive_interaction changed\n'; F=$((F+1)); FAILS="$FAILS\n  - RiE give_vassal_directive_interaction changed (re-mirror the gates, then update RIE_BLOCK_MD5)"; fi
+	for d in settle_wastelands elven_settlement; do
+		rdef "RiE directive flag: vassal_directive_$d" common/character_interactions "add_character_flag = vassal_directive_$d"
+	done
+	rdef "RiE colonization still asks for Settle Wastelands" events "has_character_flag = vassal_directive_settle_wastelands"
+
+	echo
+	echo "== RiE: what the gates and conditions ask =="
+	for t in is_elf is_underground_race same_race same_race_culture is_wastelands is_underground_county; do
+		rdefd "RiE scripted trigger: $t" common/scripted_triggers "$t"
+	done
+	rdefd "RiE culture: wastelands"          common/culture/cultures wastelands
+	rdefd "RiE terrain: halls"               common/terrain_types halls
+	rdefd "RiE holding: elven_holding"       common/holdings elven_holding
+	rdefd "RiE modifier: block_settlement_ability" common/modifiers block_settlement_ability
+
+	echo
+	echo "== RiE: display =="
+	# The non-exempt path of the mod's dimming override points at these.
+	for k in settle_wastelands_icon settlement_focus_text elven_settlement_icon elven_settlement_focus_text; do
+		rdef "RiE loc key: $k" localization/english "^ *$k:"
+	done
+	# The two textures the mod's own directive icons draw.
+	for tex in concept_icons/conceptwilderness council_task_types/task_elven_settlement; do
+		if [ -f "$RIE/gfx/interface/icons/$tex.dds" ]; then printf '  ok    RiE texture: %s.dds\n' "$tex"; P=$((P+1))
+		else printf '  FAIL  RiE texture: %s.dds\n' "$tex"; F=$((F+1)); FAILS="$FAILS\n  - RiE texture: $tex.dds"; fi
+	done
+	# Realms in Exile defines these too, so dist/rie must load after it.
+	rdefd "RiE custom loc: vassal_directive_icon (load after RiE)" common/customizable_localization vassal_directive_icon
+	rdefd "RiE custom loc: vassal_directive_text (load after RiE)" common/customizable_localization vassal_directive_text
+	# The panel opens from the vanilla button, which Realms in Exile's own realm
+	# window still has.
+	rdef "RiE realm window keeps the directives button" gui/window_my_realm.gui "Toggle\( *'mass_directives_window' *\)"
+else
+	echo
+	echo "rie: not found at $RIE - skipping Realms in Exile checks (set RIE_DIR to include them)"
 fi
 
 echo

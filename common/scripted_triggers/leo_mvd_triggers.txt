@@ -79,6 +79,7 @@ leo_mvd_gate_convert_faith_trigger = {
 	NOT = { government_has_flag = government_is_nomadic }
 	any_sub_realm_county = {
 		faith != scope:leo_mvd_vassal_tmp.faith
+		# @RIE:convert_county@
 	}
 }
 
@@ -88,6 +89,7 @@ leo_mvd_gate_convert_culture_trigger = {
 	NOT = { government_has_flag = government_is_nomadic }
 	any_sub_realm_county = {
 		culture != scope:leo_mvd_vassal_tmp.culture
+		# @RIE:convert_county@
 	}
 }
 
@@ -225,11 +227,16 @@ leo_mvd_cond_holds_trigger = {
 		limit = { scope:leo_mvd_cond_id = 2 }
 		culture = scope:leo_mvd_liege.culture
 	}
-	# 3 - Holds Counties of Another Faith
+	# 3 - Holds Counties of Another Faith. Asked exactly as Convert Faith's gate asks
+	# it, and 4 as Convert Culture's, so that where a total conversion narrows which
+	# counties a vassal may convert, the same lines narrow these too: a rule that
+	# says "holds counties of another faith, so convert them" never picks a vassal
+	# the directive would then refuse.
 	trigger_else_if = {
 		limit = { scope:leo_mvd_cond_id = 3 }
 		any_sub_realm_county = {
 			faith != scope:leo_mvd_vassal_tmp.faith
+			# @RIE:convert_county@
 		}
 	}
 	# 4 - Holds Counties of Another Culture
@@ -237,6 +244,7 @@ leo_mvd_cond_holds_trigger = {
 		limit = { scope:leo_mvd_cond_id = 4 }
 		any_sub_realm_county = {
 			culture != scope:leo_mvd_vassal_tmp.culture
+			# @RIE:convert_county@
 		}
 	}
 	# 5 - Same Dynasty as You
@@ -435,6 +443,7 @@ leo_mvd_cond_holds_trigger = {
 		scope:leo_mvd_avg_dev >= scope:leo_mvd_thresh
 	}
 	# @AGOT:conditions@
+	# @RIE:conditions@
 	# No condition picked yet: the branch is inert rather than silently true.
 	trigger_else = {
 		always = no
@@ -498,5 +507,6 @@ leo_mvd_managed_matches_trigger = {
 			has_character_flag = vassal_directive_raid_herd_intent
 		}
 		# @AGOT:match@
+		# @RIE:match@
 	}
 }

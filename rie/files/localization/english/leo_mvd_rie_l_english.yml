@@ -1,0 +1,21 @@
+l_english:
+ # Exempt (grayed) display keys for Realms in Exile's two directives. The
+ # colored display uses its own settle_wastelands_icon, settlement_focus_text,
+ # elven_settlement_icon and elven_settlement_focus_text.
+ leo_mvd_x_settle_wastelands_icon: "@leo_mvd_gray_settle_wastelands!"
+ leo_mvd_x_settle_wastelands_text: "[directive|E]: Settle wilderness counties$leo_mvd_exempt_suffix$"
+ leo_mvd_x_elven_settlement_icon: "@leo_mvd_gray_elven_settlement!"
+ leo_mvd_x_elven_settlement_text: "[directive|E]: Elven Settlement$leo_mvd_exempt_suffix$"
+
+ # Borders the Wilderness, the one Realms in Exile condition that explains
+ # itself. The generator writes its label and the other two conditions'.
+ leo_mvd_ui_cond_23_tt: "True when a county of the [vassal|E]'s realm borders wilderness that could be settled.\n\n#weak Only a vassal given Settle the Wilderness ever colonizes it.#!"
+
+ # Realms in Exile presets (9, 10). They use no administrative directives, so
+ # each _tt_nodlc aliases its _tt.
+ leo_mvd_ui_preset_9: "Settle the Wilds"
+ leo_mvd_ui_preset_9_tt: "Push the realm out into the wilderness.\n\n#weak 1.#! [vassals|E] whose lands border the wilderness are told to $leo_mvd_ui_dir_15$.\n#weak 2.#! Vassals of your [faith|E] holding counties of another are told to $leo_mvd_ui_dir_1$.\n#weak 3.#! All left over vassals $leo_mvd_ui_dir_9$.\n\n#weak Only a vassal given Settle the Wilderness ever colonizes.#!"
+ leo_mvd_ui_preset_9_tt_nodlc: "$leo_mvd_ui_preset_9_tt$"
+ leo_mvd_ui_preset_10: "Elven Realm"
+ leo_mvd_ui_preset_10_tt: "For an elven ruler: gather the realm's other peoples into the elven fold.\n\n#weak 1.#! Elven [vassals|E] holding counties of another race are told to $leo_mvd_ui_dir_16$.\n#weak 2.#! Vassals whose lands border the wilderness are told to $leo_mvd_ui_dir_15$.\n#weak 3.#! All left over vassals $leo_mvd_ui_dir_9$.\n\n#weak Elven Settlement needs both you and the vassal to be elves. Under any other ruler the first step is skipped.#!"
+ leo_mvd_ui_preset_10_tt_nodlc: "$leo_mvd_ui_preset_10_tt$"

@@ -4,12 +4,12 @@
 #
 #   bash tools/tag_release.sh <tag> [commit]
 #
-#   tag     vanilla-vX.Y.Z, agot-vX.Y.Z or tfe-vX.Y.Z
+#   tag     vanilla-vX.Y.Z, agot-vX.Y.Z, tfe-vX.Y.Z or rie-vX.Y.Z
 #   commit  what to tag (default: HEAD). Tag the commit that was published to
 #           the Workshop.
 #
 # The notes are the plain-text (Paradox Mods) block of
-# publishing/patch_notes/<mod>-<version>.md, where <mod> is base, agot or tfe.
+# publishing/patch_notes/<mod>-<version>.md, where <mod> is base, agot, tfe or rie.
 # publishing/ is not in git, so the release workflow cannot read the patch notes
 # itself; the tag message is how they reach it. The tag is created locally and
 # not pushed, so it can be checked first.
@@ -23,7 +23,8 @@ case $TAG in
 	vanilla-v*) TARGET=vanilla; NOTES_MOD=base; DESC=descriptor.mod ;;
 	agot-v*)    TARGET=agot;    NOTES_MOD=agot; DESC=agot/descriptor.mod ;;
 	tfe-v*)     TARGET=tfe;     NOTES_MOD=tfe;  DESC=tfe/descriptor.mod ;;
-	*) echo "tag must start with vanilla-v, agot-v or tfe-v: $TAG" >&2; exit 1 ;;
+	rie-v*)     TARGET=rie;     NOTES_MOD=rie;  DESC=rie/descriptor.mod ;;
+	*) echo "tag must start with vanilla-v, agot-v, tfe-v or rie-v: $TAG" >&2; exit 1 ;;
 esac
 VER=${TAG#*-v}
 

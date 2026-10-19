@@ -1,0 +1,8 @@
+		AND = {
+			var:leo_mvd_managed = 15
+			has_character_flag = vassal_directive_settle_wastelands
+		}
+		AND = {
+			var:leo_mvd_managed = 16
+			has_character_flag = vassal_directive_elven_settlement
+		}

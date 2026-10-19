@@ -1,0 +1,1 @@
+				has_character_flag = vassal_directive_settle_wilderness

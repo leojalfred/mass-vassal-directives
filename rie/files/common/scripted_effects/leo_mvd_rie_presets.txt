@@ -1,0 +1,49 @@
+# Leo VI's Mass Vassal Directives - Realms in Exile presets
+#
+# Built only into the Realms in Exile mod. Two Middle-earth built-ins around the
+# directives Realms in Exile adds. They are rule data like the base presets,
+# loaded through the same leo_mvd_select_preset_effect path, and use no
+# administrative directive, so no expansion changes them.
+#
+# Settling is the one thing here a vassal would otherwise never do: Realms in
+# Exile's AI vassals colonize only while they hold Settle the Wilderness.
+#
+# Node shape per priority: n1 root, n2 its TRUE branch, n3 its FALSE branch.
+
+# Current scope: the player. Push into the wilderness wherever the realm meets
+# it, convert your own faith, and grow everywhere else.
+leo_mvd_preset_9_effect = {
+	leo_mvd_clear_rules_effect = yes
+	set_variable = { name = leo_mvd_rule_count value = 3 }
+	# 1: vassals on the edge of the wilderness settle it.
+	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 23 THRESH = 0 }
+	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 15 }
+	# 2: Faith is Yours -> Convert Faith, as in the base presets, so an off-faith
+	# vassal is not told to spread their own.
+	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 1 THRESH = 0 }
+	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 1 }
+	# 3: everyone else builds their economy.
+	leo_mvd_set_node_dir_effect = { NODE = r3_n1 DIR = 9 }
+
+	set_variable = { name = leo_mvd_preset value = 9 }
+}
+
+# Current scope: the player. For an elven ruler: bring the realm's other
+# peoples into the elven fold, settle the wilderness at its edge, and grow the
+# rest. Elven Settlement asks that you and the vassal both be elves, so under
+# any other ruler, and for any vassal who is not an elf, the first priority
+# falls through to the next.
+leo_mvd_preset_10_effect = {
+	leo_mvd_clear_rules_effect = yes
+	set_variable = { name = leo_mvd_rule_count value = 3 }
+	# 1: elven vassals holding counties of another race settle them.
+	leo_mvd_set_node_cond_effect = { NODE = r1_n1 COND = 25 THRESH = 0 }
+	leo_mvd_set_node_dir_effect = { NODE = r1_n2 DIR = 16 }
+	# 2: vassals on the edge of the wilderness settle it.
+	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 23 THRESH = 0 }
+	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 15 }
+	# 3: everyone else builds their economy.
+	leo_mvd_set_node_dir_effect = { NODE = r3_n1 DIR = 9 }
+
+	set_variable = { name = leo_mvd_preset value = 10 }
+}

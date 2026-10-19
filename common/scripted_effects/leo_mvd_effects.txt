@@ -11,7 +11,9 @@
 # 7 building_focus_fortification, 8 building_focus_military,
 # 9 building_focus_economy. Nomads, who can be given no others:
 # 10 manage_fertility, 11 explore_cultures, 12 raid_innovation_intent,
-# 13 raid_herd_intent.
+# 13 raid_herd_intent. The total-conversion builds add their own directives
+# after these: 14 settle_wilderness (AGOT), 15 settle_wastelands and
+# 16 elven_settlement (Realms in Exile).
 #
 # The same numbers suffix the leo_mvd_ui_dir_N loc keys, which the panel builds
 # at runtime - keep them aligned.
