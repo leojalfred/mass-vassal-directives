@@ -10,6 +10,8 @@ leo_mvd_options_ack_trigger = {
 	always = no
 	# Read by the panel alone: it hides the Govern by Administration preset.
 	var:leo_mvd_admin_family = 0
+	# Read by the panel alone: every gate opens onto it.
+	is_target_in_variable_list = { name = leo_mvd_one target = flag:leo_mvd_one }
 	is_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_1 }
 	var:leo_mvd_x_cond_1 = 1
 	is_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_2 }

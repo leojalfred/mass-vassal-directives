@@ -10,6 +10,15 @@ leo_mvd_build_options_effect = {
 	# condition below and the preset's visibility both read it.
 	leo_mvd_set_admin_family_effect = yes
 
+	# The one-entry list every gate in the panel opens onto (emit_gate_start
+	# in tools/gen_panel.sh). Made once and never rebuilt like the lists
+	# below: a gate whose list was cleared and refilled could rebuild what it
+	# holds, folding every priority back open on a click.
+	if = {
+		limit = { NOT = { is_target_in_variable_list = { name = leo_mvd_one target = flag:leo_mvd_one } } }
+		add_to_variable_list = { name = leo_mvd_one target = flag:leo_mvd_one }
+	}
+
 	# Conditions offered by the settled waterfall, in panel order.
 	clear_variable_list = leo_mvd_conds
 	add_to_variable_list = { name = leo_mvd_conds target = flag:cond_1 }

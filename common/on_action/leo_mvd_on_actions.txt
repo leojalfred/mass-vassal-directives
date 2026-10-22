@@ -49,6 +49,11 @@ leo_mvd_on_death = {
 				exists = player_heir
 			}
 			player_heir = {
+				# The panel's lists live on the character, so the heir starts
+				# without them. The dropdowns would rebuild theirs on a click,
+				# but the gates that hold the rule tree are never clicked, and
+				# without their list the heir would see no rules at all.
+				leo_mvd_build_options_effect = yes
 				if = {
 					limit = { root = { has_variable = leo_mvd_auto } }
 					set_variable = leo_mvd_auto
