@@ -267,6 +267,46 @@ sgui_valid() { echo "[GetScriptedGui('$1').IsValid( GuiScope.SetRoot( GetPlayer.
 # threshold picker can name its list from the condition beside it.
 dd_list() { echo "Select_CString( GetVariableSystem.HasValue( 'leo_mvd_dd', '$1' ), $2, 'leo_mvd_x' )"; }
 
+# A subtree that exists only while <bool> holds, for every part of the editor
+# that a rule set may not use: a priority past the end of the waterfall, a
+# folded one, and each node's directive, condition and branch editors.
+#
+# visible = no would not do. A hidden widget is still created, and the panel's
+# first-open hitch is one layout pass over everything created, hidden or not -
+# which is why it used to cost the whole of every priority's tree however little
+# of it a rule set used. A datamodel over a list that does not exist has no
+# items, so the subtree is not hidden but absent, exactly as a closed dropdown's
+# rows are (dd_list). Here the list has one entry, so an open gate makes one
+# copy of the subtree.
+#
+# leo_mvd_one is never rebuilt once made: a gate whose list was cleared and
+# refilled might rebuild its subtree, folding its priority back open. It falls
+# back to leo_mvd_conds, which is rebuilt on every dropdown opened, only for a
+# save made before leo_mvd_one existed, until the first panel interaction or
+# succession builds it. DataModelFirst keeps that fallback to one copy.
+gate_dm() { echo "DataModelFirst( GetPlayer.MakeScope.GetList( Select_CString( $1, Select_CString( DataModelHasItems( GetPlayer.MakeScope.GetList('leo_mvd_one') ), 'leo_mvd_one', 'leo_mvd_conds' ), 'leo_mvd_x' ) ), '(int32)1' )"; }
+
+# Opens a gate at <1> depth on <2> bool: the holder and its item. The caller emits
+# the one widget the item holds at depth+2, then calls emit_gate_end.
+#
+# The holder is also visible on the same bool, because an empty one is still a
+# widget, and its parent's spacing would open a gap around it where a hidden one
+# takes no space at all.
+emit_gate_start() { local depth=$1 cond=$2
+	ind "$depth"
+	p "vbox = {"
+	ind $((depth+1))
+	p "visible = \"[$cond]\""
+	p "layoutpolicy_horizontal = expanding"
+	p "datamodel = \"[$(gate_dm "$cond")]\""
+	p ""
+	p "item = {"
+}
+emit_gate_end() { local depth=$1
+	ind $((depth+1)); p "}"
+	ind "$depth"; p "}"
+}
+
 # A GUI bool: are any of the DLC features <@> active? Vanilla gates its own
 # admin/nomad UI this way (frontend_bookmarks.gui, shared/mapmodes.gui).
 # References to the gated governments stay safe without the DLC - they simply
@@ -458,9 +498,20 @@ emit_dd_start() { local depth=$1 id=$2 label=$3
 	p "layoutpolicy_horizontal = expanding"
 	p "margin = { $DD_INSET 0 }"
 	p ""
+	# A dropdown whose rows are literal widgets rather than a datamodel's (a
+	# node's kind, the preset) is gated on being open instead, so that it too
+	# holds no rows while shut. L is where the list itself sits.
+	local open="GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' )" L=$((depth+2))
+	DD_GATED=
+	if [ -z "${4:-}" ]; then
+		DD_GATED=1
+		emit_gate_start "$L" "$open"
+		L=$((L+2))
+		ind "$L"
+	fi
 	p "vbox = {"
-	ind $((depth+3))
-	p "visible = \"[GetVariableSystem.HasValue( 'leo_mvd_dd', '$id' )]\""
+	ind $((L+1))
+	p "visible = \"[$open]\""
 	p "layoutpolicy_horizontal = expanding"
 	# The rows run the full width of the list and sit flush against each other,
 	# as vanilla's do. Their text is already inset by leo_mvd_button_dropdown.
@@ -475,7 +526,7 @@ emit_dd_start() { local depth=$1 id=$2 label=$3
 
 	# Where the caller's rows go. Returned this way so that changing the shape
 	# above does not mean re-counting indents at every call site.
-	DD_ROW_DEPTH=$((depth+4))
+	DD_ROW_DEPTH=$((L+2))
 }
 
 # The one row template a datamodel dropdown needs, in place of a literal widget
@@ -513,7 +564,12 @@ emit_dd_item() { local depth=$1 node=$2 label=$3 tt=${4:-} vis=${5:-}
 #
 # <1> depth  <2> id
 emit_dd_end() { local depth=$1 id=$2
-	ind $((depth+2)); p "}"
+	if [ -n "${DD_GATED:-}" ]; then
+		ind $((depth+4)); p "}"
+		emit_gate_end $((depth+2))
+	else
+		ind $((depth+2)); p "}"
+	fi
 	ind $((depth+1)); p "}"
 	p ""
 	p "widget = {"
@@ -587,30 +643,38 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-} sibling=${
 	done
 	emit_dd_end "$depth" "${node}_kind"
 
+	# Each editor below is gated (emit_gate_start), so a node holds only the one
+	# its kind uses, and a node that is not a condition holds no branches at all.
+	# Inside a gate everything sits two levels deeper, at g.
+	local g=$((depth+2))
+
 	# Assign a Directive
 	ind "$depth"; p ""
+	emit_gate_start "$depth" "$(veq "leo_mvd_${node}_kind" 1)"
+	ind "$g"
 	p "vbox = {"
-	ind $((depth+1))
-	p "visible = \"[$(veq "leo_mvd_${node}_kind" 1)]\""
+	ind $((g+1))
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
 	# The directive list. Which directives a player may pick is decided in script
 	# (leo_mvd_build_options_effect), so the DLC gate that used to sit on every
 	# administrative row is gone: an option they cannot use is simply absent.
-	emit_dd_start $((depth+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")" \
+	emit_dd_start $((g+1)) "${node}_dir" "$(vkey 'leo_mvd_ui_dir_' "leo_mvd_${node}_dir")" \
 		"GetPlayer.MakeScope.GetList( $(dd_list "${node}_dir" "$CUR_DIR_LIST") )"
 	emit_dd_item "$DD_ROW_DEPTH" "$node" "Localize( Concatenate( 'leo_mvd_ui_', Scope.GetFlagName ) )" "" "$dir_sib"
-	emit_dd_end $((depth+1)) "${node}_dir"
-	ind "$depth"; p "}"
+	emit_dd_end $((g+1)) "${node}_dir"
+	ind "$g"; p "}"
+	emit_gate_end "$depth"
 
 	[ "$level" -ge 2 ] && return
 
 	# Check a Condition
 	ind "$depth"; p ""
+	emit_gate_start "$depth" "$(veq "leo_mvd_${node}_kind" 2)"
+	ind "$g"
 	p "vbox = {"
-	ind $((depth+1))
-	p "visible = \"[$(veq "leo_mvd_${node}_kind" 2)]\""
+	ind $((g+1))
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
@@ -631,48 +695,54 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-} sibling=${
 	local citem_vis=
 	[ -n "$parent_cond" ] && citem_vis="NotEqualTo_CFixedPoint( GetPlayer.MakeScope.Var( Concatenate( 'leo_mvd_x_', Scope.GetFlagName ) ).GetValue, GetPlayer.MakeScope.Var('$parent_cond').GetValue )"
 	citem_vis=$(vis_and "$citem_vis" "$cond_sib")
-	emit_dd_start $((depth+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")" \
+	emit_dd_start $((g+1)) "${node}_cond" "$(vkey 'leo_mvd_ui_cond_' "leo_mvd_${node}_cond")" \
 		"GetPlayer.MakeScope.GetList( $(dd_list "${node}_cond" "$CUR_COND_LIST") )"
 	emit_dd_item "$DD_ROW_DEPTH" "$node" \
 		"Localize( Concatenate( 'leo_mvd_ui_', Scope.GetFlagName ) )" \
 		"Localize( Concatenate( Concatenate( 'leo_mvd_ui_', Scope.GetFlagName ), '_tt' ) )" \
 		"$citem_vis"
-	emit_dd_end $((depth+1)) "${node}_cond"
+	emit_dd_end $((g+1)) "${node}_cond"
 
 	# Its threshold, if it takes one. One picker per node rather than one per
 	# numeric condition: every numeric condition's rows live in a single dropdown,
 	# each row gated so only the chosen condition's values show, and the picker as
-	# a whole is hidden unless the chosen condition takes a threshold. The label is
-	# built from the chosen condition and value at runtime.
-	ind $((depth+1)); p ""
+	# a whole exists only while the chosen condition takes a threshold. The label
+	# is built from the chosen condition and value at runtime.
+	local tg=$((g+3))
+	ind $((g+1)); p ""
+	emit_gate_start $((g+1)) "$(numeric_cond_sel "leo_mvd_${node}_cond")"
+	ind "$tg"
 	p "vbox = {"
-	ind $((depth+2))
-	p "visible = \"[$(numeric_cond_sel "leo_mvd_${node}_cond")]\""
+	ind $((tg+1))
 	p "layoutpolicy_horizontal = expanding"
 	p "spacing = 2"
 	# The threshold picker names its list from the node's own condition, so it
 	# shows one ladder instead of carrying every condition's values at once,
 	# each gated. A condition that takes no threshold has no such list, which
-	# leaves the picker empty - and it is hidden then anyway.
-	emit_dd_start $((depth+2)) "${node}_t" "$(thresh_label_dyn "leo_mvd_${node}_cond" "leo_mvd_${node}_thresh")" \
+	# leaves the picker empty - and it does not exist then anyway.
+	emit_dd_start $((tg+1)) "${node}_t" "$(thresh_label_dyn "leo_mvd_${node}_cond" "leo_mvd_${node}_thresh")" \
 		"GetPlayer.MakeScope.GetList( $(dd_list "${node}_t" "Concatenate( 'leo_mvd_t_', $(vint "leo_mvd_${node}_cond") )") )"
 	# The label needs both halves - which condition is asking, and which value -
 	# so the key is leo_mvd_ui_c<cond>_<flag>, e.g. leo_mvd_ui_c9_thresh_1000.
 	emit_dd_item "$DD_ROW_DEPTH" "$node" \
 		"Localize( Concatenate( Concatenate( 'leo_mvd_ui_c', $(vint "leo_mvd_${node}_cond") ), Concatenate( '_', Scope.GetFlagName ) ) )" \
 		"" "$thresh_sib"
-	emit_dd_end $((depth+2)) "${node}_t"
-	ind $((depth+1)); p "}"
-	ind "$depth"; p "}"
+	emit_dd_end $((tg+1)) "${node}_t"
+	ind "$tg"; p "}"
+	emit_gate_end $((g+1))
+	ind "$g"; p "}"
+	emit_gate_end "$depth"
 
-	# Its branches. Only rendered once this node is actually a condition, so an
-	# unused level costs the player nothing to look at.
+	# Its branches. Only built once this node is actually a condition, which is
+	# where most of the saving is: a root that assigns a directive outright holds
+	# none of the six nodes beneath it.
 	local kids kt kf; kids=$(node_children "$n")
 	kt=$(echo "$kids" | cut -d' ' -f1); kf=$(echo "$kids" | cut -d' ' -f2)
 	ind "$depth"; p ""
+	emit_gate_start "$depth" "$(veq "leo_mvd_${node}_kind" 2)"
+	ind "$g"
 	p "vbox = {"
-	ind $((depth+1))
-	p "visible = \"[$(veq "leo_mvd_${node}_kind" 2)]\""
+	ind $((g+1))
 	p "layoutpolicy_horizontal = expanding"
 	p "margin_left = 16"
 	p "spacing = 2"
@@ -680,16 +750,17 @@ emit_node() { local depth=$1 prio=$2 n=$3 level=$4 parent_cond=${5:-} sibling=${
 		local which=${b%%:*} kid rest=${b#*:}
 		kid=${rest%%:*}
 		local sib_n=${rest##*:}
-		ind $((depth+1)); p ""
+		ind $((g+1)); p ""
 		p "text_label_left = {"
-		ind $((depth+2)); p "layoutpolicy_horizontal = expanding"
+		ind $((g+2)); p "layoutpolicy_horizontal = expanding"
 		p "text = \"leo_mvd_ui_branch_$which\""
-		ind $((depth+1)); p "}"
+		ind $((g+1)); p "}"
 		# The other branch of this condition is the sibling, so identical picks
 		# can be gated out.
-		emit_node $((depth+1)) "$prio" "$kid" $((level+1)) "leo_mvd_${node}_cond" "${NODE_PREFIX}${prio}_n${sib_n}"
+		emit_node $((g+1)) "$prio" "$kid" $((level+1)) "leo_mvd_${node}_cond" "${NODE_PREFIX}${prio}_n${sib_n}"
 	done
-	ind "$depth"; p "}"
+	ind "$g"; p "}"
+	emit_gate_end "$depth"
 }
 
 ### A waterfall.
@@ -754,33 +825,37 @@ emit_waterfall() {
 	p "text = \"$heading\""
 	ind 5; p "}"
 
-	# One collapsible section per priority in use.
+	# One collapsible section per priority in use. The section is gated, and so is
+	# its body, so a priority past the end of the waterfall holds nothing and a
+	# folded one holds only its header.
 	for prio in $(seq 1 "$max"); do
 		ind 5; p ""
 		p "### $which priority $prio (collapsible). Shown whenever the rule set in"
 		p "### place reaches this far - for a built-in preset too, so its plan can"
 		p "### be read rather than taken on trust."
+		emit_gate_start 5 "$(vis_and "$dlc" "$(vge "$COUNT_VAR" "$prio")")"
+		ind 7
 		p "vbox = {"
-		ind 6
-		p "visible = \"[$(vis_and "$dlc" "$(vge "$COUNT_VAR" "$prio")")]\""
+		ind 8
 		p "layoutpolicy_horizontal = expanding"
 		p "oncreate = \"[BindFoldOutContext]\""
 		p "oncreate = \"[PdxGuiFoldOut.Unfold]\""
 		p ""
 		p "button_expandable_toggle_field = {"
-		ind 7; p "blockoverride \"text\" {"
-		ind 8; p "text = \"${prio_loc}_$prio\""
-		ind 7; p "}"
-		ind 6; p "}"
+		ind 9; p "blockoverride \"text\" {"
+		ind 10; p "text = \"${prio_loc}_$prio\""
+		ind 9; p "}"
+		ind 8; p "}"
 		p ""
+		emit_gate_start 8 "PdxGuiFoldOut.IsUnfolded"
+		ind 10
 		p "vbox = {"
-		ind 7
-		p "visible = \"[PdxGuiFoldOut.IsUnfolded]\""
+		ind 11
 		p "layoutpolicy_horizontal = expanding"
 		p "margin = { 6 4 }"
 		p "spacing = 2"
 		p ""
-		emit_node 7 "$prio" 1 0
+		emit_node 11 "$prio" 1 0
 
 		# Extend or shorten the waterfall.
 		#
@@ -790,9 +865,9 @@ emit_waterfall() {
 		# which it gets because the visible sits on Add's half rather than on
 		# Add: a hidden widget takes no space, so the half collapses instead of
 		# standing empty.
-		ind 7; p ""
+		ind 11; p ""
 		p "hbox = {"
-		ind 8
+		ind 12
 		p "layoutpolicy_horizontal = expanding"
 		p "margin_top = 8"
 		p "spacing = 6"
@@ -802,28 +877,28 @@ emit_waterfall() {
 		if [ "$prio" -lt "$max" ]; then
 			p ""
 			p "hbox = {"
-			ind 9
+			ind 13
 			# Only "is this the end", since prio < max already settles the rest.
 			p "visible = \"[$(veq "$COUNT_VAR" "$prio")]\""
 			p "layoutpolicy_horizontal = expanding"
 			p ""
 			p "button_standard = {"
-			ind 10
+			ind 14
 			p "layoutpolicy_horizontal = expanding"
 			p "text = \"leo_mvd_ui_add_priority\""
 			p "onclick = \"$(sgui "$add_sgui")\""
 			p "tooltip = \"leo_mvd_ui_add_priority_tt\""
-			ind 9; p "}"
-			ind 8; p "}"
+			ind 13; p "}"
+			ind 12; p "}"
 		fi
 
-		ind 8; p ""
+		ind 12; p ""
 		p "hbox = {"
-		ind 9
+		ind 13
 		p "layoutpolicy_horizontal = expanding"
 		p ""
 		p "button_standard = {"
-		ind 10
+		ind 14
 		p "layoutpolicy_horizontal = expanding"
 		p "text = \"leo_mvd_ui_remove_priority\""
 		p "onclick = \"$(sgui "${remove_prefix}_${prio}")\""
@@ -831,12 +906,14 @@ emit_waterfall() {
 		# no enabled - the binding would only ever answer yes.
 		[ "$which" = main ] && p "enabled = \"$(sgui_valid "${remove_prefix}_${prio}")\""
 		p "tooltip = \"$remove_tt\""
-		ind 9; p "}"
-		ind 8; p "}"
-		ind 7; p "}"
+		ind 13; p "}"
+		ind 12; p "}"
+		ind 11; p "}"
 
-		ind 6; p "}"
-		ind 5; p "}"
+		ind 10; p "}"
+		emit_gate_end 8
+		ind 7; p "}"
+		emit_gate_end 5
 	done
 
 	# With no nomad rules there is no priority to hang an Add off, so the
@@ -965,9 +1042,7 @@ window = {
 	parentanchor = top|right
 	position = { -645 70 }
 
-	# No background here: it is on the top vbox, so the pre-warm hides it along
-	# with everything else (see that vbox's alpha).
-
+	using = Window_Background_Subwindow
 	# The layer the Realm window itself uses (window_my_realm.gui), so the panel
 	# sits at the same depth as the Subjects tab it belongs to and beneath the
 	# Character Finder (which is on the layer above), rather than floating over
@@ -975,45 +1050,19 @@ window = {
 	layer = windows_layer
 	movable = yes
 
-	### Shown by the vanilla button, or for one moment at startup to pre-warm.
+	### Shown by the vanilla button.
 	###
 	### The tree is created at startup (gui/scripted_widgets/), but it is only
 	### measured, laid out and its text shaped the first time the window becomes
-	### visible - which is the whole of the hitch on first open, and why it does
-	### not scale with how much of the panel a rule set actually shows. So show
-	### it once at creation and that pass happens during the loading screen.
-	###
-	### Its own variable, not vanilla's mass_directives_window: that one also
-	### drives the Subjects tab's compact list (window_my_realm.gui:3688), so
-	### borrowing it would disturb vanilla's own UI.
-	visible = "[Or( GetVariableSystem.Exists('mass_directives_window'), GetVariableSystem.Exists('leo_mvd_prewarm') )]"
+	### visible, and that pass covers every widget created, hidden or not. So the
+	### first-open hitch is set by how many widgets exist, which is why the parts
+	### of the rule tree a rule set does not use are not created at all (see
+	### emit_gate_start in tools/gen_panel.sh) rather than merely hidden.
+	visible = "[GetVariableSystem.Exists('mass_directives_window')]"
 
-	### No input guard is needed alongside the pre-warm. It lives only between the
-	### widget's creation and the load-to-session transition, and the engine wipes
-	### GUI variables at that transition - which is what clears leo_mvd_prewarm,
-	### and it is also before the player has mouse control. So there is no frame in
-	### which the hidden panel could take a click. (alwaystransparent would not
-	### help anyway: it is a per-widget pass-through, not a subtree blocker.)
-	oncreate = "[GetVariableSystem.Set( 'leo_mvd_prewarm', '1' )]"
-
-	### Ends the pre-warm a moment after creation. Copies vanilla's self-firing
-	### timed state (achievements/popup.gui:58).
-	state = {
-		name = leo_mvd_prewarm_done
-		trigger_on_create = yes
-		duration = 0
-		delay = 0.3
-		on_finish = "[GetVariableSystem.Clear( 'leo_mvd_shown' )]"
-		on_finish = "[GetVariableSystem.Clear( 'leo_mvd_prewarm' )]"
-	}
-
-	### leo_mvd_shown lets the top vbox tell a real open from the pre-warm, which
-	### also fires _show. The pre-warm ends by clearing it, so it only survives
-	### once the player opens the panel.
 	state = {
 		name = _show
 		using = Animation_FadeIn_Quick
-		on_start = "[GetVariableSystem.Set( 'leo_mvd_shown', '1' )]"
 	}
 
 	### Closing the panel also closes any open dropdown, so it does not come
@@ -1027,20 +1076,6 @@ window = {
 	vbox = {
 		layoutpolicy_horizontal = expanding
 		layoutpolicy_vertical = expanding
-
-		using = Window_Background_Subwindow
-
-		### Transparent while pre-warming. Here rather than on the window: the
-		### window has to fade in through _show for the pre-warm to pay the
-		### first-open hitch, and a window held at alpha 0 instead does not warm
-		### at all. Its fades set its alpha directly and win over a binding, so a
-		### binding on the window was overridden and the pre-warm was seen. Down
-		### here the two multiply instead of fighting.
-		###
-		### Transparent until leo_mvd_shown, not until leo_mvd_prewarm clears. The
-		### window keeps drawing through its _hide fade, so turning opaque the
-		### moment the pre-warm ended flashed the panel on every load.
-		alpha = "[Select_float( And( GetVariableSystem.Exists('leo_mvd_shown'), Not( GetVariableSystem.Exists('leo_mvd_prewarm') ) ), '(float)1', '(float)0' )]"
 
 		header_pattern = {
 			layoutpolicy_horizontal = expanding
@@ -1379,6 +1414,15 @@ HEAD
 	echo -e "\t# condition below and the preset's visibility both read it."
 	echo -e "\tleo_mvd_set_admin_family_effect = yes"
 	echo
+	echo -e "\t# The one-entry list every gate in the panel opens onto (emit_gate_start"
+	echo -e "\t# in tools/gen_panel.sh). Made once and never rebuilt like the lists"
+	echo -e "\t# below: a gate whose list was cleared and refilled could rebuild what it"
+	echo -e "\t# holds, folding every priority back open on a click."
+	echo -e "\tif = {"
+	echo -e "\t\tlimit = { NOT = { is_target_in_variable_list = { name = leo_mvd_one target = flag:leo_mvd_one } } }"
+	echo -e "\t\tadd_to_variable_list = { name = leo_mvd_one target = flag:leo_mvd_one }"
+	echo -e "\t}"
+	echo
 
 	# CONDS is the display order, so the list is built in that order and a gated
 	# condition is wrapped in its own DLC check in place rather than pushed to the
@@ -1520,6 +1564,8 @@ HEAD
 	echo -e "\talways = no"
 	echo -e "\t# Read by the panel alone: it hides the Govern by Administration preset."
 	echo -e "\tvar:leo_mvd_admin_family = 0"
+	echo -e "\t# Read by the panel alone: every gate opens onto it."
+	echo -e "\tis_target_in_variable_list = { name = leo_mvd_one target = flag:leo_mvd_one }"
 	for c in $CONDS; do
 		echo -e "\tis_target_in_variable_list = { name = leo_mvd_conds target = flag:cond_$c }"
 		echo -e "\tvar:leo_mvd_x_cond_$c = $c"
