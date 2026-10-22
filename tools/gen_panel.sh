@@ -965,7 +965,9 @@ window = {
 	parentanchor = top|right
 	position = { -645 70 }
 
-	using = Window_Background_Subwindow
+	# No background here: it is on the top vbox, so the pre-warm hides it along
+	# with everything else (see that vbox's alpha).
+
 	# The layer the Realm window itself uses (window_my_realm.gui), so the panel
 	# sits at the same depth as the Subjects tab it belongs to and beneath the
 	# Character Finder (which is on the layer above), rather than floating over
@@ -986,22 +988,12 @@ window = {
 	### borrowing it would disturb vanilla's own UI.
 	visible = "[Or( GetVariableSystem.Exists('mass_directives_window'), GetVariableSystem.Exists('leo_mvd_prewarm') )]"
 
-	### Transparent while pre-warming, so laying out is all it does. Bound to the
-	### same variable that ends the pre-warm rather than animated, so the panel
-	### cannot get stuck invisible: the moment that clears, this reads 1 again.
-	### alpha (rather than an off-screen position) because it is the same on every
-	### resolution and UI scale, and its worst case is only that the warm does not
-	### fully take and the old hitch returns - never a visible panel on load, which
-	### is what a movable window clamped back on-screen could otherwise give.
-	###
-	### No input guard is needed alongside it. The pre-warm lives only between the
+	### No input guard is needed alongside the pre-warm. It lives only between the
 	### widget's creation and the load-to-session transition, and the engine wipes
 	### GUI variables at that transition - which is what clears leo_mvd_prewarm,
 	### and it is also before the player has mouse control. So there is no frame in
-	### which this invisible panel could take a click. (alwaystransparent would not
+	### which the hidden panel could take a click. (alwaystransparent would not
 	### help anyway: it is a per-widget pass-through, not a subtree blocker.)
-	alpha = "[Select_float( GetVariableSystem.Exists('leo_mvd_prewarm'), '(float)0', '(float)1' )]"
-
 	oncreate = "[GetVariableSystem.Set( 'leo_mvd_prewarm', '1' )]"
 
 	### Ends the pre-warm a moment after creation. Copies vanilla's self-firing
@@ -1011,12 +1003,17 @@ window = {
 		trigger_on_create = yes
 		duration = 0
 		delay = 0.3
+		on_finish = "[GetVariableSystem.Clear( 'leo_mvd_shown' )]"
 		on_finish = "[GetVariableSystem.Clear( 'leo_mvd_prewarm' )]"
 	}
 
+	### leo_mvd_shown lets the top vbox tell a real open from the pre-warm, which
+	### also fires _show. The pre-warm ends by clearing it, so it only survives
+	### once the player opens the panel.
 	state = {
 		name = _show
 		using = Animation_FadeIn_Quick
+		on_start = "[GetVariableSystem.Set( 'leo_mvd_shown', '1' )]"
 	}
 
 	### Closing the panel also closes any open dropdown, so it does not come
@@ -1030,6 +1027,20 @@ window = {
 	vbox = {
 		layoutpolicy_horizontal = expanding
 		layoutpolicy_vertical = expanding
+
+		using = Window_Background_Subwindow
+
+		### Transparent while pre-warming. Here rather than on the window: the
+		### window has to fade in through _show for the pre-warm to pay the
+		### first-open hitch, and a window held at alpha 0 instead does not warm
+		### at all. Its fades set its alpha directly and win over a binding, so a
+		### binding on the window was overridden and the pre-warm was seen. Down
+		### here the two multiply instead of fighting.
+		###
+		### Transparent until leo_mvd_shown, not until leo_mvd_prewarm clears. The
+		### window keeps drawing through its _hide fade, so turning opaque the
+		### moment the pre-warm ended flashed the panel on every load.
+		alpha = "[Select_float( And( GetVariableSystem.Exists('leo_mvd_shown'), Not( GetVariableSystem.Exists('leo_mvd_prewarm') ) ), '(float)1', '(float)0' )]"
 
 		header_pattern = {
 			layoutpolicy_horizontal = expanding
