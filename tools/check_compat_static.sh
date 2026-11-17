@@ -100,7 +100,7 @@ echo
 echo "== Vanilla: directives the mod assigns and clears =="
 # The 13 vanilla directive flags. Set by give_vassal_directive_interaction, so if
 # a directive were removed its flag would stop appearing in that folder.
-for d in convert_faith convert_culture improve_development train_commanders \
+for d in convert_faith convert_culture improve_prosperity train_commanders \
          build_maa improve_cultural_acceptance building_focus_fortification \
          building_focus_military building_focus_economy manage_fertility \
          explore_cultures raid_innovation_intent raid_herd_intent; do
@@ -115,7 +115,7 @@ echo
 echo "== Vanilla: scripted triggers the mod calls =="
 for t in vassal_is_valid_and_follows_directive_trigger \
          vassal_follows_directive_trigger vassal_follows_directive_valid_trigger \
-         is_physically_able is_governor; do
+         is_physically_able; do
 	defd "scripted trigger: $t" common/scripted_triggers "$t"
 done
 # Rite is Yours compares rites because the conversion task spreads the
@@ -227,7 +227,7 @@ def "dlc feature: by_god_alone"        common/scripted_triggers "has_dlc_feature
 echo
 echo "== Vanilla: engine built-in triggers (proxy: still used by vanilla) =="
 for t in is_powerful_vassal_of is_councillor_of max_military_strength \
-         vassal_contract_has_flag highest_held_title_tier development_level \
+         vassal_contract_has_flag highest_held_title_tier prosperity_level is_governor \
          cultural_acceptance has_dynasty government_has_mechanic government_has_flag \
          any_sub_realm_county any_held_county any_held_title every_held_title \
          capital_county opinion save_temporary_scope_value_as; do
@@ -255,14 +255,15 @@ echo "== Vanilla: display bits (cosmetic; a miss degrades looks, not function) =
 # alias member, so common words in prose do not give a false pass.
 for c in faith culture cultures dynasty house administrative government \
          governor baron \
-         powerful_vassal council title development opinion county counties \
+         powerful_vassal council title prosperity opinion county counties \
          cultural_acceptance men_at_arms fortification_buildings \
          military_buildings economic_buildings vassal vassals directive \
          directives nomad duchy kingdom empire raid_intent innovations herd \
          county_fertility; do
 	# "$c = {" (a concept key) or membership in an "alias = { ... }". The key form
-	# is left-bounded by (^|[^a-z_]) so development is not falsely satisfied by
-	# county_development = {, while still tolerating a leading BOM on line 1.
+	# is left-bounded by (^|[^a-z_]) so a name is not falsely satisfied by a
+	# longer key ending in it (county_x = {), while still tolerating a leading BOM
+	# on line 1.
 	if _g "$GAME/common/game_concepts" "(^|[^a-z_])$c = [{]|alias = [{][^}]*\b$c\b"; then
 		printf '  ok    game concept: %s\n' "$c"; P=$((P+1))
 	else
@@ -298,7 +299,7 @@ echo "== Vanilla: loc keys the exempt-dimming override reuses =="
 for k in no_directive_icon directive_refusal_icon no_directive_text \
          refusing_directive_text blank_line county_fertility_text culture_text \
          herd_text convert_faith_icon convert_faith_text convert_culture_icon \
-         convert_culture_text improve_development_icon improve_development_text \
+         convert_culture_text improve_prosperity_icon improve_prosperity_text \
          train_commanders_icon train_commanders_text build_maa_icon build_maa_text \
          improve_cultural_acceptance_icon improve_cultural_acceptance_text \
          building_focus_fortification_icon building_focus_fortification_text \
@@ -313,7 +314,7 @@ echo
 echo "== Vanilla: textures the mod's directive texticons pull from =="
 for tex in vassal_directives/no_directive vassal_directives/refusal \
            vassal_directives/convert_faith vassal_directives/promote_culture \
-           vassal_directives/improve_development \
+           vassal_directives/improve_prosperity \
            vassal_directives/improve_cultural_acceptance \
            vassal_directives/boost_men_at_arms vassal_directives/recruit_men_at_arms \
            vassal_directives/construct_fortification_buildings \

@@ -26,15 +26,15 @@
  leo_mvd_ui_preset_0: "Keine"
  # Doubles as the panel's Description text while None is selected, so it has to
  # both say what None does and point a new player somewhere useful.
- leo_mvd_ui_preset_0_tt: "Es wird nichts zugewiesen, und die Automatik gibt alle [directives|E] auf, die sie erteilt hat. Anweisungen, die du einem [vassal|E] selbst gegeben hast, bleiben unangetastet.\n\nEine Vorlage ist eine Reihenfolge: Jeder Vasall erhält die erste Anweisung darin, die zu ihm passt. Wähle oben eine aus, und ihr Plan erscheint hier.\n\nOder wähle #V Benutzerdefiniert#!, um die Reihenfolge selbst zu schreiben, Priorität für Priorität. Gib jedem Vasall dieselbe Anweisung, oder beurteile sie nach dem, was du wählst, von [faith|E] und [culture|E] über Stärke, [development|E] bis hin zum Ansehen, und gib jedem die passende Anweisung.\n\n#weak Nichts geschieht, bis du wählst.#!"
- leo_mvd_ui_preset_1: "Bekehren und entwickeln"
+ leo_mvd_ui_preset_0_tt: "Es wird nichts zugewiesen, und die Automatik gibt alle [directives|E] auf, die sie erteilt hat. Anweisungen, die du einem [vassal|E] selbst gegeben hast, bleiben unangetastet.\n\nEine Vorlage ist eine Reihenfolge: Jeder Vasall erhält die erste Anweisung darin, die zu ihm passt. Wähle oben eine aus, und ihr Plan erscheint hier.\n\nOder wähle #V Benutzerdefiniert#!, um die Reihenfolge selbst zu schreiben, Priorität für Priorität. Gib jedem Vasall dieselbe Anweisung, oder beurteile sie nach dem, was du wählst, von [faith|E] und [culture|E] über Stärke, [prosperity|E] bis hin zum Ansehen, und gib jedem die passende Anweisung.\n\n#weak Nichts geschieht, bis du wählst.#!"
+ leo_mvd_ui_preset_1: "Bekehren und gedeihen"
  leo_mvd_ui_preset_1_tt: "Führe deine [vassals|E] zusammen und lasse sie dann wachsen.\n\n#weak 1.#! Vasallen deines [rite|E], die Grafschaften eines anderen [faith|E] halten, sollen $leo_mvd_ui_dir_1$.\n#weak 2.#! Vasallen deiner [culture|E], die Grafschaften einer anderen halten, sollen $leo_mvd_ui_dir_2$.\n#weak 3.#! Von den Übrigen sollen die militärisch Starken $leo_mvd_ui_dir_3$ und die Schwachen $leo_mvd_ui_dir_5$.\n#weak 4.#! Alle verbleibenden Vasallen sollen $leo_mvd_ui_dir_9$."
  leo_mvd_ui_preset_2: "Das Reich einen"
- leo_mvd_ui_preset_2_tt: "Mache das Reich zu einem Volk.\n\n#weak 1.#! Vasallen deines [rite|E], die Grafschaften eines anderen [faith|E] halten, sollen $leo_mvd_ui_dir_1$.\n#weak 2.#! Vasallen deiner [culture|E], die Grafschaften einer anderen halten, sollen $leo_mvd_ui_dir_2$.\n#weak 3.#! Wer noch Grafschaften fremder Kultur hält, soll $leo_mvd_ui_dir_6$.\n#weak 4.#! Alle verbleibenden Vasallen sollen $leo_mvd_ui_dir_9$.\n\n#weak Bekehrt stärker als Bekehren und entwickeln, auf Kosten des Wachstums.#!"
+ leo_mvd_ui_preset_2_tt: "Mache das Reich zu einem Volk.\n\n#weak 1.#! Vasallen deines [rite|E], die Grafschaften eines anderen [faith|E] halten, sollen $leo_mvd_ui_dir_1$.\n#weak 2.#! Vasallen deiner [culture|E], die Grafschaften einer anderen halten, sollen $leo_mvd_ui_dir_2$.\n#weak 3.#! Wer noch Grafschaften fremder Kultur hält, soll $leo_mvd_ui_dir_6$.\n#weak 4.#! Alle verbleibenden Vasallen sollen $leo_mvd_ui_dir_9$.\n\n#weak Bekehrt stärker als Bekehren und gedeihen, auf Kosten des Wachstums.#!"
  leo_mvd_ui_preset_3: "Für den Krieg rüsten"
  leo_mvd_ui_preset_3_tt: "Rüste das Reich, jeden [vassal|E] nach seiner Stärke.\n\n[administrative|E] Vasallen setzen ihre eigenen Truppen ein: die Starken sollen $leo_mvd_ui_dir_4$, die Schwachen $leo_mvd_ui_dir_5$.\nÜberall sonst sollen die Starken $leo_mvd_ui_dir_7$ und die Schwachen $leo_mvd_ui_dir_8$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
  leo_mvd_ui_preset_4: "Die Wirtschaft ausbauen"
- leo_mvd_ui_preset_4_tt: "Schaffe Wohlstand vor allem anderen.\n\nUnentwickelte Vasallen sollen $leo_mvd_ui_dir_3$.\nEtablierte Vasallen sollen $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
+ leo_mvd_ui_preset_4_tt: "Schaffe Wohlstand vor allem anderen.\n\nVasallen, deren Hauptstadt noch nicht wohlhabend ist, sollen $leo_mvd_ui_dir_3$.\nWohlhabende Vasallen sollen $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
  leo_mvd_ui_preset_8: "Nach [GetPlayer.Custom('leo_mvd_cl_admin_term_short')] regieren"
  leo_mvd_ui_preset_8_tt: "[GetPlayer.Custom('leo_mvd_cl_preset_8_tt')]"
  leo_mvd_ui_preset_8_tt_rtp: "Jeden Gouverneur dem zuweisen, wofür sein [GetPlayer.Custom('leo_mvd_cl_admin_term')] ihn ohnehin eignet.\n\n#weak 1.#! $admin_theme_military$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_5$.\n#weak 2.#! $admin_theme_frontier$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_7$.\n#weak 3.#! $admin_theme_civilian$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_3$.\n#weak 4.#! $admin_theme_naval$-Gouverneure erhalten den Befehl zu $leo_mvd_ui_dir_8$.\n#weak 5.#! Jeder andere [vassal|E], ob Gouverneur oder nicht, erhält den Befehl zu $leo_mvd_ui_dir_9$.\n\n#weak Ignoriert [faith|E] und [culture|E] vollständig.#!"
@@ -69,7 +69,7 @@
  # label cannot say which counties are averaged.
  leo_mvd_ui_cond_20_tt: "Trifft genau einen Typ. Ein [vassal|E], der kein [governor|E] ist, erfüllt diese Bedingung nie.\n\n#weak Steht im Vertrag eines Gouverneurs, dies sortiert also nur [administrative|E] Vasallen. Angeboten werden nur die Typen, die Eure eigene [government|E] verwendet.#!"
  leo_mvd_ui_cond_9_tt: "Die Zahl ist ein Maßstab auf [duchy|E]-Ebene, skaliert nach dem Rang jedes [vassal|E], damit eine einzige Einstellung im ganzen Reich sinnvoll bleibt. Größere Reiche stellen größere Heere auf.\n\nAnhand der Zahl wird von einem Vasallen auf [county|E]-Ebene 0.4x verlangt, auf Herzogtum-Ebene 1x, auf [kingdom|E]-Ebene 3x, auf [empire|E]-Ebene 8x.\n\n#weak So ergibt eine Wahl von 1000 etwa 400 Soldaten für einen Grafen, 1000 für einen Herzog, 3000 für einen König und 8000 für einen Kaiser.#!"
- leo_mvd_ui_cond_21_tt: "Die durchschnittliche [development|E] der [counties|E], die der [vassal|E] persönlich hält. Das sind die Grafschaften, die eine [directive|E] tatsächlich verbessern kann, da Direktiven nicht an die Vasallen der Vasallen weitergegeben werden.\n\n#weak Ein Vasall ohne eigene Grafschaft, etwa ein [baron|E], erfüllt diese Bedingung nie.#!"
+ leo_mvd_ui_cond_21_tt: "Der durchschnittliche [prosperity|E] der [counties|E], die der [vassal|E] persönlich hält. Das sind die Grafschaften, die eine [directive|E] tatsächlich verbessern kann, da Direktiven nicht an die Vasallen der Vasallen weitergegeben werden.\n\n#weak Ein Vasall ohne eigene Grafschaft, etwa ein [baron|E], erfüllt diese Bedingung nie.#!"
  leo_mvd_ui_cond_22_tt: "Der Lehnsherr des [vassal|E] ist eine deiner [puppets|E]. Seine [directive|E] läuft daher über diese Marionette, und ob er sie annimmt, hängt von seinem Verhältnis zur Marionette ab, nicht zu dir. Nutze dies, um sie anders zu behandeln als deine eigenen Vasallen."
  leo_mvd_ui_term_theme: "[theme_administration|E]"
  leo_mvd_ui_term_circuit: "[circuit_administration|E]"
@@ -94,7 +94,7 @@
  # icon variants
  leo_mvd_x_no_directive_icon: "@leo_mvd_gray_directive_none!"
  leo_mvd_x_directive_refusal_icon: "@leo_mvd_gray_directive_refusal!"
- leo_mvd_x_improve_development_icon: "@leo_mvd_gray_task_develop_county!"
+ leo_mvd_x_improve_prosperity_icon: "@leo_mvd_gray_task_develop_county!"
  leo_mvd_x_train_commanders_icon: "@leo_mvd_gray_task_train_commanders!"
  leo_mvd_x_build_maa_icon: "@leo_mvd_gray_directive_maa!"
  leo_mvd_x_convert_faith_icon: "@leo_mvd_gray_task_conversion!"
@@ -110,7 +110,7 @@
  # text variants
  leo_mvd_x_no_directive_text: "$no_directive_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_refusing_directive_text: "$refusing_directive_text$$leo_mvd_exempt_suffix$"
- leo_mvd_x_improve_development_text: "$improve_development_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_improve_prosperity_text: "$improve_prosperity_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_train_commanders_text: "$train_commanders_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_build_maa_text: "$build_maa_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_convert_faith_text: "$convert_faith_text$$leo_mvd_exempt_suffix$"

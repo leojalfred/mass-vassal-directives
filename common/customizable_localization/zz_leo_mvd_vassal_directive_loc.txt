@@ -23,7 +23,7 @@ vassal_directive_icon = {
 		trigger = {
 			has_variable = leo_mvd_exempt
 			NOR = {
-				has_character_flag = vassal_directive_improve_development
+				has_character_flag = vassal_directive_improve_prosperity
 				has_character_flag = vassal_directive_train_commanders
 				has_character_flag = vassal_directive_build_maa
 				has_character_flag = vassal_directive_convert_faith
@@ -44,7 +44,7 @@ vassal_directive_icon = {
 		localization_key = no_directive_icon
 		trigger = {
 			NOR = {
-				has_character_flag = vassal_directive_improve_development
+				has_character_flag = vassal_directive_improve_prosperity
 				has_character_flag = vassal_directive_train_commanders
 				has_character_flag = vassal_directive_build_maa
 				has_character_flag = vassal_directive_convert_faith
@@ -66,7 +66,7 @@ vassal_directive_icon = {
 		trigger = {
 			has_variable = leo_mvd_exempt
 			OR = {
-				has_character_flag = vassal_directive_improve_development
+				has_character_flag = vassal_directive_improve_prosperity
 				has_character_flag = vassal_directive_train_commanders
 				has_character_flag = vassal_directive_build_maa
 				has_character_flag = vassal_directive_convert_faith
@@ -89,7 +89,7 @@ vassal_directive_icon = {
 		localization_key = directive_refusal_icon
 		trigger = {
 			OR = {
-				has_character_flag = vassal_directive_improve_development
+				has_character_flag = vassal_directive_improve_prosperity
 				has_character_flag = vassal_directive_train_commanders
 				has_character_flag = vassal_directive_build_maa
 				has_character_flag = vassal_directive_convert_faith
@@ -109,17 +109,17 @@ vassal_directive_icon = {
 	}
 
 	text = {
-		localization_key = leo_mvd_x_improve_development_icon
+		localization_key = leo_mvd_x_improve_prosperity_icon
 		trigger = {
 			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_improve_development
+			has_character_flag = vassal_directive_improve_prosperity
 		}
 	}
 
 	text = {
-		localization_key = improve_development_icon
+		localization_key = improve_prosperity_icon
 		trigger = {
-			has_character_flag = vassal_directive_improve_development
+			has_character_flag = vassal_directive_improve_prosperity
 		}
 	}
 
@@ -315,7 +315,7 @@ vassal_directive_text = {
 		trigger = {
 			has_variable = leo_mvd_exempt
 			NOR = {
-				has_character_flag = vassal_directive_improve_development
+				has_character_flag = vassal_directive_improve_prosperity
 				has_character_flag = vassal_directive_train_commanders
 				has_character_flag = vassal_directive_build_maa
 				has_character_flag = vassal_directive_convert_faith
@@ -336,7 +336,7 @@ vassal_directive_text = {
 		localization_key = no_directive_text
 		trigger = {
 			NOR = {
-				has_character_flag = vassal_directive_improve_development
+				has_character_flag = vassal_directive_improve_prosperity
 				has_character_flag = vassal_directive_train_commanders
 				has_character_flag = vassal_directive_build_maa
 				has_character_flag = vassal_directive_convert_faith
@@ -358,7 +358,7 @@ vassal_directive_text = {
 		trigger = {
 			has_variable = leo_mvd_exempt
 			OR = {
-				has_character_flag = vassal_directive_improve_development
+				has_character_flag = vassal_directive_improve_prosperity
 				has_character_flag = vassal_directive_train_commanders
 				has_character_flag = vassal_directive_build_maa
 				has_character_flag = vassal_directive_convert_faith
@@ -381,7 +381,7 @@ vassal_directive_text = {
 		localization_key = refusing_directive_text
 		trigger = {
 			OR = {
-				has_character_flag = vassal_directive_improve_development
+				has_character_flag = vassal_directive_improve_prosperity
 				has_character_flag = vassal_directive_train_commanders
 				has_character_flag = vassal_directive_build_maa
 				has_character_flag = vassal_directive_convert_faith
@@ -401,17 +401,17 @@ vassal_directive_text = {
 	}
 
 	text = {
-		localization_key = leo_mvd_x_improve_development_text
+		localization_key = leo_mvd_x_improve_prosperity_text
 		trigger = {
 			has_variable = leo_mvd_exempt
-			has_character_flag = vassal_directive_improve_development
+			has_character_flag = vassal_directive_improve_prosperity
 		}
 	}
 
 	text = {
-		localization_key = improve_development_text
+		localization_key = improve_prosperity_text
 		trigger = {
-			has_character_flag = vassal_directive_improve_development
+			has_character_flag = vassal_directive_improve_prosperity
 		}
 	}
 

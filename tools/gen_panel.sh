@@ -73,7 +73,7 @@ NOMAD_DIRS="10 11 12 13"
 ALL_DIRS="$DIRS $NOMAD_DIRS"
 dir_icon() { case $1 in
 	1) echo convert_faith ;;                2) echo convert_culture ;;
-	3) echo improve_development ;;          4) echo train_commanders ;;
+	3) echo improve_prosperity ;;           4) echo train_commanders ;;
 	5) echo build_maa ;;                    6) echo improve_cultural_acceptance ;;
 	7) echo building_focus_fortification ;; 8) echo building_focus_military ;;
 	9) echo building_focus_economy ;;
@@ -84,7 +84,7 @@ esac; }
 dir_name() { case $1 in
 	1) echo "Convert [faith|E]" ;;
 	2) echo "Promote [culture|E]" ;;
-	3) echo "Improve [development|E]" ;;
+	3) echo "Improve [prosperity|E]" ;;
 	4) echo "Boost [men_at_arms|E]" ;;
 	5) echo "Recruit [men_at_arms|E]" ;;
 	6) echo "Improve [cultural_acceptance|E]" ;;
@@ -103,7 +103,7 @@ esac; }
 # This list is also the order the panel offers them in, which is why 19, 20 and
 # 21 sit beside the questions they refine rather than at the end: Same House
 # reads next to Same Dynasty, Governor Theme next to Administrative Government,
-# Average Development next to Capital Development, and 22 (Is Your Puppet's
+# Average Prosperity next to Capital Prosperity, and 22 (Is Your Puppet's
 # Vassal) with the other questions about where a vassal stands with you. The
 # codes themselves are append-only - they are stored in player variables that
 # persist in saves, so renumbering would silently rewrite existing rule sets.
@@ -131,14 +131,14 @@ cond_name() { case $1 in
 	8) echo "Is on Your [council|E]" ;;
 	9) echo "Military Strength is at Least" ;;
 	10) echo "[title|E] Tier is at Least" ;;
-	11) echo "Capital [development|E] is at Least" ;;
+	11) echo "Capital [prosperity|E] is at Least" ;;
 	12) echo "[opinion|E] of You is at Least" ;;
 	13) echo "[counties|E] Held is at Least" ;;
 	14) echo "[cultural_acceptance|E] with You is at Least" ;;
 	19) echo "Same [house|E] as You" ;;
 	# Themes, circuits or provinces, whichever word the player's own game uses.
 	20) echo "[GetPlayer.Custom('leo_mvd_cl_admin_term')] is" ;;
-	21) echo "Average [development|E] is at Least" ;;
+	21) echo "Average [prosperity|E] is at Least" ;;
 	22) echo "Is Your [puppet|E]'s [vassal|E]" ;;
 	15) echo "Is Ironborn" ;;
 	16) echo "Follows the Faith of the Seven" ;;
@@ -174,7 +174,7 @@ cond_thresh() { case $1 in
 	# a rule survives the liege changing government. Append-only, like the
 	# condition codes and for the same reason.
 	20) if [ "$TARGET" = tfe ]; then echo "1 2 3 4 5 6 7 8 9 10 11"; else echo "1 2 3 4 5 6 7 8 9 10"; fi ;;
-	# Lower than Capital Development's ladder: the capital is usually the best
+	# Lower than Capital Prosperity's ladder: the capital is usually the best
 	# county a vassal holds, so an average over the whole domain runs behind it.
 	21) echo "5 10 20 40 60" ;;
 esac; }
@@ -327,7 +327,7 @@ sdlc() { if [ $# -eq 1 ]; then echo "has_dlc_feature = $1"; return; fi
 vis_and() { local out=; for e in "$@"; do [ -z "$e" ] && continue
 	if [ -z "$out" ]; then out=$e; else out="And( $out, $e )"; fi; done; echo "$out"; }
 # The DLC features that can put an administrative vassal in a realm. Vanilla
-# gates the three administrative directives (improve development, train
+# gates the three administrative directives (improve prosperity, train
 # commanders, build men-at-arms) on `government_has_mechanic = administrative` and
 # nothing else, and five governments answer yes to that: Byzantium's
 # administrative from Roads to Power, plus the celestial, meritocratic, steppe
@@ -390,7 +390,7 @@ esac; }
 # Military Strength's threshold is a duchy-tier baseline scaled by the vassal's
 # rank (leo_mvd_effective_threshold), which the plain label cannot convey.
 # Governor Theme picks a value rather than a floor, the one place the panel
-# departs from "is at least", so it says so. Average Development's label cannot
+# departs from "is at least", so it says so. Average Prosperity's label cannot
 # say which counties are averaged (the personally held ones).
 cond_tt() { case $1 in 9) echo "leo_mvd_ui_cond_9_tt" ;; 20) echo "leo_mvd_ui_cond_20_tt" ;; 21) echo "leo_mvd_ui_cond_21_tt" ;; 22) echo "leo_mvd_ui_cond_22_tt" ;; esac; }
 

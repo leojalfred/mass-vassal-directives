@@ -5,7 +5,7 @@
 # directive. They are rule data like the base presets, loaded through the same
 # leo_mvd_select_preset_effect path.
 #
-# Note on directives: the Seven Kingdoms are feudal, and Improve Development /
+# Note on directives: the Seven Kingdoms are feudal, and Improve Prosperity /
 # Train Commanders / Build Men-at-Arms are administrative-government only (the
 # Free Cities). So these presets use only directives feudal vassals can act on,
 # and none of them are administrative, so they do not branch on the expansions
@@ -29,7 +29,7 @@ leo_mvd_preset_6_effect = {
 	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 8 }
 
 	# 3: the rest build by their strength - the strong grow their economy, the
-	# weak fortify. Economy, not Improve Development, since feudal vassals can
+	# weak fortify. Economy, not Improve Prosperity, since feudal vassals can
 	# do it; the baseline is the AGOT-scaled leo_mvd_mil_baseline (2000).
 	leo_mvd_set_node_cond_effect = { NODE = r3_n1 COND = 9 THRESH = leo_mvd_mil_baseline }
 	leo_mvd_set_node_dir_effect = { NODE = r3_n2 DIR = 9 }

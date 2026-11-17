@@ -38,7 +38,7 @@ texticon = {
 texticon = {
 	icon = leo_mvd_gray_task_develop_county
 	iconsize = {
-		texture = "gfx/interface/icons/vassal_directives/improve_development.dds"
+		texture = "gfx/interface/icons/vassal_directives/improve_prosperity.dds"
 		size = { 35 35 }
 		offset = { 0 11 }
 		fontsize = 16
@@ -200,9 +200,9 @@ texticon = {
 	}
 }
 texticon = {
-	icon = leo_mvd_dir_icon_improve_development
+	icon = leo_mvd_dir_icon_improve_prosperity
 	iconsize = {
-		texture = "gfx/interface/icons/vassal_directives/improve_development.dds"
+		texture = "gfx/interface/icons/vassal_directives/improve_prosperity.dds"
 		size = { 20 20 }
 		offset = { 0 4 }
 		fontsize = 16

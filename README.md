@@ -1,6 +1,6 @@
 # Leo VI's Mass Vassal Directives
 
-A quality-of-life mod for **Crusader Kings III (1.20.x)** that hands out vassal directives for you, by rules you write, so you never have to click through every vassal one by one again.
+A quality-of-life mod for **Crusader Kings III (1.21.x)** that hands out vassal directives for you, by rules you write, so you never have to click through every vassal one by one again.
 
 Nothing about directive _eligibility_ changes: the mod calls the game's own eligibility triggers and mirrors the vanilla interaction's conditions exactly. It only automates what you could already do by hand.
 
@@ -16,7 +16,7 @@ A priority is one of three things:
 - **Check a Condition**: ask something about the vassal, and send each answer its own way. Either branch can be another condition, so a priority can weigh up to two questions.
 - **Continue to Next Priority**: do nothing here and let the next one decide.
 
-The key to reading a rule set: **a vassal who cannot be given a directive falls through to the next priority.** That is the game's own doing (vanilla hides a directive it will not allow), and it is what lets a rule say "develop the land" without worrying about the vassals who cannot.
+The key to reading a rule set: **a vassal who cannot be given a directive falls through to the next priority.** That is the game's own doing (vanilla hides a directive it will not allow), and it is what lets a rule say "make the land prosper" without worrying about the vassals who cannot.
 
 Nomads keep a **running order of their own**, below the main one. They have four directives no one else can be given and can be given none of the other nine, so they cannot share a list with the rest.
 
@@ -27,10 +27,10 @@ Pick one and its plan appears in the panel, so you can read what it actually doe
 | Preset                  | What it does                                                                                        |
 | ----------------------- | --------------------------------------------------------------------------------------------------- |
 | **None**                | Nothing is assigned, and the automation gives up whatever it handed out. The default.               |
-| **Convert and Develop** | Faith, then culture, then growth: the strong develop their land, the weak raise men-at-arms.        |
+| **Convert and Prosper** | Faith, then culture, then growth: the strong make their land prosper, the weak raise men-at-arms.   |
 | **Unify the Realm**     | Converts harder, at the cost of growth. Cultural acceptance grinds down what conversion cannot.     |
 | **Prepare for War**     | Arms the realm, each vassal to their strength. Ignores faith and culture.                           |
-| **Grow the Economy**    | Wealth first: the undeveloped develop, the established build. Ignores faith and culture.            |
+| **Grow the Economy**    | Wealth first: poor land is made to prosper, prosperous land builds. Ignores faith and culture.      |
 | **Govern by Theme**     | Each governor does what their administration type suits them for; everyone else builds economy.     |
 | **Custom**              | Your own rules, up to six priorities plus three for nomads.                                         |
 
@@ -40,7 +40,7 @@ Govern by Theme goes by whichever word your own government uses, so it reads as 
 
 ### Conditions
 
-Rite is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Same House as You · Administrative Government · Administration Type · Is a Powerful Vassal · Is on Your Council · Is Your Puppet's Vassal · Military Strength · Title Tier · Average Development · Capital Development · Opinion of You · Counties Held · Cultural Acceptance with You
+Rite is Yours · Culture is Yours · Holds Counties of Another Faith · Holds Counties of Another Culture · Same Dynasty as You · Same House as You · Administrative Government · Administration Type · Is a Powerful Vassal · Is on Your Council · Is Your Puppet's Vassal · Military Strength · Title Tier · Average Prosperity · Capital Prosperity · Opinion of You · Counties Held · Cultural Acceptance with You
 
 Every measured condition reads the same way (**"is at least"**), so the true branch is always the high side. Two are worth knowing about. Military Strength's number is the **duchy baseline**, and it scales by title tier so it stays meaningful at every realm size (counts ×0.4, dukes ×1, kings ×3, emperors ×8; tunable in `common/script_values/leo_mvd_values.txt`). Administration Type is the one exception to "is at least": it matches a single type outright, so a rule asking for Military Administration is answered no by every other type, and by every vassal who is not a governor. It speaks your own government's language, because every administrative government has its own set of types under its own names: a Byzantine emperor picks from the six themes, a Celestial one from the five circuit administrations, and a meritocratic, steppe administrative or Ritsuryo realm from its own three. Only the ones your realm can actually have are offered. Administration Type and Administrative Government both appear with _Roads to Power_ or _All Under Heaven_.
 
@@ -60,7 +60,7 @@ Settings are stored per playthrough and carry over to your heir on succession.
 
 ## Compatibility
 
-- **DLC**: none required, all supported. Either _Roads to Power_ or _All Under Heaven_ adds the administrative directives (Improve Development, Train Commanders, Build Men-at-Arms) and the Administrative Government condition, since both bring governments the game counts as administrative: Byzantium's from the first, and China's, Korea's, the steppe's and Japan's from the second. Either expansion also brings the Administration Type condition and the Govern by Theme preset, each speaking the language of whichever administrative government you play. _Khans of the Steppe_ adds nomad vassals and their four directives. _By God Alone_ adds the Puppet Secular Ruler and Puppet Clerical Ruler puppets; Puppet Realm Priest needs no DLC. Your rules reach the vassals of every puppet you hold, either way. Without a given DLC the panel hides what it would enable and the built-in presets adapt their plans, so nothing ever points at an option your game cannot use.
+- **DLC**: none required, all supported. Either _Roads to Power_ or _All Under Heaven_ adds the administrative directives (Improve Prosperity, Train Commanders, Build Men-at-Arms) and the Administrative Government condition, since both bring governments the game counts as administrative: Byzantium's from the first, and China's, Korea's, the steppe's and Japan's from the second. Either expansion also brings the Administration Type condition and the Govern by Theme preset, each speaking the language of whichever administrative government you play. _Khans of the Steppe_ adds nomad vassals and their four directives. _By God Alone_ adds the Puppet Secular Ruler and Puppet Clerical Ruler puppets; Puppet Realm Priest needs no DLC. Your rules reach the vassals of every puppet you hold, either way. Without a given DLC the panel hides what it would enable and the built-in presets adapt their plans, so nothing ever points at an option your game cannot use.
 - **Achievements**: not affected. Since CK3 1.9, mods do not disable achievements.
 - **Existing saves**: safe to add mid-run (automation bootstraps within a game-year, or immediately from the panel) and safe to remove (mod-assigned directives are ordinary vanilla directives; leftover mod variables are inert).
 - **Multiplayer**: settings and automation are per-player; every button routes through a synchronized scripted GUI.
