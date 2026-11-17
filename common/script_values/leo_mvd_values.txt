@@ -43,7 +43,7 @@ leo_mvd_effective_threshold = {
 	}
 }
 
-# Current scope: vassal. Average development of the counties the vassal holds
+# Current scope: vassal. Average prosperity of the counties the vassal holds
 # personally, the ones a directive could actually improve: directives are not
 # passed down to sub-vassals. Iterated as county-tier held titles because the
 # script value parser accepts every_held_title but not every_held_county, which
@@ -57,11 +57,11 @@ leo_mvd_held_county_count = {
 		add = 1
 	}
 }
-leo_mvd_avg_held_development = {
+leo_mvd_avg_held_prosperity = {
 	value = 0
 	every_held_title = {
 		limit = { tier = tier_county }
-		add = development_level
+		add = prosperity_level
 	}
 	if = {
 		limit = { any_held_title = { tier = tier_county } }

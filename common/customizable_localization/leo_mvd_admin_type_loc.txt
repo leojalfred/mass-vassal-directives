@@ -158,7 +158,7 @@ leo_mvd_cl_preset_8_tt = {
 	# Ritsuryo reads the same as the other two, plus a caveat they do not need:
 	# its governors hold a single county by design (main_administrative_tier =
 	# county, where every other administrative government says duchy), and
-	# vanilla offers Improve Development only from duchy tier. So most Ritsuryo
+	# vanilla offers Improve Prosperity only from duchy tier. So most Ritsuryo
 	# industrial governors fall through to the economy default, and the tooltip
 	# says so rather than promising a directive the game will refuse.
 	text = {

@@ -77,9 +77,9 @@ leo_mvd_try_assign_effect = {
 		else_if = {
 			limit = {
 				scope:leo_mvd_dir_id = 3
-				leo_mvd_gate_improve_development_trigger = yes
+				leo_mvd_gate_improve_prosperity_trigger = yes
 			}
-			leo_mvd_assign_effect = { DIRECTIVE = improve_development CODE = 3 }
+			leo_mvd_assign_effect = { DIRECTIVE = improve_prosperity CODE = 3 }
 		}
 		else_if = {
 			limit = {
@@ -487,7 +487,7 @@ leo_mvd_restore_custom_effect = {
 #
 # Built-ins are rule data, not hardcoded logic: each one loads a rule set that
 # the engine then evaluates by the same path as a hand-built one. So there is a
-# single implementation of the waterfall, and "Convert and Develop" reproducing
+# single implementation of the waterfall, and "Convert and Prosper" reproducing
 # the mod's original behavior doubles as the engine's regression test.
 #
 # Selecting one overwrites the rule set. leo_mvd_preset records which is loaded:
@@ -505,8 +505,8 @@ leo_mvd_preset_0_effect = {
 
 # Current scope: the player.
 # Steer vassals onto your faith, then your culture, then grow them: strong
-# vassals develop their land, weaker ones raise men-at-arms where they can and
-# build up their economy where they cannot.
+# vassals make their land prosper, weaker ones raise men-at-arms where they can
+# and build up their economy where they cannot.
 leo_mvd_preset_1_effect = {
 	leo_mvd_clear_rules_effect = yes
 
@@ -520,11 +520,11 @@ leo_mvd_preset_1_effect = {
 	leo_mvd_set_node_cond_effect = { NODE = r2_n1 COND = 2 THRESH = 0 }
 	leo_mvd_set_node_dir_effect = { NODE = r2_n2 DIR = 2 }
 
-	# 3+: grow the realm. Where administrative vassals exist the strong develop
-	# their land and the weak raise men-at-arms, with a fourth priority behind
-	# both: it catches the strong who fail Improve Development's duchy gate and
+	# 3+: grow the realm. Where administrative vassals exist the strong make
+	# their land prosper and the weak raise men-at-arms, with a fourth priority
+	# behind both: it catches the strong who fail Improve Prosperity's duchy gate and
 	# the weak who are not administrative and so cannot recruit at all. Where
-	# such vassals do not exist there is no Improve Development directive, so the
+	# such vassals do not exist there is no Improve Prosperity directive, so the
 	# strong build economy instead and the catch-all is not needed. Either
 	# expansion supplies an administrative government, so both are asked about.
 	if = {
@@ -617,15 +617,15 @@ leo_mvd_preset_3_effect = {
 }
 
 # Current scope: the player.
-# Build wealth. Underdeveloped vassals raise their development first; once they
+# Build wealth. Vassals whose land is poor raise its prosperity first; once they
 # are established they turn to economic buildings.
 leo_mvd_preset_4_effect = {
 	leo_mvd_clear_rules_effect = yes
 
-	# Where administrative vassals exist, underdeveloped ones raise their
-	# development first and turn to economic buildings once established, with a
-	# second priority to catch those who fail Improve Development's gate. Where
-	# they do not there is no development directive, so growth is economic
+	# Where administrative vassals exist, vassals whose capital is poor raise
+	# its prosperity first and turn to economic buildings once established, with
+	# a second priority to catch those who fail Improve Prosperity's gate. Where
+	# they do not there is no prosperity directive, so growth is economic
 	# buildings for everyone.
 	if = {
 		limit = { OR = { has_dlc_feature = roads_to_power has_dlc_feature = all_under_heaven } }
@@ -667,7 +667,7 @@ leo_mvd_preset_4_effect = {
 #   Military and Protectorate  raise troops (they carry the levy and damage
 #                              bonuses, and vanilla spends their income on
 #                              men-at-arms)
-#   Civilian and Industrial    grow their land (development and tax bonuses)
+#   Civilian and Industrial    grow their land (the types built around the economy)
 #   Frontier                   fortifies (it borders another realm and may raid)
 #   Naval                      builds military, which is where its ports are
 #   everyone else              builds economy, from the last priority

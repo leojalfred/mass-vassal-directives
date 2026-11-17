@@ -26,15 +26,15 @@
  leo_mvd_ui_preset_0: "Ninguno"
  # Doubles as the panel's Description text while None is selected, so it has to
  # both say what None does and point a new player somewhere useful.
- leo_mvd_ui_preset_0_tt: "No se asigna nada, y la automatización renuncia a cualquier [directives|E] que hubiera repartido. Las directivas que diste tú mismo a un [vassal|E] quedan intactas.\n\nUn predefinido es un orden de prioridad: a cada vasallo se le da la primera directiva de él que le convenga. Elige uno arriba y su plan aparecerá aquí.\n\nO elige #V Personalizado#! para escribir el orden tú mismo, prioridad por prioridad. Da a cada vasallo la misma directiva, o júzgalos según lo que elijas, desde [faith|E] y [culture|E] hasta fuerza, [development|E] y prestigio, y da a cada uno la directiva que le encaje.\n\n#weak No ocurre nada hasta que elijas.#!"
- leo_mvd_ui_preset_1: "Convertir y desarrollar"
+ leo_mvd_ui_preset_0_tt: "No se asigna nada, y la automatización renuncia a cualquier [directives|E] que hubiera repartido. Las directivas que diste tú mismo a un [vassal|E] quedan intactas.\n\nUn predefinido es un orden de prioridad: a cada vasallo se le da la primera directiva de él que le convenga. Elige uno arriba y su plan aparecerá aquí.\n\nO elige #V Personalizado#! para escribir el orden tú mismo, prioridad por prioridad. Da a cada vasallo la misma directiva, o júzgalos según lo que elijas, desde [faith|E] y [culture|E] hasta fuerza, [prosperity|E] y prestigio, y da a cada uno la directiva que le encaje.\n\n#weak No ocurre nada hasta que elijas.#!"
+ leo_mvd_ui_preset_1: "Convertir y prosperar"
  leo_mvd_ui_preset_1_tt: "Trae a tus [vassals|E] al redil, y luego hazlos crecer.\n\n#weak 1.#! A los vasallos de tu [rite|E] que posean condados de otra [faith|E] se les ordena $leo_mvd_ui_dir_1$.\n#weak 2.#! A los vasallos de tu [culture|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_2$.\n#weak 3.#! Del resto, los militarmente fuertes $leo_mvd_ui_dir_3$ y los débiles $leo_mvd_ui_dir_5$.\n#weak 4.#! Todos los vasallos restantes $leo_mvd_ui_dir_9$."
  leo_mvd_ui_preset_2: "Unificar el reino"
- leo_mvd_ui_preset_2_tt: "Haz del reino un solo pueblo.\n\n#weak 1.#! A los vasallos de tu [rite|E] que posean condados de otra [faith|E] se les ordena $leo_mvd_ui_dir_1$.\n#weak 2.#! A los vasallos de tu [culture|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_2$.\n#weak 3.#! Los que aún posean condados de cultura ajena trabajan en $leo_mvd_ui_dir_6$.\n#weak 4.#! Todos los vasallos restantes $leo_mvd_ui_dir_9$.\n\n#weak Convierte con más ahínco que Convertir y desarrollar, a costa del crecimiento.#!"
+ leo_mvd_ui_preset_2_tt: "Haz del reino un solo pueblo.\n\n#weak 1.#! A los vasallos de tu [rite|E] que posean condados de otra [faith|E] se les ordena $leo_mvd_ui_dir_1$.\n#weak 2.#! A los vasallos de tu [culture|E] que posean condados de otra se les ordena $leo_mvd_ui_dir_2$.\n#weak 3.#! Los que aún posean condados de cultura ajena trabajan en $leo_mvd_ui_dir_6$.\n#weak 4.#! Todos los vasallos restantes $leo_mvd_ui_dir_9$.\n\n#weak Convierte con más ahínco que Convertir y prosperar, a costa del crecimiento.#!"
  leo_mvd_ui_preset_3: "Prepararse para la guerra"
  leo_mvd_ui_preset_3_tt: "Arma el reino, cada [vassal|E] según su fuerza.\n\nLos vasallos [administrative|E] ponen a trabajar a sus propias tropas: los fuertes $leo_mvd_ui_dir_4$, los débiles $leo_mvd_ui_dir_5$.\nEn los demás casos, los fuertes $leo_mvd_ui_dir_7$ y los débiles $leo_mvd_ui_dir_8$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
  leo_mvd_ui_preset_4: "Hacer crecer la economía"
- leo_mvd_ui_preset_4_tt: "Amasa riqueza antes que nada.\n\nA los vasallos poco desarrollados se les ordena $leo_mvd_ui_dir_3$.\nLos vasallos establecidos se dedican a $leo_mvd_ui_dir_9$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
+ leo_mvd_ui_preset_4_tt: "Amasa riqueza antes que nada.\n\nA los vasallos cuya capital aún no es próspera se les ordena $leo_mvd_ui_dir_3$.\nLos vasallos prósperos se dedican a $leo_mvd_ui_dir_9$.\n\n#weak Ignora por completo [faith|E] y [culture|E].#!"
  leo_mvd_ui_preset_8: "Gobernar por [GetPlayer.Custom('leo_mvd_cl_admin_term_short')]"
  leo_mvd_ui_preset_8_tt: "[GetPlayer.Custom('leo_mvd_cl_preset_8_tt')]"
  leo_mvd_ui_preset_8_tt_rtp: "Asignar a cada gobernador aquello para lo que su [GetPlayer.Custom('leo_mvd_cl_admin_term')] ya lo hace apto.\n\n#weak 1.#! Los gobernadores $admin_theme_military$ reciben la orden de $leo_mvd_ui_dir_5$.\n#weak 2.#! Los gobernadores $admin_theme_frontier$ reciben la orden de $leo_mvd_ui_dir_7$.\n#weak 3.#! Los gobernadores $admin_theme_civilian$ reciben la orden de $leo_mvd_ui_dir_3$.\n#weak 4.#! Los gobernadores $admin_theme_naval$ reciben la orden de $leo_mvd_ui_dir_8$.\n#weak 5.#! Todo otro [vassal|E], sea gobernador o no, recibe la orden de $leo_mvd_ui_dir_9$.\n\n#weak Ignora por completo la [faith|E] y la [culture|E].#!"
@@ -69,7 +69,7 @@
  # label cannot say which counties are averaged.
  leo_mvd_ui_cond_20_tt: "Coincide exactamente con un tipo. Un [vassal|E] que no es [governor|E] nunca cumple esta condición.\n\n#weak Se fija en el contrato de un gobernador, así que esto solo ordena a los vasallos [administrative|E]. Solo se ofrecen los tipos que usa tu propio [government|E].#!"
  leo_mvd_ui_cond_9_tt: "La cifra es un baremo de rango [duchy|E], escalado al rango de cada [vassal|E] para que un único ajuste siga teniendo sentido en todo el reino. Los reinos mayores levantan ejércitos mayores.\n\nFrente a la cifra, a un vasallo de rango [county|E] se le pide 0.4x, a uno de rango ducado 1x, a uno de rango [kingdom|E] 3x, a uno de rango [empire|E] 8x.\n\n#weak Así, una elección de 1000 resulta en 400 tropas para un conde, 1000 para un duque, 3000 para un rey y 8000 para un emperador.#!"
- leo_mvd_ui_cond_21_tt: "El [development|E] medio de los [counties|E] que el [vassal|E] posee personalmente. Esos son los condados que una [directive|E] puede mejorar realmente, ya que las directivas no se transmiten a los vasallos de los vasallos.\n\n#weak Un vasallo que no posee ningún condado, como un [baron|E], nunca cumple esta condición.#!"
+ leo_mvd_ui_cond_21_tt: "La [prosperity|E] media de los [counties|E] que el [vassal|E] posee personalmente. Esos son los condados que una [directive|E] puede mejorar realmente, ya que las directivas no se transmiten a los vasallos de los vasallos.\n\n#weak Un vasallo que no posee ningún condado, como un [baron|E], nunca cumple esta condición.#!"
  leo_mvd_ui_cond_22_tt: "El señor del [vassal|E] es uno de tus [puppets|E], así que su [directive|E] pasa por ese títere, y que la acepte depende de su relación con el títere y no contigo. Úsalo para tratarlos de forma distinta a tus propios vasallos."
  leo_mvd_ui_term_theme: "[theme_administration|E]"
  leo_mvd_ui_term_circuit: "[circuit_administration|E]"
@@ -94,7 +94,7 @@
  # icon variants
  leo_mvd_x_no_directive_icon: "@leo_mvd_gray_directive_none!"
  leo_mvd_x_directive_refusal_icon: "@leo_mvd_gray_directive_refusal!"
- leo_mvd_x_improve_development_icon: "@leo_mvd_gray_task_develop_county!"
+ leo_mvd_x_improve_prosperity_icon: "@leo_mvd_gray_task_develop_county!"
  leo_mvd_x_train_commanders_icon: "@leo_mvd_gray_task_train_commanders!"
  leo_mvd_x_build_maa_icon: "@leo_mvd_gray_directive_maa!"
  leo_mvd_x_convert_faith_icon: "@leo_mvd_gray_task_conversion!"
@@ -110,7 +110,7 @@
  # text variants
  leo_mvd_x_no_directive_text: "$no_directive_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_refusing_directive_text: "$refusing_directive_text$$leo_mvd_exempt_suffix$"
- leo_mvd_x_improve_development_text: "$improve_development_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_improve_prosperity_text: "$improve_prosperity_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_train_commanders_text: "$train_commanders_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_build_maa_text: "$build_maa_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_convert_faith_text: "$convert_faith_text$$leo_mvd_exempt_suffix$"

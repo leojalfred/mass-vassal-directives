@@ -3,14 +3,14 @@
 # Eligibility must match vanilla exactly. Wherever possible we call the vanilla
 # scripted triggers directly (00_vassal_stance_triggers.txt). The remaining
 # conditions are verbatim mirrors of give_vassal_directive_interaction
-# (00_vassal_interactions.txt:3592-3618 and its send_option blocks) because the
+# (00_vassal_interactions.txt:3635-3661 and its send_option blocks) because the
 # interaction's inline is_shown/is_valid blocks cannot be invoked from script.
 # Re-diff those mirrored lines against vanilla after each game patch.
 
 # Current scope: vassal candidate. $LIEGE$ = the liege issuing directives.
 #
 # Verbatim mirror of give_vassal_directive_interaction's is_shown
-# (00_vassal_interactions.txt:3592-3609) - the vassals vanilla will even offer a
+# (00_vassal_interactions.txt:3635-3652) - the vassals vanilla will even offer a
 # directive for. Re-diff this against vanilla after each game patch; it is the
 # one block both the rules and the exempt interaction depend on, so a drift here
 # is a drift everywhere.
@@ -40,7 +40,7 @@ leo_mvd_directive_shown_trigger = {
 # is_valid_showing_failures_only.
 leo_mvd_base_eligible_trigger = {
 	leo_mvd_directive_shown_trigger = { LIEGE = $LIEGE$ }
-	# is_valid_showing_failures_only mirror (:3615-3618); the follows/valid
+	# is_valid_showing_failures_only mirror (:3658-3661); the follows/valid
 	# sub-triggers are both included in the vanilla composite below
 	is_physically_able = yes
 	# is_valid mirror - the canonical vanilla eligibility composite
@@ -142,23 +142,23 @@ leo_mvd_directing_liege_check_trigger = {
 # falls through to the next priority, which is what vanilla does when a
 # send_option is unavailable.
 
-# Current scope: vassal. improve_development (:3620)
-leo_mvd_gate_improve_development_trigger = {
+# Current scope: vassal. improve_prosperity (:3663)
+leo_mvd_gate_improve_prosperity_trigger = {
 	government_has_mechanic = administrative
 	highest_held_title_tier >= tier_duchy
 }
 
-# Current scope: vassal. train_commanders (:3634)
+# Current scope: vassal. train_commanders (:3677)
 leo_mvd_gate_train_commanders_trigger = {
 	government_has_mechanic = administrative
 }
 
-# Current scope: vassal. build_maa (:3645)
+# Current scope: vassal. build_maa (:3688)
 leo_mvd_gate_build_maa_trigger = {
 	government_has_mechanic = administrative
 }
 
-# Current scope: vassal. convert_faith (:3656)
+# Current scope: vassal. convert_faith (:3699)
 leo_mvd_gate_convert_faith_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 	NOT = { government_has_flag = government_is_nomadic }
@@ -167,7 +167,7 @@ leo_mvd_gate_convert_faith_trigger = {
 	}
 }
 
-# Current scope: vassal. convert_culture (:3675)
+# Current scope: vassal. convert_culture (:3718)
 leo_mvd_gate_convert_culture_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 	NOT = { government_has_flag = government_is_nomadic }
@@ -176,7 +176,7 @@ leo_mvd_gate_convert_culture_trigger = {
 	}
 }
 
-# Current scope: vassal. improve_cultural_acceptance (:3694)
+# Current scope: vassal. improve_cultural_acceptance (:3737)
 leo_mvd_gate_improve_cultural_acceptance_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 	NOT = { government_has_flag = government_is_nomadic }
@@ -186,8 +186,8 @@ leo_mvd_gate_improve_cultural_acceptance_trigger = {
 	}
 }
 
-# Current scope: vassal. building_focus_fortification (:3714),
-# building_focus_military (:3725) and building_focus_economy (:3736) all share
+# Current scope: vassal. building_focus_fortification (:3757),
+# building_focus_military (:3768) and building_focus_economy (:3779) all share
 # the same single vanilla condition.
 leo_mvd_gate_building_focus_trigger = {
 	NOT = { government_has_flag = government_is_nomadic }
@@ -201,14 +201,14 @@ leo_mvd_gate_building_focus_trigger = {
 # rules are their own waterfall rather than a special case inside the main one.
 #
 # Herders are not part of this: vanilla's is_shown excludes them from directives
-# altogether (:3605), and leo_mvd_base_eligible_trigger mirrors that.
+# altogether (:3648), and leo_mvd_base_eligible_trigger mirrors that.
 
-# Current scope: vassal. manage_fertility (:3747). Vanilla asks nothing further.
+# Current scope: vassal. manage_fertility (:3790). Vanilla asks nothing further.
 leo_mvd_gate_manage_fertility_trigger = {
 	government_has_flag = government_is_nomadic
 }
 
-# Current scope: vassal. explore_cultures (:3757)
+# Current scope: vassal. explore_cultures (:3800)
 leo_mvd_gate_explore_cultures_trigger = {
 	save_temporary_scope_as = leo_mvd_vassal_tmp
 	government_has_flag = government_is_nomadic
@@ -217,7 +217,7 @@ leo_mvd_gate_explore_cultures_trigger = {
 	}
 }
 
-# Current scope: vassal. raid_innovation_intent (:3775)
+# Current scope: vassal. raid_innovation_intent (:3818)
 #
 # Vanilla also refuses this to a vassal who already has it - alone among the
 # thirteen. That is a menu nicety: it greys out an option that would do nothing.
@@ -230,7 +230,7 @@ leo_mvd_gate_raid_innovation_intent_trigger = {
 	government_has_flag = government_is_nomadic
 }
 
-# Current scope: vassal. raid_herd_intent (:3793). Vanilla asks nothing further.
+# Current scope: vassal. raid_herd_intent (:3836). Vanilla asks nothing further.
 leo_mvd_gate_raid_herd_intent_trigger = {
 	government_has_flag = government_is_nomadic
 }
@@ -374,12 +374,12 @@ leo_mvd_cond_holds_trigger = {
 			highest_held_title_tier >= tier_empire
 		}
 	}
-	# 11 - Capital Development is at least
+	# 11 - Capital Prosperity is at least
 	trigger_else_if = {
 		limit = { scope:leo_mvd_cond_id = 11 }
 		exists = capital_county
 		capital_county = {
-			development_level >= scope:leo_mvd_thresh
+			prosperity_level >= scope:leo_mvd_thresh
 		}
 	}
 	# 12 - Opinion of You is at least
@@ -506,7 +506,7 @@ leo_mvd_cond_holds_trigger = {
 			always = no
 		}
 	}
-	# 21 - Average Development is at least. Averaged over the counties the
+	# 21 - Average Prosperity is at least. Averaged over the counties the
 	# vassal holds personally: directives are not passed down to sub-vassals,
 	# so those are the counties a directive could actually improve. The average
 	# is staged as a scope first because a computed value cannot stand on the
@@ -516,10 +516,10 @@ leo_mvd_cond_holds_trigger = {
 		limit = { scope:leo_mvd_cond_id = 21 }
 		any_held_county = { always = yes }
 		save_temporary_scope_value_as = {
-			name = leo_mvd_avg_dev
-			value = leo_mvd_avg_held_development
+			name = leo_mvd_avg_prosperity
+			value = leo_mvd_avg_held_prosperity
 		}
-		scope:leo_mvd_avg_dev >= scope:leo_mvd_thresh
+		scope:leo_mvd_avg_prosperity >= scope:leo_mvd_thresh
 	}
 	# 22 - Is Your Puppet's Vassal. True when the vassal's liege is one of the
 	# player's puppets, of any of the three types that can give directives (see
@@ -557,7 +557,7 @@ leo_mvd_managed_matches_trigger = {
 		}
 		AND = {
 			var:leo_mvd_managed = 3
-			has_character_flag = vassal_directive_improve_development
+			has_character_flag = vassal_directive_improve_prosperity
 		}
 		AND = {
 			var:leo_mvd_managed = 4

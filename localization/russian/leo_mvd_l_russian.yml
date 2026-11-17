@@ -26,15 +26,15 @@
  leo_mvd_ui_preset_0: "Нет"
  # Doubles as the panel's Description text while None is selected, so it has to
  # both say what None does and point a new player somewhere useful.
- leo_mvd_ui_preset_0_tt: "Ничего не назначается, и автоматика отказывается от любых выданных ею [directives|E]. Наказы, которые вы дали [vassal|E] сами, остаются нетронутыми.\n\nШаблон — это порядок предпочтений: каждому вассал выдаётся первая подходящая ему наказ. Выберите шаблон выше, и его план появится здесь.\n\nИли выберите #V Свой#! , чтобы задать порядок самостоятельно, приоритет за приоритетом. Дайте каждому вассал одну и ту же наказ или судите их по тому, что выберете сами — от [faith|E] и [culture|E] до силы, [development|E] и положения — и дайте каждому подходящую наказ.\n\n#weak Ничего не произойдёт, пока вы не выберете.#!"
- leo_mvd_ui_preset_1: "Обращать и развивать"
+ leo_mvd_ui_preset_0_tt: "Ничего не назначается, и автоматика отказывается от любых выданных ею [directives|E]. Наказы, которые вы дали [vassal|E] сами, остаются нетронутыми.\n\nШаблон — это порядок предпочтений: каждому вассал выдаётся первая подходящая ему наказ. Выберите шаблон выше, и его план появится здесь.\n\nИли выберите #V Свой#! , чтобы задать порядок самостоятельно, приоритет за приоритетом. Дайте каждому вассал одну и ту же наказ или судите их по тому, что выберете сами — от [faith|E] и [culture|E] до силы, [prosperity|E] и положения — и дайте каждому подходящую наказ.\n\n#weak Ничего не произойдёт, пока вы не выберете.#!"
+ leo_mvd_ui_preset_1: "Обращать и процветать"
  leo_mvd_ui_preset_1_tt: "Приведите своих [vassals|E] в лоно, затем развивайте их.\n\n#weak 1.#! Вассалам вашего [rite|E], владеющим графствами иной [faith|E], велено $leo_mvd_ui_dir_1$.\n#weak 2.#! Вассалам вашей [culture|E], владеющим графствами иной, велено $leo_mvd_ui_dir_2$.\n#weak 3.#! Из остальных военно сильные $leo_mvd_ui_dir_3$, а слабые $leo_mvd_ui_dir_5$.\n#weak 4.#! Все оставшиеся вассалы $leo_mvd_ui_dir_9$."
  leo_mvd_ui_preset_2: "Объединить державу"
- leo_mvd_ui_preset_2_tt: "Сделайте державу единым народом.\n\n#weak 1.#! Вассалам вашего [rite|E], владеющим графствами иной [faith|E], велено $leo_mvd_ui_dir_1$.\n#weak 2.#! Вассалам вашей [culture|E], владеющим графствами иной, велено $leo_mvd_ui_dir_2$.\n#weak 3.#! Те, кто всё ещё держит графства чужой культура, работают над $leo_mvd_ui_dir_6$.\n#weak 4.#! Все оставшиеся вассалы $leo_mvd_ui_dir_9$.\n\n#weak Обращает сильнее, чем «Обращать и развивать», ценой роста.#!"
+ leo_mvd_ui_preset_2_tt: "Сделайте державу единым народом.\n\n#weak 1.#! Вассалам вашего [rite|E], владеющим графствами иной [faith|E], велено $leo_mvd_ui_dir_1$.\n#weak 2.#! Вассалам вашей [culture|E], владеющим графствами иной, велено $leo_mvd_ui_dir_2$.\n#weak 3.#! Те, кто всё ещё держит графства чужой культура, работают над $leo_mvd_ui_dir_6$.\n#weak 4.#! Все оставшиеся вассалы $leo_mvd_ui_dir_9$.\n\n#weak Обращает сильнее, чем «Обращать и процветать», ценой роста.#!"
  leo_mvd_ui_preset_3: "Готовиться к войне"
  leo_mvd_ui_preset_3_tt: "Вооружите державу, каждого [vassal|E] по его силе.\n\n[administrative|E] вассалы используют собственные войска: сильные $leo_mvd_ui_dir_4$, слабые $leo_mvd_ui_dir_5$.\nУ прочих сильные $leo_mvd_ui_dir_7$, а слабые $leo_mvd_ui_dir_8$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
  leo_mvd_ui_preset_4: "Развивать экономику"
- leo_mvd_ui_preset_4_tt: "Наживайте богатство прежде всего прочего.\n\nНеразвитым вассалам велено $leo_mvd_ui_dir_3$.\nСостоявшиеся вассалы обращаются к $leo_mvd_ui_dir_9$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
+ leo_mvd_ui_preset_4_tt: "Наживайте богатство прежде всего прочего.\n\nВассалам, чья столица ещё не процветает, велено $leo_mvd_ui_dir_3$.\nПроцветающие вассалы обращаются к $leo_mvd_ui_dir_9$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
  leo_mvd_ui_preset_8: "Управление: [GetPlayer.Custom('leo_mvd_cl_admin_term_short')]"
  leo_mvd_ui_preset_8_tt: "[GetPlayer.Custom('leo_mvd_cl_preset_8_tt')]"
  leo_mvd_ui_preset_8_tt_rtp: "Поручить каждому губернатору то, к чему его [GetPlayer.Custom('leo_mvd_cl_admin_term')] и без того располагает.\n\n#weak 1.#! Губернаторы с типом $admin_theme_military$ получают приказ $leo_mvd_ui_dir_5$.\n#weak 2.#! Губернаторы с типом $admin_theme_frontier$ получают приказ $leo_mvd_ui_dir_7$.\n#weak 3.#! Губернаторы с типом $admin_theme_civilian$ получают приказ $leo_mvd_ui_dir_3$.\n#weak 4.#! Губернаторы с типом $admin_theme_naval$ получают приказ $leo_mvd_ui_dir_8$.\n#weak 5.#! Любой другой [vassal|E], губернатор или нет, получает приказ $leo_mvd_ui_dir_9$.\n\n#weak Полностью игнорирует [faith|E] и [culture|E].#!"
@@ -69,7 +69,7 @@
  # label cannot say which counties are averaged.
  leo_mvd_ui_cond_20_tt: "Совпадает ровно с одним типом. [vassal|E], который не [governor|E], никогда не выполняет это условие.\n\n#weak Задаётся в договоре губернатора, поэтому так сортируются только [administrative|E] вассалы. Предлагаются лишь типы, которые использует ваше собственное [government|E].#!"
  leo_mvd_ui_cond_9_tt: "Число — это мерило уровня [duchy|E], масштабируемое под ранг каждого [vassal|E], чтобы одна настройка оставалась осмысленной по всей державе. Крупные державы поднимают крупные армии.\n\nОт этого числа с вассала уровня [county|E] спрашивается 0.4x, с уровня герцогство — 1x, с уровня [kingdom|E] — 3x, с уровня [empire|E] — 8x.\n\n#weak Так, выбор 1000 даёт 400 воинов для графа, 1000 для герцога, 3000 для короля и 8000 для императора.#!"
- leo_mvd_ui_cond_21_tt: "Среднее [development|E] [counties|E], которыми [vassal|E] владеет лично. Именно эти графства [directive|E] может действительно улучшить, поскольку директивы не передаются вассалам вассалов.\n\n#weak Вассал без собственного графства, например [baron|E], никогда не выполняет это условие.#!"
+ leo_mvd_ui_cond_21_tt: "Среднее [prosperity|E] [counties|E], которыми [vassal|E] владеет лично. Именно эти графства [directive|E] может действительно улучшить, поскольку директивы не передаются вассалам вассалов.\n\n#weak Вассал без собственного графства, например [baron|E], никогда не выполняет это условие.#!"
  leo_mvd_ui_cond_22_tt: "Сюзерен этого [vassal|E] является одной из ваших [puppets|E], поэтому его [directive|E] идёт через эту марионетку, и примет ли он её, зависит от его отношений с марионеткой, а не с вами. Используйте это, чтобы обращаться с ними иначе, чем со своими вассалами."
  leo_mvd_ui_term_theme: "[theme_administration|E]"
  leo_mvd_ui_term_circuit: "[circuit_administration|E]"
@@ -94,7 +94,7 @@
  # icon variants
  leo_mvd_x_no_directive_icon: "@leo_mvd_gray_directive_none!"
  leo_mvd_x_directive_refusal_icon: "@leo_mvd_gray_directive_refusal!"
- leo_mvd_x_improve_development_icon: "@leo_mvd_gray_task_develop_county!"
+ leo_mvd_x_improve_prosperity_icon: "@leo_mvd_gray_task_develop_county!"
  leo_mvd_x_train_commanders_icon: "@leo_mvd_gray_task_train_commanders!"
  leo_mvd_x_build_maa_icon: "@leo_mvd_gray_directive_maa!"
  leo_mvd_x_convert_faith_icon: "@leo_mvd_gray_task_conversion!"
@@ -110,7 +110,7 @@
  # text variants
  leo_mvd_x_no_directive_text: "$no_directive_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_refusing_directive_text: "$refusing_directive_text$$leo_mvd_exempt_suffix$"
- leo_mvd_x_improve_development_text: "$improve_development_text$$leo_mvd_exempt_suffix$"
+ leo_mvd_x_improve_prosperity_text: "$improve_prosperity_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_train_commanders_text: "$train_commanders_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_build_maa_text: "$build_maa_text$$leo_mvd_exempt_suffix$"
  leo_mvd_x_convert_faith_text: "$convert_faith_text$$leo_mvd_exempt_suffix$"
